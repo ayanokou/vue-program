@@ -10,17 +10,20 @@
                    ref="imgUrl">
             <el-button icon="getUrl" @click="socketioPic">socketio测试(PIC)</el-button>
         </div>
-        <img
-            :src="imgUrl"
-            alt="a cat"
-            class="img"
-            :style="{transform:'scale('+multiples+')'}"
-        />
-      <span>{{imgUrl}}</span>
-        <el-image-viewer
-            v-if="showViewer"
-            :src="imgUrl"
-            :on-close="closeViewer"/>
+        <div id="result">
+
+        </div>
+<!--        <img-->
+<!--            :src="imgUrl"-->
+<!--            alt="a cat"-->
+<!--            id="img"-->
+<!--            :style="{transform:'scale('+multiples+')'}"-->
+<!--        />-->
+<!--      <span>{{imgUrl}}</span>-->
+<!--        <el-image-viewer-->
+<!--            v-if="showViewer"-->
+<!--            :src="imgUrl"-->
+<!--            :on-close="closeViewer"/>-->
     </div>
 </template>
 

@@ -94,13 +94,19 @@ export default {
     name: 'FlowDemo',
     data() {
         return {
+            //logic-flow
             lf: null,
             initHeight: '',
             initData: null,
+            //点击事件的节点对象
             nodeModel:'',
+            //点击事件的边对象
             edgeModel:'',
+            //框选选中的数据
+            selectedMSG:null,
             //赋值变量 算子和图形
             suanzis: suanziItemList,
+            //
         }
     },
     computed:{
@@ -138,6 +144,7 @@ export default {
 
         })
 
+        //接收java传来的数据
         socket.on('rev',(data)=>{
             console.log(data)
         })
@@ -208,13 +215,26 @@ export default {
             }
             lf.extension.leftMenus.setPatternItems(suanziItemListConcat)
 
-            lf.extension.selectionSelect.openSelectionSelect();
 
             // 设置节点面板, 设置框选回调
             suanziItemList['控制模块'][0].callback = () => {
-                lf.openSelectionSelect();
-                lf.once("selection:selected", () => {
-                    //lf.closeSelectionSelect();
+                //开启框选
+                lf.openSelectionSelect()
+                lf.once("selection:selected", (data) => {
+                    let result={nodes:[],edges:[]}
+                    for(let x of data){
+                        //通过id获得model
+                        let model=this.lf.getNodeModelById(x.id)
+                        //通过model获得data
+                        if(!model){
+                            model=this.lf.getEdgeModelById(x.id)
+                            result.edges.push(model.getData())
+                        }else{
+                            result.nodes.push(model.getData())
+                        }
+                    }
+                    this.selectedMSG=result
+                    console.log(this.selectedMSG)
                 });
             },
 
@@ -263,10 +283,10 @@ export default {
         downloadXML() {
             //this.download('flow.xml', lfJson2Xml(this.lf.getGraphData()))
             //前端开始运行逻辑不完善，因此将流程图json传到后端的语句写在这里了，以后实际开发的时候进行调整
-            console.log(this.lf.getGraphData());
-            console.log(JSON.stringify(this.lf.getGraphData()))
             //socket.emit('flowInformation',this.lf.getGraphData());
             //test 传json串
+            console.log(this.lf.getGraphData());
+            //console.log(JSON.stringify(this.lf.getGraphData()))
             var jsonObject={
                 userName:'Flow',
                 message:JSON.stringify(this.lf.getGraphData())

@@ -6,12 +6,13 @@ export default {
     name:"Index",
     data () {
         return {
-            imgUrl: '',
+            imgUrl: null,
             multiples: 1,
             showViewer:false,
         }
     },
-
+    mounted() {
+    },
     methods: {
         //放大
         toBIgChange () {
@@ -67,20 +68,32 @@ export default {
         //             this.imgUrl = data.text
         //         })
         // },
+        f(){
 
+        },
         socketioPic(){
-            let base64Img
+
+            let base64Img=""
+            //模板绑定
             let Img = this.$refs.imgUrl.files[0]
             let reader = new FileReader()
             reader.readAsDataURL(Img)
             reader.onload=function (){
-                var jsonObject = {userName: "Pic",
+                let base64Result=""
+                let jsonObject = {userName: "Pic",
                     message: this.result,
                 };
                 base64Img = this.result
                 socket.emit('chatevent', jsonObject);
-                console.log(this.result)
+                //接受处理后的结果，显示文件
+                socket.on('revBase64',(data)=>{
+                    base64Result=data;
+                    console.log(base64Result)
+                    let result = document.getElementById("result");
+                    result.innerHTML = '<img src="' + base64Result + '" alt="" />';
+                })
             }
+
         }
 
 

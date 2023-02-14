@@ -73,8 +73,9 @@ public class DemoApplication {
 					Base64.Decoder decoder = Base64.getDecoder();
 					String ImgBase64 = data.getMessage().replace("data:image/png;base64,","");
 					//test java传dll图片
-					String ImgBase2=dlltest.Decode.INSTANCE.eventHandle(1,ImgBase64);
-					System.out.println(ImgBase2);
+					String ImgBaseResult=dlltest.Decode.INSTANCE.eventHandle(1,ImgBase64);
+					System.out.println(ImgBaseResult);
+					server.getBroadcastOperations().sendEvent("revBase64", "data:image/png;base64,"+ImgBaseResult);
 					//test end
 					try
 					{
@@ -90,29 +91,6 @@ public class DemoApplication {
 						//生成jpeg图片
 						String imgFilePath = "E:\\"+UUID.randomUUID().toString()+".png";//新生成的图片
 						OutputStream out = new FileOutputStream("C:\\Users\\zwq\\Desktop\\a1.png");
-						out.write(b);
-						out.flush();
-						out.close();
-						System.out.println("图片接收成功");
-					}
-					catch (Exception e)
-					{
-						System.out.println("图片接收失败");
-					}
-					try
-					{
-						//Base64解码
-						byte[] b = decoder.decode(ImgBase2);
-						for(int i=0;i<b.length;++i)
-						{
-							if(b[i]<0)
-							{//调整异常数据
-								b[i]+=256;
-							}
-						}
-						//生成jpeg图片
-						String imgFilePath = "E:\\"+UUID.randomUUID().toString()+".png";//新生成的图片
-						OutputStream out = new FileOutputStream("C:\\Users\\zwq\\Desktop\\a2.png");
 						out.write(b);
 						out.flush();
 						out.close();
