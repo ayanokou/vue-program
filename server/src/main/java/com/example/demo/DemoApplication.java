@@ -37,6 +37,7 @@ public class DemoApplication {
 		config.setHostname("localhost");
 		config.setPort(9092);
 		final SocketIOServer server = new SocketIOServer(config);
+
 		server.addEventListener("chatevent", ChatObject.class, new DataListener<ChatObject>() {
 			@Override
 			public void onData(SocketIOClient client, ChatObject data, AckRequest ackRequest) {
@@ -56,10 +57,25 @@ public class DemoApplication {
 					float result = Float.parseFloat(data.getMessage());
 					System.out.println("float测试："+result);
 				}
+				// test 传json
+				else if(data.getUserName().equals("Flow")){
+					String result=data.getMessage();
+					//发送dll数据
+					dlltest.Decode.INSTANCE.eventHandle(2,result);
+					//发送前端数据
+
+					server.getBroadcastOperations().sendEvent("rev", "after process");
+
+				}
+				// test end
 				else if(data.getUserName().equals("Pic"))
 				{
 					Base64.Decoder decoder = Base64.getDecoder();
 					String ImgBase64 = data.getMessage().replace("data:image/png;base64,","");
+					//test java传dll图片
+					String ImgBase2=dlltest.Decode.INSTANCE.eventHandle(1,ImgBase64);
+					System.out.println(ImgBase2);
+					//test end
 					try
 					{
 						//Base64解码
@@ -72,8 +88,8 @@ public class DemoApplication {
 							}
 						}
 						//生成jpeg图片
-						String imgFilePath = "E:\\"+UUID.randomUUID().toString()+".jpg";//新生成的图片
-						OutputStream out = new FileOutputStream(imgFilePath);
+						String imgFilePath = "E:\\"+UUID.randomUUID().toString()+".png";//新生成的图片
+						OutputStream out = new FileOutputStream("C:\\Users\\zwq\\Desktop\\a1.png");
 						out.write(b);
 						out.flush();
 						out.close();
@@ -83,7 +99,29 @@ public class DemoApplication {
 					{
 						System.out.println("图片接收失败");
 					}
-
+					try
+					{
+						//Base64解码
+						byte[] b = decoder.decode(ImgBase2);
+						for(int i=0;i<b.length;++i)
+						{
+							if(b[i]<0)
+							{//调整异常数据
+								b[i]+=256;
+							}
+						}
+						//生成jpeg图片
+						String imgFilePath = "E:\\"+UUID.randomUUID().toString()+".png";//新生成的图片
+						OutputStream out = new FileOutputStream("C:\\Users\\zwq\\Desktop\\a2.png");
+						out.write(b);
+						out.flush();
+						out.close();
+						System.out.println("图片接收成功");
+					}
+					catch (Exception e)
+					{
+						System.out.println("图片接收失败");
+					}
 				}
 
 			}
@@ -177,7 +215,6 @@ public class DemoApplication {
 				}
 			}
 		});
-
 
 		server.start();
 		SpringApplication.run(DemoApplication.class, args);

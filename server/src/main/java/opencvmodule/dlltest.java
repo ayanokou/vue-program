@@ -24,4 +24,11 @@ public class dlltest {
         void myLoad(String fileName, int flags, long returnAddress);
         void myWrite(String fileName, long matAddress);
     }
+
+    public interface Decode extends StdCallLibrary {
+
+        Decode INSTANCE = (Decode) Native.loadLibrary(("dllexport.dll"), Decode.class);
+        //void eventHandle(String s);
+        String eventHandle(int event,String para);
+    }
 }

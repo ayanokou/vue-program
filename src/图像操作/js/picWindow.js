@@ -1,3 +1,7 @@
+//import io from "../../../js/socket.io/socket.io";
+
+let socket = io.connect('http://localhost:9092')
+
 export default {
     name:"Index",
     data () {
@@ -55,14 +59,30 @@ export default {
         //         this.data.url = response.data.Text
         //       })
         // }
-        getUrl() {
-            fetch("http://localhost:8081/getUrl")
-                .then(res => res.json())
-                .then(data=> {
-                    console.log(data.text)
-                    this.imgUrl = data.text
-                })
+        // getUrl() {
+        //     fetch("http://localhost:8081/getUrl")
+        //         .then(res => res.json())
+        //         .then(data=> {
+        //             console.log(data.text)
+        //             this.imgUrl = data.text
+        //         })
+        // },
+
+        socketioPic(){
+            let base64Img
+            let Img = this.$refs.imgUrl.files[0]
+            let reader = new FileReader()
+            reader.readAsDataURL(Img)
+            reader.onload=function (){
+                var jsonObject = {userName: "Pic",
+                    message: this.result,
+                };
+                base64Img = this.result
+                socket.emit('chatevent', jsonObject);
+                console.log(this.result)
+            }
         }
+
 
     }
 }

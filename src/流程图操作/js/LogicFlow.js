@@ -1,5 +1,8 @@
 import {Menu, BpmnElement, SelectionSelect, Control, Snapshot} from '@logicflow/extension'
 import {lfJson2Xml} from '@logicflow/extension'
+//test 框选
+import '@logicflow/extension/lib/style/index.css'
+//test end
 import {
     LogicFlow,
     PolygonNode,
@@ -14,7 +17,7 @@ import {
 import {LeftMenus} from './LeftMenuItems.js'
 import {MiniMap} from './MiniMap.js'
 import {eventHandle, events} from "../../sys/eventResponseController";
-
+LogicFlow.use(SelectionSelect);
 const handleOpen = (key, keyPath) => {
     console.log(key, keyPath)
 }
@@ -30,6 +33,7 @@ window.addEventListener('message', function (messageEvent) {
         console.log('收到vue的数据：', data);
     }
 )
+
 
 class CycleModel extends CircleNodeModel{
     getNodeStyle() {
@@ -111,7 +115,7 @@ export default {
             let type=this.nodeModel.getProperties().type
 
             if(type=="conditionJudge"||type=="cycleStart"){
-                window.open('#/conditionNode')
+                window.open("#/conditionNode", "newwin", "toolbar=no,scrollbars=no,menubar=no");
             }
 
 
@@ -127,11 +131,15 @@ export default {
 
         })
         this.lf.on('edge:click',(evt)=>{
-            window.open('#/conditionEdge')
+            window.open('#/conditionEdge', "newwin", "toolbar=no,scrollbars=no,menubar=no")
             let edgeId=(evt.data.id)
             //获取边
             this.edgeModel=this.lf.getEdgeModelById(edgeId)
 
+        })
+
+        socket.on('rev',(data)=>{
+            console.log(data)
         })
 
         window.addEventListener('message', (evt) => {
@@ -200,14 +208,15 @@ export default {
             }
             lf.extension.leftMenus.setPatternItems(suanziItemListConcat)
 
+            lf.extension.selectionSelect.openSelectionSelect();
 
-            // // 设置节点面板, 设置框选回调
-            // suanziItemList['控制模块'][0].callback = () => {
-            //     lf.openSelectionSelect();
-            //     lf.once("selection:selected", () => {
-            //         //lf.closeSelectionSelect();
-            //     });
-            // },
+            // 设置节点面板, 设置框选回调
+            suanziItemList['控制模块'][0].callback = () => {
+                lf.openSelectionSelect();
+                lf.once("selection:selected", () => {
+                    //lf.closeSelectionSelect();
+                });
+            },
 
 
             lf.extension.control.addItem({
@@ -252,11 +261,19 @@ export default {
             this.lf.getSnapshot()
         },
         downloadXML() {
-            console.log(this.lf.getGraphData())
-            this.download('flow.xml', lfJson2Xml(this.lf.getGraphData()))
+            //this.download('flow.xml', lfJson2Xml(this.lf.getGraphData()))
             //前端开始运行逻辑不完善，因此将流程图json传到后端的语句写在这里了，以后实际开发的时候进行调整
             console.log(this.lf.getGraphData());
-            socket.emit('flowInformation',this.lf.getGraphData());
+            console.log(JSON.stringify(this.lf.getGraphData()))
+            //socket.emit('flowInformation',this.lf.getGraphData());
+            //test 传json串
+            var jsonObject={
+                userName:'Flow',
+                message:JSON.stringify(this.lf.getGraphData())
+            }
+
+            socket.emit('chatevent',jsonObject);
+            //test end
         }
     },
 
