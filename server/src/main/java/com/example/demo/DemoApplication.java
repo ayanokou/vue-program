@@ -7,8 +7,8 @@ import elementdetectmodule.Circle;
 import elementdetectmodule.EDCircle;
 import elementdetectmodule.ParamOfSameCenterCircle;
 import opencvmodule.dlltest;
-import org.opencv.core.Core;
-import org.opencv.core.Mat;
+//import org.opencv.core.Core;
+//import org.opencv.core.Mat;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -30,8 +30,8 @@ import com.corundumstudio.socketio.*;
 @CrossOrigin
 public class DemoApplication {
 	private static String imagePath;
-	static{
-		System.loadLibrary(Core.NATIVE_LIBRARY_NAME); }
+//	static{
+//		System.loadLibrary(Core.NATIVE_LIBRARY_NAME); }
 	public static void main(String[] args) {
 		com.corundumstudio.socketio.Configuration config = new Configuration();
 		config.setHostname("localhost");
@@ -105,94 +105,94 @@ public class DemoApplication {
 			}
 		});
 
-		server.addEventListener("flowInformation", demoMessage.class, new DataListener<demoMessage>() {
-			private String imagePath;
-
-			@Override
-			public void onData(SocketIOClient client, demoMessage dm, AckRequest ackRequest) {
-				int amount = dm.getNodesNum();
-				System.out.println("nodes amount:"+amount);
-				FlowInformation [] fl = new FlowInformation[amount];
-
-				for(int i = 0;i<dm.getNodesNum();i++)
-				{
-					fl[i] = new FlowInformation();
-					fl[i].setId(dm.getNodes().get(i).getId());
-					fl[i].setFunction(dm.getNodes().get(i).getFunc());
-					for (int j = 0;j<dm.getEdgesNum();j++)
-					{
-						if(Objects.equals(fl[i].getId(), dm.getEdges().get(j).getTargetNodeId()))
-						{
-							fl[i].setFather(dm.getEdges().get(j).getSourceNodeId());
-						}
-					}
-				}
-				Stack<FlowInformation> Tree = new Stack();
-				String leaf[]=new String[]{"3"};
-				int i=0;
-				while (i<leaf.length){
-					FlowInformation  treenode =findnode(fl,leaf[i]);//获得叶子节点
-					while (treenode.getFather()!=null)//判断其有无父节点
-					{
-						Tree.push(treenode);//入栈
-						String Father = (String)treenode.getFather();
-						treenode = findnode(fl,Father);//获取其父节点
-					}
-					Tree.push(treenode);//根节点入栈
-					Mat imageMat=new Mat();
-					Mat imageMatRet=new Mat();
-					Mat input=new Mat();
-					Mat result=new Mat();
-					Mat EDCircleInput=new Mat();
-					ParamOfSameCenterCircle.ByValue Param  = new ParamOfSameCenterCircle.ByValue();
-					while(!Tree.isEmpty()){
-						treenode =Tree.pop();
-						String Function1 = (String) treenode.getFunction();
-						//先判断该节点是否已经有图像，若没有，则执行函数
-						//执行函数
-						if(Function1.equalsIgnoreCase("图像源"))
-						{System.out.println("打开图片");
-							//JsonArray ParameterArray = treenode.getJsonArray("ParameterArray");
-							//System.out.println("参数为"+ParameterArray.get(0));
-							System.out.println("this.imagePath:"+this.imagePath);
-							dlltest.imgcodes.INSTANCE.myLoad(imagePath,3,imageMat.getNativeObjAddr());
-							dlltest.imgcodes.INSTANCE.myLoad(imagePath,0,input.getNativeObjAddr());
-							dlltest.imgcodes.INSTANCE.myLoad(imagePath,3,EDCircleInput.getNativeObjAddr());
-							// EDCircle
-							Param.matAddress = EDCircleInput.getNativeObjAddr();
-							Pointer center = new Memory(16);
-							center.setDouble(0,300);
-							center.setDouble(8,300);
-							Param.center = center;
-							Param.R = 60.0;
-							Param.magnification = 120.0 / 60.0;
-						}
-						else if(Function1.equalsIgnoreCase("图像滤波"))
-						{
-							System.out.println("图像滤波");
-							//JsonArray ParameterArray = treenode.getJsonArray("ParameterArray");
-							//System.out.println("参数1为"+ParameterArray.get(0)+"参数2为"+ParameterArray.get(1));
-
-							//ObjectDetector.DLLMul.dllMul.objectDetectionMat(imageMat.getNativeObjAddr(),imageMatRet.getNativeObjAddr(),"C:\\Users\\asus\\Desktop\\SOW\\SOW_server\\src\\main\\resources\\mywork_dir");
-							//dlltest.imgcodes.INSTANCE.myWrite("ret.jpg",imageMatRet.getNativeObjAddr());
-							dlltest.dllexport.INSTANCE.myMedianBlur(input.getNativeObjAddr(),result.getNativeObjAddr(),15);
-							dlltest.imgcodes.INSTANCE.myWrite("mediafileter.jpg",result.getNativeObjAddr());
-							Circle.ByValue EDCircleResult = EDCircle.EDCircleBySameCenterCircle.INSTANCE.EDCircle(Param);
-							System.out.println(EDCircleResult.x);
-							System.out.println(EDCircleResult.y);
-							System.out.println(EDCircleResult.r);
-							System.out.println(EDCircleResult.isCircle);
-						}
-						else{
-							System.out.println("执行其他函数");
-							//JsonArray ParameterArray = treenode.getJsonArray("ParameterArray");
-							//System.out.println("参数1为"+ParameterArray.get(0)+"参数2为"+ParameterArray.get(1));
-						}//执行函数完毕
-					}
-					i++;
-				}
-			}
-		});
+//		server.addEventListener("flowInformation", demoMessage.class, new DataListener<demoMessage>() {
+//			private String imagePath;
+//
+//			@Override
+//			public void onData(SocketIOClient client, demoMessage dm, AckRequest ackRequest) {
+//				int amount = dm.getNodesNum();
+//				System.out.println("nodes amount:"+amount);
+//				FlowInformation [] fl = new FlowInformation[amount];
+//
+//				for(int i = 0;i<dm.getNodesNum();i++)
+//				{
+//					fl[i] = new FlowInformation();
+//					fl[i].setId(dm.getNodes().get(i).getId());
+//					fl[i].setFunction(dm.getNodes().get(i).getFunc());
+//					for (int j = 0;j<dm.getEdgesNum();j++)
+//					{
+//						if(Objects.equals(fl[i].getId(), dm.getEdges().get(j).getTargetNodeId()))
+//						{
+//							fl[i].setFather(dm.getEdges().get(j).getSourceNodeId());
+//						}
+//					}
+//				}
+//				Stack<FlowInformation> Tree = new Stack();
+//				String leaf[]=new String[]{"3"};
+//				int i=0;
+//				while (i<leaf.length){
+//					FlowInformation  treenode =findnode(fl,leaf[i]);//获得叶子节点
+//					while (treenode.getFather()!=null)//判断其有无父节点
+//					{
+//						Tree.push(treenode);//入栈
+//						String Father = (String)treenode.getFather();
+//						treenode = findnode(fl,Father);//获取其父节点
+//					}
+//					Tree.push(treenode);//根节点入栈
+//					Mat imageMat=new Mat();
+//					Mat imageMatRet=new Mat();
+//					Mat input=new Mat();
+//					Mat result=new Mat();
+//					Mat EDCircleInput=new Mat();
+//					ParamOfSameCenterCircle.ByValue Param  = new ParamOfSameCenterCircle.ByValue();
+//					while(!Tree.isEmpty()){
+//						treenode =Tree.pop();
+//						String Function1 = (String) treenode.getFunction();
+//						//先判断该节点是否已经有图像，若没有，则执行函数
+//						//执行函数
+//						if(Function1.equalsIgnoreCase("图像源"))
+//						{System.out.println("打开图片");
+//							//JsonArray ParameterArray = treenode.getJsonArray("ParameterArray");
+//							//System.out.println("参数为"+ParameterArray.get(0));
+//							System.out.println("this.imagePath:"+this.imagePath);
+//							dlltest.imgcodes.INSTANCE.myLoad(imagePath,3,imageMat.getNativeObjAddr());
+//							dlltest.imgcodes.INSTANCE.myLoad(imagePath,0,input.getNativeObjAddr());
+//							dlltest.imgcodes.INSTANCE.myLoad(imagePath,3,EDCircleInput.getNativeObjAddr());
+//							// EDCircle
+//							Param.matAddress = EDCircleInput.getNativeObjAddr();
+//							Pointer center = new Memory(16);
+//							center.setDouble(0,300);
+//							center.setDouble(8,300);
+//							Param.center = center;
+//							Param.R = 60.0;
+//							Param.magnification = 120.0 / 60.0;
+//						}
+//						else if(Function1.equalsIgnoreCase("图像滤波"))
+//						{
+//							System.out.println("图像滤波");
+//							//JsonArray ParameterArray = treenode.getJsonArray("ParameterArray");
+//							//System.out.println("参数1为"+ParameterArray.get(0)+"参数2为"+ParameterArray.get(1));
+//
+//							//ObjectDetector.DLLMul.dllMul.objectDetectionMat(imageMat.getNativeObjAddr(),imageMatRet.getNativeObjAddr(),"C:\\Users\\asus\\Desktop\\SOW\\SOW_server\\src\\main\\resources\\mywork_dir");
+//							//dlltest.imgcodes.INSTANCE.myWrite("ret.jpg",imageMatRet.getNativeObjAddr());
+//							dlltest.dllexport.INSTANCE.myMedianBlur(input.getNativeObjAddr(),result.getNativeObjAddr(),15);
+//							dlltest.imgcodes.INSTANCE.myWrite("mediafileter.jpg",result.getNativeObjAddr());
+//							Circle.ByValue EDCircleResult = EDCircle.EDCircleBySameCenterCircle.INSTANCE.EDCircle(Param);
+//							System.out.println(EDCircleResult.x);
+//							System.out.println(EDCircleResult.y);
+//							System.out.println(EDCircleResult.r);
+//							System.out.println(EDCircleResult.isCircle);
+//						}
+//						else{
+//							System.out.println("执行其他函数");
+//							//JsonArray ParameterArray = treenode.getJsonArray("ParameterArray");
+//							//System.out.println("参数1为"+ParameterArray.get(0)+"参数2为"+ParameterArray.get(1));
+//						}//执行函数完毕
+//					}
+//					i++;
+//				}
+//			}
+//		});
 
 		server.start();
 		SpringApplication.run(DemoApplication.class, args);
@@ -212,88 +212,88 @@ public class DemoApplication {
 	//	System.out.println("The text is "+jm.getText()+" and the number is "+jm.getNum());
 	//}
 	*/
-	public void JsonReq(@RequestBody demoMessage dm){
-		int amount = dm.getNodesNum();
-		FlowInformation [] fl = new FlowInformation[amount];
-
-		for(int i = 0;i<dm.getNodesNum();i++)
-		{
-			fl[i] = new FlowInformation();
-			fl[i].setId(dm.getNodes().get(i).getId());
-			fl[i].setFunction(dm.getNodes().get(i).getFunc());
-			for (int j = 0;j<dm.getEdgesNum();j++)
-			{
-				if(Objects.equals(fl[i].getId(), dm.getEdges().get(j).getTargetNodeId()))
-				{
-					fl[i].setFather(dm.getEdges().get(j).getSourceNodeId());
-				}
-			}
-		}
-		Stack<FlowInformation> Tree = new Stack();
-		String leaf[]=new String[]{"3"};
-		int i=0;
-		while (i<leaf.length){
-			FlowInformation  treenode =findnode(fl,leaf[i]);//获得叶子节点
-			while (treenode.getFather()!=null)//判断其有无父节点
-			{
-				Tree.push(treenode);//入栈
-				String Father = (String)treenode.getFather();
-				treenode = findnode(fl,Father);//获取其父节点
-			}
-			Tree.push(treenode);//根节点入栈
-			Mat imageMat=new Mat();
-			Mat imageMatRet=new Mat();
-			Mat input=new Mat();
-			Mat result=new Mat();
-            Mat EDCircleInput=new Mat();
-            ParamOfSameCenterCircle.ByValue Param  = new ParamOfSameCenterCircle.ByValue();
-			while(!Tree.isEmpty()){
-				treenode =Tree.pop();
-				String Function1 = (String) treenode.getFunction();
-				//先判断该节点是否已经有图像，若没有，则执行函数
-				//执行函数
-				if(Function1.equalsIgnoreCase("图像源"))
-				{System.out.println("打开图片");
-					//JsonArray ParameterArray = treenode.getJsonArray("ParameterArray");
-					//System.out.println("参数为"+ParameterArray.get(0));
-					System.out.println("this.imagePath:"+this.imagePath);
-					dlltest.imgcodes.INSTANCE.myLoad(imagePath,3,imageMat.getNativeObjAddr());
-					dlltest.imgcodes.INSTANCE.myLoad(imagePath,0,input.getNativeObjAddr());
-					dlltest.imgcodes.INSTANCE.myLoad(imagePath,3,EDCircleInput.getNativeObjAddr());
-					// EDCircle
-					Param.matAddress = EDCircleInput.getNativeObjAddr();
-					Pointer center = new Memory(16);
-					center.setDouble(0,300);
-					center.setDouble(8,300);
-					Param.center = center;
-					Param.R = 60.0;
-					Param.magnification = 120.0 / 60.0;
-				}
-				else if(Function1.equalsIgnoreCase("图像滤波"))
-				{
-					System.out.println("图像滤波");
-					//JsonArray ParameterArray = treenode.getJsonArray("ParameterArray");
-					//System.out.println("参数1为"+ParameterArray.get(0)+"参数2为"+ParameterArray.get(1));
-
-					//ObjectDetector.DLLMul.dllMul.objectDetectionMat(imageMat.getNativeObjAddr(),imageMatRet.getNativeObjAddr(),"C:\\Users\\asus\\Desktop\\SOW\\SOW_server\\src\\main\\resources\\mywork_dir");
-					//dlltest.imgcodes.INSTANCE.myWrite("ret.jpg",imageMatRet.getNativeObjAddr());
-					dlltest.dllexport.INSTANCE.myMedianBlur(input.getNativeObjAddr(),result.getNativeObjAddr(),15);
-					dlltest.imgcodes.INSTANCE.myWrite("mediafileter.jpg",result.getNativeObjAddr());
-					Circle.ByValue EDCircleResult = EDCircle.EDCircleBySameCenterCircle.INSTANCE.EDCircle(Param);
-					System.out.println(EDCircleResult.x);
-					System.out.println(EDCircleResult.y);
-					System.out.println(EDCircleResult.r);
-					System.out.println(EDCircleResult.isCircle);
-				}
-				else{
-					System.out.println("执行其他函数");
-					//JsonArray ParameterArray = treenode.getJsonArray("ParameterArray");
-					//System.out.println("参数1为"+ParameterArray.get(0)+"参数2为"+ParameterArray.get(1));
-				}//执行函数完毕
-			}
-			i++;
-		}
-	}
+//	public void JsonReq(@RequestBody demoMessage dm){
+//		int amount = dm.getNodesNum();
+//		FlowInformation [] fl = new FlowInformation[amount];
+//
+//		for(int i = 0;i<dm.getNodesNum();i++)
+//		{
+//			fl[i] = new FlowInformation();
+//			fl[i].setId(dm.getNodes().get(i).getId());
+//			fl[i].setFunction(dm.getNodes().get(i).getFunc());
+//			for (int j = 0;j<dm.getEdgesNum();j++)
+//			{
+//				if(Objects.equals(fl[i].getId(), dm.getEdges().get(j).getTargetNodeId()))
+//				{
+//					fl[i].setFather(dm.getEdges().get(j).getSourceNodeId());
+//				}
+//			}
+//		}
+//		Stack<FlowInformation> Tree = new Stack();
+//		String leaf[]=new String[]{"3"};
+//		int i=0;
+//		while (i<leaf.length){
+//			FlowInformation  treenode =findnode(fl,leaf[i]);//获得叶子节点
+//			while (treenode.getFather()!=null)//判断其有无父节点
+//			{
+//				Tree.push(treenode);//入栈
+//				String Father = (String)treenode.getFather();
+//				treenode = findnode(fl,Father);//获取其父节点
+//			}
+//			Tree.push(treenode);//根节点入栈
+//			Mat imageMat=new Mat();
+//			Mat imageMatRet=new Mat();
+//			Mat input=new Mat();
+//			Mat result=new Mat();
+//            Mat EDCircleInput=new Mat();
+//            ParamOfSameCenterCircle.ByValue Param  = new ParamOfSameCenterCircle.ByValue();
+//			while(!Tree.isEmpty()){
+//				treenode =Tree.pop();
+//				String Function1 = (String) treenode.getFunction();
+//				//先判断该节点是否已经有图像，若没有，则执行函数
+//				//执行函数
+//				if(Function1.equalsIgnoreCase("图像源"))
+//				{System.out.println("打开图片");
+//					//JsonArray ParameterArray = treenode.getJsonArray("ParameterArray");
+//					//System.out.println("参数为"+ParameterArray.get(0));
+//					System.out.println("this.imagePath:"+this.imagePath);
+//					dlltest.imgcodes.INSTANCE.myLoad(imagePath,3,imageMat.getNativeObjAddr());
+//					dlltest.imgcodes.INSTANCE.myLoad(imagePath,0,input.getNativeObjAddr());
+//					dlltest.imgcodes.INSTANCE.myLoad(imagePath,3,EDCircleInput.getNativeObjAddr());
+//					// EDCircle
+//					Param.matAddress = EDCircleInput.getNativeObjAddr();
+//					Pointer center = new Memory(16);
+//					center.setDouble(0,300);
+//					center.setDouble(8,300);
+//					Param.center = center;
+//					Param.R = 60.0;
+//					Param.magnification = 120.0 / 60.0;
+//				}
+//				else if(Function1.equalsIgnoreCase("图像滤波"))
+//				{
+//					System.out.println("图像滤波");
+//					//JsonArray ParameterArray = treenode.getJsonArray("ParameterArray");
+//					//System.out.println("参数1为"+ParameterArray.get(0)+"参数2为"+ParameterArray.get(1));
+//
+//					//ObjectDetector.DLLMul.dllMul.objectDetectionMat(imageMat.getNativeObjAddr(),imageMatRet.getNativeObjAddr(),"C:\\Users\\asus\\Desktop\\SOW\\SOW_server\\src\\main\\resources\\mywork_dir");
+//					//dlltest.imgcodes.INSTANCE.myWrite("ret.jpg",imageMatRet.getNativeObjAddr());
+//					dlltest.dllexport.INSTANCE.myMedianBlur(input.getNativeObjAddr(),result.getNativeObjAddr(),15);
+//					dlltest.imgcodes.INSTANCE.myWrite("mediafileter.jpg",result.getNativeObjAddr());
+//					Circle.ByValue EDCircleResult = EDCircle.EDCircleBySameCenterCircle.INSTANCE.EDCircle(Param);
+//					System.out.println(EDCircleResult.x);
+//					System.out.println(EDCircleResult.y);
+//					System.out.println(EDCircleResult.r);
+//					System.out.println(EDCircleResult.isCircle);
+//				}
+//				else{
+//					System.out.println("执行其他函数");
+//					//JsonArray ParameterArray = treenode.getJsonArray("ParameterArray");
+//					//System.out.println("参数1为"+ParameterArray.get(0)+"参数2为"+ParameterArray.get(1));
+//				}//执行函数完毕
+//			}
+//			i++;
+//		}
+//	}
 	/*
 	@RequestMapping("/GetJson")
 	public JsonMessage JsonRtr(){

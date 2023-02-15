@@ -126,16 +126,17 @@ export default {
 
 
             //调用事件响应函数，做出响应
-            const msg_key = evt.data.properties.key
-            eventHandle(events.msg_singleStepOpr, {msg_key})//单步运算->key
+            //const msg_key = evt.data.properties.key
+            //eventHandle(events.msg_singleStepOpr, {msg_key})//单步运算->key
 
             //iframe给父组件传递消息方法
-            window.parent.postMessage({nodeHelpMsg: evt.data.properties.helpMsg});
-            console.log(JSON.stringify(evt.data.text.value) + " is clicked. run some method related to label or type or id... and it's properties taht we can modify are: " + JSON.stringify(data.data.properties))
+            //window.parent.postMessage({nodeHelpMsg: evt.data.properties.helpMsg});
+            //console.log(JSON.stringify(evt.data.text.value) + " is clicked. run some method related to label or type or id... and it's properties taht we can modify are: " + JSON.stringify(data.data.properties))
             //原生修改html元素方法
             // window.parent.document.getElementById("pane-third").innerText = evt.data.properties.helpMsg
 
         })
+
         this.lf.on('edge:click',(evt)=>{
             window.open('#/conditionEdge', "newwin", "toolbar=no,scrollbars=no,menubar=no")
             let edgeId=(evt.data.id)
@@ -145,8 +146,8 @@ export default {
         })
 
         //接收java传来的数据
-        socket.on('rev',(data)=>{
-            console.log(data)
+        socket.on('rev',(evt)=>{
+            this.nodeModel=this.lf.getNodeModelById(evt.data.id)
         })
 
         window.addEventListener('message', (evt) => {
@@ -189,6 +190,36 @@ export default {
                 }
             })
 
+            lf.extension.menu.setMenuConfig({
+                nodeMenu: [
+                    {
+                        text: '删除',
+                        callback(node) {
+                            lf.deleteNode(node.id);
+                        },
+                    },
+                    {
+                        text: '编辑文本',
+                        callback: function (node) {
+                            lf.graphModel.editText(node.id);
+                        },
+                    },
+                    {
+                        text: '单步运行',
+                        callback: function (node) {
+
+                            console.log(node)
+                        }
+
+                    }
+                ], // 覆盖默认的节点右键菜单
+                edgeMenu: false, // 删除默认的边右键菜单
+                graphMenu: [],
+
+
+                // 覆盖默认的边右键菜单，与false表现一样
+            });
+
             lf.batchRegister([
                 { // 圆形结点：标志循环开始循环结束
                     type: 'cycle',
@@ -217,7 +248,7 @@ export default {
 
 
             // 设置节点面板, 设置框选回调
-            suanziItemList['控制模块'][0].callback = () => {
+            suanziItemList['控制模块'][2].callback = () => {
                 //开启框选
                 lf.openSelectionSelect()
                 lf.once("selection:selected", (data) => {
