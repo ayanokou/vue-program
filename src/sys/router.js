@@ -38,6 +38,11 @@ const router = createRouter({
             name: 'conditionNode',
             component: () => import('@/流程图操作/components/dialog/ConditionNodeDialog.vue')
         },
+        {
+            path: '/input',
+            name: 'input',
+            component: () => import('@/流程图操作/components/dialog/InputDialog.vue')
+        },
     ]
 })
 

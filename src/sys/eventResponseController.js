@@ -13,6 +13,7 @@ const V2F_Mapping={  //key为被触发事件的类型，value为对应应该运�
 export const events={
     msg_singleStepOpr:1,   //事件定义：单步计算
     msg_menuBar:2,               //事件定义：菜单栏事件
+    onSubmitTest:3
 }
 
 //事件管理函数
@@ -23,7 +24,7 @@ export function eventHandle(event, paras){   //事件触发后的响应函数
             break;
         case events.msg_menuBar:
             eventFindValueFunction(paras)
-            break;
+            break
         default:
             //.....
     }

@@ -74,9 +74,13 @@ public class DemoApplication {
 					String ImgBase64 = data.getMessage().replace("data:image/png;base64,","");
 					//test java传dll图片
 					String ImgBaseResult=dlltest.Decode.INSTANCE.eventHandle(1,ImgBase64);
+
 					System.out.println(ImgBaseResult);
+
 					server.getBroadcastOperations().sendEvent("revBase64", "data:image/png;base64,"+ImgBaseResult);
 					//test end
+
+
 					try
 					{
 						//Base64解码

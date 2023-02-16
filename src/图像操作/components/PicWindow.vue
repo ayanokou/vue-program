@@ -10,8 +10,8 @@
                    ref="imgUrl">
             <el-button icon="getUrl" @click="socketioPic">socketio测试(PIC)</el-button>
         </div>
-        <div id="result">
 
+        <div id="result">
         </div>
 <!--        <img-->
 <!--            :src="imgUrl"-->

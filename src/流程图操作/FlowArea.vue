@@ -50,8 +50,9 @@ window.addEventListener('message', (event) => {
 //     }
 // }
 
-//给子iframe传数据
+
 function getGeometry(id) {
+    //给子iframe传数据
     window.frames[id-1].postMessage(id-1)
 }
 </script>

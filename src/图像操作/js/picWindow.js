@@ -68,9 +68,7 @@ export default {
         //             this.imgUrl = data.text
         //         })
         // },
-        f(){
 
-        },
         socketioPic(){
 
             let base64Img=""

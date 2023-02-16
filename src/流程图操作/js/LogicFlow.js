@@ -27,13 +27,6 @@ const handleClose = (key, keyPath) => {
 //初始化socketio用于前后端传输
 let socket = io.connect('http://localhost:9092')
 
-//收到父页面传输的数据
-window.addEventListener('message', function (messageEvent) {
-        var data = messageEvent.data;
-        console.log('收到vue的数据：', data);
-    }
-)
-
 
 class CycleModel extends CircleNodeModel{
     getNodeStyle() {
@@ -117,12 +110,27 @@ export default {
         //设置节点点击事件监听, 修改帮助信息
         this.lf.on('node:click', (evt) => {
             //刷新nodeModel
+            console.log(evt.data)
             this.nodeModel=this.lf.getNodeModelById(evt.data.id)
-            let type=this.nodeModel.getProperties().type
+            //let type=this.nodeModel.getProperties().type
+            let type=evt.data.properties.type
+            console.log(type)
 
-            if(type=="conditionJudge"||type=="cycleStart"){
-                window.open("#/conditionNode", "newwin", "toolbar=no,scrollbars=no,menubar=no");
+            switch(type){
+                case "cycleStart":
+                    window.open("#/conditionNode", "newwin", "width=400, height=400, top=400, left=400,toolbar=no,scrollbars=no,menubar=no")
+                    break
+                case "conditionJudge":
+                    window.open("#/conditionNode", "newwin", "width=400, height=400, top=400, left=400,toolbar=no,scrollbars=no,menubar=no")
+                    break
+                case "input":
+                    window.open("#/input", "newwin", "width=400, height=400, top=400, left=400,toolbar=no,scrollbars=no,menubar=no")
+
             }
+
+            // if(type=="conditionJudge"||type=="cycleStart"){
+            //     window.open("#/conditionNode", "newwin", "toolbar=no,scrollbars=no,menubar=no");
+            // }
 
 
             //调用事件响应函数，做出响应
@@ -149,7 +157,7 @@ export default {
         socket.on('rev',(evt)=>{
             this.nodeModel=this.lf.getNodeModelById(evt.data.id)
         })
-
+        //与弹出的dialog和标签页通信
         window.addEventListener('message', (evt) => {
             if(evt.data.flag){
                 //修改边的文本
@@ -161,6 +169,15 @@ export default {
                     value:evt.data.conditionValue
                 })
             }
+            if(evt.data.imgBase64){
+                this.nodeModel.setProperties({
+                    key:{
+                        imgBase64:evt.data.imgBase64
+                    }
+                })
+            }
+
+            console.log(evt.data)
         })
         window.onresize = () => {
             return (() => {
@@ -312,7 +329,7 @@ export default {
             this.lf.getSnapshot()
         },
         downloadXML() {
-            //this.download('flow.xml', lfJson2Xml(this.lf.getGraphData()))
+            this.download('flow.xml', lfJson2Xml(this.lf.getGraphData()))
             //前端开始运行逻辑不完善，因此将流程图json传到后端的语句写在这里了，以后实际开发的时候进行调整
             //socket.emit('flowInformation',this.lf.getGraphData());
             //test 传json串
