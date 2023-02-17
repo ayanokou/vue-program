@@ -43,6 +43,11 @@ const router = createRouter({
             name: 'input',
             component: () => import('@/流程图操作/components/dialog/InputDialog.vue')
         },
+        {
+            path: '/imgFilter',
+            name: 'imgFilter',
+            component: () => import('@/流程图操作/components/dialog/ImageFilter.vue')
+        },
     ]
 })
 
