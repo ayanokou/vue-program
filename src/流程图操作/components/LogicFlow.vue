@@ -20,20 +20,41 @@
         <!--流程图区域-->
         <el-main id="lf" style="height: 100%; padding: 0;"></el-main>
 
-      <el-dialog v-model="dialogVisible"  width="30%" draggable>
+      <el-dialog v-model="dialogVisible"  width="50%" draggable>
         <el-form  label-width="120px">
-          <el-form-item v-for="(Item,index) in opts" :label="Item.text">
-            <el-input />
+          <el-form-item v-for="(item,index) in opts" :label="item.text">
+
+            <div v-if="item.type === 'checkbox'">
+              <div v-for="(cont,index2) in item.content">
+                <label>
+                  <input type="checkbox" name="{{index}}" :value="cont.options" v-model="formData.checkboxes[index2]"/>
+                  {{cont.options}}
+                </label>
+              </div>
+            </div >
+
+            <div v-if="item.type === 'radio'">
+              <div v-for="(cont,index2) in item.content">
+                <label>
+                  <input type="radio" name="{{index}}" :value="cont.options" v-model="formData.radio"/>
+                  {{cont.options}}
+                </label>
+              </div>
+            </div >
+
+            <div v-if="item.type === 'input'">
+              <label>
+                <input type="text" v-model="formData.inputs">
+              </label>
+            </div>
           </el-form-item>
         </el-form>
 
         <template #footer>
           <span class="dialog-footer">
+            <el-button type="primary" @click="dialogVisible = false;formDataSubmit()">Submit</el-button>
             <el-button @click="dialogVisible = false">Cancel</el-button>
-            <el-button type="primary" @click="dialogVisible = false">
-             Confirm
-            </el-button>
-           </span>
+          </span>
         </template>
       </el-dialog>
     </el-container>
