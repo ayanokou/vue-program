@@ -22,10 +22,8 @@
 </template>
 
 <script>
-import {eventHandle,events} from "../../../sys/eventResponseController";
 
 export default {
-    name: "inputDialog.vue",
     data(){
         return {
             activeName:'first'

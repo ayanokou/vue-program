@@ -42,7 +42,7 @@ const router = createRouter({
             path: '/input',
             name: 'input',
             component: () => import('@/流程图操作/components/dialog/InputDialog.vue')
-        },
+        }
     ]
 })
 

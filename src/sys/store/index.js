@@ -4,12 +4,17 @@ import {createStore} from 'vuex'
 export default createStore({
     state(){
         return{
-            vuexHelpInfo:'I am helpInfo from vuex'
+            vuexHelpInfo:'I am helpInfo from vuex',
+            //前端的图片
+            imgBase64:""
         }
     },
     mutations:{
-        changeVuexHelpInfo(state,payload){
+        setVuexHelpInfo(state,payload){
             state.vuexHelpInfo=payload
+        },
+        setImgBase64(state,payload){
+            state.imgBase64=payload
         }
     },
     modules:{

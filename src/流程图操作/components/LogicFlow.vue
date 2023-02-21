@@ -10,7 +10,7 @@
                     </template>
                     <el-menu-item-group>
                         <!--vue 插入元素-->
-                        <el-menu-item v-for="(suanziItem, index2) in value" :index="'suanzi' + index1 + '-' + index2" :id="suanziItem.id">
+                        <el-menu-item v-for="(suanziItem, index2) in value" :index="'suanzi' + index1 + '-' + index2" :id="suanziItem.name">
                         </el-menu-item>
                     </el-menu-item-group>
                 </el-sub-menu>

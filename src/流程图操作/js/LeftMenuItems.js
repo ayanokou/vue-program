@@ -19,7 +19,7 @@ const LeftMenus = (function () {
         }
         //遍历列表，依次创建每个节点
         this.shapeList.forEach(function (shapeItem) {
-            document.getElementById(shapeItem.id).appendChild(_this.createDndItem(shapeItem));
+            document.getElementById(shapeItem.name).appendChild(_this.createDndItem(shapeItem));
         });
 
 

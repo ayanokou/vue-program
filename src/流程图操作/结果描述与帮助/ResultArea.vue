@@ -20,7 +20,6 @@
 </template>
 
 <script setup>
-
 import CurrentData from './components/CurrentData.vue' //当前结果显示区组件
 import HistoryData from './components/HistoryData.vue' //历史结果显示区组件
 import HelpData from './components/HelpData.vue' //帮助显示区组件

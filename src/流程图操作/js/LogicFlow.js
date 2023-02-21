@@ -99,6 +99,7 @@ export default {
             selectedMSG:null,
             //赋值变量 算子和图形
             suanzis: suanziItemList,
+            imgBase64:""
             //
         }
     },
@@ -113,7 +114,7 @@ export default {
             console.log(evt.data)
             this.nodeModel=this.lf.getNodeModelById(evt.data.id)
             //let type=this.nodeModel.getProperties().type
-            let type=evt.data.properties.type
+            let type=evt.data.properties.name
             console.log(type)
 
             switch(type){
@@ -125,6 +126,7 @@ export default {
                     break
                 case "input":
                     window.open("#/input", "newwin", "width=400, height=400, top=400, left=400,toolbar=no,scrollbars=no,menubar=no")
+                    break
 
             }
 
@@ -154,8 +156,15 @@ export default {
         })
 
         //接收java传来的数据
-        socket.on('rev',(evt)=>{
-            this.nodeModel=this.lf.getNodeModelById(evt.data.id)
+        socket.on('revJson',(data)=>{
+            console.log("this is json from java"+data)
+        })
+        socket.on('revBase64',(data)=>{
+            console.log("this is img from java"+data)
+            //先传递给FlowArea组件
+            window.parent.postMessage({
+                imgBase64:data
+            })
         })
         //与弹出的dialog和标签页通信
         window.addEventListener('message', (evt) => {
@@ -175,6 +184,11 @@ export default {
                         imgBase64:evt.data.imgBase64
                     }
                 })
+                //发送后端
+                let jsonObject = {userName: "Pic",
+                    message:evt.data.imgBase64,
+                };
+                socket.emit('chatevent', jsonObject);
             }
 
             console.log(evt.data)
@@ -329,17 +343,15 @@ export default {
             this.lf.getSnapshot()
         },
         downloadXML() {
-            this.download('flow.xml', lfJson2Xml(this.lf.getGraphData()))
+            //下载json
+            this.download('flow.json', JSON.stringify(this.lf.getGraphData()))
             //前端开始运行逻辑不完善，因此将流程图json传到后端的语句写在这里了，以后实际开发的时候进行调整
-            //socket.emit('flowInformation',this.lf.getGraphData());
-            //test 传json串
-            console.log(this.lf.getGraphData());
-            //console.log(JSON.stringify(this.lf.getGraphData()))
+
+            //test 传json给后端
             var jsonObject={
                 userName:'Flow',
                 message:JSON.stringify(this.lf.getGraphData())
             }
-
             socket.emit('chatevent',jsonObject);
             //test end
         }

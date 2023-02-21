@@ -1,5 +1,7 @@
 //import io from "../../../js/socket.io/socket.io";
 
+import {mapState} from "vuex";
+
 let socket = io.connect('http://localhost:9092')
 
 export default {
@@ -11,7 +13,8 @@ export default {
             showViewer:false,
         }
     },
-    mounted() {
+    computed:{
+        ...mapState(['imgBase64'])
     },
     methods: {
         //放大
@@ -69,30 +72,30 @@ export default {
         //         })
         // },
 
-        socketioPic(){
-
-            let base64Img=""
-            //模板绑定
-            let Img = this.$refs.imgUrl.files[0]
-            let reader = new FileReader()
-            reader.readAsDataURL(Img)
-            reader.onload=function (){
-                let base64Result=""
-                let jsonObject = {userName: "Pic",
-                    message: this.result,
-                };
-                base64Img = this.result
-                socket.emit('chatevent', jsonObject);
-                //接受处理后的结果，显示文件
-                socket.on('revBase64',(data)=>{
-                    base64Result=data;
-                    console.log(base64Result)
-                    let result = document.getElementById("result");
-                    result.innerHTML = '<img src="' + base64Result + '" alt="" />';
-                })
-            }
-
-        }
+        // socketioPic(){
+        //
+        //     let base64Img=""
+        //     //模板绑定
+        //     let Img = this.$refs.imgUrl.files[0]
+        //     let reader = new FileReader()
+        //     reader.readAsDataURL(Img)
+        //     reader.onload=function (){
+        //         let base64Result=""
+        //         let jsonObject = {userName: "Pic",
+        //             message: this.result,
+        //         };
+        //         base64Img = this.result
+        //         socket.emit('chatevent', jsonObject);
+        //         //接受处理后的结果，显示文件
+        //         socket.on('revBase64',(data)=>{
+        //             base64Result=data;
+        //             console.log(base64Result)
+        //             let result = document.getElementById("result");
+        //             result.innerHTML = '<img src="' + base64Result + '" alt="" />';
+        //         })
+        //     }
+        //
+        // }
 
 
     }

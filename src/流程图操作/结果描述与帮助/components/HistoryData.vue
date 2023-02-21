@@ -26,9 +26,9 @@ export default {
         // changeInfo(){
         //     this.$store.commit('changeVuexHelpInfo','new helpInfo')
         // }
-        ...mapMutations(['changeVuexHelpInfo']),
+        ...mapMutations(['setVuexHelpInfo']),
         changeInfo(){
-            this.changeVuexHelpInfo('new helpInfo')
+            this.setVuexHelpInfo('new helpInfo')
         }
     }
 }
