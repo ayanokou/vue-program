@@ -287,6 +287,7 @@ export default {
             selectedMSG: null,
             //赋值变量 算子和图形
             suanzis: suanziItemList,
+
             imgBase64:"",
             opts:null,
             dialogVisible:false,
@@ -308,15 +309,15 @@ export default {
         this.lf.on('node:click', (evt) => {
             console.log(this.opts)
 
+
             let type = evt.data.properties.name
+
             this.opts = operators[type]
 
             //刷新nodeModel
             console.log(type)
             this.nodeModel=this.lf.getNodeModelById(evt.data.id)
             //let type=this.nodeModel.getProperties().type
-
-
 
 
             switch (type) {
@@ -365,6 +366,7 @@ export default {
 
         //接收java传来的数据
 
+
         socket.on('revJson',(data)=>{
             console.log("this is json from java"+data)
         })
@@ -374,6 +376,7 @@ export default {
             window.parent.postMessage({
                 imgBase64:data
             })
+
 
         })
         //与弹出的dialog和标签页通信
