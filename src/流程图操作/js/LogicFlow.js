@@ -111,7 +111,13 @@ export default {
             opts:null,
             //
             dialogVisible:false,
-            type:""
+            type:"",
+            formData:{
+                checkboxes:[],
+                inputs:"",
+                radio:""
+            }
+
         }
     },
     computed:{
@@ -361,6 +367,17 @@ export default {
 
             socket.emit('chatevent',jsonObject);
             //test end
+        },
+        formDataSubmit() {
+            console.log('Inputs:', this.formData.inputs)
+            console.log('Checkboxes:', this.formData.checkboxes)
+            console.log('Radio:', this.formData.radio)
+            console.log("length:",this.formData.checkboxes[0])
+            this.formData={
+                checkboxes:[],
+                inputs:"",
+                radio:""
+            }
         }
     },
 
