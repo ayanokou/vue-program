@@ -22,8 +22,15 @@
 
       <el-dialog v-model="dialogVisible"  width="30%" draggable>
         <el-form  label-width="120px">
-          <el-form-item v-for="(Item,index) in opts" :label="Item.text">
-            <el-input />
+          <el-form-item v-for="(item,index) in opts" :label="item.text">
+            <div v-if="item.type === 'checkbox'">
+              <div v-for="(cont,index) in item.content">
+                <label>
+                  <input type="checkbox"  value="A" />
+                  {{cont.options}}
+                </label>
+              </div>
+            </div>
           </el-form-item>
         </el-form>
 
