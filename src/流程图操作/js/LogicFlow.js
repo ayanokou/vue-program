@@ -285,7 +285,6 @@ export default {
             suanzis: suanziItemList,
             imgBase64:"",
             opts:null,
-
             dialogVisible:false,
             type:"",
             formData:{
@@ -293,6 +292,7 @@ export default {
                 inputs:"",
                 radio:""
             }
+
         }
     },
     computed: {
@@ -311,8 +311,6 @@ export default {
             this.nodeModel=this.lf.getNodeModelById(evt.data.id)
             //let type=this.nodeModel.getProperties().type
 
-
-
             switch (type) {
                 case "cycleStart":
                     window.open("#/conditionNode", "newwin", "width=400, height=400, top=400, left=400,toolbar=no,scrollbars=no,menubar=no")
@@ -323,12 +321,8 @@ export default {
                 case "input":
                     window.open("#/input", "newwin", "width=400, height=400, top=400, left=400,toolbar=no,scrollbars=no,menubar=no")
                     break
-
-                // case "imgFilter":
-                //     window.open("#/imgFilter", "newwin", "width=400, height=400, top=400, left=400,toolbar=no,scrollbars=no,menubar=no")
-                //     break
                 default:
-                    this.dialogVisible = true
+                    this.dialogVisible=true
 
 
             }
@@ -360,6 +354,7 @@ export default {
 
         //接收java传来的数据
 
+
         socket.on('revJson',(data)=>{
             console.log("this is json from java"+data)
         })
@@ -369,6 +364,7 @@ export default {
             window.parent.postMessage({
                 imgBase64:data
             })
+
 
         })
         //与弹出的dialog和标签页通信

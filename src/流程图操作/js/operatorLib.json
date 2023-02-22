@@ -2228,7 +2228,7 @@
             "name": "groupId",
             "properties": {
                 "helpMsg": "it is a help message",
-                "type": "groupId",
+                "name": "groupId",
                 "value": ""
             }
         }
