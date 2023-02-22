@@ -20,6 +20,22 @@
         <!--流程图区域-->
         <el-main id="lf" style="height: 100%; padding: 0;"></el-main>
 
+      <el-dialog v-model="dialogVisible"  width="30%" draggable>
+        <el-form  label-width="120px">
+          <el-form-item v-for="(Item,index) in opts" :label="Item.text">
+            <el-input />
+          </el-form-item>
+        </el-form>
+
+        <template #footer>
+          <span class="dialog-footer">
+            <el-button @click="dialogVisible = false">Cancel</el-button>
+            <el-button type="primary" @click="dialogVisible = false">
+             Confirm
+            </el-button>
+           </span>
+        </template>
+      </el-dialog>
     </el-container>
 
 

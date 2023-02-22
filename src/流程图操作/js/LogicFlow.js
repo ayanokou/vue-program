@@ -17,6 +17,9 @@ import {
 import {LeftMenus} from './LeftMenuItems.js'
 import {MiniMap} from './MiniMap.js'
 import {eventHandle, events} from "../../sys/eventResponseController";
+
+
+
 LogicFlow.use(SelectionSelect);
 const handleOpen = (key, keyPath) => {
     console.log(key, keyPath)
@@ -80,8 +83,14 @@ class ConditionJudgmentModel extends DiamondNodeModel {
 
 //法三
 import data from './operatorLib.json'
+import {ref} from "vue";
 
 const suanziItemList = data
+
+import operators from './operators.json'
+
+
+// const dialogVisible = ref(false) //dialogVisible若为true,则显示页面内弹窗
 
 export default {
     name: 'FlowDemo',
@@ -99,8 +108,14 @@ export default {
             selectedMSG:null,
             //赋值变量 算子和图形
             suanzis: suanziItemList,
-            imgBase64:""
+
+            imgBase64:"",
+
+            opts:null,
+
             //
+            dialogVisible:false,
+            type:""
         }
     },
     computed:{
@@ -110,12 +125,14 @@ export default {
         this.init()
         //设置节点点击事件监听, 修改帮助信息
         this.lf.on('node:click', (evt) => {
+            console.log(this.opts)
+            let type=evt.data.properties.type
+            this.opts = operators[type]
+            this.dialogVisible = true
             //刷新nodeModel
-            console.log(evt.data)
+            //console.log(evt.data)
             this.nodeModel=this.lf.getNodeModelById(evt.data.id)
             //let type=this.nodeModel.getProperties().type
-            let type=evt.data.properties.name
-            console.log(type)
 
             switch(type){
                 case "cycleStart":
@@ -127,6 +144,11 @@ export default {
                 case "input":
                     window.open("#/input", "newwin", "width=400, height=400, top=400, left=400,toolbar=no,scrollbars=no,menubar=no")
                     break
+
+                // case "imgFilter":
+                //     window.open("#/imgFilter", "newwin", "width=400, height=400, top=400, left=400,toolbar=no,scrollbars=no,menubar=no")
+                //     break
+
 
             }
 
