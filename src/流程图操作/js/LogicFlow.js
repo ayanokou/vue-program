@@ -392,11 +392,7 @@ export default {
                 })
             }
             if (evt.data.imgBase64) {
-                this.nodeModel.setProperties({
-                    key: {
-                        imgBase64: evt.data.imgBase64
-                    }
-                })
+
                 //发送后端
                 let jsonObject = {userName: "Pic",
                     message:evt.data.imgBase64,

@@ -28,7 +28,10 @@ public class DemoApplication {
 		config.setMaxFramePayloadLength(1024 * 1024);
 		config.setHostname("localhost");
 		config.setPort(9092);
+		config.setMaxFramePayloadLength(1024 * 1024);
+
 		final SocketIOServer server = new SocketIOServer(config);
+
 		server.addEventListener("chatevent", ChatObject.class, new DataListener<ChatObject>() {
 			@Override
 			public void onData(SocketIOClient client, ChatObject data, AckRequest ackRequest) {
@@ -64,6 +67,7 @@ public class DemoApplication {
 					clientForCpp.eventHandle(listenerForCpp, 2, result);
 
 
+
 				}
 				// test end
 				else if (data.getUserName().equals("Pic")) {
@@ -89,6 +93,7 @@ public class DemoApplication {
 					String ImgBase64 = data.getMessage().replaceAll("(data:image/jpeg|data:image/png);base64,", "");
 					System.out.println(ImgBase64);
 					clientForCpp.eventHandle(listenerForCpp, 1, ImgBase64);
+
 
 				}
 			}

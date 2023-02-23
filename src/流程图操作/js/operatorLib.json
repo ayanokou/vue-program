@@ -1,4 +1,5 @@
 {
+
     "图像匹配": [
         {
             "type": "operator",
@@ -313,6 +314,8 @@
                 "helpMsg": "it is a help message",
                 "id": 8,
                 "name": "imgFilter",
+                "dllPath": "./",
+                "methodName": "",
                 "inPara": [
                     {
                         "varName":"src",
