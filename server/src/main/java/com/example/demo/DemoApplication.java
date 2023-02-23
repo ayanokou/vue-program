@@ -14,6 +14,7 @@ import com.corundumstudio.socketio.*;
 @RestController
 @CrossOrigin
 public class DemoApplication {
+
 	private static String imgFormat;
 
 	static {
@@ -21,6 +22,7 @@ public class DemoApplication {
 		System.loadLibrary("opencv_world343");
 		System.loadLibrary("clientSDK");
 	}
+
 	public static void main(String[] args) {
 		com.corundumstudio.socketio.Configuration config = new Configuration();
 		config.setMaxFramePayloadLength(1024 * 1024);
