@@ -16,15 +16,6 @@ import com.corundumstudio.socketio.*;
 @RestController
 @CrossOrigin
 public class DemoApplication {
-	private static String imagePath;
-//	static{
-//		System.loadLibrary(Core.NATIVE_LIBRARY_NAME); }
-//public static void main(String[] args) {
-//	CommonData x=new CommonData(4,"javaJson");
-//	System.out.println(x.getValue());
-//	System.out.println(x.getJson());
-//
-//}
 	public static void main(String[] args) {
 		com.corundumstudio.socketio.Configuration config = new Configuration();
 		config.setHostname("localhost");
