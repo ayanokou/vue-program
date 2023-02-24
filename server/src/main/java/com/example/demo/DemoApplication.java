@@ -15,6 +15,7 @@ import com.corundumstudio.socketio.*;
 @CrossOrigin
 public class DemoApplication {
 
+
 	private static String imgFormat;
 
 	static {
@@ -22,6 +23,7 @@ public class DemoApplication {
 		System.loadLibrary("opencv_world343");
 		System.loadLibrary("clientSDK");
 	}
+
 
 	public static void main(String[] args) {
 		com.corundumstudio.socketio.Configuration config = new Configuration();
@@ -71,6 +73,7 @@ public class DemoApplication {
 				}
 				// test end
 				else if (data.getUserName().equals("Pic")) {
+
 					//创建与cpp通讯类
 					//接听类
 					FCListener listenerForCpp = new FCListener() {
@@ -87,6 +90,7 @@ public class DemoApplication {
 						imgFormat="data:image/png;base64,";
 					} else if (data.getMessage().contains("data:image/jpeg;base64,")) {
 						imgFormat="data:image/jpeg;base64,";
+
 					}
 
 					Base64.Decoder decoder = Base64.getDecoder();
@@ -98,10 +102,10 @@ public class DemoApplication {
 				}
 			}
 		});
-		server.start();
-		SpringApplication.run(DemoApplication.class, args);
 	}
+
 }
+
 ////		server.addEventListener("flowInformation", demoMessage.class, new DataListener<demoMessage>() {
 ////			private String imagePath;
 ////
