@@ -15,9 +15,11 @@ import {
     CircleNodeModel,
     h
 } from '@logicflow/core'
+
 import { LeftMenus } from './LeftMenuItems.js'
 import { MiniMap } from './MiniMap.js'
 import { eventHandle, events } from "../../sys/eventResponseController";
+
 
 
 
@@ -258,7 +260,9 @@ class MyGroup extends GroupNode.view {
 
 //法三
 import data from './operatorLib.json'
+
 import { ref } from "vue";
+
 
 const suanziItemList = data
 
@@ -285,7 +289,6 @@ export default {
             suanzis: suanziItemList,
             imgBase64:"",
             opts:null,
-
             dialogVisible:false,
             type:"",
             formData:{
@@ -293,6 +296,7 @@ export default {
                 inputs:"",
                 radio:""
             }
+
         }
     },
     computed: {
@@ -303,6 +307,7 @@ export default {
         //设置节点点击事件监听, 修改帮助信息
         this.lf.on('node:click', (evt) => {
             console.log(this.opts)
+
             let type = evt.data.properties.name
             this.opts = operators[type]
 
@@ -310,6 +315,7 @@ export default {
             console.log(type)
             this.nodeModel=this.lf.getNodeModelById(evt.data.id)
             //let type=this.nodeModel.getProperties().type
+
 
 
 
@@ -323,7 +329,6 @@ export default {
                 case "input":
                     window.open("#/input", "newwin", "width=400, height=400, top=400, left=400,toolbar=no,scrollbars=no,menubar=no")
                     break
-
                 // case "imgFilter":
                 //     window.open("#/imgFilter", "newwin", "width=400, height=400, top=400, left=400,toolbar=no,scrollbars=no,menubar=no")
                 //     break

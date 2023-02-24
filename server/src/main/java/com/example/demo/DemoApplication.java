@@ -14,7 +14,7 @@ import com.corundumstudio.socketio.*;
 @RestController
 @CrossOrigin
 public class DemoApplication {
-	private static String imagePath;
+	private static String imgFormat;
 
 	static {
 		System.out.println(System.getProperty("java.library.path"));
@@ -23,6 +23,7 @@ public class DemoApplication {
 	}
 	public static void main(String[] args) {
 		com.corundumstudio.socketio.Configuration config = new Configuration();
+		config.setMaxFramePayloadLength(1024 * 1024);
 		config.setHostname("localhost");
 		config.setPort(9092);
 		final SocketIOServer server = new SocketIOServer(config);
@@ -70,14 +71,20 @@ public class DemoApplication {
 
 						@Override
 						public void onMessage(String res) {
-							client.sendEvent("revBase64","data:image/png;base64,"+res);
+							client.sendEvent("revBase64",  imgFormat+res);
 							System.out.println("data:image/png;base64,"+res);
 						}
 					};
 					//发送类
 					FCClient clientForCpp = new FCClient();
+					if(data.getMessage().contains("data:image/png;base64,")){
+						imgFormat="data:image/png;base64,";
+					} else if (data.getMessage().contains("data:image/jpeg;base64,")) {
+						imgFormat="data:image/jpeg;base64,";
+					}
+
 					Base64.Decoder decoder = Base64.getDecoder();
-					String ImgBase64 = data.getMessage().replace("data:image/png;base64,", "");
+					String ImgBase64 = data.getMessage().replaceAll("(data:image/jpeg|data:image/png);base64,", "");
 					System.out.println(ImgBase64);
 					clientForCpp.eventHandle(listenerForCpp, 1, ImgBase64);
 
