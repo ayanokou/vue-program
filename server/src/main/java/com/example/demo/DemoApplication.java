@@ -100,6 +100,8 @@ public class DemoApplication {
 				}
 			}
 		});
+		server.start();
+		SpringApplication.run(DemoApplication.class, args);
 	}
 
 }

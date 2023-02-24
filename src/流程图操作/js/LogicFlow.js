@@ -259,9 +259,6 @@ class MyGroup extends GroupNode.view {
 
 //法三
 import data from './operatorLib.json'
-import { ref } from "vue";
-
-import { ref } from "vue";
 
 
 const suanziItemList = data
