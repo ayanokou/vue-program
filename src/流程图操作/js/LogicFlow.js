@@ -344,7 +344,7 @@ export default {
         },
         downloadXML() {
             //下载json
-            this.download('flow.json', JSON.stringify(this.lf.getGraphData()))
+            //this.download('flow.json', JSON.stringify(this.lf.getGraphData()))
             //前端开始运行逻辑不完善，因此将流程图json传到后端的语句写在这里了，以后实际开发的时候进行调整
 
             //test 传json给后端
