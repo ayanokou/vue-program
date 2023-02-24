@@ -251,7 +251,6 @@ class MyGroup extends GroupNode.view {
 //
 //     });
 // });
-
 //法二
 // fetch('')
 //     .then((response) => response.json())
@@ -259,11 +258,8 @@ class MyGroup extends GroupNode.view {
 
 //法三
 import data from './operatorLib.json'
-
-
 const suanziItemList = data
 
-import operators from './operators.json'
 
 
 // const dialogVisible = ref(false) //dialogVisible若为true,则显示页面内弹窗
@@ -285,14 +281,11 @@ export default {
             //赋值变量 算子和图形
             suanzis: suanziItemList,
             imgBase64:"",
-            opts:null,
+            opt:null,
+            optUI:null,
             dialogVisible:false,
             type:"",
-            formData:{
-                checkboxes:[],
-                inputs:"",
-                radio:""
-            }
+            formData:[]
 
         }
     },
@@ -303,11 +296,19 @@ export default {
         this.init()
         //设置节点点击事件监听, 修改帮助信息
         this.lf.on('node:click', (evt) => {
-            console.log(this.opts)
+            let type=evt.data.properties.name
+            if (evt.data.properties.upperName) {
+                let upperName = evt.data.properties.upperName
+                let upperopt = suanziItemList[upperName]
+                for(let i=0;i<upperopt.length;i++){
+                    if(upperopt[i]["name"]===type){
+                        this.opt=upperopt[i]
+                        this.optUI=upperopt[i]["dialogUI"]
+                        break;
+                    }
+                }
+            }
 
-            let type = evt.data.properties.name
-
-            this.opts = operators[type]
 
             //刷新nodeModel
             console.log(type)
@@ -385,11 +386,6 @@ export default {
                 })
             }
             if (evt.data.imgBase64) {
-                this.nodeModel.setProperties({
-                    key: {
-                        imgBase64: evt.data.imgBase64
-                    }
-                })
 
                 //发送后端
                 let jsonObject = {userName: "Pic",
@@ -606,7 +602,7 @@ export default {
         },
         downloadXML() {
             //下载json
-            //this.download('flow.json', JSON.stringify(this.lf.getGraphData()))
+            this.download('flow.json', JSON.stringify(this.lf.getGraphData()))
             //前端开始运行逻辑不完善，因此将流程图json传到后端的语句写在这里了，以后实际开发的时候进行调整
             //socket.emit('flowInformation',this.lf.getGraphData());
             //test 传json串
@@ -622,15 +618,29 @@ export default {
             //test end
         },
         formDataSubmit() {
-            console.log('Inputs:', this.formData.inputs)
-            console.log('Checkboxes:', this.formData.checkboxes)
-            console.log('Radio:', this.formData.radio)
-            console.log("length:",this.formData.checkboxes[0])
-            this.formData={
-                checkboxes:[],
-                inputs:"",
-                radio:""
+
+            console.log(this.formData)
+            //拉一个原始的properties
+            let propValue=this.opt['properties']
+            let inParaValue=propValue['inPara'];
+            //将不是指针的参数输入进去，更新这个properties
+
+            //j为formData数组的下标
+            let j=0;
+            //如果第一个存的methodName，那么就
+            if(this.optUI[0]['varName']=="methodName"){
+                propValue["methodName"]=this.formData[0]
+                j+=1;
             }
+
+            for(let i=0;i<inParaValue.length;++i){
+                if(inParaValue[i]['valueType']!="指针"){
+                    //开始填值
+                    propValue['inPara'][i]['value']=this.formData[j++];
+                }
+            }
+            //修改流程图json的properties
+            this.nodeModel.setProperties(propValue)
         }
     },
 

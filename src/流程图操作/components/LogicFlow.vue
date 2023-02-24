@@ -20,43 +20,57 @@
         <!--流程图区域-->
         <el-main id="lf" style="height: 100%; padding: 0;"></el-main>
 
-      <el-dialog v-model="dialogVisible"  width="50%" draggable>
-        <el-form  label-width="120px">
-          <el-form-item v-for="(item,index) in opts" :label="item.text">
+        <el-dialog v-model="dialogVisible"  width="50%" draggable>
+            <el-form  label-width="120px">
+                    <el-form-item v-for="(item,index) in optUI " :label="item.text" required>
+<!--                    <div v-if="item.type === 'checkbox'">-->
+<!--                        <div v-for="(cont,index2) in item.content">-->
+<!--                            <label>-->
+<!--                                <input type="checkbox" name="{{index}}" :value="cont.options" v-model="formData.checkboxes[index2]"/>-->
+<!--                                {{cont.options}}-->
+<!--                            </label>-->
+<!--                        </div>-->
+<!--                    </div >-->
 
-            <div v-if="item.type === 'checkbox'">
-              <div v-for="(cont,index2) in item.content">
-                <label>
-                  <input type="checkbox" name="{{index}}" :value="cont.options" v-model="formData.checkboxes[index2]"/>
-                  {{cont.options}}
-                </label>
-              </div>
-            </div >
+<!--                    <div v-if="item.type === 'radio'">-->
+<!--                        <div v-for="(cont,index2) in item.content">-->
+<!--                            <label>-->
+<!--                                <input type="radio" name="{{index}}" :value="cont.options" v-model="formData.radio"/>-->
+<!--                                {{cont.options}}-->
+<!--                            </label>-->
+<!--                        </div>-->
+<!--                    </div >-->
 
-            <div v-if="item.type === 'radio'">
-              <div v-for="(cont,index2) in item.content">
-                <label>
-                  <input type="radio" name="{{index}}" :value="cont.options" v-model="formData.radio"/>
-                  {{cont.options}}
-                </label>
-              </div>
-            </div >
+                    <div v-if="item.type === 'input'">
+                        <label>
+                            <input type="text" v-model="formData[index]">
+                        </label>
+                    </div>
 
-            <div v-if="item.type === 'input'">
-              <label>
-                <input type="text" v-model="formData.inputs">
-              </label>
-            </div>
-          </el-form-item>
-        </el-form>
+                    <div v-if="item.type==='dropDownBox'">
+                        <label>
+                            <el-select v-model="formData[index]" placeholder="请选择">
+                                <el-option
+                                    v-for="option in item.content"
+                                    :key="option.options"
+                                    :label="option.options"
+                                    :value="option.options"
+                                ></el-option>
+                            </el-select>
+                        </label>
+                    </div>
 
-        <template #footer>
+                </el-form-item>
+
+            </el-form>
+
+            <template #footer>
           <span class="dialog-footer">
             <el-button type="primary" @click="dialogVisible = false;formDataSubmit()">Submit</el-button>
             <el-button @click="dialogVisible = false">Cancel</el-button>
           </span>
-        </template>
-      </el-dialog>
+            </template>
+        </el-dialog>
     </el-container>
 
 

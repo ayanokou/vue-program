@@ -31,6 +31,7 @@ export default {
     },
     methods:{
         onSubmit(){
+            alert(1)
             //读取图片
             let Img=this.$refs.imgUrl.files[0]
             let reader=new FileReader()
