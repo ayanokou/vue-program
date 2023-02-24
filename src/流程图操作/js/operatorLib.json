@@ -1,4 +1,5 @@
 {
+
     "图像匹配": [
         {
             "type": "operator",
@@ -10,6 +11,7 @@
                 "helpMsg": "it is a help message",
                 "id": 1,
                 "name": "findEdgeCircle",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -50,6 +52,7 @@
                 "helpMsg": "it is a help message",
                 "id":2,
                 "name": "findPolygon",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -90,6 +93,7 @@
                 "helpMsg": "it is a help message",
                 "id": 3,
                 "name": "findPoint",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -130,6 +134,7 @@
                 "helpMsg": "it is a help message",
                 "id": 4,
                 "name": "findParallel",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -170,6 +175,7 @@
                 "helpMsg": "it is a help message",
                 "id": 5,
                 "name": "templateMatch",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -210,6 +216,7 @@
                 "helpMsg": "it is a help message",
                 "id": 6,
                 "name": "blockCompare",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -250,6 +257,7 @@
                 "helpMsg": "it is a help message",
                 "id": 7,
                 "name": "contourCompare",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -313,6 +321,8 @@
                 "helpMsg": "it is a help message",
                 "id": 8,
                 "name": "imgFilter",
+                "dllPath": "./",
+                "methodName": "",
                 "inPara": [
                     {
                         "varName":"src",
@@ -365,6 +375,7 @@
                 "helpMsg": "it is a help message",
                 "id": 9,
                 "name": "imgBinary",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -405,6 +416,7 @@
                 "helpMsg": "it is a help message",
                 "id": 10,
                 "name": "geometricTransformation",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -445,6 +457,7 @@
                 "helpMsg": "it is a help message",
                 "id": 11,
                 "name": "morphologicalProcessing",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -485,6 +498,7 @@
                 "helpMsg": "it is a help message",
                 "id": 12,
                 "name": "imgEnhancement",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -525,6 +539,7 @@
                 "helpMsg": "it is a help message",
                 "id": 13,
                 "name": "operations",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -567,6 +582,7 @@
                 "helpMsg": "it is a help message",
                 "id": 14,
                 "name": "checkerboardCalib",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -607,6 +623,7 @@
                 "helpMsg": "it is a help message",
                 "id": 15,
                 "name": "NPointCalib",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -647,6 +664,7 @@
                 "helpMsg": "it is a help message",
                 "id": 16,
                 "name": "distortCalib",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -687,6 +705,7 @@
                 "helpMsg": "it is a help message",
                 "id": 17,
                 "name": "mapCalib",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -727,6 +746,7 @@
                 "helpMsg": "it is a help message",
                 "id": 18,
                 "name": "coordinateTransform",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -767,6 +787,7 @@
                 "helpMsg": "it is a help message",
                 "id": 19,
                 "name": "HTansform",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -807,6 +828,7 @@
                 "helpMsg": "it is a help message",
                 "id": 20,
                 "name": "unitTransform",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -847,6 +869,7 @@
                 "helpMsg": "it is a help message",
                 "id": 21,
                 "name": "undistort",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -887,6 +910,7 @@
                 "helpMsg": "it is a help message",
                 "id": 22,
                 "name": "handEyeCalib",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -927,6 +951,7 @@
                 "helpMsg": "it is a help message",
                 "id": 23,
                 "name": "rotCalib",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -969,6 +994,7 @@
                 "helpMsg": "it is a help message",
                 "id": 24,
                 "name": "geometricRelation",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -1009,6 +1035,7 @@
                 "helpMsg": "it is a help message",
                 "id": 25,
                 "name": "geometricFit",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -1049,6 +1076,7 @@
                 "helpMsg": "it is a help message",
                 "id": 26,
                 "name": "pixelStatistics",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -1089,6 +1117,7 @@
                 "helpMsg": "it is a help message",
                 "id": 27,
                 "name": "areaMeasure",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -1129,6 +1158,7 @@
                 "helpMsg": "it is a help message",
                 "id": 28,
                 "name": "areaMeasure",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -1169,6 +1199,7 @@
                 "helpMsg": "it is a help message",
                 "id": 29,
                 "name": "brightness",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -1209,6 +1240,7 @@
                 "helpMsg": "it is a help message",
                 "id": 30,
                 "name": "qualityEvaluation",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -1251,6 +1283,7 @@
                 "helpMsg": "it is a help message",
                 "id": 31,
                 "name": "colorExtration",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -1291,6 +1324,7 @@
                 "helpMsg": "it is a help message",
                 "id":32,
                 "name": "colorMeasure",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -1331,6 +1365,7 @@
                 "helpMsg": "it is a help message",
                 "id":33,
                 "name": "colorCvt",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -1371,6 +1406,7 @@
                 "helpMsg": "it is a help message",
                 "id":34,
                 "name": "colorRecognition",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -1413,6 +1449,7 @@
                 "helpMsg": "it is a help message",
                 "id":35,
                 "name": "2DcodeRecog",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -1453,6 +1490,7 @@
                 "helpMsg": "it is a help message",
                 "id":36,
                 "name": "1DcodeRecog",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -1493,6 +1531,7 @@
                 "helpMsg": "it is a help message",
                 "id":37,
                 "name":"strRecog",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -1533,6 +1572,7 @@
                 "helpMsg": "it is a help message",
                 "id":38,
                 "name": "OVC",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -1575,6 +1615,7 @@
                 "helpMsg": "it is a help message",
                 "id":39,
                 "name": "2Dsolution",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -1615,6 +1656,7 @@
                 "helpMsg": "it is a help message",
                 "id":40,
                 "name": "3Dsolution",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -1657,6 +1699,7 @@
                 "helpMsg": "it is a help message",
                 "id":41,
                 "name": "imgSegment",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -1697,6 +1740,7 @@
                 "helpMsg": "it is a help message",
                 "id":42,
                 "name": "targetDetect",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -1737,6 +1781,7 @@
                 "helpMsg": "it is a help message",
                 "id":43,
                 "name": "imgClassify",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -1777,6 +1822,7 @@
                 "helpMsg": "it is a help message",
                 "id":44,
                 "name": "imgEnhance",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -1819,6 +1865,7 @@
                 "helpMsg": "it is a help message",
                 "id":45,
                 "name": "blob",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -1859,6 +1906,7 @@
                 "helpMsg": "it is a help message",
                 "id":46,
                 "name": "haveOrNot",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -1899,6 +1947,7 @@
                 "helpMsg": "it is a help message",
                 "id":47,
                 "name": "scratchDetection",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -1939,6 +1988,7 @@
                 "helpMsg": "it is a help message",
                 "id":48,
                 "name": "edgeDetect",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -1979,6 +2029,7 @@
                 "helpMsg": "it is a help message",
                 "id":49,
                 "name": "contourSequence",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -2019,6 +2070,7 @@
                 "helpMsg": "it is a help message",
                 "id":50,
                 "name": "varModel",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",
@@ -2059,6 +2111,7 @@
                 "helpMsg": "it is a help message",
                 "id":51,
                 "name": "contourDegree",
+                "funcName": "",
                 "inPara": [
                     {
                         "varName":"",

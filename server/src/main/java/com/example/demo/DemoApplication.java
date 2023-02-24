@@ -1,8 +1,6 @@
 package com.example.demo;
 
-import opencvmodule.CommonData;
-//import org.opencv.core.Core;
-//import org.opencv.core.Mat;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
@@ -16,12 +14,24 @@ import com.corundumstudio.socketio.*;
 @RestController
 @CrossOrigin
 public class DemoApplication {
+
+	private static String imgFormat;
+
+	static {
+		System.out.println(System.getProperty("java.library.path"));
+		System.loadLibrary("opencv_world343");
+		System.loadLibrary("clientSDK");
+	}
+
 	public static void main(String[] args) {
 		com.corundumstudio.socketio.Configuration config = new Configuration();
+		config.setMaxFramePayloadLength(1024 * 1024);
 		config.setHostname("localhost");
 		config.setPort(9092);
+		config.setMaxFramePayloadLength(1024 * 1024);
+
 		final SocketIOServer server = new SocketIOServer(config);
-		CommonData tmp=new CommonData(17,"im json");
+
 		server.addEventListener("chatevent", ChatObject.class, new DataListener<ChatObject>() {
 			@Override
 			public void onData(SocketIOClient client, ChatObject data, AckRequest ackRequest) {
@@ -41,49 +51,58 @@ public class DemoApplication {
 				}
 				// test 传json
 				else if (data.getUserName().equals("Flow")) {
+					//创建与cpp通讯类
+					//接听类
+					FCListener listenerForCpp = new FCListener() {
+						@Override
+						public void onMessage(String res) {
+							client.sendEvent("revJson",res);
+							System.out.println(res);
+						}
+					};
+					//发送类
+					FCClient clientForCpp = new FCClient();
 					String result = data.getMessage();
 					//发送dll数据
-					tmp.eventHandle(2,result);
-					//发送前端数据
+					clientForCpp.eventHandle(listenerForCpp, 2, result);
 
-					client.sendEvent("revJson", tmp.getJson());
-					System.out.println(tmp.getJson());
+
 
 				}
 				// test end
 				else if (data.getUserName().equals("Pic")) {
+
+					//创建与cpp通讯类
+					//接听类
+					FCListener listenerForCpp = new FCListener() {
+
+						@Override
+						public void onMessage(String res) {
+							client.sendEvent("revBase64",  imgFormat+res);
+							System.out.println("data:image/png;base64,"+res);
+						}
+					};
+					//发送类
+					FCClient clientForCpp = new FCClient();
+					if(data.getMessage().contains("data:image/png;base64,")){
+						imgFormat="data:image/png;base64,";
+					} else if (data.getMessage().contains("data:image/jpeg;base64,")) {
+						imgFormat="data:image/jpeg;base64,";
+
+					}
+
 					Base64.Decoder decoder = Base64.getDecoder();
-					String ImgBase64 = data.getMessage().replace("data:image/png;base64,", "");
+					String ImgBase64 = data.getMessage().replaceAll("(data:image/jpeg|data:image/png);base64,", "");
 					System.out.println(ImgBase64);
-					tmp.eventHandle(1,ImgBase64);
-					client.sendEvent("revBase64", "data:image/png;base64," + tmp.getImgRet());
-					System.out.println(tmp.getImgRet());
+					clientForCpp.eventHandle(listenerForCpp, 1, ImgBase64);
 
-//					try {
-//						//Base64解码
-//						byte[] b = decoder.decode(ImgBase64);
-//						for (int i = 0; i < b.length; ++i) {
-//							if (b[i] < 0) {//调整异常数据
-//								b[i] += 256;
-//							}
-//						}
-//						//生成jpeg图片
-//						String imgFilePath = "E:\\" + UUID.randomUUID().toString() + ".png";//新生成的图片
-//						OutputStream out = new FileOutputStream("C:\\Users\\zwq\\Desktop\\a1.png");
-//						out.write(b);
-//						out.flush();
-//						out.close();
-//						System.out.println("图片接收成功");
-//					} catch (Exception e) {
-//						System.out.println("图片接收失败");
-//					}
+
 				}
-
 			}
 		});
-		server.start();
-		SpringApplication.run(DemoApplication.class, args);
 	}
+
+}
 
 ////		server.addEventListener("flowInformation", demoMessage.class, new DataListener<demoMessage>() {
 ////			private String imagePath;
@@ -376,4 +395,4 @@ public class DemoApplication {
 //		}
 //		return tar;
 //	}
-}
+

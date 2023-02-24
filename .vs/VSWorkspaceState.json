@@ -1,6 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\public",
+    "\\server"
   ],
   "PreviewInSolutionExplorer": false
 }

@@ -15,6 +15,7 @@ import {
     CircleNodeModel,
     h
 } from '@logicflow/core'
+
 import { LeftMenus } from './LeftMenuItems.js'
 import { MiniMap } from './MiniMap.js'
 import { eventHandle, events } from "../../sys/eventResponseController";
@@ -260,6 +261,9 @@ class MyGroup extends GroupNode.view {
 import data from './operatorLib.json'
 import { ref } from "vue";
 
+import { ref } from "vue";
+
+
 const suanziItemList = data
 
 import operators from './operators.json'
@@ -303,13 +307,16 @@ export default {
         //设置节点点击事件监听, 修改帮助信息
         this.lf.on('node:click', (evt) => {
             console.log(this.opts)
+
             let type = evt.data.properties.name
+
             this.opts = operators[type]
 
             //刷新nodeModel
             console.log(type)
             this.nodeModel=this.lf.getNodeModelById(evt.data.id)
             //let type=this.nodeModel.getProperties().type
+
 
             switch (type) {
                 case "cycleStart":
@@ -323,6 +330,7 @@ export default {
                     break
                 default:
                     this.dialogVisible=true
+
 
 
             }
@@ -385,6 +393,7 @@ export default {
                         imgBase64: evt.data.imgBase64
                     }
                 })
+
                 //发送后端
                 let jsonObject = {userName: "Pic",
                     message:evt.data.imgBase64,
@@ -600,7 +609,7 @@ export default {
         },
         downloadXML() {
             //下载json
-            this.download('flow.json', JSON.stringify(this.lf.getGraphData()))
+            //this.download('flow.json', JSON.stringify(this.lf.getGraphData()))
             //前端开始运行逻辑不完善，因此将流程图json传到后端的语句写在这里了，以后实际开发的时候进行调整
             //socket.emit('flowInformation',this.lf.getGraphData());
             //test 传json串
