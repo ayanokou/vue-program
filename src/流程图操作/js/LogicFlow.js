@@ -537,7 +537,7 @@ export default {
 
 
             // 设置节点面板, 设置框选回调
-            suanziItemList['控制模块'][2].callback = () => {
+            suanziItemList['控制模块'][0].callback = () => {
                 //开启框选
                 lf.openSelectionSelect()
                 lf.once("selection:selected", (data) => {
@@ -641,6 +641,8 @@ export default {
             }
             //修改流程图json的properties
             this.nodeModel.setProperties(propValue)
+            //清空formData
+            this.formData=[]
         }
     },
 

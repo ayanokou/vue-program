@@ -1,4 +1,135 @@
 {
+    "输入输出": [
+        {
+            "type": "operator",
+            "text": "前端输入",
+            "label": "前端输入",
+            "name": "input",
+            "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAEFVwZaAAAABGdBTUEAALGPC/xhBQAAAqlJREFUOBF9VM9rE0EUfrMJNUKLihGbpLGtaCOIR8VjQMGDePCgCCIiCNqzCAp2MyYUCXhUtF5E0D+g1t48qAd7CCLqQUQKEWkStcEfVGlLdp/fm3aW2QQdyLzf33zz5m2IsAZ9XhDpyaaIZkTS4ASzK41TFao88GuJ3hsr2pAbipHxuSYyKRugagICGANkfFnNh3HeE2N0b3nN2cgnpcictw5veJIzxmDamSlxxQZicq/mflxhbaH8BLRbuRwNtZp0JAhoplVRUdzmCe/vO27wFuuA3S5qXruGdboy5/PRGFsbFGKo/haRtQHIrM83bVeTrOgNhZReWaYGnE4aUQgTJNvijJFF4jQ8BxJE5xfKatZWmZcTQ+BVgh7s8SgPlCkcec4mGTmieTP4xd7PcpIEg1TX6gdeLW8rTVMVLVvb7ctXoH0Cydl2QOPJBG21STE5OsnbweVYzAnD3A7PVILuY0yiiyDwSm2g441r6rMSgp6iK42yqroI2QoXeJVeA+YeZSa47gZdXaZWQKTrG93rukk/l2Al6Kzh5AZEl7dDQy+JjgFahQjRopSxPbrbvK7GRe9ePWBo1wcU7sYrFZtavXALwGw/7Dnc50urrHJuTPSoO2IMV3gUQGNg87IbSOIY9BpiT9HV7FCZ94nPXb3MSnwHn/FFFE1vG6DTby+r31KAkUktB3Qf6ikUPWxW1BkXSPQeMHHiW0+HAd2GelJsZz1OJegCxqzl+CLVHa/IibuHeJ1HAKzhuDR+ymNaRFM+4jU6UWKXorRmbyqkq/D76FffevwdCp+jN3UAN/C9JRVTDuOxC/oh+EdMnqIOrlYteKSfadVRGLJFJPSB/ti/6K8f0CNymg/iH2gO/f0DwE0yjAFO6l8JaR5j0VPwPwfaYHqOqrCI319WzwhwzNW/aQAAAABJRU5ErkJggg==",
+            "properties": {
+                "helpMsg": "it is a help message",
+                "id": 52,
+                "name": "input",
+                "inPara": [
+                    {
+                        "varName": "",
+                        "varType": "",
+                        "value": "",
+                        "valueType": ""
+                    },
+                    {
+                        "varName": "",
+                        "varType": "",
+                        "value": "",
+                        "valueType": ""
+                    }
+                ],
+                "outPara": [
+                    {
+                        "varName": "",
+                        "varType": "",
+                        "value": "",
+                        "valueType": ""
+                    },
+                    {
+                        "varName": "",
+                        "varType": "",
+                        "value": "",
+                        "valueType": ""
+                    }
+                ]
+            }
+        },
+        {
+            "type": "operator",
+            "text": "文件输入",
+            "label": "文件输入",
+            "name": "inputFile",
+            "dialogUI": [
+                {
+                    "varName": "filename",
+                    "type": "input",
+                    "text": "filename:"
+                },
+                {
+                    "varName": "flags",
+                    "type": "input",
+                    "text": "flags:"
+                }
+            ],
+            "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAEFVwZaAAAABGdBTUEAALGPC/xhBQAAAqlJREFUOBF9VM9rE0EUfrMJNUKLihGbpLGtaCOIR8VjQMGDePCgCCIiCNqzCAp2MyYUCXhUtF5E0D+g1t48qAd7CCLqQUQKEWkStcEfVGlLdp/fm3aW2QQdyLzf33zz5m2IsAZ9XhDpyaaIZkTS4ASzK41TFao88GuJ3hsr2pAbipHxuSYyKRugagICGANkfFnNh3HeE2N0b3nN2cgnpcictw5veJIzxmDamSlxxQZicq/mflxhbaH8BLRbuRwNtZp0JAhoplVRUdzmCe/vO27wFuuA3S5qXruGdboy5/PRGFsbFGKo/haRtQHIrM83bVeTrOgNhZReWaYGnE4aUQgTJNvijJFF4jQ8BxJE5xfKatZWmZcTQ+BVgh7s8SgPlCkcec4mGTmieTP4xd7PcpIEg1TX6gdeLW8rTVMVLVvb7ctXoH0Cydl2QOPJBG21STE5OsnbweVYzAnD3A7PVILuY0yiiyDwSm2g441r6rMSgp6iK42yqroI2QoXeJVeA+YeZSa47gZdXaZWQKTrG93rukk/l2Al6Kzh5AZEl7dDQy+JjgFahQjRopSxPbrbvK7GRe9ePWBo1wcU7sYrFZtavXALwGw/7Dnc50urrHJuTPSoO2IMV3gUQGNg87IbSOIY9BpiT9HV7FCZ94nPXb3MSnwHn/FFFE1vG6DTby+r31KAkUktB3Qf6ikUPWxW1BkXSPQeMHHiW0+HAd2GelJsZz1OJegCxqzl+CLVHa/IibuHeJ1HAKzhuDR+ymNaRFM+4jU6UWKXorRmbyqkq/D76FffevwdCp+jN3UAN/C9JRVTDuOxC/oh+EdMnqIOrlYteKSfadVRGLJFJPSB/ti/6K8f0CNymg/iH2gO/f0DwE0yjAFO6l8JaR5j0VPwPwfaYHqOqrCI319WzwhwzNW/aQAAAABJRU5ErkJggg==",
+            "properties": {
+                "upperName": "输入输出",
+                "helpMsg": "it is a help message",
+                "id": 54,
+                "name": "inputFile",
+                "dllPath": "this is io path",
+                "methodName": "myRead",
+                "inPara": [
+                    {
+                        "varName": "filename",
+                        "varType": "String",
+                        "value": "",
+                        "valueType": "立即数"
+                    },
+                    {
+                        "varName": "flags",
+                        "varType": "int",
+                        "value": "",
+                        "valueType": "立即数"
+                    }
+                ],
+                "outPara": [
+                    {
+                        "varName": "inputFile.res",
+                        "varType": "Mat",
+                        "value": "",
+                        "valueType": ""
+                    }
+                ]
+            }
+        },
+        {
+            "type": "operator",
+            "text": "输出模块",
+            "label": "输出模块",
+            "name": "output",
+            "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAEFVwZaAAAABGdBTUEAALGPC/xhBQAAAqlJREFUOBF9VM9rE0EUfrMJNUKLihGbpLGtaCOIR8VjQMGDePCgCCIiCNqzCAp2MyYUCXhUtF5E0D+g1t48qAd7CCLqQUQKEWkStcEfVGlLdp/fm3aW2QQdyLzf33zz5m2IsAZ9XhDpyaaIZkTS4ASzK41TFao88GuJ3hsr2pAbipHxuSYyKRugagICGANkfFnNh3HeE2N0b3nN2cgnpcictw5veJIzxmDamSlxxQZicq/mflxhbaH8BLRbuRwNtZp0JAhoplVRUdzmCe/vO27wFuuA3S5qXruGdboy5/PRGFsbFGKo/haRtQHIrM83bVeTrOgNhZReWaYGnE4aUQgTJNvijJFF4jQ8BxJE5xfKatZWmZcTQ+BVgh7s8SgPlCkcec4mGTmieTP4xd7PcpIEg1TX6gdeLW8rTVMVLVvb7ctXoH0Cydl2QOPJBG21STE5OsnbweVYzAnD3A7PVILuY0yiiyDwSm2g441r6rMSgp6iK42yqroI2QoXeJVeA+YeZSa47gZdXaZWQKTrG93rukk/l2Al6Kzh5AZEl7dDQy+JjgFahQjRopSxPbrbvK7GRe9ePWBo1wcU7sYrFZtavXALwGw/7Dnc50urrHJuTPSoO2IMV3gUQGNg87IbSOIY9BpiT9HV7FCZ94nPXb3MSnwHn/FFFE1vG6DTby+r31KAkUktB3Qf6ikUPWxW1BkXSPQeMHHiW0+HAd2GelJsZz1OJegCxqzl+CLVHa/IibuHeJ1HAKzhuDR+ymNaRFM+4jU6UWKXorRmbyqkq/D76FffevwdCp+jN3UAN/C9JRVTDuOxC/oh+EdMnqIOrlYteKSfadVRGLJFJPSB/ti/6K8f0CNymg/iH2gO/f0DwE0yjAFO6l8JaR5j0VPwPwfaYHqOqrCI319WzwhwzNW/aQAAAABJRU5ErkJggg==",
+            "properties": {
+                "helpMsg": "it is a help message",
+                "id": 53,
+                "name": "output",
+                "inPara": [
+                    {
+                        "varName": "",
+                        "varType": "",
+                        "value": "",
+                        "valueType": ""
+                    },
+                    {
+                        "varName": "",
+                        "varType": "",
+                        "value": "",
+                        "valueType": ""
+                    }
+                ],
+                "outPara": [
+                    {
+                        "varName": "",
+                        "varType": "",
+                        "value": "",
+                        "valueType": ""
+                    },
+                    {
+                        "varName": "",
+                        "varType": "",
+                        "value": "",
+                        "valueType": ""
+                    }
+                ]
+            }
+        }
+    ],
     "图像匹配": [
         {
             "type": "operator",
@@ -301,22 +432,10 @@
                     "text": "请选择滤波方式",
                     "content": [
                         {
-                            "options": "滤波方式1"
+                            "options": "GaussianBlur"
                         },
                         {
-                            "options": "滤波方式2"
-                        },
-                        {
-                            "options": "滤波方式3"
-                        },
-                        {
-                            "options": "滤波方式4"
-                        },
-                        {
-                            "options": "滤波方式5"
-                        },
-                        {
-                            "options": "滤波方式6"
+                            "options": "MedianBlur"
                         }
                     ]
                 },
@@ -326,7 +445,7 @@
                     "text": "请选择src",
                     "content": [
                         {
-                            "options": "input.res"
+                            "options": "inputFile.res"
                         }
                     ]
                 },
@@ -357,7 +476,7 @@
                 "helpMsg": "it is a help message",
                 "id": 8,
                 "name": "imgFilter",
-                "dllPath": "这里是dll根路径",
+                "dllPath": "this is imgFilter path",
                 "methodName": "",
                 "inPara": [
                     {
@@ -2180,86 +2299,6 @@
         }
     ],
     "控制模块": [
-        {
-            "type": "operator",
-            "text": "输入源",
-            "label": "输入源",
-            "name": "input",
-            "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAEFVwZaAAAABGdBTUEAALGPC/xhBQAAAqlJREFUOBF9VM9rE0EUfrMJNUKLihGbpLGtaCOIR8VjQMGDePCgCCIiCNqzCAp2MyYUCXhUtF5E0D+g1t48qAd7CCLqQUQKEWkStcEfVGlLdp/fm3aW2QQdyLzf33zz5m2IsAZ9XhDpyaaIZkTS4ASzK41TFao88GuJ3hsr2pAbipHxuSYyKRugagICGANkfFnNh3HeE2N0b3nN2cgnpcictw5veJIzxmDamSlxxQZicq/mflxhbaH8BLRbuRwNtZp0JAhoplVRUdzmCe/vO27wFuuA3S5qXruGdboy5/PRGFsbFGKo/haRtQHIrM83bVeTrOgNhZReWaYGnE4aUQgTJNvijJFF4jQ8BxJE5xfKatZWmZcTQ+BVgh7s8SgPlCkcec4mGTmieTP4xd7PcpIEg1TX6gdeLW8rTVMVLVvb7ctXoH0Cydl2QOPJBG21STE5OsnbweVYzAnD3A7PVILuY0yiiyDwSm2g441r6rMSgp6iK42yqroI2QoXeJVeA+YeZSa47gZdXaZWQKTrG93rukk/l2Al6Kzh5AZEl7dDQy+JjgFahQjRopSxPbrbvK7GRe9ePWBo1wcU7sYrFZtavXALwGw/7Dnc50urrHJuTPSoO2IMV3gUQGNg87IbSOIY9BpiT9HV7FCZ94nPXb3MSnwHn/FFFE1vG6DTby+r31KAkUktB3Qf6ikUPWxW1BkXSPQeMHHiW0+HAd2GelJsZz1OJegCxqzl+CLVHa/IibuHeJ1HAKzhuDR+ymNaRFM+4jU6UWKXorRmbyqkq/D76FffevwdCp+jN3UAN/C9JRVTDuOxC/oh+EdMnqIOrlYteKSfadVRGLJFJPSB/ti/6K8f0CNymg/iH2gO/f0DwE0yjAFO6l8JaR5j0VPwPwfaYHqOqrCI319WzwhwzNW/aQAAAABJRU5ErkJggg==",
-            "properties": {
-                "helpMsg": "it is a help message",
-                "id": 52,
-                "name": "input",
-                "inPara": [
-                    {
-                        "varName": "",
-                        "varType": "",
-                        "value": "",
-                        "valueType": ""
-                    },
-                    {
-                        "varName": "",
-                        "varType": "",
-                        "value": "",
-                        "valueType": ""
-                    }
-                ],
-                "outPara": [
-                    {
-                        "varName": "",
-                        "varType": "",
-                        "value": "",
-                        "valueType": ""
-                    },
-                    {
-                        "varName": "",
-                        "varType": "",
-                        "value": "",
-                        "valueType": ""
-                    }
-                ]
-            }
-        },
-        {
-            "type": "operator",
-            "text": "输出源",
-            "label": "输出源",
-            "name": "output",
-            "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAEFVwZaAAAABGdBTUEAALGPC/xhBQAAAqlJREFUOBF9VM9rE0EUfrMJNUKLihGbpLGtaCOIR8VjQMGDePCgCCIiCNqzCAp2MyYUCXhUtF5E0D+g1t48qAd7CCLqQUQKEWkStcEfVGlLdp/fm3aW2QQdyLzf33zz5m2IsAZ9XhDpyaaIZkTS4ASzK41TFao88GuJ3hsr2pAbipHxuSYyKRugagICGANkfFnNh3HeE2N0b3nN2cgnpcictw5veJIzxmDamSlxxQZicq/mflxhbaH8BLRbuRwNtZp0JAhoplVRUdzmCe/vO27wFuuA3S5qXruGdboy5/PRGFsbFGKo/haRtQHIrM83bVeTrOgNhZReWaYGnE4aUQgTJNvijJFF4jQ8BxJE5xfKatZWmZcTQ+BVgh7s8SgPlCkcec4mGTmieTP4xd7PcpIEg1TX6gdeLW8rTVMVLVvb7ctXoH0Cydl2QOPJBG21STE5OsnbweVYzAnD3A7PVILuY0yiiyDwSm2g441r6rMSgp6iK42yqroI2QoXeJVeA+YeZSa47gZdXaZWQKTrG93rukk/l2Al6Kzh5AZEl7dDQy+JjgFahQjRopSxPbrbvK7GRe9ePWBo1wcU7sYrFZtavXALwGw/7Dnc50urrHJuTPSoO2IMV3gUQGNg87IbSOIY9BpiT9HV7FCZ94nPXb3MSnwHn/FFFE1vG6DTby+r31KAkUktB3Qf6ikUPWxW1BkXSPQeMHHiW0+HAd2GelJsZz1OJegCxqzl+CLVHa/IibuHeJ1HAKzhuDR+ymNaRFM+4jU6UWKXorRmbyqkq/D76FffevwdCp+jN3UAN/C9JRVTDuOxC/oh+EdMnqIOrlYteKSfadVRGLJFJPSB/ti/6K8f0CNymg/iH2gO/f0DwE0yjAFO6l8JaR5j0VPwPwfaYHqOqrCI319WzwhwzNW/aQAAAABJRU5ErkJggg==",
-            "properties": {
-                "helpMsg": "it is a help message",
-                "id": 53,
-                "name": "output",
-                "inPara": [
-                    {
-                        "varName": "",
-                        "varType": "",
-                        "value": "",
-                        "valueType": ""
-                    },
-                    {
-                        "varName": "",
-                        "varType": "",
-                        "value": "",
-                        "valueType": ""
-                    }
-                ],
-                "outPara": [
-                    {
-                        "varName": "",
-                        "varType": "",
-                        "value": "",
-                        "valueType": ""
-                    },
-                    {
-                        "varName": "",
-                        "varType": "",
-                        "value": "",
-                        "valueType": ""
-                    }
-                ]
-            }
-        },
         {
             "label": "选区",
             "text": "选区",

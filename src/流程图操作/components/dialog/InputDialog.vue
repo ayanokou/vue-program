@@ -5,7 +5,7 @@
 
                 <el-form :model="form" >
                     <el-form-item>
-                        <input type="file" id="saveImage" name="myphoto" accept="image/png,image/gif,image/jpeg" ref="imgUrl">
+                        <input type="file" id="saveImage" name="myphoto" ref="imgUrl">
                     </el-form-item>
                     <el-form-item>
                         <el-button type="primary" @click="onSubmit">确认</el-button>
@@ -31,7 +31,6 @@ export default {
     },
     methods:{
         onSubmit(){
-            alert(1)
             //读取图片
             let Img=this.$refs.imgUrl.files[0]
             let reader=new FileReader()

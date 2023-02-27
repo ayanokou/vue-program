@@ -25,10 +25,9 @@ public class DemoApplication {
 
 	public static void main(String[] args) {
 		com.corundumstudio.socketio.Configuration config = new Configuration();
-		config.setMaxFramePayloadLength(1024 * 1024);
+		config.setMaxFramePayloadLength(5*1024 * 1024);
 		config.setHostname("localhost");
 		config.setPort(9092);
-		config.setMaxFramePayloadLength(1024 * 1024);
 
 		final SocketIOServer server = new SocketIOServer(config);
 
@@ -89,10 +88,12 @@ public class DemoApplication {
 					} else if (data.getMessage().contains("data:image/jpeg;base64,")) {
 						imgFormat="data:image/jpeg;base64,";
 
+					}else if (data.getMessage().contains("data:image/bmp;base64,")){
+						imgFormat="data:image/jpeg;base64,";
 					}
 
 					Base64.Decoder decoder = Base64.getDecoder();
-					String ImgBase64 = data.getMessage().replaceAll("(data:image/jpeg|data:image/png);base64,", "");
+					String ImgBase64 = data.getMessage().replaceAll("(data:image/jpeg|data:image/png|data:image/bmp);base64,", "");
 					System.out.println(ImgBase64);
 					clientForCpp.eventHandle(listenerForCpp, 1, ImgBase64);
 
