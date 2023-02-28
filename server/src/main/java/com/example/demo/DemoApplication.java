@@ -19,7 +19,7 @@ public class DemoApplication {
 
 	static {
 		System.out.println(System.getProperty("java.library.path"));
-		System.loadLibrary("opencv_world343");
+		System.loadLibrary("opencv_world455");
 		System.loadLibrary("clientSDK");
 	}
 
