@@ -33,7 +33,7 @@ const handleClose = (key, keyPath) => {
 //初始化socketio用于前后端传输
 let socket = io.connect('http://localhost:9092')
 
-
+let id=1;
 class CycleModel extends CircleNodeModel {
     getNodeStyle() {
         const style = super.getNodeStyle();
@@ -44,6 +44,9 @@ class CycleModel extends CircleNodeModel {
         const size = this.properties.scale || 1;
         this.r = 25 * size
     }
+    createId() {
+        return (id++)+"";
+    }
 }
 
 class SuanziModel extends RectNodeModel {
@@ -51,6 +54,9 @@ class SuanziModel extends RectNodeModel {
         const size = this.properties.scale || 1;
         this.width = 100 * size
         this.height = 80 * size
+    }
+    createId() {
+        return (id++)+"";
     }
 }
 
@@ -64,6 +70,9 @@ class ConditionJudgmentModel extends DiamondNodeModel {
         const size = this.properties.scale || 1;
         this.rx = 60 * size
         this.ry = 40 * size
+    }
+    createId() {
+        return (id++)+"";
     }
 }
 //定义Group节点，重写了节点的一些属性和方法
@@ -120,6 +129,9 @@ class MyGroupModel extends GroupNode.model {
         style.fill = "none";
         style.hover.stroke = "transparent";
         return style;
+    }
+    createId() {
+        return (id++)+"";
     }
 }
 //自定义Group节点的外观
@@ -634,15 +646,20 @@ export default {
             }
 
             for(let i=0;i<inParaValue.length;++i){
-                if(inParaValue[i]['valueType']!="指针"){
+                if(inParaValue[i]['valueType']==0){
                     //开始填值
                     propValue['inPara'][i]['value']=this.formData[j++];
                 }
             }
             //修改流程图json的properties
             this.nodeModel.setProperties(propValue)
-            //清空formData
+
+        },
+        clear(){
+            //清空
             this.formData=[]
+            this.opt=null
+            this.optUI=null
         }
     },
 

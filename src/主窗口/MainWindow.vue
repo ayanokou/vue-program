@@ -31,12 +31,12 @@
                         <el-menu-item><span style="color:aliceblue;">修改密码</span></el-menu-item>
                     </el-sub-menu>
 
-                    <el-sub-menu index="5">
-                        <template #title><span style="color:aliceblue">布局</span></template>
-                        <el-menu-item @click="layout(0)"><span style="color:aliceblue;">布局一</span></el-menu-item>
-                        <el-menu-item @click="layout(1)"><span style="color:aliceblue;">布局二</span></el-menu-item>
-                        <el-menu-item @click="layout(2)"><span style="color:aliceblue;">布局三</span></el-menu-item>
-                    </el-sub-menu>
+<!--                    <el-sub-menu index="5">-->
+<!--                        <template #title><span style="color:aliceblue">布局</span></template>-->
+<!--                        <el-menu-item @click="layout(0)"><span style="color:aliceblue;">布局一</span></el-menu-item>-->
+<!--                        <el-menu-item @click="layout(1)"><span style="color:aliceblue;">布局二</span></el-menu-item>-->
+<!--                        <el-menu-item @click="layout(2)"><span style="color:aliceblue;">布局三</span></el-menu-item>-->
+<!--                    </el-sub-menu>-->
 
                 </el-menu>
 

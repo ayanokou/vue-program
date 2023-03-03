@@ -37,9 +37,15 @@ export default {
             reader.readAsDataURL(Img)
             reader.onload=function(){
                 //传给父窗口
-                window.opener.postMessage({imgBase64:this.result});
+                window.opener.postMessage({imgBase64:reader.result});
+                this.f()
+
                 window.close()
+
             }
+        },
+        f(){
+            alert(1)
         }
     }
 }

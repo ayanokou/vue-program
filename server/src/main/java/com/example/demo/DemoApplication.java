@@ -18,6 +18,11 @@ public class DemoApplication {
 	private static String imgFormat;
 
 	static {
+		String path1 = "server/src/main/resources";
+//		String path2 = "server/src/main/resources/Read.dll";
+//		String path3 = "server/src/main/resources/GaussianBlur.dll";
+		String libPath = path1 + ";";
+		System.setProperty("java.library.path", libPath);
 		System.out.println(System.getProperty("java.library.path"));
 		System.loadLibrary("opencv_world455");
 		System.loadLibrary("clientSDK");
@@ -78,7 +83,6 @@ public class DemoApplication {
 						@Override
 						public void onMessage(String res) {
 							client.sendEvent("revBase64",  imgFormat+res);
-							System.out.println("data:image/png;base64,"+res);
 						}
 					};
 					//发送类

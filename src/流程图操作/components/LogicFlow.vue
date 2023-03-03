@@ -66,8 +66,8 @@
 
             <template #footer>
           <span class="dialog-footer">
-            <el-button type="primary" @click="dialogVisible = false;formDataSubmit()">Submit</el-button>
-            <el-button @click="dialogVisible = false">Cancel</el-button>
+            <el-button type="primary" @click="dialogVisible = false;formDataSubmit();clear()">Submit</el-button>
+            <el-button @click="dialogVisible = false;clear()">Cancel</el-button>
           </span>
             </template>
         </el-dialog>
