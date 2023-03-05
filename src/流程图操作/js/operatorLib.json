@@ -424,7 +424,7 @@
             "name": "imgFilter",
             "dialogUI": {
                 "selector": {
-                    "label": "选择方法",
+                    "label": "选择滤波方法",
                     "content": [
                         "GaussianBlur",
                         "MedianBlur"
@@ -432,27 +432,28 @@
                 },
                 "methods": [
                     {
+                        "test": 1,
                         "methodName": "GaussianBlur",
                         "methodUI": [
                             {
                                 "varName": "ksize",
                                 "type": "input",
-                                "text": "ksize:"
+                                "label": "ksize:"
                             },
                             {
                                 "varName": "sigmaX",
                                 "type": "input",
-                                "text": "sigmaX:"
+                                "label": "sigmaX:"
                             },
                             {
                                 "varName": "sigmaY",
                                 "type": "input",
-                                "text": "sigmaY:"
+                                "label": "sigmaY:"
                             },
                             {
                                 "varName": "borderType",
                                 "type": "input",
-                                "text": "borderType:"
+                                "label": "borderType:"
                             }
                         ],
                         "methodInPara": [
@@ -496,9 +497,68 @@
                         "methodOutPara": []
                     },
                     {
+                        "test": 0,
                         "methodName": "ElseBlur",
-                        "methodUI": [],
-                        "methodInPara": [],
+                        "methodUI": [
+                            {
+                                "varName": "ksize",
+                                "type": "input",
+                                "label": "ksize:"
+                            },
+                            {
+                                "varName": "sigmaX",
+                                "type": "input",
+                                "label": "sigmaX:"
+                            },
+                            {
+                                "varName": "sigmaY",
+                                "type": "input",
+                                "label": "sigmaY:"
+                            },
+                            {
+                                "varName": "borderType",
+                                "type": "input",
+                                "label": "borderType:"
+                            }
+                        ],
+                        "methodInPara": [
+                            {
+                                "varName": "src",
+                                "varType": "InputArray",
+                                "value": "",
+                                "valueType": ""
+                            },
+                            {
+                                "varName": "dst",
+                                "varType": "OutputArray",
+                                "value": "",
+                                "valueType": ""
+                            },
+                            {
+                                "varName": "ksize",
+                                "varType": "Size",
+                                "value": "",
+                                "valueType": ""
+                            },
+                            {
+                                "varName": "sigmaX",
+                                "varType": "double",
+                                "value": "",
+                                "valueType": ""
+                            },
+                            {
+                                "varName": "sigmaY",
+                                "varType": "double",
+                                "value": "",
+                                "valueType": ""
+                            },
+                            {
+                                "varName": "borderType",
+                                "varType": "int",
+                                "value": "",
+                                "valueType": ""
+                            }
+                        ],
                         "methodOutPara": []
                     }
                 ]

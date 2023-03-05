@@ -313,12 +313,12 @@ export default {
                 let upperopt = suanziItemList[upperName]
                 for(let i=0;i<upperopt.length;i++){
                     if(upperopt[i]["name"]===type){
-                        this.dialog=upperopt[i]["dialogUI"]
+                        this.dialogUI=upperopt[i]["dialogUI"]
                         break;
                     }
                 }
             }
-            console.log(this.dialog)
+            console.log(this.dialogUI)
 
             //刷新nodeModel
             console.log(type)
