@@ -21,48 +21,72 @@
         <el-main id="lf" style="height: 100%; padding: 0;"></el-main>
 
         <el-dialog v-model="dialogVisible"  width="50%" draggable>
-            <el-form  label-width="120px">
-                    <el-form-item v-for="(item,index) in optUI " :label="item.text" required>
-<!--                    <div v-if="item.type === 'checkbox'">-->
-<!--                        <div v-for="(cont,index2) in item.content">-->
-<!--                            <label>-->
-<!--                                <input type="checkbox" name="{{index}}" :value="cont.options" v-model="formData.checkboxes[index2]"/>-->
-<!--                                {{cont.options}}-->
-<!--                            </label>-->
-<!--                        </div>-->
-<!--                    </div >-->
-
-<!--                    <div v-if="item.type === 'radio'">-->
-<!--                        <div v-for="(cont,index2) in item.content">-->
-<!--                            <label>-->
-<!--                                <input type="radio" name="{{index}}" :value="cont.options" v-model="formData.radio"/>-->
-<!--                                {{cont.options}}-->
-<!--                            </label>-->
-<!--                        </div>-->
-<!--                    </div >-->
-
-                    <div v-if="item.type === 'input'">
-                        <label>
-                            <input type="text" v-model="formData[index]">
-                        </label>
-                    </div>
-
-                    <div v-if="item.type==='dropDownBox'">
-                        <label>
-                            <el-select v-model="formData[index]" placeholder="请选择">
-                                <el-option
-                                    v-for="option in item.content"
-                                    :key="option.options"
-                                    :label="option.options"
-                                    :value="option.options"
-                                ></el-option>
-                            </el-select>
-                        </label>
-                    </div>
-
+            <el-form label-width="120px">
+                <el-form-item>
+                    <el-select placeholder="请选择">
+                        <el-option>
+                            1
+                        </el-option>
+                    </el-select>
                 </el-form-item>
-
             </el-form>
+<!--            <el-form  label-width="120px">-->
+<!--                单选框-->
+<!--                <el-form-item>-->
+<!--                    <div v-if="dialogUI.content.length>0">-->
+<!--                        <label>-->
+<!--                            <el-select v-model="formData[index]" placeholder="请选择">-->
+<!--                                <el-option-->
+<!--                                    v-for="option in item.content"-->
+<!--                                    :key="option.options"-->
+<!--                                    :label="option.options"-->
+<!--                                    :value="option.options"-->
+<!--                                ></el-option>-->
+<!--                            </el-select>-->
+<!--                        </label>-->
+<!--                    </div>-->
+<!--                </el-form-item>-->
+<!--                    <el-form-item v-for="(item,index) in optUI " :label="item.text" required>-->
+<!--&lt;!&ndash;                    <div v-if="item.type === 'checkbox'">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <div v-for="(cont,index2) in item.content">&ndash;&gt;-->
+<!--&lt;!&ndash;                            <label>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <input type="checkbox" name="{{index}}" :value="cont.options" v-model="formData.checkboxes[index2]"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                                {{cont.options}}&ndash;&gt;-->
+<!--&lt;!&ndash;                            </label>&ndash;&gt;-->
+<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </div >&ndash;&gt;-->
+
+<!--&lt;!&ndash;                    <div v-if="item.type === 'radio'">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <div v-for="(cont,index2) in item.content">&ndash;&gt;-->
+<!--&lt;!&ndash;                            <label>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <input type="radio" name="{{index}}" :value="cont.options" v-model="formData.radio"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                                {{cont.options}}&ndash;&gt;-->
+<!--&lt;!&ndash;                            </label>&ndash;&gt;-->
+<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </div >&ndash;&gt;-->
+
+<!--                    <div v-if="item.type === 'input'">-->
+<!--                        <label>-->
+<!--                            <input type="text" v-model="formData[index]">-->
+<!--                        </label>-->
+<!--                    </div>-->
+
+<!--                    <div v-if="item.type==='dropDownBox'">-->
+<!--                        <label>-->
+<!--                            <el-select v-model="formData[index]" placeholder="请选择">-->
+<!--                                <el-option-->
+<!--                                    v-for="option in item.content"-->
+<!--                                    :key="option.options"-->
+<!--                                    :label="option.options"-->
+<!--                                    :value="option.options"-->
+<!--                                ></el-option>-->
+<!--                            </el-select>-->
+<!--                        </label>-->
+<!--                    </div>-->
+
+<!--                </el-form-item>-->
+
+<!--            </el-form>-->
 
             <template #footer>
           <span class="dialog-footer">

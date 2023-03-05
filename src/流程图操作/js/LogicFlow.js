@@ -293,8 +293,7 @@ export default {
             //赋值变量 算子和图形
             suanzis: suanziItemList,
             imgBase64:"",
-            opt:null,
-            optUI:null,
+            dialogUI:null,
             dialogVisible:false,
             type:"",
             formData:[]
@@ -314,13 +313,12 @@ export default {
                 let upperopt = suanziItemList[upperName]
                 for(let i=0;i<upperopt.length;i++){
                     if(upperopt[i]["name"]===type){
-                        this.opt=upperopt[i]
-                        this.optUI=upperopt[i]["dialogUI"]
+                        this.dialog=upperopt[i]["dialogUI"]
                         break;
                     }
                 }
             }
-
+            console.log(this.dialog)
 
             //刷新nodeModel
             console.log(type)
