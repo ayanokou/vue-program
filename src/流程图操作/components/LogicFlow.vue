@@ -26,14 +26,14 @@
         <el-dialog v-model="dialogVisible" width="50%" draggable>
             <el-form label-width="120px">
                 <el-form-item :label="dialogUI.selector.label" v-if="dialogUI.selector.content.length>1">
-                    <el-select placeholder="请选择">
-                        <el-option>
+                    <el-select placeholder="请选择" v-model="methodName">
+                        <el-option v-for="m in dialogUI.selector.content" :label="m" :key="m" :value="m">
                         </el-option>
                     </el-select>
                 </el-form-item>
 
                 <template v-for="method in dialogUI.methods">
-                    <el-form-item v-if="method.test===1" v-for="item in method.methodUI" :label="item.label" required>
+                    <el-form-item v-if="method.methodName===methodName" v-for="(item,index) in method.methodUI" :label="item.label" v-model="formData[index]" required>
                         <div v-if="item.type === 'input'">
                             <label>
                                 <input type="text">

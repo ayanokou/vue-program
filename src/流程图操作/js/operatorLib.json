@@ -427,12 +427,11 @@
                     "label": "选择滤波方法",
                     "content": [
                         "GaussianBlur",
-                        "MedianBlur"
+                        "ElseBlur"
                     ]
                 },
                 "methods": [
                     {
-                        "test": 1,
                         "methodName": "GaussianBlur",
                         "methodUI": [
                             {
@@ -497,7 +496,6 @@
                         "methodOutPara": []
                     },
                     {
-                        "test": 0,
                         "methodName": "ElseBlur",
                         "methodUI": [
                             {
@@ -509,16 +507,6 @@
                                 "varName": "sigmaX",
                                 "type": "input",
                                 "label": "sigmaX:"
-                            },
-                            {
-                                "varName": "sigmaY",
-                                "type": "input",
-                                "label": "sigmaY:"
-                            },
-                            {
-                                "varName": "borderType",
-                                "type": "input",
-                                "label": "borderType:"
                             }
                         ],
                         "methodInPara": [

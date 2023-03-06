@@ -294,6 +294,8 @@ export default {
             suanzis: suanziItemList,
             imgBase64:"",
             dialogUI:null,
+            //算子选中的方法名
+            methodName:"",
             dialogVisible:false,
             type:"",
             formData:[]
@@ -318,6 +320,8 @@ export default {
                     }
                 }
             }
+            //默认方法名
+            this.methodName=this.dialogUI.methods[0].methodName
             console.log(this.dialogUI)
 
             //刷新nodeModel
