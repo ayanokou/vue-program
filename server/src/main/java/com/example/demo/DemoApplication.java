@@ -60,7 +60,7 @@ public class DemoApplication {
 					FCListener listenerForCpp = new FCListener() {
 						@Override
 						public void onMessage(String res) {
-							client.sendEvent("revJson",res);
+							client.sendEvent("revBase64","data:image/jpeg;base64,"+res);
 							System.out.println(res);
 						}
 					};
