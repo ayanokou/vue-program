@@ -293,9 +293,10 @@ export default {
             //赋值变量 算子和图形
             suanzis: suanziItemList,
             imgBase64:"",
+            //对话框UI
             dialogUI:null,
             //算子选中的方法名
-            methodName:"",
+            modelName:"",
             dialogVisible:false,
             type:"",
             formData:[]
@@ -315,19 +316,17 @@ export default {
                 let upperopt = suanziItemList[upperName]
                 for(let i=0;i<upperopt.length;i++){
                     if(upperopt[i]["name"]===type){
-                        this.dialogUI=upperopt[i]["dialogUI"]
+                        this.dialogUI=upperopt[i]["models"]
                         break;
                     }
                 }
             }
+
             //默认方法名
-            this.methodName=this.dialogUI.methods[0].methodName
-            console.log(this.dialogUI)
+            this.modelName=this.dialogUI.models[0].modelName
 
             //刷新nodeModel
-            console.log(type)
             this.nodeModel=this.lf.getNodeModelById(evt.data.id)
-            //let type=this.nodeModel.getProperties().type
 
 
             switch (type) {
@@ -616,7 +615,7 @@ export default {
         },
         downloadXML() {
             //下载json
-            this.download('flow.json', JSON.stringify(this.lf.getGraphData()))
+            //this.download('flow.json', JSON.stringify(this.lf.getGraphData()))
             //前端开始运行逻辑不完善，因此将流程图json传到后端的语句写在这里了，以后实际开发的时候进行调整
             //socket.emit('flowInformation',this.lf.getGraphData());
             //test 传json串
@@ -632,29 +631,31 @@ export default {
             //test end
         },
         formDataSubmit() {
-
+            console.log(1)
             console.log(this.formData)
-            //拉一个原始的properties
-            let propValue=this.opt['properties']
-            let inParaValue=propValue['inPara'];
-            //将不是指针的参数输入进去，更新这个properties
+            console.log(1)
 
-            //j为formData数组的下标
-            let j=0;
-            //如果第一个存的methodName，那么就
-            if(this.optUI[0]['varName']=="methodName"){
-                propValue["methodName"]=this.formData[0]
-                j+=1;
-            }
-
-            for(let i=0;i<inParaValue.length;++i){
-                if(inParaValue[i]['valueType']==0){
-                    //开始填值
-                    propValue['inPara'][i]['value']=this.formData[j++];
-                }
-            }
-            //修改流程图json的properties
-            this.nodeModel.setProperties(propValue)
+            // //拉一个原始的properties
+            // let propValue=this.opt['properties']
+            // let inParaValue=propValue['inPara'];
+            // //将不是指针的参数输入进去，更新这个properties
+            //
+            // //j为formData数组的下标
+            // let j=0;
+            // //如果第一个存的methodName，那么就
+            // if(this.optUI[0]['varName']=="methodName"){
+            //     propValue["methodName"]=this.formData[0]
+            //     j+=1;
+            // }
+            //
+            // for(let i=0;i<inParaValue.length;++i){
+            //     if(inParaValue[i]['valueType']==0){
+            //         //开始填值
+            //         propValue['inPara'][i]['value']=this.formData[j++];
+            //     }
+            // }
+            // //修改流程图json的properties
+            // this.nodeModel.setProperties(propValue)
 
         },
         clear(){

@@ -41,50 +41,61 @@
         },
         {
             "type": "operator",
-            "text": "文件输入",
-            "label": "文件输入",
-            "name": "inputFile",
-            "dialogUI": [
-                {
-                    "varName": "filename",
-                    "type": "input",
-                    "text": "filename:"
+            "text": "数据输入",
+            "label": "数据输入",
+            "name": "dataInput",
+            "models": {
+                "selector": {
+                    "label": "选择输入模式",
+                    "content": [
+                        "Read",
+                        "Camera"
+                    ]
                 },
-                {
-                    "varName": "flags",
-                    "type": "input",
-                    "text": "flags:"
-                }
-            ],
+                "models": [
+                    {
+                        "modelName": "Read",
+                        "inPara": [
+                            {
+                                "varName": "filename",
+                                "varType": "String",
+                                "from": "",
+                                "typeUI": "input",
+                                "explanation": ""
+                            },
+                            {
+                                "varName": "flags",
+                                "varType": "int",
+                                "from": "",
+                                "typeUI": "input",
+                                "explanation": ""
+                            }
+                        ],
+                        "outPara": [
+                            {
+                                "varType": "Mat",
+                                "typeUI": "input",
+                                "explanation": ""
+                            }
+                        ]
+                    },
+                    {
+                        "modelName": "Camera",
+                        "inPara": [
+
+                        ],
+                        "outPara": [
+                        ]
+                    }
+                ]
+            },
             "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAEFVwZaAAAABGdBTUEAALGPC/xhBQAAAqlJREFUOBF9VM9rE0EUfrMJNUKLihGbpLGtaCOIR8VjQMGDePCgCCIiCNqzCAp2MyYUCXhUtF5E0D+g1t48qAd7CCLqQUQKEWkStcEfVGlLdp/fm3aW2QQdyLzf33zz5m2IsAZ9XhDpyaaIZkTS4ASzK41TFao88GuJ3hsr2pAbipHxuSYyKRugagICGANkfFnNh3HeE2N0b3nN2cgnpcictw5veJIzxmDamSlxxQZicq/mflxhbaH8BLRbuRwNtZp0JAhoplVRUdzmCe/vO27wFuuA3S5qXruGdboy5/PRGFsbFGKo/haRtQHIrM83bVeTrOgNhZReWaYGnE4aUQgTJNvijJFF4jQ8BxJE5xfKatZWmZcTQ+BVgh7s8SgPlCkcec4mGTmieTP4xd7PcpIEg1TX6gdeLW8rTVMVLVvb7ctXoH0Cydl2QOPJBG21STE5OsnbweVYzAnD3A7PVILuY0yiiyDwSm2g441r6rMSgp6iK42yqroI2QoXeJVeA+YeZSa47gZdXaZWQKTrG93rukk/l2Al6Kzh5AZEl7dDQy+JjgFahQjRopSxPbrbvK7GRe9ePWBo1wcU7sYrFZtavXALwGw/7Dnc50urrHJuTPSoO2IMV3gUQGNg87IbSOIY9BpiT9HV7FCZ94nPXb3MSnwHn/FFFE1vG6DTby+r31KAkUktB3Qf6ikUPWxW1BkXSPQeMHHiW0+HAd2GelJsZz1OJegCxqzl+CLVHa/IibuHeJ1HAKzhuDR+ymNaRFM+4jU6UWKXorRmbyqkq/D76FffevwdCp+jN3UAN/C9JRVTDuOxC/oh+EdMnqIOrlYteKSfadVRGLJFJPSB/ti/6K8f0CNymg/iH2gO/f0DwE0yjAFO6l8JaR5j0VPwPwfaYHqOqrCI319WzwhwzNW/aQAAAABJRU5ErkJggg==",
             "properties": {
                 "upperName": "输入输出",
                 "helpMsg": "it is a help message",
-                "name": "inputFile",
+                "name": "dataInput",
                 "dllPath": "./dll/",
-                "methodName": "Read",
-                "inPara": [
-                    {
-                        "varName": "filename",
-                        "varType": "String",
-                        "value": "",
-                        "valueType": 0
-                    },
-                    {
-                        "varName": "flags",
-                        "varType": "int",
-                        "value": "",
-                        "valueType": 0
-                    }
-                ],
-                "outPara": [
-                    {
-                        "varName": "inputFile.res",
-                        "varType": "Mat",
-                        "value": "",
-                        "valueType": ""
-                    }
-                ]
+                "modelName": ""
             }
         },
         {
@@ -422,7 +433,7 @@
             "text": "图像滤波",
             "label": "图像滤波",
             "name": "imgFilter",
-            "dialogUI": {
+            "models": {
                 "selector": {
                     "label": "选择滤波方法",
                     "content": [
@@ -430,124 +441,76 @@
                         "ElseBlur"
                     ]
                 },
-                "methods": [
+                "models": [
                     {
-                        "methodName": "GaussianBlur",
-                        "methodUI": [
-                            {
-                                "varName": "ksize",
-                                "type": "input",
-                                "label": "ksize:"
-                            },
-                            {
-                                "varName": "sigmaX",
-                                "type": "input",
-                                "label": "sigmaX:"
-                            },
-                            {
-                                "varName": "sigmaY",
-                                "type": "input",
-                                "label": "sigmaY:"
-                            },
-                            {
-                                "varName": "borderType",
-                                "type": "input",
-                                "label": "borderType:"
-                            }
-                        ],
-                        "methodInPara": [
+                        "modelName": "GaussianBlur",
+                        "inPara": [
                             {
                                 "varName": "src",
                                 "varType": "InputArray",
-                                "value": "",
-                                "valueType": ""
+                                "from": "",
+                                "typeUI": "input",
+                                "explanation": ""
                             },
                             {
                                 "varName": "dst",
                                 "varType": "OutputArray",
-                                "value": "",
-                                "valueType": ""
+                                "from": "",
+                                "typeUI": "input",
+                                "explanation": ""
                             },
                             {
                                 "varName": "ksize",
                                 "varType": "Size",
-                                "value": "",
-                                "valueType": ""
+                                "from": "",
+                                "typeUI": "input",
+                                "explanation": ""
                             },
                             {
                                 "varName": "sigmaX",
                                 "varType": "double",
-                                "value": "",
-                                "valueType": ""
+                                "from": "",
+                                "typeUI": "input",
+                                "explanation": ""
                             },
                             {
                                 "varName": "sigmaY",
                                 "varType": "double",
-                                "value": "",
-                                "valueType": ""
+                                "from": "",
+                                "typeUI": "input",
+                                "explanation": ""
                             },
                             {
                                 "varName": "borderType",
                                 "varType": "int",
-                                "value": "",
-                                "valueType": ""
+                                "from": "",
+                                "typeUI": "input",
+                                "explanation": ""
                             }
                         ],
-                        "methodOutPara": []
+                        "outPara": [
+                        ]
                     },
                     {
-                        "methodName": "ElseBlur",
-                        "methodUI": [
-                            {
-                                "varName": "ksize",
-                                "type": "input",
-                                "label": "ksize:"
-                            },
-                            {
-                                "varName": "sigmaX",
-                                "type": "input",
-                                "label": "sigmaX:"
-                            }
-                        ],
-                        "methodInPara": [
+                        "modelName": "ElseBlur",
+                        "inPara": [
                             {
                                 "varName": "src",
                                 "varType": "InputArray",
-                                "value": "",
-                                "valueType": ""
+                                "from": "",
+                                "typeUI": "input",
+                                "explanation": ""
                             },
                             {
                                 "varName": "dst",
                                 "varType": "OutputArray",
-                                "value": "",
-                                "valueType": ""
-                            },
-                            {
-                                "varName": "ksize",
-                                "varType": "Size",
-                                "value": "",
-                                "valueType": ""
-                            },
-                            {
-                                "varName": "sigmaX",
-                                "varType": "double",
-                                "value": "",
-                                "valueType": ""
-                            },
-                            {
-                                "varName": "sigmaY",
-                                "varType": "double",
-                                "value": "",
-                                "valueType": ""
-                            },
-                            {
-                                "varName": "borderType",
-                                "varType": "int",
-                                "value": "",
-                                "valueType": ""
+                                "from": "",
+                                "typeUI": "input",
+                                "explanation": ""
                             }
                         ],
-                        "methodOutPara": []
+                        "outPara": [
+                        ]
                     }
                 ]
             },
@@ -557,47 +520,7 @@
                 "helpMsg": "it is a help message",
                 "name": "imgFilter",
                 "dllPath": "./dll/",
-                "methodName": "GaussianBlur",
-                "inPara": [
-                    {
-                        "varName": "src",
-                        "varType": "InputArray",
-                        "value": "",
-                        "valueType": 1
-                    },
-                    {
-                        "varName": "dst",
-                        "varType": "OutputArray",
-                        "value": "",
-                        "valueType": 2
-                    },
-                    {
-                        "varName": "ksize",
-                        "varType": "Size",
-                        "value": "",
-                        "valueType": 0
-                    },
-                    {
-                        "varName": "sigmaX",
-                        "varType": "double",
-                        "value": "",
-                        "valueType": 0
-                    },
-                    {
-                        "varName": "sigmaY",
-                        "varType": "double",
-                        "value": "",
-                        "valueType": 0
-                    },
-                    {
-                        "varName": "borderType",
-                        "varType": "int",
-                        "value": "",
-                        "valueType": 0
-                    }
-                ],
-                "outPara": [
-                ]
+                "modelName": ""
             }
         },
         {
