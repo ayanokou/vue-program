@@ -25,14 +25,14 @@
 
         <el-dialog v-model="dialogVisible" width="50%" draggable>
             <el-form label-width="120px">
-                <el-form-item :label="dialogUI.selector.label" v-if="dialogUI.selector.content.length>1">
+                <el-form-item label="模式选择" v-if="dialogUI.length>1">
                     <el-select placeholder="请选择" v-model="modelName">
-                        <el-option v-for="m in dialogUI.selector.content" :label="m" :key="m" :value="m">
+                        <el-option v-for="m in dialogUI" :label="m.modelName" :key="m.modelName" :value="m.modelName">
                         </el-option>
                     </el-select>
                 </el-form-item>
 
-                <template v-for="model in dialogUI.models">
+                <template v-for="model in dialogUI">
                     <el-form-item v-if="model.modelName===modelName" v-for="(item,index) in model.inPara" :label="item.varName">
                         <div v-if="item.typeUI === 'input'">
                             <label>

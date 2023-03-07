@@ -44,51 +44,41 @@
             "text": "数据输入",
             "label": "数据输入",
             "name": "dataInput",
-            "models": {
-                "selector": {
-                    "label": "选择输入模式",
-                    "content": [
-                        "Read",
-                        "Camera"
+            "models": [
+                {
+                    "modelName": "Read",
+                    "inPara": [
+                        {
+                            "varName": "filename",
+                            "varType": "String",
+                            "from": "",
+                            "typeUI": "input",
+                            "explanation": ""
+                        },
+                        {
+                            "varName": "flags",
+                            "varType": "int",
+                            "from": "",
+                            "typeUI": "input",
+                            "explanation": ""
+                        }
+                    ],
+                    "outPara": [
+                        {
+                            "varType": "Mat",
+                            "typeUI": "input",
+                            "explanation": ""
+                        }
                     ]
                 },
-                "models": [
-                    {
-                        "modelName": "Read",
-                        "inPara": [
-                            {
-                                "varName": "filename",
-                                "varType": "String",
-                                "from": "",
-                                "typeUI": "input",
-                                "explanation": ""
-                            },
-                            {
-                                "varName": "flags",
-                                "varType": "int",
-                                "from": "",
-                                "typeUI": "input",
-                                "explanation": ""
-                            }
-                        ],
-                        "outPara": [
-                            {
-                                "varType": "Mat",
-                                "typeUI": "input",
-                                "explanation": ""
-                            }
-                        ]
-                    },
-                    {
-                        "modelName": "Camera",
-                        "inPara": [
-
-                        ],
-                        "outPara": [
-                        ]
-                    }
-                ]
-            },
+                {
+                    "modelName": "Camera",
+                    "inPara": [
+                    ],
+                    "outPara": [
+                    ]
+                }
+            ],
             "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAEFVwZaAAAABGdBTUEAALGPC/xhBQAAAqlJREFUOBF9VM9rE0EUfrMJNUKLihGbpLGtaCOIR8VjQMGDePCgCCIiCNqzCAp2MyYUCXhUtF5E0D+g1t48qAd7CCLqQUQKEWkStcEfVGlLdp/fm3aW2QQdyLzf33zz5m2IsAZ9XhDpyaaIZkTS4ASzK41TFao88GuJ3hsr2pAbipHxuSYyKRugagICGANkfFnNh3HeE2N0b3nN2cgnpcictw5veJIzxmDamSlxxQZicq/mflxhbaH8BLRbuRwNtZp0JAhoplVRUdzmCe/vO27wFuuA3S5qXruGdboy5/PRGFsbFGKo/haRtQHIrM83bVeTrOgNhZReWaYGnE4aUQgTJNvijJFF4jQ8BxJE5xfKatZWmZcTQ+BVgh7s8SgPlCkcec4mGTmieTP4xd7PcpIEg1TX6gdeLW8rTVMVLVvb7ctXoH0Cydl2QOPJBG21STE5OsnbweVYzAnD3A7PVILuY0yiiyDwSm2g441r6rMSgp6iK42yqroI2QoXeJVeA+YeZSa47gZdXaZWQKTrG93rukk/l2Al6Kzh5AZEl7dDQy+JjgFahQjRopSxPbrbvK7GRe9ePWBo1wcU7sYrFZtavXALwGw/7Dnc50urrHJuTPSoO2IMV3gUQGNg87IbSOIY9BpiT9HV7FCZ94nPXb3MSnwHn/FFFE1vG6DTby+r31KAkUktB3Qf6ikUPWxW1BkXSPQeMHHiW0+HAd2GelJsZz1OJegCxqzl+CLVHa/IibuHeJ1HAKzhuDR+ymNaRFM+4jU6UWKXorRmbyqkq/D76FffevwdCp+jN3UAN/C9JRVTDuOxC/oh+EdMnqIOrlYteKSfadVRGLJFJPSB/ti/6K8f0CNymg/iH2gO/f0DwE0yjAFO6l8JaR5j0VPwPwfaYHqOqrCI319WzwhwzNW/aQAAAABJRU5ErkJggg==",
             "properties": {
                 "upperName": "输入输出",
@@ -433,87 +423,82 @@
             "text": "图像滤波",
             "label": "图像滤波",
             "name": "imgFilter",
-            "models": {
-                "selector": {
-                    "label": "选择滤波方法",
-                    "content": [
-                        "GaussianBlur",
-                        "ElseBlur"
+            "models": [
+                {
+                    "type": "operator",
+                    "text": "高斯滤波",
+                    "label": "高斯滤波",
+                    "name": "GaussianBlur",
+                    "modelName": "GaussianBlur",
+                    "inPara": [
+                        {
+                            "varName": "src",
+                            "varType": "InputArray",
+                            "from": "",
+                            "typeUI": "input",
+                            "explanation": ""
+                        },
+                        {
+                            "varName": "dst",
+                            "varType": "OutputArray",
+                            "from": "",
+                            "typeUI": "input",
+                            "explanation": ""
+                        },
+                        {
+                            "varName": "ksize",
+                            "varType": "Size",
+                            "from": "",
+                            "typeUI": "input",
+                            "explanation": ""
+                        },
+                        {
+                            "varName": "sigmaX",
+                            "varType": "double",
+                            "from": "",
+                            "typeUI": "input",
+                            "explanation": ""
+                        },
+                        {
+                            "varName": "sigmaY",
+                            "varType": "double",
+                            "from": "",
+                            "typeUI": "input",
+                            "explanation": ""
+                        },
+                        {
+                            "varName": "borderType",
+                            "varType": "int",
+                            "from": "",
+                            "typeUI": "input",
+                            "explanation": ""
+                        }
+                    ],
+                    "outPara": [
                     ]
                 },
-                "models": [
-                    {
-                        "modelName": "GaussianBlur",
-                        "inPara": [
-                            {
-                                "varName": "src",
-                                "varType": "InputArray",
-                                "from": "",
-                                "typeUI": "input",
-                                "explanation": ""
-                            },
-                            {
-                                "varName": "dst",
-                                "varType": "OutputArray",
-                                "from": "",
-                                "typeUI": "input",
-                                "explanation": ""
-                            },
-                            {
-                                "varName": "ksize",
-                                "varType": "Size",
-                                "from": "",
-                                "typeUI": "input",
-                                "explanation": ""
-                            },
-                            {
-                                "varName": "sigmaX",
-                                "varType": "double",
-                                "from": "",
-                                "typeUI": "input",
-                                "explanation": ""
-                            },
-                            {
-                                "varName": "sigmaY",
-                                "varType": "double",
-                                "from": "",
-                                "typeUI": "input",
-                                "explanation": ""
-                            },
-                            {
-                                "varName": "borderType",
-                                "varType": "int",
-                                "from": "",
-                                "typeUI": "input",
-                                "explanation": ""
-                            }
-                        ],
-                        "outPara": [
-                        ]
-                    },
-                    {
-                        "modelName": "ElseBlur",
-                        "inPara": [
-                            {
-                                "varName": "src",
-                                "varType": "InputArray",
-                                "from": "",
-                                "typeUI": "input",
-                                "explanation": ""
-                            },
-                            {
-                                "varName": "dst",
-                                "varType": "OutputArray",
-                                "from": "",
-                                "typeUI": "input",
-                                "explanation": ""
-                            }
-                        ],
-                        "outPara": [
-                        ]
-                    }
-                ]
-            },
+                {
+                    "modelName": "ElseBlur",
+                    "inPara": [
+                        {
+                            "varName": "src",
+                            "varType": "InputArray",
+                            "from": "",
+                            "typeUI": "input",
+                            "explanation": ""
+                        },
+                        {
+                            "varName": "dst",
+                            "varType": "OutputArray",
+                            "from": "",
+                            "typeUI": "input",
+                            "explanation": ""
+                        }
+                    ],
+                    "outPara": [
+                    ]
+                }
+            ],
             "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAEFVwZaAAAABGdBTUEAALGPC/xhBQAAAqlJREFUOBF9VM9rE0EUfrMJNUKLihGbpLGtaCOIR8VjQMGDePCgCCIiCNqzCAp2MyYUCXhUtF5E0D+g1t48qAd7CCLqQUQKEWkStcEfVGlLdp/fm3aW2QQdyLzf33zz5m2IsAZ9XhDpyaaIZkTS4ASzK41TFao88GuJ3hsr2pAbipHxuSYyKRugagICGANkfFnNh3HeE2N0b3nN2cgnpcictw5veJIzxmDamSlxxQZicq/mflxhbaH8BLRbuRwNtZp0JAhoplVRUdzmCe/vO27wFuuA3S5qXruGdboy5/PRGFsbFGKo/haRtQHIrM83bVeTrOgNhZReWaYGnE4aUQgTJNvijJFF4jQ8BxJE5xfKatZWmZcTQ+BVgh7s8SgPlCkcec4mGTmieTP4xd7PcpIEg1TX6gdeLW8rTVMVLVvb7ctXoH0Cydl2QOPJBG21STE5OsnbweVYzAnD3A7PVILuY0yiiyDwSm2g441r6rMSgp6iK42yqroI2QoXeJVeA+YeZSa47gZdXaZWQKTrG93rukk/l2Al6Kzh5AZEl7dDQy+JjgFahQjRopSxPbrbvK7GRe9ePWBo1wcU7sYrFZtavXALwGw/7Dnc50urrHJuTPSoO2IMV3gUQGNg87IbSOIY9BpiT9HV7FCZ94nPXb3MSnwHn/FFFE1vG6DTby+r31KAkUktB3Qf6ikUPWxW1BkXSPQeMHHiW0+HAd2GelJsZz1OJegCxqzl+CLVHa/IibuHeJ1HAKzhuDR+ymNaRFM+4jU6UWKXorRmbyqkq/D76FffevwdCp+jN3UAN/C9JRVTDuOxC/oh+EdMnqIOrlYteKSfadVRGLJFJPSB/ti/6K8f0CNymg/iH2gO/f0DwE0yjAFO6l8JaR5j0VPwPwfaYHqOqrCI319WzwhwzNW/aQAAAABJRU5ErkJggg==",
             "properties": {
                 "upperName": "图像处理",

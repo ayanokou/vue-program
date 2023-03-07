@@ -323,7 +323,7 @@ export default {
             }
 
             //默认方法名
-            this.modelName=this.dialogUI.models[0].modelName
+            this.modelName=this.dialogUI[0].modelName
 
             //刷新nodeModel
             this.nodeModel=this.lf.getNodeModelById(evt.data.id)
@@ -664,62 +664,6 @@ export default {
             this.opt=null
             this.optUI=null
         }
-    },
-
-    //////////////////////YUANZHENG SOCKETIO TEST/////////////////
-    //此处为前后端通信函数，因为前端UI逻辑还未完善，先放在这里，以后用的时候进行调整
-    //具体逻辑为socketio.emit('参数名',json格式的参数);后端建立对应的监听器接收并进行下一步处理
-    //有问题问袁征
-    socketioNum() {
-        var jsonObject = {
-            userName: "Num",
-            message: 1024,
-        };
-        socket.emit('chatevent', jsonObject);
-    },
-    socketioInt() {
-        var jsonObject = {
-            userName: "Int",
-            message: 2048,
-        };
-        socket.emit('chatevent', jsonObject);
-    },
-    socketioDou() {
-        var jsonObject = {
-            userName: "Dou",
-            message: 10.24,
-        };
-        socket.emit('chatevent', jsonObject);
-    },
-    socketioFlt() {
-        var jsonObject = {
-            userName: "Flt",
-            message: 102.4,
-        };
-        socket.emit('chatevent', jsonObject);
-    },
-    socketioStr() {
-        var jsonObject = {
-            userName: "Str",
-            message: "Hello Yuan Zheng!!!!!!",
-        };
-        socket.emit('chatevent', jsonObject);
-    },
-    socketioPic() {
-        let base64Img
-        let Img = this.$refs.imgUrl.files[0]
-        let reader = new FileReader()
-        reader.readAsDataURL(Img)
-        reader.onload = function () {
-            var jsonObject = {
-                userName: "Pic",
-                message: this.result,
-            };
-            base64Img = this.result
-            socket.emit('chatevent', jsonObject);
-            console.log(this.result)
-        }
     }
-    //////////////////////////////////////////////////////////////
 }
 
