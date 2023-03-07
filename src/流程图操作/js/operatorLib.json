@@ -429,53 +429,55 @@
                     "text": "高斯滤波",
                     "label": "高斯滤波",
                     "name": "GaussianBlur",
-                    "modelName": "GaussianBlur",
-                    "inPara": [
-                        {
-                            "varName": "src",
-                            "varType": "InputArray",
-                            "from": "",
-                            "typeUI": "input",
-                            "explanation": ""
-                        },
-                        {
-                            "varName": "dst",
-                            "varType": "OutputArray",
-                            "from": "",
-                            "typeUI": "input",
-                            "explanation": ""
-                        },
-                        {
-                            "varName": "ksize",
-                            "varType": "Size",
-                            "from": "",
-                            "typeUI": "input",
-                            "explanation": ""
-                        },
-                        {
-                            "varName": "sigmaX",
-                            "varType": "double",
-                            "from": "",
-                            "typeUI": "input",
-                            "explanation": ""
-                        },
-                        {
-                            "varName": "sigmaY",
-                            "varType": "double",
-                            "from": "",
-                            "typeUI": "input",
-                            "explanation": ""
-                        },
-                        {
-                            "varName": "borderType",
-                            "varType": "int",
-                            "from": "",
-                            "typeUI": "input",
-                            "explanation": ""
-                        }
-                    ],
-                    "outPara": [
-                    ]
+                    "properties": {
+                        "inPara": [
+                            {
+                                "varName": "src",
+                                "varType": "InputArray",
+                                "from": "",
+                                "typeUI": "input",
+                                "explanation": ""
+                            },
+                            {
+                                "varName": "dst",
+                                "varType": "OutputArray",
+                                "from": "",
+                                "typeUI": "input",
+                                "explanation": ""
+                            },
+                            {
+                                "varName": "ksize",
+                                "varType": "Size",
+                                "from": "",
+                                "typeUI": "input",
+                                "explanation": ""
+                            },
+                            {
+                                "varName": "sigmaX",
+                                "varType": "double",
+                                "from": "",
+                                "typeUI": "input",
+                                "explanation": ""
+                            },
+                            {
+                                "varName": "sigmaY",
+                                "varType": "double",
+                                "from": "",
+                                "typeUI": "input",
+                                "explanation": ""
+                            },
+                            {
+                                "varName": "borderType",
+                                "varType": "int",
+                                "from": "",
+                                "typeUI": "input",
+                                "explanation": ""
+                            }
+                        ],
+                        "outPara": [
+                        ]
+                    },
+                    "models": []
                 },
                 {
                     "modelName": "ElseBlur",
