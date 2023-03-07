@@ -27,7 +27,7 @@
             <el-form label-width="120px">
                 <el-form-item label="模式选择" v-if="dialogUI.length>1">
                     <el-select placeholder="请选择" v-model="modelName">
-                        <el-option v-for="m in dialogUI" :label="m.name" :key="m.name" :value="m.nName">
+                        <el-option v-for="m in dialogUI" :label="m.name" :key="m.name" :value="m.name">
                         </el-option>
                     </el-select>
                 </el-form-item>

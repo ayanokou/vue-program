@@ -323,7 +323,7 @@ export default {
             }
 
             //默认方法名
-            this.modelName=this.dialogUI[0].modelName
+            this.modelName=this.dialogUI[0].name
 
             //刷新nodeModel
             this.nodeModel=this.lf.getNodeModelById(evt.data.id)
