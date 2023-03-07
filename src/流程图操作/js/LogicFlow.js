@@ -298,9 +298,7 @@ export default {
             //算子选中的方法名
             modelName:"",
             dialogVisible:false,
-            type:"",
             formData:[]
-
         }
     },
     computed: {
@@ -615,7 +613,7 @@ export default {
         },
         downloadXML() {
             //下载json
-            //this.download('flow.json', JSON.stringify(this.lf.getGraphData()))
+            this.download('flow.json', JSON.stringify(this.lf.getGraphData()))
             //前端开始运行逻辑不完善，因此将流程图json传到后端的语句写在这里了，以后实际开发的时候进行调整
             //socket.emit('flowInformation',this.lf.getGraphData());
             //test 传json串
@@ -631,38 +629,24 @@ export default {
             //test end
         },
         formDataSubmit() {
-            console.log(1)
             console.log(this.formData)
-            console.log(1)
-
-            // //拉一个原始的properties
-            // let propValue=this.opt['properties']
-            // let inParaValue=propValue['inPara'];
-            // //将不是指针的参数输入进去，更新这个properties
             //
-            // //j为formData数组的下标
-            // let j=0;
-            // //如果第一个存的methodName，那么就
-            // if(this.optUI[0]['varName']=="methodName"){
-            //     propValue["methodName"]=this.formData[0]
-            //     j+=1;
-            // }
-            //
-            // for(let i=0;i<inParaValue.length;++i){
-            //     if(inParaValue[i]['valueType']==0){
-            //         //开始填值
-            //         propValue['inPara'][i]['value']=this.formData[j++];
-            //     }
-            // }
-            // //修改流程图json的properties
-            // this.nodeModel.setProperties(propValue)
-
+            let inPara=null
+            for(let m of this.dialogUI){
+                if(m.name==this.modelName){
+                    inPara=m.properties.inPara
+                }
+            }
+            for(let i in inPara){
+                inPara[i].from=this.formData[i]
+            }
+            this.nodeModel.setProperties({
+                "modelName":this.modelName,
+                "inPara":inPara
+            })
         },
         clear(){
-            //清空
             this.formData=[]
-            this.opt=null
-            this.optUI=null
         }
     }
 }
