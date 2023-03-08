@@ -639,6 +639,11 @@ export default {
             }
             for(let i in inPara){
                 inPara[i].from=this.formData[i]
+                if(this.formData[i]){
+                    inPara[i].from=this.formData[i]
+                }else{
+                    inPara[i].from=""
+                }
             }
             this.nodeModel.setProperties({
                 "modelName":this.modelName,

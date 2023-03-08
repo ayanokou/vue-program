@@ -460,13 +460,6 @@
                                 "explanation": ""
                             },
                             {
-                                "varName": "dst",
-                                "varType": "OutputArray",
-                                "from": "",
-                                "typeUI": "input",
-                                "explanation": ""
-                            },
-                            {
                                 "varName": "ksize",
                                 "varType": "Size",
                                 "from": "",
