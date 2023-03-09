@@ -36,36 +36,31 @@ public class DemoApplication {
 
 		final SocketIOServer server = new SocketIOServer(config);
 
+
 		server.addEventListener("chatevent", ChatObject.class, new DataListener<ChatObject>() {
 			@Override
 			public void onData(SocketIOClient client, ChatObject data, AckRequest ackRequest) {
-				if (data.getUserName().equals("Num"))
-					System.out.print("数字测试，数字是：" + data.getMessage());
-				else if (data.getUserName().equals("Str"))
-					System.out.println("字符串测试，字符串是：" + data.getMessage());
-				else if (data.getUserName().equals("Int")) {
-					int result = Integer.parseInt(data.getMessage());
-					System.out.println("integer测试：" + result);
-				} else if (data.getUserName().equals("Dou")) {
-					double result = Double.parseDouble(data.getMessage());
-					System.out.println("double测试：" + result);
-				} else if (data.getUserName().equals("Flt")) {
-					float result = Float.parseFloat(data.getMessage());
-					System.out.println("float测试：" + result);
-				}
-				// test 传json
-				else if (data.getUserName().equals("Flow")) {
+				FCListener listenerForCpp = new FCListener() {
+					@Override
+					public void onMessage(int resType,String mat,int[] paramInt,double[] paramDouble,String[] paramString) {
+//							client.sendEvent("revJson",res);
+//							System.out.println(res);
+
+						switch(resType){
+							//传图片
+							case 0:
+								client.sendEvent("revBase64","data:image/jpeg;base64,"+mat);
+						}
+					}
+				};
+				//发送类
+				FCClient clientForCpp = new FCClient();
+
+
+				if (data.getUserName().equals("Flow")) {
 					//创建与cpp通讯类
 					//接听类
-					FCListener listenerForCpp = new FCListener() {
-						@Override
-						public void onMessage(String res) {
-							client.sendEvent("revJson",res);
-							System.out.println(res);
-						}
-					};
-					//发送类
-					FCClient clientForCpp = new FCClient();
+
 					String result = data.getMessage();
 					//发送dll数据
 					clientForCpp.eventHandle(listenerForCpp, 2, result);
@@ -74,35 +69,35 @@ public class DemoApplication {
 
 				}
 				// test end
-				else if (data.getUserName().equals("Pic")) {
-
-					//创建与cpp通讯类
-					//接听类
-					FCListener listenerForCpp = new FCListener() {
-
-						@Override
-						public void onMessage(String res) {
-							client.sendEvent("revBase64",  imgFormat+res);
-						}
-					};
-					//发送类
-					FCClient clientForCpp = new FCClient();
-					if(data.getMessage().contains("data:image/png;base64,")){
-						imgFormat="data:image/png;base64,";
-					} else if (data.getMessage().contains("data:image/jpeg;base64,")) {
-						imgFormat="data:image/jpeg;base64,";
-
-					}else if (data.getMessage().contains("data:image/bmp;base64,")){
-						imgFormat="data:image/jpeg;base64,";
-					}
-
-					Base64.Decoder decoder = Base64.getDecoder();
-					String ImgBase64 = data.getMessage().replaceAll("(data:image/jpeg|data:image/png|data:image/bmp);base64,", "");
-					System.out.println(ImgBase64);
-					clientForCpp.eventHandle(listenerForCpp, 1, ImgBase64);
-
-
-				}
+//				else if (data.getUserName().equals("Pic")) {
+//
+//					//创建与cpp通讯类
+//					//接听类
+//					FCListener listenerForCpp = new FCListener() {
+//
+//						@Override
+//						public void onMessage(String res) {
+//							client.sendEvent("revBase64",  imgFormat+res);
+//						}
+//					};
+//					//发送类
+//					FCClient clientForCpp = new FCClient();
+//					if(data.getMessage().contains("data:image/png;base64,")){
+//						imgFormat="data:image/png;base64,";
+//					} else if (data.getMessage().contains("data:image/jpeg;base64,")) {
+//						imgFormat="data:image/jpeg;base64,";
+//
+//					}else if (data.getMessage().contains("data:image/bmp;base64,")){
+//						imgFormat="data:image/jpeg;base64,";
+//					}
+//
+//					Base64.Decoder decoder = Base64.getDecoder();
+//					String ImgBase64 = data.getMessage().replaceAll("(data:image/jpeg|data:image/png|data:image/bmp);base64,", "");
+//					System.out.println(ImgBase64);
+//					clientForCpp.eventHandle(listenerForCpp, 1, ImgBase64);
+//
+//
+//				}
 			}
 		});
 		server.start();

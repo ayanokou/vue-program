@@ -19,7 +19,7 @@ import {
 import { LeftMenus } from './LeftMenuItems.js'
 import { MiniMap } from './MiniMap.js'
 import { eventHandle, events } from "../../sys/eventResponseController";
-
+import {ElNotification} from 'element-plus'
 
 
 LogicFlow.use(SelectionSelect);
@@ -306,6 +306,20 @@ export default {
     mounted() {
         this.initHeight = window.innerHeight
         this.init()
+        //鼠标移到节点显示帮助信息
+        this.lf.on('node:mouseenter',(evt)=>{
+            let res=[]
+            if(evt.data.properties.outPara){
+                for(let x of evt.data.properties.outPara){
+                    res.push(evt.data.properties.name+`.${x.varType}`)
+                }
+                const n=ElNotification({
+                    title: 'NAME',
+                    message: res,
+                    duration: 3000,
+                })
+            }
+        })
         //设置节点点击事件监听, 修改帮助信息
         this.lf.on('node:click', (evt) => {
             let type=evt.data.properties.name
@@ -339,7 +353,8 @@ export default {
                     break
                 default:
                     this.dialogVisible=true
-
+                    let e=document.getElementsByClassName('el-overlay-dialog')[0].parentNode
+                    e.style.width = '0px';
 
 
             }
@@ -370,7 +385,6 @@ export default {
         })
 
         //接收java传来的数据
-
 
         socket.on('revJson',(data)=>{
             console.log("this is json from java"+data)
@@ -404,8 +418,6 @@ export default {
                 };
                 socket.emit('chatevent', jsonObject);
             }
-
-            console.log(evt.data)
         })
         window.onresize = () => {
             return (() => {
@@ -629,16 +641,16 @@ export default {
             //test end
         },
         formDataSubmit() {
-            console.log(this.formData)
-            //
             let inPara=null
+            let outPara=null
             for(let m of this.dialogUI){
                 if(m.name==this.modelName){
                     inPara=m.properties.inPara
+                    outPara=m.properties.outPara
                 }
             }
             for(let i in inPara){
-                inPara[i].from=this.formData[i]
+
                 if(this.formData[i]){
                     inPara[i].from=this.formData[i]
                 }else{
@@ -647,7 +659,8 @@ export default {
             }
             this.nodeModel.setProperties({
                 "modelName":this.modelName,
-                "inPara":inPara
+                "inPara":inPara,
+                "outPara":outPara
             })
         },
         clear(){

@@ -23,7 +23,7 @@
         <!--流程图区域-->
         <el-main id="lf" style="height: 100%; padding: 0;"></el-main>
 
-        <el-dialog v-model="dialogVisible" width="50%" draggable>
+        <el-dialog v-model="dialogVisible" :modal="false" :close-on-click-modal="false" :title="modelName" width="50%" draggable>
             <el-form label-width="120px">
                 <el-form-item label="模式选择" v-if="dialogUI.length>1">
                     <el-select placeholder="请选择" v-model="modelName">
@@ -59,6 +59,13 @@
 </script>
 
 <style>
+.el-overlay-dialog{
+    pointer-events:none;
+}
+
+.el-dialog{
+    pointer-events:auto;
+}
 .el-menu-vertical:not(.el-menu--collapse) {
     width: 180px;
     min-height: 400px;
