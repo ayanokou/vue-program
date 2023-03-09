@@ -50,6 +50,9 @@ public class DemoApplication {
 							//传图片
 							case 0:
 								client.sendEvent("revBase64","data:image/jpeg;base64,"+mat);
+								break;
+							case 1:
+								System.out.println();
 						}
 					}
 				};
