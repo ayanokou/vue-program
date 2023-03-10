@@ -311,7 +311,7 @@ export default {
             let res=[]
             if(evt.data.properties.outPara){
                 for(let x of evt.data.properties.outPara){
-                    res.push(evt.data.properties.name+`.${x.varType}`)
+                    res.push(evt.data.properties.name+`.${x.varName}`)
                 }
                 const n=ElNotification({
                     title: 'NAME',
