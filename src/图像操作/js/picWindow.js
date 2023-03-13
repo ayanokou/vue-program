@@ -13,6 +13,25 @@ export default {
             showViewer:false,
         }
     },
+    mounted() {
+
+    },
+    watch:{
+        imgBase64(){
+            //canvas标签插入图片
+            let cvs = document.getElementById("cvs");
+            //创建image对象
+            let imgObj = new Image();
+            imgObj.src = this.imgBase64;
+            //待图片加载完后，将其显示在canvas上
+            imgObj.onload = function () {
+                let ctx = cvs.getContext('2d');
+                ctx.drawImage(this, 0, 0);
+            }
+            //在图片之上绘画
+
+        }
+    },
     computed:{
         ...mapState(['imgBase64'])
     },

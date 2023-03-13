@@ -25,6 +25,9 @@ public class DemoApplication {
 		System.setProperty("java.library.path", libPath);
 		System.out.println(System.getProperty("java.library.path"));
 		System.loadLibrary("opencv_world455");
+		System.loadLibrary("opencv_core343");
+		System.loadLibrary("opencv_imgproc343");
+
 		System.loadLibrary("clientSDK");
 	}
 
@@ -53,6 +56,13 @@ public class DemoApplication {
 								break;
 							case 1:
 								System.out.println();
+							case 2:
+								for(int i=0;i<paramDouble.length;i++)
+								{
+									System.out.print(paramDouble[i]);
+									if((i+1)%4==0)
+										System.out.println();
+								}
 						}
 					}
 				};

@@ -12,7 +12,11 @@
         </div>
 
         <div id="result">
-            <img :src="imgBase64" alt="" />
+<!--            <img :src="imgBase64" alt="" />-->
+            <canvas id="cvs"  width="1024" height="768" style="border:1px solid #ccc;margin:20px auto;display: block;">
+                当前浏览器不支持canvas
+                <!-- 如果浏览器支持canvas，则canvas标签里的内容不会显示出来 -->
+            </canvas>
         </div>
 <!--        <img-->
 <!--            :src="imgUrl"-->
