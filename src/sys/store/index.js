@@ -5,8 +5,10 @@ export default createStore({
     state(){
         return{
             vuexHelpInfo:'I am helpInfo from vuex',
-            //前端的图片
-            imgBase64:""
+            //网络通讯传过来的图片
+            imgBase64:"",
+            //网络通讯穿过来的double数组
+            revDoubles:null
         }
     },
     mutations:{
@@ -15,6 +17,9 @@ export default createStore({
         },
         setImgBase64(state,payload){
             state.imgBase64=payload
+        },
+        setRevDoubles(state,payload){
+            state.revDoubles=payload
         }
     },
     modules:{

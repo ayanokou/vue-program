@@ -56,13 +56,17 @@ public class DemoApplication {
 								break;
 							case 1:
 								System.out.println();
+								break;
 							case 2:
+								//传double数组
+								client.sendEvent("revDoubles", paramDouble);
 								for(int i=0;i<paramDouble.length;i++)
 								{
 									System.out.print(paramDouble[i]);
 									if((i+1)%4==0)
 										System.out.println();
 								}
+								break;
 						}
 					}
 				};

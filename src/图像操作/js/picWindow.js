@@ -13,6 +13,9 @@ export default {
             showViewer:false,
         }
     },
+    computed:{
+        ...mapState(['imgBase64','revDoubles'])
+    },
     mounted() {
 
     },
@@ -30,10 +33,18 @@ export default {
             }
             //在图片之上绘画
 
+        },
+        revDoubles(){
+            const cvs = document.getElementById("cvs")
+            const ctx=cvs.getContext('2d')
+            for(let i=0;i<this.revDoubles.length/4;++i){
+                // 绘制矩形
+                ctx.beginPath()
+                ctx.strokeStyle = 'red';  // 填充颜色为红色
+                ctx.strokeRect(this.revDoubles[i*4], this.revDoubles[i*4+1], this.revDoubles[i*4+2], this.revDoubles[i*4+3]);
+            }
+
         }
-    },
-    computed:{
-        ...mapState(['imgBase64'])
     },
     methods: {
         //放大

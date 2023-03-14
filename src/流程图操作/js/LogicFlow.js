@@ -1,5 +1,5 @@
-import { Menu, BpmnElement, SelectionSelect, Control, Snapshot, Group, GroupNode } from '@logicflow/extension'
-import { lfJson2Xml } from '@logicflow/extension'
+import {Menu, BpmnElement, SelectionSelect, Control, Snapshot, Group, GroupNode} from '@logicflow/extension'
+import {lfJson2Xml} from '@logicflow/extension'
 //test 框选
 import '@logicflow/extension/lib/style/index.css'
 //test end
@@ -16,9 +16,9 @@ import {
     h
 } from '@logicflow/core'
 
-import { LeftMenus } from './LeftMenuItems.js'
-import { MiniMap } from './MiniMap.js'
-import { eventHandle, events } from "../../sys/eventResponseController";
+import {LeftMenus} from './LeftMenuItems.js'
+import {MiniMap} from './MiniMap.js'
+import {eventHandle, events} from "../../sys/eventResponseController";
 import {ElNotification} from 'element-plus'
 
 
@@ -33,19 +33,22 @@ const handleClose = (key, keyPath) => {
 //初始化socketio用于前后端传输
 let socket = io.connect('http://localhost:9092')
 
-let id=1;
+let id = 1;
+
 class CycleModel extends CircleNodeModel {
     getNodeStyle() {
         const style = super.getNodeStyle();
         style.stroke = 'blue';
         return style;
     }
+
     setAttributes() {
         const size = this.properties.scale || 1;
         this.r = 25 * size
     }
+
     createId() {
-        return (id++)+"";
+        return (id++) + "";
     }
 }
 
@@ -55,8 +58,9 @@ class SuanziModel extends RectNodeModel {
         this.width = 100 * size
         this.height = 80 * size
     }
+
     createId() {
-        return (id++)+"";
+        return (id++) + "";
     }
 }
 
@@ -66,15 +70,18 @@ class ConditionJudgmentModel extends DiamondNodeModel {
         style.stroke = 'blue';
         return style;
     }
+
     setAttributes() {
         const size = this.properties.scale || 1;
         this.rx = 60 * size
         this.ry = 40 * size
     }
+
     createId() {
-        return (id++)+"";
+        return (id++) + "";
     }
 }
+
 //定义Group节点，重写了节点的一些属性和方法
 //由张瀚文添加
 //参考https://blog.csdn.net/towersxu/article/details/124292204
@@ -92,10 +99,12 @@ class MyGroupModel extends GroupNode.model {
         };
         this.targetRules.push(noTarget);
     }
+
     updateText(value) {
         const textValue = value.replace(/\n/gm, "");
         super.updateText(textValue.slice(0, 10));
     }
+
     getNodeStyle() {
         const style = super.getNodeStyle();
         style.stroke = "#AEAFAE";
@@ -104,21 +113,23 @@ class MyGroupModel extends GroupNode.model {
         style.fill = "rgba(239,245,255,0.45)";
         return style;
     }
+
     foldGroup(isFolded) {
         super.foldGroup(isFolded);
         if (isFolded) {
-            this.text = { ...this.foldText };
+            this.text = {...this.foldText};
             if (!this.text.value) {
                 this.text.value = "已折叠";
             }
             this.text.x = this.x + 10;
             this.text.y = this.y;
         } else {
-            this.foldText = { ...this.text };
+            this.foldText = {...this.text};
             this.text = {};
         }
 
     }
+
     deleteGroup() {
         this.graphModel.deleteNode(this.id);
     }
@@ -130,14 +141,16 @@ class MyGroupModel extends GroupNode.model {
         style.hover.stroke = "transparent";
         return style;
     }
+
     createId() {
-        return (id++)+"";
+        return (id++) + "";
     }
 }
+
 //自定义Group节点的外观
 class MyGroup extends GroupNode.view {
     getFoldIcon() {
-        const { model } = this.props;
+        const {model} = this.props;
         const foldX = model.x - model.width / 2 + 5;
         const foldY = model.y - model.height / 2 + 5;
         if (!model.foldable) return null;
@@ -203,7 +216,7 @@ class MyGroup extends GroupNode.view {
     }
 
     getDeleteIcon() {
-        const { model } = this.props;
+        const {model} = this.props;
 
         return h("g", {}, [
             h("rect", {
@@ -270,8 +283,8 @@ class MyGroup extends GroupNode.view {
 
 //法三
 import data from './operatorLib.json'
-const suanziItemList = data
 
+const suanziItemList = data
 
 
 // const dialogVisible = ref(false) //dialogVisible若为true,则显示页面内弹窗
@@ -292,28 +305,27 @@ export default {
             selectedMSG: null,
             //赋值变量 算子和图形
             suanzis: suanziItemList,
-            imgBase64:"",
+            imgBase64: "",
             //对话框UI
-            dialogUI:null,
+            dialogUI: null,
             //算子选中的方法名
-            modelName:"",
-            dialogVisible:false,
-            formData:[]
+            modelName: "",
+            dialogVisible: false,
+            formData: []
         }
     },
-    computed: {
-    },
+    computed: {},
     mounted() {
         this.initHeight = window.innerHeight
         this.init()
         //鼠标移到节点显示帮助信息
-        this.lf.on('node:mouseenter',(evt)=>{
-            let res=[]
-            if(evt.data.properties.outPara){
-                for(let x of evt.data.properties.outPara){
-                    res.push(evt.data.properties.name+`.${x.varName}`)
+        this.lf.on('node:mouseenter', (evt) => {
+            let res = []
+            if (evt.data.properties.outPara) {
+                for (let x of evt.data.properties.outPara) {
+                    res.push(evt.data.properties.name + `.${x.varName}`)
                 }
-                const n=ElNotification({
+                const n = ElNotification({
                     title: 'NAME',
                     message: res,
                     duration: 3000,
@@ -322,23 +334,23 @@ export default {
         })
         //设置节点点击事件监听, 修改帮助信息
         this.lf.on('node:click', (evt) => {
-            let type=evt.data.properties.name
+            let type = evt.data.properties.name
             if (evt.data.properties.upperName) {
                 let upperName = evt.data.properties.upperName
                 let upperopt = suanziItemList[upperName]
-                for(let i=0;i<upperopt.length;i++){
-                    if(upperopt[i]["name"]===type){
-                        this.dialogUI=upperopt[i]["models"]
+                for (let i = 0; i < upperopt.length; i++) {
+                    if (upperopt[i]["name"] === type) {
+                        this.dialogUI = upperopt[i]["models"]
                         break;
                     }
                 }
             }
 
             //默认方法名
-            this.modelName=this.dialogUI[0].name
+            this.modelName = this.dialogUI[0].name
 
             //刷新nodeModel
-            this.nodeModel=this.lf.getNodeModelById(evt.data.id)
+            this.nodeModel = this.lf.getNodeModelById(evt.data.id)
 
 
             switch (type) {
@@ -352,8 +364,8 @@ export default {
                     window.open("#/input", "newwin", "width=400, height=400, top=400, left=400,toolbar=no,scrollbars=no,menubar=no")
                     break
                 default:
-                    this.dialogVisible=true
-                    let e=document.getElementsByClassName('el-overlay-dialog')[0].parentNode
+                    this.dialogVisible = true
+                    let e = document.getElementsByClassName('el-overlay-dialog')[0].parentNode
                     e.style.width = '0px';
 
 
@@ -386,17 +398,19 @@ export default {
 
         //接收java传来的数据
 
-        socket.on('revJson',(data)=>{
-            console.log("this is json from java"+data)
+        socket.on('revJson', (data) => {
         })
-        socket.on('revBase64',(data)=>{
-            console.log("this is img from java"+data)
+        socket.on('revBase64', (data) => {
             //先传递给FlowArea组件
             window.parent.postMessage({
-                imgBase64:data
+                imgBase64: data
             })
-
-
+        })
+        socket.on('revDoubles',(data)=>{
+            //先传递给FlowArea组件
+            window.parent.postMessage({
+                revDoubles: data
+            })
         })
         //与弹出的dialog和标签页通信
         window.addEventListener('message', (evt) => {
@@ -413,8 +427,9 @@ export default {
             if (evt.data.imgBase64) {
 
                 //发送后端
-                let jsonObject = {userName: "Pic",
-                    message:evt.data.imgBase64,
+                let jsonObject = {
+                    userName: "Pic",
+                    message: evt.data.imgBase64,
                 };
                 socket.emit('chatevent', jsonObject);
             }
@@ -487,43 +502,43 @@ export default {
                         alert("111");
                     }
                 },
-                {
-                    text: '组合',
-                    callback() {
-                        alert("222");
-                        //将选区数据存储
-                        const { nodes } = lf.getSelectElements();
-                        const { startPoint, endPoint } = lf.extension.selectionSelect;
-                        //清除选区数据
-                        lf.clearSelectElements();
-                        //如果节点中有不能组合的节点类型则返回
-                        // if(nodes.some((node) => node.type === "someNode")){
-                        //     return;
-                        // }
-                        //startPoint endPoint是dom坐标，需要转换成canvas坐标
-                        const { transformModel } = lf.graphModel;
-                        const [x1, y1] = transformModel.HtmlPointToCanvasPoint([
-                            startPoint.x, startPoint.y
-                        ]);
-                        const [x2, y2] = transformModel.HtmlPointToCanvasPoint([
-                            endPoint.x, endPoint.y
-                        ]);
-                        const width = x2 - x1;
-                        const height = y2 - y1;
-                        if (width < 175 && height < 40) {
-                            return;
+                    {
+                        text: '组合',
+                        callback() {
+                            alert("222");
+                            //将选区数据存储
+                            const {nodes} = lf.getSelectElements();
+                            const {startPoint, endPoint} = lf.extension.selectionSelect;
+                            //清除选区数据
+                            lf.clearSelectElements();
+                            //如果节点中有不能组合的节点类型则返回
+                            // if(nodes.some((node) => node.type === "someNode")){
+                            //     return;
+                            // }
+                            //startPoint endPoint是dom坐标，需要转换成canvas坐标
+                            const {transformModel} = lf.graphModel;
+                            const [x1, y1] = transformModel.HtmlPointToCanvasPoint([
+                                startPoint.x, startPoint.y
+                            ]);
+                            const [x2, y2] = transformModel.HtmlPointToCanvasPoint([
+                                endPoint.x, endPoint.y
+                            ]);
+                            const width = x2 - x1;
+                            const height = y2 - y1;
+                            if (width < 175 && height < 40) {
+                                return;
+                            }
+                            //创建一个GroupNode
+                            lf.addNode({
+                                type: "mygroup",
+                                x: x1 + width / 2,
+                                y: y1 + height / 2,
+                                width,
+                                height,
+                                children: nodes.map((item) => item.id)
+                            });
                         }
-                        //创建一个GroupNode
-                        lf.addNode({
-                            type: "mygroup",
-                            x: x1 + width / 2,
-                            y: y1 + height / 2,
-                            width,
-                            height,
-                            children: nodes.map((item) => item.id)
-                        });
-                    }
-                },
+                    },
                 ]
             })
 
@@ -564,7 +579,7 @@ export default {
                 //开启框选
                 lf.openSelectionSelect()
                 lf.once("selection:selected", (data) => {
-                    let result = { nodes: [], edges: [] }
+                    let result = {nodes: [], edges: []}
                     for (let x of data) {
                         //通过id获得model
                         let model = this.lf.getNodeModelById(x.id)
@@ -579,17 +594,21 @@ export default {
                     this.selectedMSG = result
                     console.log(this.selectedMSG)
                 });
-            },
-
-
-                lf.extension.control.addItem({
-                    text: "下载快照",
-                    onClick: () => {
-                        this.downloadImage()
-                    }
-                })
+            }
             lf.extension.control.addItem({
-                text: "下载XML",
+                text: "运行",
+                onClick: () => {
+                    this.run()
+                }
+            })
+            lf.extension.control.addItem({
+                text:"导入Json",
+                onClick:()=>{
+                    this.loadJson()
+                }
+            })
+            lf.extension.control.addItem({
+                text: "下载Json",
                 onClick: () => {
                     this.downloadXML()
                 }
@@ -603,6 +622,30 @@ export default {
             this.lf = lf
             this.initData = initData
 
+        },
+        run(){
+            let jsonObject = {
+                userName: 'Flow',
+                message: JSON.stringify(this.lf.getGraphData())
+            }
+            socket.emit('chatevent', jsonObject);
+        },
+        loadJson(){
+            let inputObj = document.createElement('input');
+            inputObj.type = 'file';
+            inputObj.accept = 'json';
+            let solutionJson = null;
+            inputObj.onchange = () => {
+                let file = inputObj.files[0];
+                let reader = new FileReader();
+                reader.readAsText(file);
+                reader.onload = () => {
+                    solutionJson = JSON.parse(reader.result);
+                    console.log(solutionJson) // 读取json
+                    this.lf.render(solutionJson)
+                };
+            };
+            inputObj.click();
         },
         download(filename, text) {
             console.log(filename, text)
@@ -628,43 +671,33 @@ export default {
             this.download('flow.json', JSON.stringify(this.lf.getGraphData()))
             //前端开始运行逻辑不完善，因此将流程图json传到后端的语句写在这里了，以后实际开发的时候进行调整
             //socket.emit('flowInformation',this.lf.getGraphData());
-            //test 传json串
-            console.log(this.lf.getGraphData());
-            //console.log(JSON.stringify(this.lf.getGraphData()))
-            var jsonObject = {
-                userName: 'Flow',
-                message: JSON.stringify(this.lf.getGraphData())
-            }
 
-            socket.emit('chatevent', jsonObject);
-
-            //test end
         },
         formDataSubmit() {
-            let inPara=null
-            let outPara=null
-            for(let m of this.dialogUI){
-                if(m.name==this.modelName){
-                    inPara=m.properties.inPara
-                    outPara=m.properties.outPara
+            let inPara = null
+            let outPara = null
+            for (let m of this.dialogUI) {
+                if (m.name == this.modelName) {
+                    inPara = m.properties.inPara
+                    outPara = m.properties.outPara
                 }
             }
-            for(let i in inPara){
+            for (let i in inPara) {
 
-                if(this.formData[i]){
-                    inPara[i].from=this.formData[i]
-                }else{
-                    inPara[i].from=""
+                if (this.formData[i]) {
+                    inPara[i].from = this.formData[i]
+                } else {
+                    inPara[i].from = ""
                 }
             }
             this.nodeModel.setProperties({
-                "modelName":this.modelName,
-                "inPara":inPara,
-                "outPara":outPara
+                "modelName": this.modelName,
+                "inPara": inPara,
+                "outPara": outPara
             })
         },
-        clear(){
-            this.formData=[]
+        clear() {
+            this.formData = []
         }
     }
 }

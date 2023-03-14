@@ -80,8 +80,10 @@ export default {
             }
             if(event.data.imgBase64){
                 //更新imgBase64的值
-                let payload=event.data.imgBase64
-                this.$store.commit('setImgBase64',payload)
+                this.$store.commit('setImgBase64',event.data.imgBase64)
+            }
+            if(event.data.revDoubles){
+                this.$store.commit('setRevDoubles',event.data.revDoubles)
             }
         })
         window.addEventListener('resize', ()=>{
