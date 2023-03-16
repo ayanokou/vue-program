@@ -49,7 +49,7 @@
                 "upperName": "输入输出",
                 "helpMsg": "it is a help message",
                 "name": "dataInput",
-                "dllPath": "./dll/",
+                "dllPath": "server/src/main/resources/",
                 "modelName": ""
             },
             "models": [
@@ -62,7 +62,7 @@
                     "inPara": [
                         {
                             "varName": "filename",
-                            "varType": "String",
+                            "varType": "string",
                             "from": "",
                             "typeUI": "input",
                             "explanation": ""
@@ -450,7 +450,7 @@
                 "upperName": "图像处理",
                 "helpMsg": "it is a help message",
                 "name": "imgFilter",
-                "dllPath": "./dll/",
+                "dllPath": "server/src/main/resources/",
                 "modelName": ""
             },
             "models": [
@@ -463,7 +463,7 @@
                         "inPara": [
                             {
                                 "varName": "src",
-                                "varType": "InputArray",
+                                "varType": "Mat",
                                 "from": "",
                                 "typeUI": "input",
                                 "explanation": ""
@@ -500,7 +500,7 @@
                         "outPara": [
                             {
                                 "varName": "dst",
-                                "varType": "OutputArray",
+                                "varType": "Mat",
                                 "explanation": ""
                             }
                         ]
