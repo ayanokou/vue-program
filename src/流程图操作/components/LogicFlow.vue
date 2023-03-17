@@ -2,20 +2,40 @@
     <el-container>
         <el-aside style="width:120px">
             <el-menu class="el-menu-vertical" :collapse="true" style="width: 120px">
-                <!--遍历添加算子菜单块-->
-                <el-sub-menu v-for="(value, key, index1) in suanzis" :index="index1">
+
+                <el-sub-menu v-for="(model_1, index1) in suanzis.models" :index="index1">
                     <template #title>
-                        <el-icon>
-                            <location/>
+                        <el-icon style="vertical-align: middle">
+                            <Expand />
                         </el-icon>
-                        {{ key }}
+                        {{ model_1.lfProperties.name }}
                     </template>
-                    <el-menu-item-group>
-                        <!--vue 插入元素-->
-                        <el-menu-item v-for="(suanziItem, index2) in value" :index="'suanzi' + index1 + '-' + index2"
-                                      :id="suanziItem.name">
-                        </el-menu-item>
-                    </el-menu-item-group>
+
+                    <el-space warp>
+                        <el-button  type="primary" v-for="(model_2, index2) in model_1.models" :index="'suanzi' + index1 + '-' + index2" @click="dialogControl[model_2.lfProperties.name]=true">
+
+                            {{model_2.lfProperties.name }}
+
+                            <el-dialog v-model="dialogControl[model_2.lfProperties.name]" width="30%" draggable append-to-body="true" modal="false">
+
+                                <template #title>
+                                    {{ model_2.lfProperties.name }}
+                                </template>
+                                <el-space wrap>
+                                    <el-button type="primary" :icon="Place" v-for="(model_3, index3) in model_2.models" :index="'suanzi' + index1 + '-' + index2 + '-' + index3" :id="model_3.lfProperties.name"
+                                               @click="dialogControl[model_2.lfProperties.name]=false;clickToAddNode(model_3)">
+                                        {{ model_3.lfProperties.name }}
+                                    </el-button>
+
+                                </el-space>
+
+                            </el-dialog>
+
+                        </el-button>
+
+                    </el-space>
+
+
                 </el-sub-menu>
             </el-menu>
         </el-aside>
@@ -25,22 +45,14 @@
 
         <el-dialog v-model="dialogVisible" :modal="false" :close-on-click-modal="false" :title="modelName" width="50%" draggable>
             <el-form label-width="120px">
-                <el-form-item label="模式选择" v-if="dialogUI.length>1">
-                    <el-select placeholder="请选择" v-model="modelName">
-                        <el-option v-for="m in dialogUI" :label="m.name" :key="m.name" :value="m.name">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
 
-                <template v-for="model in dialogUI">
-                    <el-form-item v-if="model.name===modelName" v-for="(item,index) in model.properties.inPara" :label="item.varName">
+                    <el-form-item  v-for="(item,index) in dialogUI" :label="item.varName">
                         <div v-if="item.typeUI === 'input'">
                             <label>
                                 <input type="text" v-model="formData[index]">
                             </label>
                         </div>
                     </el-form-item>
-                </template>
             </el-form>
             <template #footer>
           <span class="dialog-footer">
@@ -59,6 +71,7 @@
 </script>
 
 <style>
+
 .el-overlay-dialog{
     pointer-events:none;
 }
