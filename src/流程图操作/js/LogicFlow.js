@@ -314,7 +314,9 @@ export default {
             formData: []
         }
     },
-    computed: {},
+    computed: {
+        
+    },
     mounted() {
         this.initHeight = window.innerHeight
         this.init()
