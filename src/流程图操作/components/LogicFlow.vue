@@ -41,7 +41,9 @@
         </el-aside>
 
         <!--流程图区域-->
-        <el-main id="lf" style="height: 100%; padding: 0;"></el-main>
+        <el-main ref="lfMain" style=":height: 100%; padding: 0;">
+            <slot></slot>
+        </el-main>
 
         <el-dialog v-model="dialogVisible" :modal="false" :close-on-click-modal="false" :title="modelName" width="50%" draggable>
             <el-form label-width="120px">
@@ -70,7 +72,7 @@
 
 </script>
 
-<style>
+<style scoped>
 
 .el-overlay-dialog{
     pointer-events:none;

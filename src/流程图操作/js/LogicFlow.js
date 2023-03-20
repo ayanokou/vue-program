@@ -291,6 +291,7 @@ const suanziItemList = data
 
 export default {
     name: 'FlowDemo',
+    props:['tabName'],
     data() {
         return {
             //logic-flow
@@ -313,7 +314,8 @@ export default {
             dialogVisible: false,
             formData: [],
             dialogControl: {}, // 左侧菜单栏对话跳窗控制
-            isDragging:false
+            isDragging:false,
+            testName:"testName"//测试标签页名
         }
     },
     computed: {
@@ -322,6 +324,7 @@ export default {
     mounted() {
         this.initHeight = window.innerHeight
         this.init()
+        document.querySelector("#"+this.tabName).firstElementChild.style.height=""+this.initHeight+"px"
         //鼠标移到节点显示帮助信息
         this.lf.on('node:mouseenter', (evt) => {
             let res = []
@@ -360,17 +363,6 @@ export default {
 
 
 
-
-            //调用事件响应函数，做出响应
-            //const msg_key = evt.data.properties.key
-            //eventHandle(events.msg_singleStepOpr, {msg_key})//单步运算->key
-
-            //iframe给父组件传递消息方法
-            //window.parent.postMessage({nodeHelpMsg: evt.data.properties.helpMsg});
-            //console.log(JSON.stringify(evt.data.text.value) + " is clicked. run some method related to label or type or id... and it's properties taht we can modify are: " + JSON.stringify(data.data.properties))
-            //原生修改html元素方法
-            // window.parent.document.getElementById("pane-third").innerText = evt.data.properties.helpMsg
-
         })
 
         this.lf.on('edge:click', (evt) => {
@@ -387,15 +379,11 @@ export default {
         })
         socket.on('revBase64', (data) => {
             //先传递给FlowArea组件
-            window.parent.postMessage({
-                imgBase64: data
-            })
+            this.$store.commit('setImgBase64',event.data.imgBase64)
         })
         socket.on('revDoubles',(data)=>{
             //先传递给FlowArea组件
-            window.parent.postMessage({
-                revDoubles: data
-            })
+            this.$store.commit('setRevDoubles',event.data.revDoubles)
         })
         //与弹出的dialog和标签页通信
         window.addEventListener('message', (evt) => {
@@ -420,18 +408,17 @@ export default {
             }
         })
         window.onresize = () => {
-            return (() => {
-                this.initHeight = window.innerHeight
-                this.lf.render(this.lf.getGraphData())
-                const position = this.lf.getPointByClient(document.documentElement.clientWidth - 150, document.documentElement.clientHeight - 230)
-                this.lf.extension.miniMap.show(position.domOverlayPosition.x, position.domOverlayPosition.y)
-            })
+            this.initHeight = window.innerHeight
+            document.querySelector("#"+this.tabName).firstElementChild.style.height=""+this.initHeight+"px"
+            this.lf.render(this.lf.getGraphData())
+            const position = this.lf.getPointByClient(document.documentElement.clientWidth - 150, document.documentElement.clientHeight - 230)
+            this.lf.extension.miniMap.show(position.domOverlayPosition.x, position.domOverlayPosition.y)
         }
     },
     methods: {
         init() {
             const lf = new LogicFlow({
-                container: document.querySelector("#lf"),
+                container: document.querySelector("#"+this.tabName),
                 height: this.initHeight,
                 plugins: [Menu, BpmnElement, LeftMenus, SelectionSelect, Control, MiniMap, Snapshot, Group],
                 background: {
@@ -635,7 +622,7 @@ export default {
             const initData = {}
 
             lf.render(initData)
-            const position = lf.getPointByClient(document.documentElement.clientWidth - 150, document.documentElement.clientHeight - 230)
+            const position = lf.getPointByClient(document.documentElement.clientWidth/2 - 150, document.documentElement.clientHeight - 230)
             lf.extension.miniMap.show(position.domOverlayPosition.x, position.domOverlayPosition.y)
             this.lf = lf
             this.initData = initData
@@ -661,11 +648,16 @@ export default {
                     solutionJson = JSON.parse(reader.result);
                     console.log(solutionJson) // 读取json
                     this.lf.render(solutionJson)
+                    //test tabName
+                    this.$emit('someEvent',this.testName)
                 };
             };
             inputObj.click();
+
+
         },
         download(filename, text) {
+
             console.log(filename, text)
             var element = document.createElement("a")
             element.setAttribute(
