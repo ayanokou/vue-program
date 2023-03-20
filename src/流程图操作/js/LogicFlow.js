@@ -322,7 +322,7 @@ export default {
         
     },
     mounted() {
-        this.initHeight = window.innerHeight
+        this.initHeight = window.innerHeight-150
         this.init()
         document.querySelector("#"+this.tabName).firstElementChild.style.height=""+this.initHeight+"px"
         //鼠标移到节点显示帮助信息
@@ -377,11 +377,11 @@ export default {
         })
         socket.on('revBase64', (data) => {
             //先传递给FlowArea组件
-            this.$store.commit('setImgBase64',event.data.imgBase64)
+            this.$store.commit('setImgBase64',data)
         })
         socket.on('revDoubles',(data)=>{
             //先传递给FlowArea组件
-            this.$store.commit('setRevDoubles',event.data.revDoubles)
+            this.$store.commit('setRevDoubles',data)
         })
         //与弹出的dialog和标签页通信
         window.addEventListener('message', (evt) => {
@@ -406,7 +406,8 @@ export default {
             }
         })
         window.onresize = () => {
-            this.initHeight = window.innerHeight
+            this.initHeight = window.innerHeight-150
+            console.log(this.initHeight)
             document.querySelector("#"+this.tabName).firstElementChild.style.height=""+this.initHeight+"px"
             this.lf.render(this.lf.getGraphData())
             const position = this.lf.getPointByClient(document.documentElement.clientWidth - 150, document.documentElement.clientHeight - 230)

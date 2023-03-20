@@ -72,7 +72,7 @@
 
 </script>
 
-<style scoped>
+<style>
 
 
 .el-overlay-dialog{
