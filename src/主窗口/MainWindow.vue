@@ -86,6 +86,15 @@
 <script src="./js/mainWindow.js"></script>
 
 <style>
+
+.el-overlay-dialog{
+    pointer-events:none;
+}
+
+.el-dialog{
+    pointer-events:auto;
+}
+
 .el-header {
     --el-header-height: 80px;
 }

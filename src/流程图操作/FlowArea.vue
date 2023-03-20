@@ -86,6 +86,7 @@ export default {
 }
 </script>
 <style scoped>
+
 .demo-tabs>.el-tabs__content {
     padding: 32px;
     color: #6b778c;

@@ -16,7 +16,7 @@
 
                             {{model_2.lfProperties.name }}
 
-                            <el-dialog v-model="dialogControl[model_2.lfProperties.name]" width="30%" draggable append-to-body="true" modal="false">
+                            <el-dialog v-model="dialogControl[model_2.lfProperties.name]" width="30%" :modal="false" :close-on-click-modal="false" draggable append-to-body="true" modal="false">
 
                                 <template #title>
                                     {{ model_2.lfProperties.name }}
@@ -72,16 +72,8 @@
 
 </script>
 
-<style>
+<style scoped>
 
-
-.el-overlay-dialog{
-    pointer-events:none;
-}
-
-.el-dialog{
-    pointer-events:auto;
-}
 .el-menu-vertical:not(.el-menu--collapse) {
     width: 180px;
     min-height: 400px;
