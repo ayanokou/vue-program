@@ -2,11 +2,11 @@
     <el-tabs v-model="editableTabsValue" type="card" editable class="demo-tabs" @edit="handleTabsEdit">
         <el-tab-pane v-for="item in editableTabs" :key="item.name" :name="item.name">
             <template #label>
-                {{ item.name }}
+                {{ item.tabName }}
                 <el-button icon="pointer">开始</el-button>
                 <el-button icon="finished">结束</el-button>
             </template>
-            <LogicFlow :tabName="item.title" @someEvent="changeTabName">
+            <LogicFlow :tabName="item.title" @changeTabName="changeTabName">
                 <div :id="item.title"></div>
             </LogicFlow>
 <!--            <iframe src='#/logicFlow' width='100%' :height="iframeHeight + 'px'" scrolling="no"></iframe>-->
@@ -32,15 +32,15 @@ export default {
                 {
                     title: 'logicFlow1',//作为标签id
                     name: '1',//作为标签页名
-                    index:0//标签页下标
+                    index:0,//标签页下标
+                    tabName:'lf1'
                 },
             ]
         }
     },
     methods:{
         changeTabName(data){
-            this.editableTabs[0].name=data
-            console.log(this.editableTabs)
+            this.editableTabs[0].tabName=data
         },
         handleTabsEdit(targetName, action) {
             if (action === 'add') {
@@ -48,7 +48,8 @@ export default {
                 this.editableTabs.push({
                     title: 'logicFlow' + this.tabIndex,
                     name: newTabName,
-                    index: this.editableTabs.length
+                    index: this.editableTabs.length,
+                    tabName:'lf'+this.tabIndex
                 })
                 this.editableTabsValue = newTabName
             } else if (action === 'remove') {

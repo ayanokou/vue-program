@@ -315,7 +315,7 @@ export default {
             formData: [],
             dialogControl: {}, // 左侧菜单栏对话跳窗控制
             isDragging:false,
-            testName:"testName"//测试标签页名
+            lfData:null//当前标签页中的所有数据
         }
     },
     computed: {
@@ -360,8 +360,6 @@ export default {
             this.dialogVisible = true
             let e = document.getElementsByClassName('el-overlay-dialog')[0].parentNode
             e.style.width = '0px';
-
-
 
         })
 
@@ -649,7 +647,7 @@ export default {
                     console.log(solutionJson) // 读取json
                     this.lf.render(solutionJson)
                     //test tabName
-                    this.$emit('someEvent',this.testName)
+                    this.$emit('changeTabName',file.name.substring(0,file.name.lastIndexOf('.')))
                 };
             };
             inputObj.click();
@@ -657,8 +655,6 @@ export default {
 
         },
         download(filename, text) {
-
-            console.log(filename, text)
             var element = document.createElement("a")
             element.setAttribute(
                 "href",

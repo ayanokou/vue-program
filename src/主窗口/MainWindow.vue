@@ -116,7 +116,7 @@ ul.el-menu.el-menu--horizontal.el-menu-demo :hover {
 :root {
     --el-color-primary-light-9: rgb(8, 36, 105);
     --el-color-primary: rgb(8, 36, 105);
-    --el-menu-bg-color: rgb(8, 36, 105);
+    --el-menu-bg-color: white;
     --el-menu-hover-bg-color: rgb(121, 187, 255)
 }
 

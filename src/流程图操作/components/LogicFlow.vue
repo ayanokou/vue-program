@@ -74,6 +74,7 @@
 
 <style scoped>
 
+
 .el-overlay-dialog{
     pointer-events:none;
 }
