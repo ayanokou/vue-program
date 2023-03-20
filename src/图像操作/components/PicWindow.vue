@@ -1,10 +1,10 @@
 <template>
     <div>
         <div class="head-btn-box">
-            <el-button icon="zoom-in" @click="toBIgChange"></el-button>
-            <el-button icon="zoom-out" @click="toSmallChange"></el-button>
-            <el-button icon="RefreshLeft" @click="toReset"></el-button>
-            <el-button icon="FullScreen" @click="onPreview"></el-button>
+            <el-button title="放大" id="toBig" icon="zoom-in"></el-button>
+            <el-button title="缩小" id="toSmall" icon="zoom-out"></el-button>
+            <el-button title="复原图像" id="toReset" icon="RefreshLeft"></el-button>
+            <el-button title="全屏预览图像" id="onPreview" icon="FullScreen"></el-button>
         </div>
 
         <div id="result">

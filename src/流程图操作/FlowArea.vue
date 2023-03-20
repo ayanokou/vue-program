@@ -14,10 +14,11 @@
 </template>
 
 
-<script>
+<script >
 export default {
     data(){
         return {
+            test:1,
             tabIndex:1,
             //当前显示的标签页
             editableTabsValue:'1',
@@ -71,7 +72,17 @@ export default {
                 })
             }
             console.log(this.editableTabs)
-        }
+        },
+        newSolutionTrigger(){
+            console.log(test)
+             //处理逻辑
+            for(let tab of this.editableTabs){
+                //获得每一个tab的name
+                this.handleTabsEdit(tab.name,'remove')
+            }
+            this.handleTabsEdit('','add')
+        },
+        
     },
     mounted() {
         /**接受userLf iframe发送来的数据， 并且用emitter发射到resultArea组件*/
