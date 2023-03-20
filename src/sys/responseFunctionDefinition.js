@@ -1,11 +1,10 @@
 import statusBar from "../图像操作/js/picWindow.js"
-import flowOperation from '../流程图操作/js/FlowArea.js'
 import { createApp } from 'vue';
 
 
 //该文件存储的是各类事件响应函数的定义
 export function function_nS(paras){
-    flowOperation.methods.newSolutionTrigger()
+    
 }
 
 export function function_mF(paras){

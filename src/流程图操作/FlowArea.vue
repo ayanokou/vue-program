@@ -14,7 +14,11 @@
 </template>
 
 
-<script >
+
+<script>
+import {mapState} from "vuex";
+
+
 export default {
     data(){
         return {
@@ -32,6 +36,33 @@ export default {
             iframeHeight:window.innerHeight - 80 - 102 + 50
         }
     },
+    // computed:{
+    //     ...mapState(['newSolutionTrigger','openSolutionTrigger'])
+    // },
+    // watch:{
+    //     newSolutionTrigger(newValue){
+    //         if(newValue){
+    //
+    //             //处理逻辑
+    //             for(let tab of this.editableTabs){
+    //                 //获得每一个tab的name
+    //                 this.handleTabsEdit(tab.name,'remove')
+    //             }
+    //             this.handleTabsEdit('','add')
+    //             //关掉触发器
+    //             this.$store.commit('newSolutionEvent',false)
+    //         }
+    //     },
+    //     openSolutionTrigger(newValue){
+    //         if(newValue){
+    //             //处理逻辑
+    //             //读取json
+    //             //给每个iframe分发json
+    //             //关掉触发器
+    //             this.$store.commit('openSolutionEvent',false)
+    //         }
+    //     }
+    // },
     methods:{
         getGeometry(id) {
             //给子iframe传数据

@@ -311,10 +311,14 @@ export default {
             //算子选中的方法名
             modelName: "",
             dialogVisible: false,
-            formData: []
+            formData: [],
+            dialogControl: {}, // 左侧菜单栏对话跳窗控制
+            isDragging:false
         }
     },
-    computed: {},
+    computed: {
+        
+    },
     mounted() {
         this.initHeight = window.innerHeight
         this.init()
@@ -323,57 +327,38 @@ export default {
             let res = []
             if (evt.data.properties.outPara) {
                 for (let x of evt.data.properties.outPara) {
-                    res.push(evt.data.properties.name + `.${x.varName}`)
+                    res.push(evt.data.properties.modelName + `.${x.varName}`)
                 }
-                const n = ElNotification({
-                    title: 'NAME',
-                    message: res,
-                    duration: 3000,
-                })
+                if (this.isDragging) {
+                    ElNotification({
+                        title: 'NAME',
+                        message: res,
+                        duration: 2000,
+                    })
+                }
             }
+        })
+        this.lf.on('node:dragstart',()=>{
+            this.isDragging=false
+        })
+        this.lf.on('node:drop',()=>{
+            this.isDragging=true
         })
         //设置节点点击事件监听, 修改帮助信息
         this.lf.on('node:click', (evt) => {
-            let type = evt.data.properties.name
-            if (evt.data.properties.upperName) {
-                let upperName = evt.data.properties.upperName
-                let upperopt = suanziItemList[upperName]
-                for (let i = 0; i < upperopt.length; i++) {
-                    if (upperopt[i]["name"] === type) {
-                        this.dialogUI = upperopt[i]["models"]
-                        break;
-                    }
-                }
-            }
+            this.dialogUI=evt.data.properties.inPara
+            this.modelName=evt.data.properties.modelName
 
-            //默认方法名
-            this.modelName = this.dialogUI[0].name
 
             //刷新nodeModel
             this.nodeModel = this.lf.getNodeModelById(evt.data.id)
 
 
-            switch (type) {
-                case "cycleStart":
-                    window.open("#/conditionNode", "newwin", "width=400, height=400, top=400, left=400,toolbar=no,scrollbars=no,menubar=no")
-                    break
-                case "conditionJudge":
-                    window.open("#/conditionNode", "newwin", "width=400, height=400, top=400, left=400,toolbar=no,scrollbars=no,menubar=no")
-                    break
-                case "input":
-                    window.open("#/input", "newwin", "width=400, height=400, top=400, left=400,toolbar=no,scrollbars=no,menubar=no")
-                    break
-                default:
-                    this.dialogVisible = true
-                    let e = document.getElementsByClassName('el-overlay-dialog')[0].parentNode
-                    e.style.width = '0px';
+            this.dialogVisible = true
+            let e = document.getElementsByClassName('el-overlay-dialog')[0].parentNode
+            e.style.width = '0px';
 
 
-            }
-
-            // if(type=="conditionJudge"||type=="cycleStart"){
-            //     window.open("#/conditionNode", "newwin", "toolbar=no,scrollbars=no,menubar=no");
-            // }
 
 
             //调用事件响应函数，做出响应
@@ -565,36 +550,69 @@ export default {
                 }
 
             ])
+            // // 设置算子面板, 换成三级菜单后这段代码没用了, 初始化lf的时候设置stopMoveGraph为true就是默认框选
+            // var suanziItemListConcat = []
 
-            // 设置算子面板
-            var suanziItemListConcat = []
-            for (var i in suanziItemList) {
-                suanziItemListConcat = suanziItemListConcat.concat(suanziItemList[i])
-            }
-            lf.extension.leftMenus.setPatternItems(suanziItemListConcat)
-
-
-            // 设置节点面板, 设置框选回调
-            suanziItemList['控制模块'][0].callback = () => {
-                //开启框选
-                lf.openSelectionSelect()
-                lf.once("selection:selected", (data) => {
-                    let result = {nodes: [], edges: []}
-                    for (let x of data) {
-                        //通过id获得model
-                        let model = this.lf.getNodeModelById(x.id)
-                        //通过model获得data
-                        if (!model) {
-                            model = this.lf.getEdgeModelById(x.id)
-                            result.edges.push(model.getData())
-                        } else {
-                            result.nodes.push(model.getData())
-                        }
-                    }
-                    this.selectedMSG = result
-                    console.log(this.selectedMSG)
-                });
-            }
+            // suanziItemList.models.forEach((i)=>{
+            //     i.models.forEach((j)=>{
+            //         this.dialogControl[j.lfProperties.name] = false
+            //         j.models.forEach((k) => {
+            //             var temp = {
+            //                 label : k.lfProperties.label,
+            //                 text : k.lfProperties.text,
+            //                 type : k.lfProperties.type,
+            //                 name : k.lfProperties.name,
+            //                 properties : k.properties,
+            //                 icon : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAEFVwZaAAAABGdBTUEAALGPC/xhBQAAAqlJREFUOBF9VM9rE0EUfrMJNUKLihGbpLGtaCOIR8VjQMGDePCgCCIiCNqzCAp2MyYUCXhUtF5E0D+g1t48qAd7CCLqQUQKEWkStcEfVGlLdp/fm3aW2QQdyLzf33zz5m2IsAZ9XhDpyaaIZkTS4ASzK41TFao88GuJ3hsr2pAbipHxuSYyKRugagICGANkfFnNh3HeE2N0b3nN2cgnpcictw5veJIzxmDamSlxxQZicq/mflxhbaH8BLRbuRwNtZp0JAhoplVRUdzmCe/vO27wFuuA3S5qXruGdboy5/PRGFsbFGKo/haRtQHIrM83bVeTrOgNhZReWaYGnE4aUQgTJNvijJFF4jQ8BxJE5xfKatZWmZcTQ+BVgh7s8SgPlCkcec4mGTmieTP4xd7PcpIEg1TX6gdeLW8rTVMVLVvb7ctXoH0Cydl2QOPJBG21STE5OsnbweVYzAnD3A7PVILuY0yiiyDwSm2g441r6rMSgp6iK42yqroI2QoXeJVeA+YeZSa47gZdXaZWQKTrG93rukk/l2Al6Kzh5AZEl7dDQy+JjgFahQjRopSxPbrbvK7GRe9ePWBo1wcU7sYrFZtavXALwGw/7Dnc50urrHJuTPSoO2IMV3gUQGNg87IbSOIY9BpiT9HV7FCZ94nPXb3MSnwHn/FFFE1vG6DTby+r31KAkUktB3Qf6ikUPWxW1BkXSPQeMHHiW0+HAd2GelJsZz1OJegCxqzl+CLVHa/IibuHeJ1HAKzhuDR+ymNaRFM+4jU6UWKXorRmbyqkq/D76FffevwdCp+jN3UAN/C9JRVTDuOxC/oh+EdMnqIOrlYteKSfadVRGLJFJPSB/ti/6K8f0CNymg/iH2gO/f0DwE0yjAFO6l8JaR5j0VPwPwfaYHqOqrCI319WzwhwzNW/aQAAAABJRU5ErkJggg=="
+            //             }
+            //             if(temp.label == "选区"){
+            //                 temp.callback = () => {
+            //                     //开启框选
+            //                     lf.openSelectionSelect()
+            //                     lf.once("selection:selected", (data) => {
+            //                         let result = { nodes: [], edges: [] }
+            //                         for (let x of data) {
+            //                             //通过id获得model
+            //                             let model = this.lf.getNodeModelById(x.id)
+            //                             //通过model获得data
+            //                             if (!model) {
+            //                                 model = this.lf.getEdgeModelById(x.id)
+            //                                 result.edges.push(model.getData())
+            //                             } else {
+            //                                 result.nodes.push(model.getData())
+            //                             }
+            //                         }
+            //                         this.selectedMSG = result
+            //                         console.log(this.selectedMSG)
+            //                     });
+            //                 }
+            //             }
+            //             suanziItemListConcat = suanziItemListConcat.concat(temp)
+            //         })
+            //     })
+            // })
+            // lf.extension.leftMenus.setPatternItems(suanziItemListConcat)
+            // // 设置节点面板, 设置框选回调
+            // suanziItemList['控制模块'][0].callback = () => {
+            //     //开启框选
+            //     lf.openSelectionSelect()
+            //     lf.once("selection:selected", (data) => {
+            //         let result = {nodes: [], edges: []}
+            //         for (let x of data) {
+            //             //通过id获得model
+            //             let model = this.lf.getNodeModelById(x.id)
+            //             //通过model获得data
+            //             if (!model) {
+            //                 model = this.lf.getEdgeModelById(x.id)
+            //                 result.edges.push(model.getData())
+            //             } else {
+            //                 result.nodes.push(model.getData())
+            //             }
+            //         }
+            //         this.selectedMSG = result
+            //         console.log(this.selectedMSG)
+            //     });
+            // }
             lf.extension.control.addItem({
                 text: "运行",
                 onClick: () => {
@@ -674,30 +692,31 @@ export default {
 
         },
         formDataSubmit() {
-            let inPara = null
-            let outPara = null
-            for (let m of this.dialogUI) {
-                if (m.name == this.modelName) {
-                    inPara = m.properties.inPara
-                    outPara = m.properties.outPara
-                }
-            }
-            for (let i in inPara) {
-
-                if (this.formData[i]) {
-                    inPara[i].from = this.formData[i]
-                } else {
-                    inPara[i].from = ""
-                }
+            let inPara=this.dialogUI
+            for(let i in inPara){
+                inPara[i].from=this.formData[i]
             }
             this.nodeModel.setProperties({
-                "modelName": this.modelName,
                 "inPara": inPara,
-                "outPara": outPara
             })
         },
         clear() {
             this.formData = []
+        },
+        // 三级菜单按下添加节点
+        clickToAddNode(node) {
+            if (node.lfProperties.text != "选区") {
+                this.lf.addNode({
+                    type: node.lfProperties.type,
+                    x: 100,
+                    y: 100,
+                    text: node.lfProperties.text,
+                    label: node.lfProperties.label,
+                    name: node.lfProperties.name,
+                    properties: node.properties
+                })
+            }
+
         }
     }
 }
