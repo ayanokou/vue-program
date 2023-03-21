@@ -706,6 +706,24 @@ export default {
                 })
             }
 
+        },
+        // 三级菜单拖拽添加节点
+        dragToAddNode(event, node) {
+            this.lf.addNode({
+                type: node.lfProperties.type,
+                x: event.clientX - 50,
+                y: event.clientY - 100,
+                text: node.lfProperties.text,
+                label: node.lfProperties.label,
+                name: node.lfProperties.name,
+                properties: node.properties
+            })
+        },
+        clickLeftMenu(){
+            let es = document.getElementsByClassName('el-overlay-dialog')
+            for(let e of es){
+                e.parentNode.style.width='0px'
+            }
         }
     }
 }

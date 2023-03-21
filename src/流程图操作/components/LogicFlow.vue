@@ -12,7 +12,7 @@
                     </template>
 
                     <el-space warp>
-                        <el-button  type="primary" v-for="(model_2, index2) in model_1.models" :index="'suanzi' + index1 + '-' + index2" @click="dialogControl[model_2.lfProperties.name]=true">
+                        <el-button  type="primary" v-for="(model_2, index2) in model_1.models" :index="'suanzi' + index1 + '-' + index2" @click="dialogControl[model_2.lfProperties.name]=true;clickLeftMenu()">
 
                             {{model_2.lfProperties.name }}
 
@@ -23,7 +23,7 @@
                                 </template>
                                 <el-space wrap>
                                     <el-button type="primary" :icon="Place" v-for="(model_3, index3) in model_2.models" :index="'suanzi' + index1 + '-' + index2 + '-' + index3" :id="model_3.lfProperties.name"
-                                               @click="dialogControl[model_2.lfProperties.name]=false;clickToAddNode(model_3)">
+                                               @click="dialogControl[model_2.lfProperties.name]=false;clickToAddNode(model_3)" draggable="true" @dragend="dragToAddNode($event, model_3)">
                                         {{ model_3.lfProperties.name }}
                                     </el-button>
 
