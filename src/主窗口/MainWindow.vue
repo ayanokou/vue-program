@@ -7,8 +7,8 @@
                 <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect" menu-trigger="hover">
                     <el-sub-menu index="1">
                         <template #title><span style="color:aliceblue;">文件</span></template>
-                        <el-menu-item value="1-1" id="newSolution"><span style="color:aliceblue;">新建方案</span></el-menu-item>
-                        <el-menu-item id="openSolution"><span style="color:aliceblue;">打开方案</span></el-menu-item>
+                        <el-menu-item value="1-1" @click="newSolution"><span style="color:aliceblue;">新建方案</span></el-menu-item>
+                        <el-menu-item @click="openSolution"><span style="color:aliceblue;">打开方案</span></el-menu-item>
                         <el-menu-item id="lastOpenSolution"><span style="color:aliceblue;">最近打开方案</span></el-menu-item>
                         <el-menu-item id="openExample"><span style="color:aliceblue;">打开示例</span></el-menu-item>
                         <el-menu-item id="saveSolution"><span style="color:aliceblue;">保存方案</span></el-menu-item>

@@ -6,6 +6,7 @@ import LayoutOne from "@/主窗口/components/layout/LayoutOne.vue";
 import LayoutTwo from "@/主窗口/components/layout/LayoutTwo.vue";
 import LayoutThree from "@/主窗口/components/layout/LayoutThree.vue";
 import {computed} from "vue";
+import {mapState} from "vuex";
 
 export default {
     data() {
@@ -76,147 +77,8 @@ export default {
     },
 
     mounted() {
-
         //动态调整右半部分尺寸
         window.addEventListener('resize', this.dynamicRightHeight)
-        //新建文件的点击事件
-        document.getElementById('newSolution').addEventListener('click', function () {
-            const msg_key='newSolution'
-            eventHandle(events.msg_menuBar, {msg_key})
-        })
-        document.getElementById('openSolution').addEventListener('click', function () {
-            const msg_key='openSolution'
-            eventHandle(events.msg_menuBar, {msg_key})
-        })
-        document.getElementById('lastOpenSolution').addEventListener('click', function () {
-            const msg_key='lastOpenSolution'
-            eventHandle(events.msg_menuBar, {msg_key})
-        })
-        document.getElementById('openExample').addEventListener('click', function () {
-            const msg_key='openExample'
-            eventHandle(events.msg_menuBar, {msg_key})
-        })
-        document.getElementById('saveSolution').addEventListener('click', function () {
-            const msg_key='saveSolution'
-            eventHandle(events.msg_menuBar, {msg_key})
-        })
-        document.getElementById('importFlow').addEventListener('click', function () {
-            const msg_key='importFlow'
-            eventHandle(events.msg_menuBar, {msg_key})
-        })
-        document.getElementById('export').addEventListener('click', function () {
-            const msg_key='export'
-            eventHandle(events.msg_menuBar, {msg_key})
-        })
-        document.getElementById('exit').addEventListener('click', function () {
-            const msg_key='exit'
-            eventHandle(events.msg_menuBar, {msg_key})
-        })
-        document.getElementById('saveSolutionAs').addEventListener('click', function () {
-            const msg_key='saveSolutionAs'
-            eventHandle(events.msg_menuBar, {msg_key})
-        })
-
-        document.getElementById('setPermission').addEventListener('click', function () {
-            const msg_key='setPermission'
-            eventHandle(events.msg_menuBar, {msg_key})
-        })
-        document.getElementById('setSoftware').addEventListener('click', function () {
-            const msg_key='setSoftware'
-            eventHandle(events.msg_menuBar, {msg_key})
-        })
-        document.getElementById('setSolution').addEventListener('click', function () {
-            const msg_key='setSolution'
-            eventHandle(events.msg_menuBar, {msg_key})
-        })
-        document.getElementById('manageCommunication').addEventListener('click', function () {
-            const msg_key='manageCommunication'
-            eventHandle(events.msg_menuBar, {msg_key})
-        })
-        document.getElementById('manageCamera').addEventListener('click', function () {
-            const msg_key='manageCamera'
-            eventHandle(events.msg_menuBar, {msg_key})
-        })
-        document.getElementById('createCalibrationBoot').addEventListener('click', function () {
-            const msg_key='createCalibrationBoot'
-            eventHandle(events.msg_menuBar, {msg_key})
-        })
-        document.getElementById('calibrationBoardGenerationTool').addEventListener('click', function () {
-            const msg_key='calibrationBoardGenerationTool'
-            eventHandle(events.msg_menuBar, {msg_key})
-        })
-        document.getElementById('about').addEventListener('click', function () {
-            const msg_key='about'
-            eventHandle(events.msg_menuBar, {msg_key})
-        })
-        document.getElementById('logs').addEventListener('click', function () {
-            const msg_key='logs'
-            eventHandle(events.msg_menuBar, {msg_key})
-        })
-        document.getElementById('help').addEventListener('click', function () {
-            const msg_key='help'
-            eventHandle(events.msg_menuBar, {msg_key})
-        })
-        document.getElementById('project').addEventListener('click', function () {
-            const msg_key='project'
-            eventHandle(events.msg_menuBar, {msg_key})
-        })
-        document.getElementById('revocation').addEventListener('click', function () {
-            const msg_key='revocation'
-            eventHandle(events.msg_menuBar, {msg_key})
-        })
-        document.getElementById('redo').addEventListener('click', function () {
-            const msg_key='redo'
-            eventHandle(events.msg_menuBar, {msg_key})
-        })
-        document.getElementById('singleRun').addEventListener('click', function () {
-            const msg_key='singleRun'
-            eventHandle(events.msg_menuBar, {msg_key})
-        })
-        document.getElementById('localRun').addEventListener('click', function () {
-            const msg_key='localRun'
-            eventHandle(events.msg_menuBar, {msg_key})
-        })
-        document.getElementById('circleRun').addEventListener('click', function () {
-            const msg_key='circleRun'
-            eventHandle(events.msg_menuBar, {msg_key})
-        })
-        document.getElementById('stop').addEventListener('click', function () {
-            const msg_key='stop'
-            eventHandle(events.msg_menuBar, {msg_key})
-        })
-        document.getElementById('globalVariable').addEventListener('click', function () {
-            const msg_key='globalVariable'
-            eventHandle(events.msg_menuBar, {msg_key})
-        })
-        document.getElementById('globalTrigger').addEventListener('click', function () {
-            const msg_key='globalTrigger'
-            eventHandle(events.msg_menuBar, {msg_key})
-        })
-        document.getElementById('globalScript').addEventListener('click', function () {
-            const msg_key='globalScript'
-            eventHandle(events.msg_menuBar, {msg_key})
-        })
-        document.getElementById('runningInterface').addEventListener('click', function () {
-            const msg_key='runningInterface'
-            eventHandle(events.msg_menuBar, {msg_key})
-        })
-        document.getElementById('toBig').addEventListener('click', function () {
-            const msg_key='toBig'
-            eventHandle(events.msg_menuBar, {msg_key})
-        })
-        document.getElementById('toSmall').addEventListener('click', function () {
-            const msg_key='toSmall'
-            eventHandle(events.msg_menuBar, {msg_key})
-        })
-        document.getElementById('toReset').addEventListener('click', function () {
-            const msg_key='toReset'
-            eventHandle(events.msg_menuBar, {msg_key})
-        })
-        document.getElementById('onPreview').addEventListener('click', function () {
-            const msg_key='onPreview'
-            eventHandle(events.msg_menuBar, {msg_key})
-        })
 
 
         setInterval(() => { //不用管
@@ -241,6 +103,9 @@ export default {
             setChildren(10, this.moduleResultData)
         }, 5000)
     },
+    computed:{
+        ...mapState([])
+    },
     methods: {
         //动态布局
         layout(i) {
@@ -258,6 +123,14 @@ export default {
         //右半部分自适应调整高度
         dynamicRightHeight() {
             this.height_right = window.innerHeight - 82
+        },
+        //新建方案
+        newSolution() {
+            this.$store.commit('newSolutionEvent',true)
+        },
+        //打开方案
+        openSolution(){
+            this.$store.commit('openSolutionEvent',true)
         }
     }
 }
