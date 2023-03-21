@@ -2,13 +2,15 @@
     <el-tabs v-model="editableTabsValue" type="card" editable class="demo-tabs" @edit="handleTabsEdit">
         <el-tab-pane v-for="item in editableTabs" :key="item.name" :name="item.name">
             <template #label>
-                {{ item.title }}
-                <el-button icon="pointer" @click="getGeometry(item.name)">开始</el-button>
+                {{ item.tabName }}
+                <el-button icon="pointer">开始</el-button>
                 <el-button icon="finished">结束</el-button>
             </template>
-            <iframe src='#/logicFlow' width='100%' :height="iframeHeight + 'px'" scrolling="no"></iframe>
+            <LogicFlow :tabName="item.title" @changeTabName="changeTabName">
+                <div :id="item.title"></div>
+            </LogicFlow>
+<!--            <iframe src='#/logicFlow' width='100%' :height="iframeHeight + 'px'" scrolling="no"></iframe>-->
         </el-tab-pane>
-        <!-- <ToolBar></ToolBar> -->
     </el-tabs>
 
 </template>
@@ -18,8 +20,12 @@
 <script>
 import {mapState} from "vuex";
 
+import LogicFlow from "./components/LogicFlow.vue"
 
 export default {
+    components:{
+      LogicFlow
+    },
     data(){
         return {
             test:1,
@@ -28,14 +34,15 @@ export default {
             editableTabsValue:'1',
             editableTabs : [
                 {
-                    title: '流程 1',
-                    name: '1',
-                    iframeIndex:0
+                    title: 'logicFlow1',//作为标签id
+                    name: '1',//作为标签页名
+                    index:0,//标签页下标
+                    tabName:'lf1'
                 },
-            ],
-            iframeHeight:window.innerHeight - 80 - 102 + 50
+            ]
         }
     },
+
     computed:{
         ...mapState(['newSolutionTrigger','openSolutionTrigger'])
     },
@@ -62,18 +69,19 @@ export default {
             }
         }
     },
+
     methods:{
-        getGeometry(id) {
-            //给子iframe传数据
-            window.frames[0].postMessage(id-1)
+        changeTabName(data){
+            this.editableTabs[0].tabName=data
         },
         handleTabsEdit(targetName, action) {
             if (action === 'add') {
                 const newTabName = `${++this.tabIndex}`
                 this.editableTabs.push({
-                    title: '流程 ' + this.tabIndex,
+                    title: 'logicFlow' + this.tabIndex,
                     name: newTabName,
-                    iframeIndex: this.editableTabs.length
+                    index: this.editableTabs.length,
+                    tabName:'lf'+this.tabIndex
                 })
                 this.editableTabsValue = newTabName
             } else if (action === 'remove') {
@@ -98,32 +106,19 @@ export default {
                 this.editableTabs = tabs.filter((tab) => tab.name !== targetName)
                 //重新排序
                 this.editableTabs.forEach((tab,index)=>{
-                    tab.iframeIndex=index
+                    tab.index=index
                 })
             }
             console.log(this.editableTabs)
         },
     },
     mounted() {
-        /**接受userLf iframe发送来的数据， 并且用emitter发射到resultArea组件*/
-        window.addEventListener('message', (event) => {
-            if (event.data.nodeHelpMsg) /*添加判断是因为这个监听似乎会执行很多次*/ {
-            }
-            if(event.data.imgBase64){
-                //更新imgBase64的值
-                this.$store.commit('setImgBase64',event.data.imgBase64)
-            }
-            if(event.data.revDoubles){
-                this.$store.commit('setRevDoubles',event.data.revDoubles)
-            }
-        })
-        window.addEventListener('resize', ()=>{
-            this.iframeHeight = window.innerHeight - 80 - 102 + 50
-        })
+
     }
 }
 </script>
 <style scoped>
+
 .demo-tabs>.el-tabs__content {
     padding: 32px;
     color: #6b778c;

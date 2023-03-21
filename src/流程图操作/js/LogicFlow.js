@@ -291,6 +291,7 @@ const suanziItemList = data
 
 export default {
     name: 'FlowDemo',
+    props:['tabName'],
     data() {
         return {
             //logic-flow
@@ -313,15 +314,17 @@ export default {
             dialogVisible: false,
             formData: [],
             dialogControl: {}, // 左侧菜单栏对话跳窗控制
-            isDragging:false
+            isDragging:false,
+            lfData:null//当前标签页中的所有数据
         }
     },
     computed: {
         
     },
     mounted() {
-        this.initHeight = window.innerHeight
+        this.initHeight = window.innerHeight-150
         this.init()
+        document.querySelector("#"+this.tabName).firstElementChild.style.height=""+this.initHeight+"px"
         //鼠标移到节点显示帮助信息
         this.lf.on('node:mouseenter', (evt) => {
             let res = []
@@ -358,19 +361,6 @@ export default {
             let e = document.getElementsByClassName('el-overlay-dialog')[0].parentNode
             e.style.width = '0px';
 
-
-
-
-            //调用事件响应函数，做出响应
-            //const msg_key = evt.data.properties.key
-            //eventHandle(events.msg_singleStepOpr, {msg_key})//单步运算->key
-
-            //iframe给父组件传递消息方法
-            //window.parent.postMessage({nodeHelpMsg: evt.data.properties.helpMsg});
-            //console.log(JSON.stringify(evt.data.text.value) + " is clicked. run some method related to label or type or id... and it's properties taht we can modify are: " + JSON.stringify(data.data.properties))
-            //原生修改html元素方法
-            // window.parent.document.getElementById("pane-third").innerText = evt.data.properties.helpMsg
-
         })
 
         this.lf.on('edge:click', (evt) => {
@@ -387,15 +377,11 @@ export default {
         })
         socket.on('revBase64', (data) => {
             //先传递给FlowArea组件
-            window.parent.postMessage({
-                imgBase64: data
-            })
+            this.$store.commit('setImgBase64',data)
         })
         socket.on('revDoubles',(data)=>{
             //先传递给FlowArea组件
-            window.parent.postMessage({
-                revDoubles: data
-            })
+            this.$store.commit('setRevDoubles',data)
         })
         //与弹出的dialog和标签页通信
         window.addEventListener('message', (evt) => {
@@ -420,18 +406,18 @@ export default {
             }
         })
         window.onresize = () => {
-            return (() => {
-                this.initHeight = window.innerHeight
-                this.lf.render(this.lf.getGraphData())
-                const position = this.lf.getPointByClient(document.documentElement.clientWidth - 150, document.documentElement.clientHeight - 230)
-                this.lf.extension.miniMap.show(position.domOverlayPosition.x, position.domOverlayPosition.y)
-            })
+            this.initHeight = window.innerHeight-150
+            console.log(this.initHeight)
+            document.querySelector("#"+this.tabName).firstElementChild.style.height=""+this.initHeight+"px"
+            this.lf.render(this.lf.getGraphData())
+            const position = this.lf.getPointByClient(document.documentElement.clientWidth - 150, document.documentElement.clientHeight - 230)
+            this.lf.extension.miniMap.show(position.domOverlayPosition.x, position.domOverlayPosition.y)
         }
     },
     methods: {
         init() {
             const lf = new LogicFlow({
-                container: document.querySelector("#lf"),
+                container: document.querySelector("#"+this.tabName),
                 height: this.initHeight,
                 plugins: [Menu, BpmnElement, LeftMenus, SelectionSelect, Control, MiniMap, Snapshot, Group],
                 background: {
@@ -635,7 +621,7 @@ export default {
             const initData = {}
 
             lf.render(initData)
-            const position = lf.getPointByClient(document.documentElement.clientWidth - 150, document.documentElement.clientHeight - 230)
+            const position = lf.getPointByClient(document.documentElement.clientWidth/2 - 150, document.documentElement.clientHeight - 230)
             lf.extension.miniMap.show(position.domOverlayPosition.x, position.domOverlayPosition.y)
             this.lf = lf
             this.initData = initData
@@ -661,12 +647,15 @@ export default {
                     solutionJson = JSON.parse(reader.result);
                     console.log(solutionJson) // 读取json
                     this.lf.render(solutionJson)
+                    //test tabName
+                    this.$emit('changeTabName',file.name.substring(0,file.name.lastIndexOf('.')))
                 };
             };
             inputObj.click();
+
+
         },
         download(filename, text) {
-            console.log(filename, text)
             var element = document.createElement("a")
             element.setAttribute(
                 "href",
@@ -717,6 +706,24 @@ export default {
                 })
             }
 
+        },
+        // 三级菜单拖拽添加节点
+        dragToAddNode(event, node) {
+            this.lf.addNode({
+                type: node.lfProperties.type,
+                x: event.clientX - 50,
+                y: event.clientY - 100,
+                text: node.lfProperties.text,
+                label: node.lfProperties.label,
+                name: node.lfProperties.name,
+                properties: node.properties
+            })
+        },
+        clickLeftMenu(){
+            let es = document.getElementsByClassName('el-overlay-dialog')
+            for(let e of es){
+                e.parentNode.style.width='0px'
+            }
         }
     }
 }

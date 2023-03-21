@@ -12,18 +12,18 @@
                     </template>
 
                     <el-space warp>
-                        <el-button  type="primary" v-for="(model_2, index2) in model_1.models" :index="'suanzi' + index1 + '-' + index2" @click="dialogControl[model_2.lfProperties.name]=true">
+                        <el-button  type="primary" v-for="(model_2, index2) in model_1.models" :index="'suanzi' + index1 + '-' + index2" @click="dialogControl[model_2.lfProperties.name]=true;clickLeftMenu()">
 
                             {{model_2.lfProperties.name }}
 
-                            <el-dialog v-model="dialogControl[model_2.lfProperties.name]" width="30%" draggable append-to-body="true" modal="false">
+                            <el-dialog v-model="dialogControl[model_2.lfProperties.name]" width="30%" :modal="false" :close-on-click-modal="false" draggable append-to-body="true" modal="false">
 
                                 <template #title>
                                     {{ model_2.lfProperties.name }}
                                 </template>
                                 <el-space wrap>
                                     <el-button type="primary" :icon="Place" v-for="(model_3, index3) in model_2.models" :index="'suanzi' + index1 + '-' + index2 + '-' + index3" :id="model_3.lfProperties.name"
-                                               @click="dialogControl[model_2.lfProperties.name]=false;clickToAddNode(model_3)">
+                                               @click="dialogControl[model_2.lfProperties.name]=false;clickToAddNode(model_3)" draggable="true" @dragend="dragToAddNode($event, model_3)">
                                         {{ model_3.lfProperties.name }}
                                     </el-button>
 
@@ -41,7 +41,9 @@
         </el-aside>
 
         <!--流程图区域-->
-        <el-main id="lf" style="height: 100%; padding: 0;"></el-main>
+        <el-main ref="lfMain" style=":height: 100%; padding: 0;">
+            <slot></slot>
+        </el-main>
 
         <el-dialog v-model="dialogVisible" :modal="false" :close-on-click-modal="false" :title="modelName" width="50%" draggable>
             <el-form label-width="120px">
@@ -70,15 +72,8 @@
 
 </script>
 
-<style>
+<style scoped>
 
-.el-overlay-dialog{
-    pointer-events:none;
-}
-
-.el-dialog{
-    pointer-events:auto;
-}
 .el-menu-vertical:not(.el-menu--collapse) {
     width: 180px;
     min-height: 400px;
