@@ -131,6 +131,10 @@ export default {
         //打开方案
         openSolution(){
             this.$store.commit('openSolutionEvent',true)
+        },
+        //保存方案
+        saveSolution(){
+            this.$store.commit('saveSolutionEvent',true)
         }
     }
 }

@@ -291,6 +291,7 @@ const suanziItemList = data
 export default {
     name: 'FlowDemo',
     props:['tab'],
+    expose:['lfData'],
     data() {
         return {
             //logic-flow
@@ -313,11 +314,12 @@ export default {
             formData: [],
             dialogControl: {}, // 左侧菜单栏对话跳窗控制
             isDragging:false,
-            lfData:null//当前标签页中的所有数据
         }
     },
     computed: {
-        
+        lfData(){
+            return this.lf.getGraphData()
+        }
     },
     mounted() {
         this.initHeight = window.innerHeight-150
@@ -413,6 +415,7 @@ export default {
         }
     },
     methods: {
+        test(){alert(test)},
         init() {
             const lf = new LogicFlow({
                 container: document.querySelector("#"+this.tab.title),

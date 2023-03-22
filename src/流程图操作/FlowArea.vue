@@ -17,6 +17,7 @@
                 <el-button icon="finished">结束</el-button>
             </template>
             <LogicFlow
+                ref="lfComponent"
                 :tab="item"
                 @changeTabName="changeTabName"
             >
@@ -48,7 +49,7 @@ export default {
                     title: "logicFlow1", //作为标签id
                     name: "1", //作为标签页名
                     index: 0, //标签页下标
-                    tabName: "lf1",
+                    tabName: "lf",
                     initLF:{}
                 },
             ],
@@ -101,9 +102,38 @@ export default {
             }
         },
         saveSolutionTrigger(newValue){
+            if(newValue){
+                //逻辑
+                let lfs=[]
+                //得到每个标签页的流程图内容
+                for(let index in this.$refs.lfComponent){
+                    lfs.push({
+                        name:this.editableTabs[index].tabName,
+                        content:this.$refs.lfComponent[index].lfData
+                    })
+                }
+                let text={
+                    name:"sln",
+                    contents:lfs
+                }
 
-            //关掉触发器
-            this.$store.commit("newSolutionEvent", false);
+                let element = document.createElement("a")
+                element.setAttribute(
+                    "href",
+                    "data:text/plain;charset=utf-8," + encodeURIComponent(JSON.stringify(text))
+                )
+                element.setAttribute("download", "solution.json")
+
+                element.style.display = "none"
+                document.body.appendChild(element)
+
+                element.click()
+
+                document.body.removeChild(element)
+                //关掉触发器
+                this.$store.commit("saveSolutionEvent", false);
+            }
+
         }
     },
 
@@ -151,13 +181,7 @@ export default {
             }
             console.log(this.editableTabs);
         },
-        downloadSolutionJSON() {
-            //下载json
-            this.download('Solution.json', JSON.stringify(this.lf.getGraphData()))
-            //前端开始运行逻辑不完善，因此将流程图json传到后端的语句写在这里了，以后实际开发的时候进行调整
-            //socket.emit('flowInformation',this.lf.getGraphData());
 
-        },
     },
     mounted() {},
 };
