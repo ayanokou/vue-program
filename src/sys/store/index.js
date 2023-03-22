@@ -1,4 +1,5 @@
 //组装模块并导出 store 的地方
+import { stat } from 'original-fs'
 import {createStore} from 'vuex'
 
 export default createStore({
@@ -8,7 +9,8 @@ export default createStore({
             //前端的图片
             imgBase64:"",
             newSolutionTrigger:false,
-            openSolutionTrigger:false
+            openSolutionTrigger:false,
+            saveSolutionTrigger:false,
         }
     },
     mutations:{
@@ -23,6 +25,9 @@ export default createStore({
         },
         openSolutionEvent(state,payload){
             state.openSolutionTrigger=payload
+        },
+        saveSolutionTrigger(state, payload){
+            state.saveSolutionTrigger = payload
         }
     },
     modules:{
