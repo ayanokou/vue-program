@@ -288,16 +288,14 @@ const suanziItemList = data
 
 
 // const dialogVisible = ref(false) //dialogVisible若为true,则显示页面内弹窗
-
 export default {
     name: 'FlowDemo',
-    props:['tabName'],
+    props:['tab'],
     data() {
         return {
             //logic-flow
             lf: null,
             initHeight: '',
-            initData: null,
             //点击事件的节点对象
             nodeModel: '',
             //点击事件的边对象
@@ -324,7 +322,7 @@ export default {
     mounted() {
         this.initHeight = window.innerHeight-150
         this.init()
-        document.querySelector("#"+this.tabName).firstElementChild.style.height=""+this.initHeight+"px"
+        document.querySelector("#"+this.tab.title).firstElementChild.style.height=""+this.initHeight+"px"
         //鼠标移到节点显示帮助信息
         this.lf.on('node:mouseenter', (evt) => {
             let res = []
@@ -408,7 +406,7 @@ export default {
         window.onresize = () => {
             this.initHeight = window.innerHeight-150
             console.log(this.initHeight)
-            document.querySelector("#"+this.tabName).firstElementChild.style.height=""+this.initHeight+"px"
+            document.querySelector("#"+this.tab.title).firstElementChild.style.height=""+this.initHeight+"px"
             this.lf.render(this.lf.getGraphData())
             const position = this.lf.getPointByClient(document.documentElement.clientWidth - 150, document.documentElement.clientHeight - 230)
             this.lf.extension.miniMap.show(position.domOverlayPosition.x, position.domOverlayPosition.y)
@@ -417,7 +415,7 @@ export default {
     methods: {
         init() {
             const lf = new LogicFlow({
-                container: document.querySelector("#"+this.tabName),
+                container: document.querySelector("#"+this.tab.title),
                 height: this.initHeight,
                 plugins: [Menu, BpmnElement, LeftMenus, SelectionSelect, Control, MiniMap, Snapshot, Group],
                 background: {
@@ -618,13 +616,11 @@ export default {
                 }
             })
 
-            const initData = {}
-
-            lf.render(initData)
+            console.log(this.tab.initLF)
+            lf.render(this.tab.initLF)
             const position = lf.getPointByClient(document.documentElement.clientWidth/2 - 150, document.documentElement.clientHeight - 230)
             lf.extension.miniMap.show(position.domOverlayPosition.x, position.domOverlayPosition.y)
             this.lf = lf
-            this.initData = initData
 
         },
         run(){
@@ -648,7 +644,10 @@ export default {
                     console.log(solutionJson) // 读取json
                     this.lf.render(solutionJson)
                     //test tabName
-                    this.$emit('changeTabName',file.name.substring(0,file.name.lastIndexOf('.')))
+                    this.$emit('changeTabName',{
+                        index:this.tab.index,
+                        tabName:file.name.substring(0,file.name.lastIndexOf('.'))
+                    })
                 };
             };
             inputObj.click();

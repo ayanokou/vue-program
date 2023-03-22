@@ -4,10 +4,11 @@ import {mapState} from "vuex";
 
 let socket = io.connect('http://localhost:9092')
 
-export default {
+const statusBar = {
     name:"Index",
     data () {
         return {
+            test:1,
             imgUrl: null,
             multiples: 1,
             showViewer:false,
@@ -49,10 +50,12 @@ export default {
     methods: {
         //放大
         toBIgChange () {
+            console.log(this)
             if (this.multiples >= 2) {
                 return
             }
             this.multiples += 0.25
+            alert('toBigChange')
         },
         // 缩小
         toSmallChange () {
@@ -60,13 +63,16 @@ export default {
                 return
             }
             this.multiples -= 0.25
+            alert('调用toSmallChange')
         },
         //复原图像
         toReset(){
+            alert('调用toReset')
             this.multiples = 1
         },
         //全屏预览图像
         onPreview(){
+            alert('调用onPreview')
             this.showViewer =true
         },
         //关闭全屏预览
@@ -130,3 +136,4 @@ export default {
 
     }
 }
+export default statusBar;
