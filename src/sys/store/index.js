@@ -1,5 +1,4 @@
 //组装模块并导出 store 的地方
-import { stat } from 'original-fs'
 import {createStore} from 'vuex'
 
 export default createStore({
@@ -26,7 +25,7 @@ export default createStore({
         openSolutionEvent(state,payload){
             state.openSolutionTrigger=payload
         },
-        saveSolutionTrigger(state, payload){
+        saveSolutionEvent(state, payload){
             state.saveSolutionTrigger = payload
         }
     },
