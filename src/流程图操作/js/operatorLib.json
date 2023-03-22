@@ -187,6 +187,48 @@
                             },
                             "properties": {},
                             "models": []
+                        },
+                        {
+                            "lfProperties":{
+                                "name": "ConvertColor",
+                                "type": "operator",
+                                "text": "转换颜色空间",
+                                "label": "转换颜色空间"
+                            },
+                            "properties":{
+                                "dllPath":"server/src/main/resources/cvtColor.dll",
+                                "modelName":"convert_color",
+                                "inPara":[
+                                    {
+                                        "varName":"src",
+                                        "varType":"Mat",
+                                        "from":"",
+                                        "typeUI":"input",
+                                        "explanation":""
+                                    },
+                                    {
+                                        "varName":"code",
+                                        "varType":"int",
+                                        "from":"",
+                                        "typeUI":"input",
+                                        "explanation":""
+                                    },
+                                    {
+                                        "varName":"dcn",
+                                        "varType":"int",
+                                        "from":"",
+                                        "typeUI":"input",
+                                        "explanation":""
+                                    }
+                                ],
+                                "outPara":[
+                                    {
+                                        "varName":"dst",
+                                        "varType":"Mat",
+                                        "explanation":""
+                                    }
+                                ]
+                            }
                         }
                     ]
                 },
