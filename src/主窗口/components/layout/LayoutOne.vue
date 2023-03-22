@@ -8,7 +8,7 @@
         <pane>
 
             <splitpanes horizontal :style="'height:'+height_right+'px'">
-                <pane>
+                <pane size="70">
                     <component :is="compnts[1]"></component>
                 </pane>
                 <pane>

@@ -355,7 +355,7 @@ export default {
 
             //刷新nodeModel
             this.nodeModel = this.lf.getNodeModelById(evt.data.id)
-
+            this.$store.commit('setVuexHelpInfo',this.nodeModel.getProperties().helpMsg)
 
             this.dialogVisible = true
             let e = document.getElementsByClassName('el-overlay-dialog')[0].parentNode

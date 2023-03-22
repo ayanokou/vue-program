@@ -23,7 +23,7 @@
                                 "label": "文件输入"
                             },
                             "properties": {
-                                "helpMsg": "it is a help message",
+                                "helpMsg": "文件输入的帮助文档",
                                 "dllPath": "server/src/main/resources/Read.dll",
                                 "modelName": "Read",
                                 "inPara": [
@@ -74,7 +74,7 @@
                                 "name": "outputFile"
                             },
                             "properties": {
-                                "helpMsg": "it is a help message",
+                                "helpMsg": "输出的帮助文档\n第二个参数注意只能是Mat,double,int,string",
                                 "dllPath": "server/src/main/resources/Write.dll",
                                 "modelName": "outputFile",
                                 "inPara": [
@@ -128,7 +128,7 @@
                                 "label": "高斯滤波"
                             },
                             "properties": {
-                                "helpMsg": "it is a help message",
+                                "helpMsg": "高斯滤波的帮助文档",
                                 "dllPath": "server/src/main/resources/GaussianBlur.dll",
                                 "modelName": "GaussianBlur",
                                 "inPara": [

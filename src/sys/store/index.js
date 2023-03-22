@@ -4,7 +4,7 @@ import {createStore} from 'vuex'
 export default createStore({
     state(){
         return{
-            vuexHelpInfo:'I am helpInfo from vuex',
+            vuexHelpInfo:"",
             //网络通讯传过来的图片
             imgBase64:"",
             //网络通讯穿过来的double数组

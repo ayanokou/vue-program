@@ -1,5 +1,5 @@
 <template>
-    {{vuexHelpInfo}}
+    <pre>{{vuexHelpInfo}}</pre>
 </template>
 
 <!--<script setup>-->

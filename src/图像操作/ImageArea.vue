@@ -1,7 +1,7 @@
 <template>
     <el-scrollbar>  <!-- 滚动条组件，在内容超出容器宽高时显示滚动条 -->
         <el-tabs v-model="activeName" @tab-click="handleClick"> <!-- 标签页组件 -->
-            <el-tab-pane label="图像" name="first"> <!-- 图像标签页 -->
+            <el-tab-pane label="图像展示区" name="first"> <!-- 图像标签页 -->
                 <PicWindow></PicWindow> <!-- 图像显示区组件 -->
             </el-tab-pane>
             <el-tab-pane label="模块结果" name="second"> <!-- 模块结果标签页 -->
