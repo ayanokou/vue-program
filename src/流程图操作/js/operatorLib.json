@@ -4,6 +4,81 @@
     "models": [
         {
             "lfProperties": {
+                "name": "全局变量"
+            },
+            "properties": {},
+            "models": [
+                {
+                    "lfProperties": {
+                        "name": "全局变量"
+                    },
+                    "properties": {
+                    },
+                    "models": [
+                        {
+                            "lfProperties": {
+                                "name": "globalVariable",
+                                "type": "operator",
+                                "text": "全局变量",
+                                "label": "全局变量"
+                            },
+                            "properties": {
+                                "helpMsg": "全局变量的帮助文档",
+                                "dllPath": "null",
+                                "modelName": "null",
+                                "inPara": [
+                                    {
+                                        "varName": "globalName",
+                                        "varType": "string",
+                                        "from": "",
+                                        "typeUI": "input",
+                                        "explanation": ""
+                                    },
+                                    {
+                                        "varName": "type",
+                                        "varType": "string",
+                                        "from": "",
+                                        "typeUI": "select",
+                                        "selectContent": [
+                                            {
+                                                "value": "Mat"
+                                            },
+                                            {
+                                                "value": "Int"
+                                            },
+                                            {
+                                                "value": "Double"
+                                            },
+                                            {
+                                                "value": "String"
+                                            }
+                                        ],
+                                        "explanation": ""
+                                    },
+                                    {
+                                        "varName": "value",
+                                        "varType": "string",
+                                        "from": "",
+                                        "typeUI": "input",
+                                        "explanation": ""
+                                    }
+                                ],
+                                "outPara": [
+                                    {
+                                        "varName": "dst",
+                                        "varType": "Mat",
+                                        "explanation": ""
+                                    }
+                                ]
+                            },
+                            "models": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "lfProperties": {
                 "name": "输入输出"
             },
             "properties": {},
@@ -89,7 +164,21 @@
                                         "varName": "outName",
                                         "varType": "int",
                                         "from": "",
-                                        "typeUI": "input",
+                                        "typeUI": "select",
+                                        "selectContent": [
+                                            {
+                                                "value": "Mat"
+                                            },
+                                            {
+                                                "value": "Int"
+                                            },
+                                            {
+                                                "value": "Double"
+                                            },
+                                            {
+                                                "value": "String"
+                                            }
+                                        ],
                                         "explanation": ""
                                     }
                                 ],

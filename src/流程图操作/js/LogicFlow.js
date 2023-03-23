@@ -431,7 +431,8 @@ export default {
                     type: 'mesh', // 网格类型为线状
                     size: 20,
                     visible: true // 是否可见
-                }
+                },
+                stopMoveGraph:true
             })
 
             lf.extension.menu.setMenuConfig({
@@ -457,7 +458,7 @@ export default {
 
                     }
                 ], // 覆盖默认的节点右键菜单
-                edgeMenu: false, // 删除默认的边右键菜单
+                //edgeMenu: false, // 删除默认的边右键菜单
                 graphMenu: [],
 
 
@@ -477,7 +478,6 @@ export default {
                     {
                         text: '组合',
                         callback() {
-                            alert("222");
                             //将选区数据存储
                             const {nodes} = lf.getSelectElements();
                             const {startPoint, endPoint} = lf.extension.selectionSelect;
