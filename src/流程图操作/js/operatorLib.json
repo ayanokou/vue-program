@@ -80,7 +80,7 @@
                 "inPara": [
                   {
                     "varName": "SuanziName",
-                    "varType": "String",
+                    "varType": "viod*",
                     "from": "",
                     "typeUI": "input",
                     "explanation": ""
@@ -147,7 +147,7 @@
                 "inPara": [
                   {
                     "varName": "src",
-                    "varType": "Mat",
+                    "varType": "void*",
                     "from": "",
                     "typeUI": "input",
                     "explanation": ""
