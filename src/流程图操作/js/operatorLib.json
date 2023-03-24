@@ -80,7 +80,7 @@
                 "inPara": [
                   {
                     "varName": "SuanziName",
-                    "varType": "viod*",
+                    "varType": "void*",
                     "from": "",
                     "typeUI": "input",
                     "explanation": ""
@@ -214,7 +214,7 @@
                 "inPara":[
                   {
                     "varName":"src",
-                    "varType":"Mat",
+                    "varType":"void*",
                     "from":"",
                     "typeUI":"input",
                     "explanation":""
@@ -230,7 +230,7 @@
                 "outPara":[
                   {
                     "varName":"dst",
-                    "varType":"int",
+                    "varType":"void*",
                     "explanation":""
                   }   
                 ]
@@ -258,7 +258,7 @@
                 "inPara": [
                   {
                     "varName": "src",
-                    "varType": "Mat",
+                    "varType": "void*",
                     "from": "",
                     "typeUI": "input",
                     "explanation": ""
@@ -288,7 +288,7 @@
                 "outPara": [
                   {
                     "varName": "dst",
-                    "varType": "Mat",
+                    "varType": "void*",
                     "explanation": ""
                   }
                 ]
@@ -316,7 +316,7 @@
                 "inPara": [
                   {
                     "varName": "src",
-                    "varType": "Mat",
+                    "varType": "void*",
                     "from": "",
                     "typeUI": "input",
                     "explanation": ""
@@ -327,19 +327,12 @@
                     "from": "",
                     "typeUI": "input",
                     "explanation": ""
-                  },
-                  {
-                    "varName": "dcn",
-                    "varType": "int",
-                    "from": "",
-                    "typeUI": "input",
-                    "explanation": ""
                   }
                 ],
                 "outPara": [
                   {
                     "varName": "dst",
-                    "varType": "Mat",
+                    "varType": "void*",
                     "explanation": ""
                   }
                 ]
@@ -367,7 +360,7 @@
                 "inPara": [
                   {
                     "varName": "src",
-                    "varType": "Mat",
+                    "varType": "void*",
                     "from": "",
                     "typeUI": "input",
                     "explanation": ""
@@ -383,7 +376,7 @@
                 "outPara": [
                   {
                     "varName": "dst",
-                    "varType": "Mat",
+                    "varType": "void*",
                     "explanation": ""
                   }
                 ]
@@ -392,10 +385,10 @@
 
             {
               "lfProperties": {
-                "name": "关运算",
+                "name": "闭运算",
                 "type": "operator",
-                "text": "关运算",
-                "label": "关运算"
+                "text": "闭运算",
+                "label": "闭运算"
               },
               "properties": {
                 "dllPath": "server/src/main/resources/general.dll",
@@ -403,7 +396,7 @@
                 "inPara": [
                   {
                     "varName": "src",
-                    "varType": "Mat",
+                    "varType": "void*",
                     "from": "",
                     "typeUI": "input",
                     "explanation": ""
@@ -419,7 +412,7 @@
                 "outPara": [
                   {
                     "varName": "dst",
-                    "varType": "Mat",
+                    "varType": "void*",
                     "explanation": ""
                   }
                 ]
@@ -446,7 +439,7 @@
                 "inPara": [
                   {
                     "varName": "src",
-                    "varType": "Mat",
+                    "varType": "void*",
                     "from": "",
                     "typeUI": "input",
                     "explanation": ""
@@ -473,7 +466,7 @@
                 "inPara": [
                   {
                     "varName": "src",
-                    "varType": "Mat",
+                    "varType": "void*",
                     "from": "",
                     "typeUI": "input",
                     "explanation": ""
@@ -489,7 +482,7 @@
                 "outPara": [
                   {
                     "varName": "dst",
-                    "varType": "Mat",
+                    "varType": "void*",
                     "explanation": ""
                   }
                 ]
