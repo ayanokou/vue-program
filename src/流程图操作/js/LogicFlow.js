@@ -33,7 +33,7 @@ const handleClose = (key, keyPath) => {
 //初始化socketio用于前后端传输
 let socket = io.connect('http://localhost:9092')
 
-let id = 1;
+
 
 class CycleModel extends CircleNodeModel {
     getNodeStyle() {
@@ -60,7 +60,12 @@ class SuanziModel extends RectNodeModel {
     }
 
     createId() {
-        return (id++) + "";
+        let max=0
+        for(let node of this.graphModel.nodes){
+            if(node.id>max)
+                max=node.id
+        }
+        return (++max) + "";
     }
 }
 
@@ -314,6 +319,11 @@ export default {
             formData: [],
             dialogControl: {}, // 左侧菜单栏对话跳窗控制
             isDragging:false,
+            dialogVisibleGV:false,
+            tableData :[
+            ],
+            tableForm:[],
+            innerVisible:false
         }
     },
     computed: {
@@ -327,14 +337,17 @@ export default {
         document.querySelector("#"+this.tab.title).firstElementChild.style.height=""+this.initHeight+"px"
         //鼠标移到节点显示帮助信息
         this.lf.on('node:mouseenter', (evt) => {
-            let res = []
+            let res = ""
             if (evt.data.properties.outPara) {
                 for (let x of evt.data.properties.outPara) {
-                    res.push(evt.data.properties.modelName + `.${x.varName}`)
+                    //res.push(evt.data.properties.modelName +`.${evt.data.id}`+ `.${x.varName}`)
+                    let str="<div>变量:&nbsp;"+evt.data.properties.modelName +`.${evt.data.id}`+ `.${x.varName}`+"&nbsp;&nbsp;&nbsp;;类型:&nbsp;"+`${x.type}`+"</div>"
+                    res+=str
                 }
                 if (this.isDragging) {
                     ElNotification({
-                        title: 'NAME',
+                        title: '输出变量:',
+                        dangerouslyUseHTMLString: true,
                         message: res,
                         duration: 2000,
                     })
@@ -357,7 +370,12 @@ export default {
             this.nodeModel = this.lf.getNodeModelById(evt.data.id)
             this.$store.commit('setVuexHelpInfo',this.nodeModel.getProperties().helpMsg)
 
-            this.dialogVisible = true
+            if(this.modelName=="GlobalVariable"){
+                this.dialogVisibleGV=true
+            }else{
+                this.dialogVisible = true
+            }
+
             let e = document.getElementsByClassName('el-overlay-dialog')[0].parentNode
             e.style.width = '0px';
 
@@ -415,7 +433,6 @@ export default {
         }
     },
     methods: {
-        test(){alert(test)},
         init() {
             const lf = new LogicFlow({
                 container: document.querySelector("#"+this.tab.title),
@@ -726,6 +743,31 @@ export default {
             for(let e of es){
                 e.parentNode.style.width='0px'
             }
+        },
+        deleteRow(index){
+            this.tableData.splice(index, 1)
+        },
+        onAddItem(){
+            //弹出一个对话框表单，输入参数
+            this.innerVisible=true
+            let es = document.getElementsByClassName('el-overlay-dialog')
+            for(let e of es){
+                e.parentNode.style.width='0px'
+            }
+        },
+        addItem(){
+            let item={
+                name:this.tableForm[0],
+                value:this.tableForm[1]
+            }
+            this.tableData.push(item)
+            console.log(this.tableData)
+            this.tableForm=[]
+        },
+        submitGV(){
+            this.nodeModel.setProperties({
+                "content": this.tableData,
+            })
         }
     }
 }

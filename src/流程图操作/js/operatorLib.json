@@ -4,6 +4,43 @@
   "models": [
     {
       "lfProperties": {
+        "name": "全局变量"
+      },
+      "properties": {},
+      "models": [
+        {
+
+          "lfProperties": {
+            "name": "全局变量"
+          },
+          "properties": {},
+          "models": [
+            {
+              "lfProperties": {
+                "name": "GlobalVariable",
+                "type": "operator",
+                "text": "全局变量",
+                "label": "全局变量"
+              },
+              "properties": {
+                "helpMsg": "it is a help message of GlobalVariable",
+                "dllPath": "",
+                "modelName": "GlobalVariable",
+                "inPara": [
+
+                ],
+                "outPara": [
+
+                ]
+              },
+              "models": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lfProperties": {
         "name": "输入输出"
       },
       "properties": {},
@@ -46,6 +83,7 @@
                   {
                     "varName": "dst",
                     "varType": "Mat",
+                    "type": "Mat^1",
                     "explanation": ""
                   }
                 ]
@@ -108,11 +146,6 @@
                   }
                 ],
                 "outPara": [
-                  {
-                    "varName": "dst",
-                    "varType": "OutputArray",
-                    "explanation": ""
-                  }
                 ]
               },
               "models": []
@@ -148,6 +181,7 @@
                   {
                     "varName": "src",
                     "varType": "void*",
+                    "type": "Mat^1",
                     "from": "",
                     "typeUI": "input",
                     "explanation": ""
@@ -155,6 +189,7 @@
                   {
                     "varName": "ksize",
                     "varType": "Size",
+                    "type": "Size^1",
                     "from": "",
                     "typeUI": "input",
                     "explanation": ""
@@ -162,6 +197,7 @@
                   {
                     "varName": "sigmaX",
                     "varType": "double",
+                    "type": "double^1",
                     "from": "",
                     "typeUI": "input",
                     "explanation": ""
@@ -169,6 +205,7 @@
                   {
                     "varName": "sigmaY",
                     "varType": "double",
+                    "type": "double^1",
                     "from": "",
                     "typeUI": "input",
                     "explanation": ""
@@ -176,6 +213,7 @@
                   {
                     "varName": "borderType",
                     "varType": "int",
+                    "type": "int^1",
                     "from": "",
                     "typeUI": "input",
                     "explanation": ""
@@ -185,6 +223,7 @@
                   {
                     "varName": "dst",
                     "varType": "Mat",
+                    "type": "Mat^1",
                     "explanation": ""
                   }
                 ]
