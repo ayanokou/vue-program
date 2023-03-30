@@ -48,7 +48,12 @@ class CycleModel extends CircleNodeModel {
     }
 
     createId() {
-        return (id++) + "";
+        let max=0
+        for(let node of this.graphModel.nodes){
+            if(node.id>max)
+                max=node.id
+        }
+        return (++max) + "";
     }
 }
 
@@ -83,7 +88,12 @@ class ConditionJudgmentModel extends DiamondNodeModel {
     }
 
     createId() {
-        return (id++) + "";
+        let max=0
+        for(let node of this.graphModel.nodes){
+            if(node.id>max)
+                max=node.id
+        }
+        return (++max) + "";
     }
 }
 
@@ -148,7 +158,12 @@ class MyGroupModel extends GroupNode.model {
     }
 
     createId() {
-        return (id++) + "";
+        let max=0
+        for(let node of this.graphModel.nodes){
+            if(node.id>max)
+                max=node.id
+        }
+        return (++max) + "";
     }
 }
 
@@ -341,7 +356,7 @@ export default {
             if (evt.data.properties.outPara) {
                 for (let x of evt.data.properties.outPara) {
                     //res.push(evt.data.properties.modelName +`.${evt.data.id}`+ `.${x.varName}`)
-                    let str="<div>变量:&nbsp;"+evt.data.properties.modelName +`.${evt.data.id}`+ `.${x.varName}`+"&nbsp;&nbsp;&nbsp;;类型:&nbsp;"+`${x.type}`+"</div>"
+                    let str="<div>变量:&nbsp;"+evt.data.properties.modelName +`.${evt.data.id}`+ `.${x.varName}`+"&nbsp;&nbsp;&nbsp;;类型:&nbsp;"+`${x.varType}`+"</div>"
                     res+=str
                 }
                 if (this.isDragging) {

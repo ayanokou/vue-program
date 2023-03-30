@@ -54,15 +54,15 @@
           "models": [
             {
               "lfProperties": {
-                "name": "Read",
+                "name": "文件输入",
                 "type": "operator",
                 "text": "文件输入",
                 "label": "文件输入"
               },
               "properties": {
                 "helpMsg": "it is a help message",
-                "dllPath": "server/src/main/resources/Read.dll",
-                "modelName": "Read",
+                "dllPath": "server/src/main/resources/general.dll",
+                "modelName": "read",
                 "inPara": [
                   {
                     "varName": "filename",
@@ -83,7 +83,6 @@
                   {
                     "varName": "dst",
                     "varType": "Mat",
-                    "type": "Mat^1",
                     "explanation": ""
                   }
                 ]
@@ -99,7 +98,7 @@
           "properties": {
             "upperName": "输入输出",
             "helpMsg": "it is a help message",
-            "name": "outputFile",
+            "name": "show",
             "dllPath": "./dll/",
             "modelName": ""
           },
@@ -109,43 +108,27 @@
                 "type": "operator",
                 "text": "输出模块",
                 "label": "输出模块",
-                "name": "outputFile"
+                "name": "输出"
               },
               "properties": {
                 "helpMsg": "it is a help message",
-                "dllPath": "server/src/main/resources/Write.dll",
-                "modelName": "outputFile",
+                "dllPath": "server/src/main/resources/general.dll",
+                "modelName": "show",
                 "inPara": [
                   {
                     "varName": "SuanziName",
-                    "varType": "void*",
+                    "varType": "object",
                     "from": "",
                     "typeUI": "input",
-                    "explanation": ""
-                  },
-                  {
-                    "varName": "outName",
-                    "varType": "int",
-                    "from": "",
-                    "typeUI": "select",
-                    "selectContent": [
-                      {
-                        "value": "Mat"
-                      },
-                      {
-                        "value": "Int"
-                      },
-                      {
-                        "value": "Double"
-                      },
-                      {
-                        "value": "String"
-                      }
-                    ],
                     "explanation": ""
                   }
                 ],
                 "outPara": [
+                  {
+                    "varName": "object",
+                    "varType": "OutputArray",
+                    "explanation": ""
+                  }
                 ]
               },
               "models": []
@@ -180,8 +163,7 @@
                 "inPara": [
                   {
                     "varName": "src",
-                    "varType": "void*",
-                    "type": "Mat^1",
+                    "varType": "object",
                     "from": "",
                     "typeUI": "input",
                     "explanation": ""
@@ -189,7 +171,6 @@
                   {
                     "varName": "ksize",
                     "varType": "Size",
-                    "type": "Size^1",
                     "from": "",
                     "typeUI": "input",
                     "explanation": ""
@@ -197,7 +178,6 @@
                   {
                     "varName": "sigmaX",
                     "varType": "double",
-                    "type": "double^1",
                     "from": "",
                     "typeUI": "input",
                     "explanation": ""
@@ -205,7 +185,6 @@
                   {
                     "varName": "sigmaY",
                     "varType": "double",
-                    "type": "double^1",
                     "from": "",
                     "typeUI": "input",
                     "explanation": ""
@@ -213,7 +192,6 @@
                   {
                     "varName": "borderType",
                     "varType": "int",
-                    "type": "int^1",
                     "from": "",
                     "typeUI": "input",
                     "explanation": ""
@@ -223,21 +201,10 @@
                   {
                     "varName": "dst",
                     "varType": "Mat",
-                    "type": "Mat^1",
                     "explanation": ""
                   }
                 ]
               },
-              "models": []
-            },
-            {
-              "lfProperties": {
-                "name": "MeanBlur",
-                "type": "operator",
-                "text": "均值滤波",
-                "label": "均值滤波"
-              },
-              "properties": {},
               "models": []
             },
             {
@@ -253,7 +220,7 @@
                 "inPara":[
                   {
                     "varName":"src",
-                    "varType":"void*",
+                    "varType":"object",
                     "from":"",
                     "typeUI":"input",
                     "explanation":""
@@ -269,9 +236,9 @@
                 "outPara":[
                   {
                     "varName":"dst",
-                    "varType":"void*",
+                    "varType":"object",
                     "explanation":""
-                  }   
+                  }
                 ]
               }
             }
@@ -297,7 +264,7 @@
                 "inPara": [
                   {
                     "varName": "src",
-                    "varType": "void*",
+                    "varType": "object",
                     "from": "",
                     "typeUI": "input",
                     "explanation": ""
@@ -327,7 +294,7 @@
                 "outPara": [
                   {
                     "varName": "dst",
-                    "varType": "void*",
+                    "varType": "object",
                     "explanation": ""
                   }
                 ]
@@ -355,7 +322,7 @@
                 "inPara": [
                   {
                     "varName": "src",
-                    "varType": "void*",
+                    "varType": "object",
                     "from": "",
                     "typeUI": "input",
                     "explanation": ""
@@ -371,7 +338,7 @@
                 "outPara": [
                   {
                     "varName": "dst",
-                    "varType": "void*",
+                    "varType": "object",
                     "explanation": ""
                   }
                 ]
@@ -399,7 +366,7 @@
                 "inPara": [
                   {
                     "varName": "src",
-                    "varType": "void*",
+                    "varType": "object",
                     "from": "",
                     "typeUI": "input",
                     "explanation": ""
@@ -415,7 +382,7 @@
                 "outPara": [
                   {
                     "varName": "dst",
-                    "varType": "void*",
+                    "varType": "object",
                     "explanation": ""
                   }
                 ]
@@ -435,7 +402,7 @@
                 "inPara": [
                   {
                     "varName": "src",
-                    "varType": "void*",
+                    "varType": "object",
                     "from": "",
                     "typeUI": "input",
                     "explanation": ""
@@ -451,7 +418,7 @@
                 "outPara": [
                   {
                     "varName": "dst",
-                    "varType": "void*",
+                    "varType": "object",
                     "explanation": ""
                   }
                 ]
@@ -478,7 +445,7 @@
                 "inPara": [
                   {
                     "varName": "src",
-                    "varType": "void*",
+                    "varType": "object",
                     "from": "",
                     "typeUI": "input",
                     "explanation": ""
@@ -487,7 +454,7 @@
                 "outPara": [
                   {
                     "varName": "contours",
-                    "varType": "void*"
+                    "varType": "object"
                   }
                 ]
               }
@@ -505,14 +472,14 @@
                 "inPara": [
                   {
                     "varName": "src",
-                    "varType": "void*",
+                    "varType": "object",
                     "from": "",
                     "typeUI": "input",
                     "explanation": ""
                   },
                   {
                     "varName": "contours",
-                    "varType": "void*",
+                    "varType": "object",
                     "from": "",
                     "typeUI": "input",
                     "explanation": ""
@@ -521,7 +488,7 @@
                 "outPara": [
                   {
                     "varName": "dst",
-                    "varType": "void*",
+                    "varType": "object",
                     "explanation": ""
                   }
                 ]
