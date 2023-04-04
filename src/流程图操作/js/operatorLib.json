@@ -330,6 +330,121 @@
                     ]
                 }
             ]
+        },
+        {
+            "lfProperties": {
+                "name" : "深度学习"
+            },
+            "properties": {},
+            "models" : [
+                {
+                    "lfProperties": {
+                        "name": "ppocr"
+                    },
+                    "properties": {},
+                    "models" : [
+                        {
+                            "lfProperties": {
+                                "type": "operator",
+                                "label": "字符检测",
+                                "text": "字符检测",
+                                "name": "ocr-detection"
+                            },
+                            "properties": {
+                                "helpMsg": "it is a help message",
+                                "dllPath": "server/src/main/resources/ppocr.dll",
+                                "modelName": "detectBoxes_",
+                                "inPara": [
+                                    {
+                                        "varName": "img_mat",
+                                        "varType": "Mat",
+                                        "from": "",
+                                        "typeUI": "input",
+                                        "explanation": "输入图片 类型Mat"
+                                    },
+                                    {
+                                        "varName": "det model",
+                                        "varType": "string",
+                                        "from": "",
+                                        "typeUI": "input",
+                                        "explanation": "字符检测模型路径"
+                                    }
+                                ],
+                                "outPara": [
+                                    {
+                                        "varName": "dst",
+                                        "varType": "Mat",
+                                        "explanation": ""
+                                    }
+                                ]
+                            },
+                            "models": []
+                        },
+                        {
+                            "lfProperties": {
+                                "type": "operator",
+                                "label": "字符识别",
+                                "text": "字符识别",
+                                "name": "ocr-recognition"
+                            },
+                            "properties": {
+                                "helpMsg": "it is a help message",
+                                "dllPath": "server/src/main/resources/ppocr.dll",
+                                "modelName": "detectText_",
+                                "inPara": [
+                                    {
+                                        "varName": "img_mat",
+                                        "varType": "Mat",
+                                        "from": "",
+                                        "typeUI": "input",
+                                        "explanation": "输入图片 类型Mat"
+                                    },
+                                    {
+                                        "varName": "rec model",
+                                        "varType": "string",
+                                        "from": "",
+                                        "typeUI": "input",
+                                        "explanation": "字符识别模型路径"
+                                    },
+                                    {
+                                        "varName": "rec dict model",
+                                        "varType": "string",
+                                        "from": "",
+                                        "typeUI": "input",
+                                        "explanation": "字符识别字典路径"
+                                    }
+                                ],
+                                "outPara": [
+                                    {
+                                        "varName": "dst",
+                                        "varType": "string",
+                                        "explanation": ""
+                                    }
+                                ]
+                            },
+                            "models": []
+                        }
+                    ]
+                },
+                {
+                    "lfProperties": {
+                        "name": "onnxruntime"
+                    },
+                    "properties": {},
+                    "models" : [
+
+                    ]
+                },
+                {
+                    "lfProperties": {
+                        "name": "opencv"
+                    },
+                    "properties": {},
+                    "models" : [
+
+                    ]
+                }
+            ]
         }
     ]
 }
