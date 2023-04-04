@@ -130,6 +130,35 @@
                     </span>
             </template>
         </el-dialog>
+        <el-dialog v-model="dialogVisibleEdge" :modal="false" :close-on-click-modal="false" :title="modelName" width="50%"
+                   draggable>
+            <el-form label-width="120px">
+
+                <el-form-item  label="选择Y,N边">
+                    <div>
+                        <el-select v-model="yorn" placeholder="Select">
+                            <el-option
+                                key="Y"
+                                label="Y"
+                                value="Y"
+                            />
+                            <el-option
+                                key="N"
+                                label="N"
+                                value="N"
+                            />
+                        </el-select>
+                    </div>
+                </el-form-item>
+            </el-form>
+            <template #footer>
+          <span class="dialog-footer">
+            <el-button type="primary" @click="dialogVisibleEdge = false;edgeSubmit();">Submit</el-button>
+            <el-button @click="dialogVisibleEdge = false;">Cancel</el-button>
+          </span>
+            </template>
+        </el-dialog>
+
     </el-container>
 
 

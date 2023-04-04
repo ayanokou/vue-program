@@ -338,7 +338,9 @@ export default {
             tableData :[
             ],
             tableForm:[],
-            innerVisible:false
+            innerVisible:false,
+            dialogVisibleEdge:false,//选YN边的对话框
+            yorn:""//上面对话框的结果
         }
     },
     computed: {
@@ -397,7 +399,7 @@ export default {
         })
 
         this.lf.on('edge:click', (evt) => {
-            window.open('#/conditionEdge', "newwin", "toolbar=no,scrollbars=no,menubar=no")
+            this.dialogVisibleEdge=true;
             let edgeId = (evt.data.id)
             //获取边
             this.edgeModel = this.lf.getEdgeModelById(edgeId)
@@ -783,6 +785,9 @@ export default {
             this.nodeModel.setProperties({
                 "content": this.tableData,
             })
+        },
+        edgeSubmit(){
+            this.edgeModel.updateText(this.yorn)
         }
     }
 }
