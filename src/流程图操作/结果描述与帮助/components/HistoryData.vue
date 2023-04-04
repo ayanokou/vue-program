@@ -20,16 +20,9 @@ export default {
         }
     },
     computed: {
-        ...mapState([])
     },
     methods:{
-        // changeInfo(){
-        //     this.$store.commit('changeVuexHelpInfo','new helpInfo')
-        // }
-        ...mapMutations(['setVuexHelpInfo']),
-        changeInfo(){
-            this.setVuexHelpInfo('new helpInfo')
-        }
+
     }
 }
 </script>

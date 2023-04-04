@@ -4,11 +4,12 @@ import {createStore} from 'vuex'
 export default createStore({
     state(){
         return{
-            vuexHelpInfo:'I am helpInfo from vuex',
+            vuexHelpInfo:"",
             //网络通讯传过来的图片
             imgBase64:"",
-            //网络通讯穿过来的double数组
-            revDoubles:null
+            newSolutionTrigger:false,
+            openSolutionTrigger:false,
+            saveSolutionTrigger:false,
         }
     },
     mutations:{
@@ -18,8 +19,14 @@ export default createStore({
         setImgBase64(state,payload){
             state.imgBase64=payload
         },
-        setRevDoubles(state,payload){
-            state.revDoubles=payload
+        newSolutionEvent(state,payload){
+            state.newSolutionTrigger=payload
+        },
+        openSolutionEvent(state,payload){
+            state.openSolutionTrigger=payload
+        },
+        saveSolutionEvent(state, payload){
+            state.saveSolutionTrigger = payload
         }
     },
     modules:{

@@ -7,28 +7,45 @@
                 <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect" menu-trigger="hover">
                     <el-sub-menu index="1">
                         <template #title><span style="color:aliceblue;">文件</span></template>
-                        <el-menu-item value="1-1" id="newSolution"><span style="color:aliceblue;">新建方案</span></el-menu-item>
-                        <el-menu-item><span style="color:aliceblue;">打开方案</span></el-menu-item>
-                        <el-menu-item><span style="color:aliceblue;">保存方案</span></el-menu-item>
-                        <el-menu-item><span style="color:aliceblue;">方案另存为</span></el-menu-item>
+                        <el-menu-item value="1-1" @click="newSolution"><span style="color:aliceblue;">新建方案</span></el-menu-item>
+                        <el-menu-item @click="openSolution"><span style="color:aliceblue;">打开方案</span></el-menu-item>
+                        <el-menu-item id="lastOpenSolution"><span style="color:aliceblue;">最近打开方案</span></el-menu-item>
+                        <el-menu-item id="openExample"><span style="color:aliceblue;">打开示例</span></el-menu-item>
+                        <el-menu-item id="saveSolution" @click="saveSolution"><span style="color:aliceblue;">保存方案</span></el-menu-item>
+                        <el-menu-item id="saveSolutionAs"><span style="color:aliceblue;">方案另存为</span></el-menu-item>
+                        <el-menu-item id="importFlow"><span style="color:aliceblue;">导入流程</span></el-menu-item>
+                        <el-menu-item id="export"><span style="color:aliceblue;">导出Java/C++/Python</span></el-menu-item>
+                        <el-menu-item id="exit"><span style="color:aliceblue;">退出</span></el-menu-item>
                     </el-sub-menu>
 
+                    
+                    <el-menu-item id="project"><span style="color:aliceblue;">工程</span></el-menu-item>
+                    
+
                     <el-sub-menu index="2">
-                        <template #title><span style="color:aliceblue;">系统</span></template>
-                        <el-menu-item><span style="color:aliceblue;">相机管理</span></el-menu-item>
+                        <template #title><span style="color:aliceblue;">设置</span></template>
+                        <el-menu-item id="setPermission"><span style="color:aliceblue;">权限设置</span></el-menu-item>
+                        <el-menu-item id="setSoftware"><span style="color:aliceblue;">软件设置</span></el-menu-item>
+                        <el-menu-item id="setSolution"><span style="color:aliceblue;">方案设置</span></el-menu-item>
                     </el-sub-menu>
 
                     <el-sub-menu index="3">
-                        <template #title><span style="color:aliceblue;">视图</span></template>
-                        <el-menu-item><span style="color:aliceblue;">选择页面</span></el-menu-item>
-                        <el-menu-item><span style="color:aliceblue;">运行界面</span></el-menu-item>
+                        <template #title><span style="color:aliceblue;">系统</span></template>
+                        <el-menu-item id="manageCommunication"><span style="color:aliceblue;">通信管理</span></el-menu-item>
+                        <el-menu-item id="manageCamera"><span style="color:aliceblue;">相机管理</span></el-menu-item>
                     </el-sub-menu>
 
                     <el-sub-menu index="4">
+                        <template #title><span style="color:aliceblue;">工具</span></template>
+                        <el-menu-item id="createCalibrationBoot"><span style="color:aliceblue;">创建一键标定引导</span></el-menu-item>
+                        <el-menu-item id="calibrationBoardGenerationTool"><span style="color:aliceblue;">标定板生成工具</span></el-menu-item>
+                    </el-sub-menu>
+
+                    <el-sub-menu index="5">
                         <template #title><span style="color:aliceblue;">其他</span></template>
-                        <el-menu-item><span style="color:aliceblue;">关于</span></el-menu-item>
-                        <el-menu-item><span style="color:aliceblue;">日志</span></el-menu-item>
-                        <el-menu-item><span style="color:aliceblue;">修改密码</span></el-menu-item>
+                        <el-menu-item id="about"><span style="color:aliceblue;">关于</span></el-menu-item>
+                        <el-menu-item id="help"><span style="color:aliceblue;">帮助</span></el-menu-item>
+                        <el-menu-item id="logs"><span style="color:aliceblue;">日志</span></el-menu-item>
                     </el-sub-menu>
 
 <!--                    <el-sub-menu index="5">-->
@@ -42,29 +59,54 @@
 
                 <el-menu :default-active="activeIndex" class="el-menu-demo1" mode="horizontal" @select="handleSelect">
 
-                    <el-menu-item index="1">
+                    <el-menu-item title="撤销" id="revocation" index="1">
                         <el-icon style="color:aliceblue;">
-                            <House/>
+                            <Back />
                         </el-icon>
                     </el-menu-item>
-                    <el-menu-item index="2">
+                    <el-menu-item title="重做" id="redo" index="2">
                         <el-icon style="color:aliceblue;">
-                            <Minus/>
+                            <RefreshLeft />
                         </el-icon>
                     </el-menu-item>
-                    <el-menu-item index="3">
+                    <el-menu-item title="单次运行" id="singleRun" index="3">
                         <el-icon style="color:aliceblue;">
-                            <CirclePlus/>
+                            <Right />
                         </el-icon>
                     </el-menu-item>
-                    <el-menu-item index="4">
+                    <el-menu-item title="局部运行" id="localRun" index="4">
                         <el-icon style="color:aliceblue;">
-                            <Search/>
+                            <CaretRight />
                         </el-icon>
                     </el-menu-item>
-                    <el-menu-item index="5">
+                    <el-menu-item title="循环运行" id="circleRun" index="5">
                         <el-icon style="color:aliceblue;">
-                            <Aim/>
+                            <Refresh />
+                        </el-icon>
+                    </el-menu-item>
+                    <el-menu-item title="停止" id="stop" index="6">
+                        <el-icon style="color:aliceblue;">
+                            <CircleClose />
+                        </el-icon>
+                    </el-menu-item>
+                    <el-menu-item title="全局变量" id="globalVariable" index="7">
+                        <el-icon style="color:aliceblue;">
+                            <Notification />
+                        </el-icon>
+                    </el-menu-item>
+                    <el-menu-item title="全局触发" id="globalTrigger" index="8">
+                        <el-icon style="color:aliceblue;">
+                            <ZoomOut />
+                        </el-icon>
+                    </el-menu-item>
+                    <el-menu-item title="全局脚本" id="globalScript" index="9">
+                        <el-icon style="color:aliceblue;">
+                            <Remove />
+                        </el-icon>
+                    </el-menu-item>
+                    <el-menu-item title="运行界面" id="runningInterface" index="10">
+                        <el-icon style="color:aliceblue;">
+                            <ChatSquare />
                         </el-icon>
                     </el-menu-item>
                 </el-menu>

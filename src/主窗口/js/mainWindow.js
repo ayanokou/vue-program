@@ -6,6 +6,7 @@ import LayoutOne from "@/主窗口/components/layout/LayoutOne.vue";
 import LayoutTwo from "@/主窗口/components/layout/LayoutTwo.vue";
 import LayoutThree from "@/主窗口/components/layout/LayoutThree.vue";
 import {computed} from "vue";
+import {mapState} from "vuex";
 
 export default {
     data() {
@@ -76,14 +77,10 @@ export default {
     },
 
     mounted() {
-
         //动态调整右半部分尺寸
         window.addEventListener('resize', this.dynamicRightHeight)
-        //新建文件的点击事件
-        document.getElementById('newSolution').addEventListener('click', function () {
-            const msg_key='newSolution'
-            eventHandle(events.msg_menuBar, {msg_key})
-        })
+
+
         setInterval(() => { //不用管
             this.moduleResultData = [];
             let count = 0;
@@ -106,6 +103,9 @@ export default {
             setChildren(10, this.moduleResultData)
         }, 5000)
     },
+    computed:{
+        ...mapState([])
+    },
     methods: {
         //动态布局
         layout(i) {
@@ -123,6 +123,18 @@ export default {
         //右半部分自适应调整高度
         dynamicRightHeight() {
             this.height_right = window.innerHeight - 82
+        },
+        //新建方案
+        newSolution() {
+            this.$store.commit('newSolutionEvent',true)
+        },
+        //打开方案
+        openSolution(){
+            this.$store.commit('openSolutionEvent',true)
+        },
+        //保存方案
+        saveSolution(){
+            this.$store.commit('saveSolutionEvent',true)
         }
     }
 }

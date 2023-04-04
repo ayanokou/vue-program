@@ -33,7 +33,7 @@ const handleClose = (key, keyPath) => {
 //初始化socketio用于前后端传输
 let socket = io.connect('http://localhost:9092')
 
-let id = 1;
+
 
 class CycleModel extends CircleNodeModel {
     getNodeStyle() {
@@ -48,7 +48,12 @@ class CycleModel extends CircleNodeModel {
     }
 
     createId() {
-        return (id++) + "";
+        let max=0
+        for(let node of this.graphModel.nodes){
+            if(node.id>max)
+                max=node.id
+        }
+        return (++max) + "";
     }
 }
 
@@ -60,7 +65,12 @@ class SuanziModel extends RectNodeModel {
     }
 
     createId() {
-        return (id++) + "";
+        let max=0
+        for(let node of this.graphModel.nodes){
+            if(node.id>max)
+                max=node.id
+        }
+        return (++max) + "";
     }
 }
 
@@ -78,7 +88,12 @@ class ConditionJudgmentModel extends DiamondNodeModel {
     }
 
     createId() {
-        return (id++) + "";
+        let max=0
+        for(let node of this.graphModel.nodes){
+            if(node.id>max)
+                max=node.id
+        }
+        return (++max) + "";
     }
 }
 
@@ -143,7 +158,12 @@ class MyGroupModel extends GroupNode.model {
     }
 
     createId() {
-        return (id++) + "";
+        let max=0
+        for(let node of this.graphModel.nodes){
+            if(node.id>max)
+                max=node.id
+        }
+        return (++max) + "";
     }
 }
 
@@ -288,16 +308,15 @@ const suanziItemList = data
 
 
 // const dialogVisible = ref(false) //dialogVisible若为true,则显示页面内弹窗
-
 export default {
     name: 'FlowDemo',
-    props:['tabName'],
+    props:['tab'],
+    expose:['lfData'],
     data() {
         return {
             //logic-flow
             lf: null,
             initHeight: '',
-            initData: null,
             //点击事件的节点对象
             nodeModel: '',
             //点击事件的边对象
@@ -315,26 +334,37 @@ export default {
             formData: [],
             dialogControl: {}, // 左侧菜单栏对话跳窗控制
             isDragging:false,
-            lfData:null//当前标签页中的所有数据
+            dialogVisibleGV:false,
+            tableData :[
+            ],
+            tableForm:[],
+            innerVisible:false,
+            dialogVisibleEdge:false,//选YN边的对话框
+            yorn:""//上面对话框的结果
         }
     },
     computed: {
-        
+        lfData(){
+            return this.lf.getGraphData()
+        }
     },
     mounted() {
         this.initHeight = window.innerHeight-150
         this.init()
-        document.querySelector("#"+this.tabName).firstElementChild.style.height=""+this.initHeight+"px"
+        document.querySelector("#"+this.tab.title).firstElementChild.style.height=""+this.initHeight+"px"
         //鼠标移到节点显示帮助信息
         this.lf.on('node:mouseenter', (evt) => {
-            let res = []
+            let res = ""
             if (evt.data.properties.outPara) {
                 for (let x of evt.data.properties.outPara) {
-                    res.push(evt.data.properties.modelName + `.${x.varName}`)
+                    //res.push(evt.data.properties.modelName +`.${evt.data.id}`+ `.${x.varName}`)
+                    let str="<div>变量:&nbsp;"+evt.data.properties.modelName +`.${evt.data.id}`+ `.${x.varName}`+"&nbsp;&nbsp;&nbsp;;类型:&nbsp;"+`${x.varType}`+"</div>"
+                    res+=str
                 }
                 if (this.isDragging) {
                     ElNotification({
-                        title: 'NAME',
+                        title: '输出变量:',
+                        dangerouslyUseHTMLString: true,
                         message: res,
                         duration: 2000,
                     })
@@ -355,16 +385,21 @@ export default {
 
             //刷新nodeModel
             this.nodeModel = this.lf.getNodeModelById(evt.data.id)
+            this.$store.commit('setVuexHelpInfo',this.nodeModel.getProperties().helpMsg)
 
+            if(this.modelName=="GlobalVariable"){
+                this.dialogVisibleGV=true
+            }else{
+                this.dialogVisible = true
+            }
 
-            this.dialogVisible = true
             let e = document.getElementsByClassName('el-overlay-dialog')[0].parentNode
             e.style.width = '0px';
 
         })
 
         this.lf.on('edge:click', (evt) => {
-            window.open('#/conditionEdge', "newwin", "toolbar=no,scrollbars=no,menubar=no")
+            this.dialogVisibleEdge=true;
             let edgeId = (evt.data.id)
             //获取边
             this.edgeModel = this.lf.getEdgeModelById(edgeId)
@@ -408,7 +443,7 @@ export default {
         window.onresize = () => {
             this.initHeight = window.innerHeight-150
             console.log(this.initHeight)
-            document.querySelector("#"+this.tabName).firstElementChild.style.height=""+this.initHeight+"px"
+            document.querySelector("#"+this.tab.title).firstElementChild.style.height=""+this.initHeight+"px"
             this.lf.render(this.lf.getGraphData())
             const position = this.lf.getPointByClient(document.documentElement.clientWidth - 150, document.documentElement.clientHeight - 230)
             this.lf.extension.miniMap.show(position.domOverlayPosition.x, position.domOverlayPosition.y)
@@ -417,7 +452,7 @@ export default {
     methods: {
         init() {
             const lf = new LogicFlow({
-                container: document.querySelector("#"+this.tabName),
+                container: document.querySelector("#"+this.tab.title),
                 height: this.initHeight,
                 plugins: [Menu, BpmnElement, LeftMenus, SelectionSelect, Control, MiniMap, Snapshot, Group],
                 background: {
@@ -430,7 +465,8 @@ export default {
                     type: 'mesh', // 网格类型为线状
                     size: 20,
                     visible: true // 是否可见
-                }
+                },
+                stopMoveGraph:true
             })
 
             lf.extension.menu.setMenuConfig({
@@ -456,7 +492,7 @@ export default {
 
                     }
                 ], // 覆盖默认的节点右键菜单
-                edgeMenu: false, // 删除默认的边右键菜单
+                //edgeMenu: false, // 删除默认的边右键菜单
                 graphMenu: [],
 
 
@@ -476,7 +512,6 @@ export default {
                     {
                         text: '组合',
                         callback() {
-                            alert("222");
                             //将选区数据存储
                             const {nodes} = lf.getSelectElements();
                             const {startPoint, endPoint} = lf.extension.selectionSelect;
@@ -618,13 +653,11 @@ export default {
                 }
             })
 
-            const initData = {}
-
-            lf.render(initData)
+            console.log(this.tab.initLF)
+            lf.render(this.tab.initLF)
             const position = lf.getPointByClient(document.documentElement.clientWidth/2 - 150, document.documentElement.clientHeight - 230)
             lf.extension.miniMap.show(position.domOverlayPosition.x, position.domOverlayPosition.y)
             this.lf = lf
-            this.initData = initData
 
         },
         run(){
@@ -648,7 +681,10 @@ export default {
                     console.log(solutionJson) // 读取json
                     this.lf.render(solutionJson)
                     //test tabName
-                    this.$emit('changeTabName',file.name.substring(0,file.name.lastIndexOf('.')))
+                    this.$emit('changeTabName',{
+                        index:this.tab.index,
+                        tabName:file.name.substring(0,file.name.lastIndexOf('.'))
+                    })
                 };
             };
             inputObj.click();
@@ -724,6 +760,34 @@ export default {
             for(let e of es){
                 e.parentNode.style.width='0px'
             }
+        },
+        deleteRow(index){
+            this.tableData.splice(index, 1)
+        },
+        onAddItem(){
+            //弹出一个对话框表单，输入参数
+            this.innerVisible=true
+            let es = document.getElementsByClassName('el-overlay-dialog')
+            for(let e of es){
+                e.parentNode.style.width='0px'
+            }
+        },
+        addItem(){
+            let item={
+                name:this.tableForm[0],
+                value:this.tableForm[1]
+            }
+            this.tableData.push(item)
+            console.log(this.tableData)
+            this.tableForm=[]
+        },
+        submitGV(){
+            this.nodeModel.setProperties({
+                "content": this.tableData,
+            })
+        },
+        edgeSubmit(){
+            this.edgeModel.updateText(this.yorn)
         }
     }
 }
