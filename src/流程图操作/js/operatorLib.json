@@ -24,7 +24,7 @@
               "properties": {
                 "helpMsg": "it is a help message of GlobalVariable",
                 "dllPath": "",
-                "modelName": "GlobalVariable",
+                "modelID": "GlobalVariable",
                 "inPara": [
                 ],
                 "outPara": [
@@ -58,7 +58,7 @@
               "properties": {
                 "helpMsg": "it is a help message",
                 "dllPath": "server/src/main/resources/general.dll",
-                "modelName": "read",
+                "modelID": "read",
                 "inPara": [
                   {
                     "varName": "filename",
@@ -71,7 +71,17 @@
                     "varName": "flags",
                     "varType": "int",
                     "from": "",
-                    "typeUI": "input",
+                    "typeUI": "select",
+                    "selectContent": [
+                      {
+                        "value": "1",
+                        "label": "BGR"
+                      },
+                      {
+                        "value": "0",
+                        "label": "GRAY"
+                      }
+                    ],
                     "explanation": ""
                   }
                 ],
@@ -92,11 +102,6 @@
             "name": "输出模块"
           },
           "properties": {
-            "upperName": "输入输出",
-            "helpMsg": "it is a help message",
-            "name": "show",
-            "dllPath": "./dll/",
-            "modelName": ""
           },
           "models": [
             {
@@ -108,23 +113,32 @@
               },
               "properties": {
                 "helpMsg": "it is a help message",
-                "dllPath": "server/src/main/resources/general.dll",
-                "modelName": "show",
+                "dllPath": "server/src/main/resources/show.dll",
+                "modelID": "show",
                 "inPara": [
                   {
-                    "varName": "SuanziName",
+                    "varName": "object",
                     "varType": "object",
                     "from": "",
                     "typeUI": "input",
                     "explanation": ""
+                  },
+                  {
+                    "varName": "mode",
+                    "varType": "int",
+                    "from": "",
+                    "typeUI": "select",
+                    "selectContent": [
+                      {
+                        "value": "0",
+                        "label": "Mat"
+                      }
+                    ],
+                    "explanation": ""
                   }
                 ],
                 "outPara": [
-                  {
-                    "varName": "object",
-                    "varType": "OutputArray",
-                    "explanation": ""
-                  }
+
                 ]
               },
               "models": []
@@ -154,8 +168,8 @@
               },
               "properties": {
                 "helpMsg": "it is a help message",
-                "dllPath": "server/src/main/resources/GaussianBlur.dll",
-                "modelName": "GaussianBlur",
+                "dllPath": "server/src/main/resources/General.dll",
+                "modelID": "gaussianBlur",
                 "inPara": [
                   {
                     "varName": "src",
@@ -212,7 +226,7 @@
               },
               "properties": {
                 "dllPath": "server/src/main/resources/general.dll",
-                "modelName": "median_blur",
+                "modelID": "median_blur",
                 "inPara": [
                   {
                     "varName": "src",
@@ -256,7 +270,7 @@
               },
               "properties": {
                 "dllPath": "server/src/main/resources/general.dll",
-                "modelName": "threshold",
+                "modelID": "threshold",
                 "inPara": [
                   {
                     "varName": "src",
@@ -314,7 +328,7 @@
               },
               "properties": {
                 "dllPath": "server/src/main/resources/general.dll",
-                "modelName": "convert_color",
+                "modelID": "convert_color",
                 "inPara": [
                   {
                     "varName": "src",
@@ -358,7 +372,7 @@
               },
               "properties": {
                 "dllPath": "server/src/main/resources/general.dll",
-                "modelName": "morph_open",
+                "modelID": "morph_open",
                 "inPara": [
                   {
                     "varName": "src",
@@ -393,7 +407,7 @@
               },
               "properties": {
                 "dllPath": "server/src/main/resources/general.dll",
-                "modelName": "morph_close",
+                "modelID": "morph_close",
                 "inPara": [
                   {
                     "varName": "src",
@@ -436,7 +450,7 @@
               },
               "properties": {
                 "dllPath": "server/src/main/resources/general.dll",
-                "modelName": "find_contours",
+                "modelID": "find_contours",
                 "inPara": [
                   {
                     "varName": "src",
@@ -463,7 +477,7 @@
               },
               "properties": {
                 "dllPath": "server/src/main/resources/general.dll",
-                "modelName": "draw_contours",
+                "modelID": "draw_contours",
                 "inPara": [
                   {
                     "varName": "src",
@@ -515,7 +529,7 @@
               "properties": {
                 "helpMsg": "it is a help message",
                 "dllPath": "",
-                "modelName": "conditionJudge",
+                "modelID": "conditionJudge",
                 "inPara": [
                   {
                     "varName": "expression",
@@ -535,13 +549,23 @@
                 "type": "mygroup",
                 "text": "组合",
                 "label": "组合",
-                "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAAH6ji2bAAAABGdBTUEAALGPC/xhBQAAAnBJREFUOBGdVL1rU1EcPfdGBddmaZLiEhdx1MHZQXApraCzQ7GKLgoRBxMfcRELuihWKcXFRcEWF8HBf0DdDCKYRZpnl7p0svLe9Zzbd29eQhTbC8nv+9zf130AT63jvooOGS8Vf9Nt5zxba7sXQwODfkWpkbjTQfCGUd9gIp3uuPP8bZ946g56dYQvnBg+b1HB8VIQmMFrazKcKSvFW2dQTxJnJdQ77urmXWOMBCmXM2Rke4S7UAW+/8ywwFoewmBps2tu7mbTdp8VMOkIRAkKfrVawalJTtIliclFbaOBqa0M2xImHeVIfd/nKAfVq/LGnPss5Kh00VEdSzfwnBXPUpmykNss4lUI9C1ga+8PNrBD5YeqRY2Zz8PhjooIbfJXjowvQJBqkmEkVnktWhwu2SM7SMx7Cj0N9IC0oQXRo8xwAGzQms+xrB/nNSUWVveI48ayrFGyC2+E2C+aWrZHXvOuz+CiV6iycWe1Rd1Q6+QUG07nb5SbPrL4426d+9E1axKjY3AoRrlEeSQo2Eu0T6BWAAr6COhTcWjRaYfKG5csnvytvUr/WY4rrPMB53Uo7jZRjXaG6/CFfNMaXEu75nG47X+oepU7PKJvvzGDY1YLSKHJrK7vFUwXKkaxwhCW3u+sDFMVrIju54RYYbFKpALZAo7sB6wcKyyrd+aBMryMT2gPyD6GsQoRFkGHr14TthZni9ck0z+Pnmee460mHXbRAypKNy3nuMdrWgVKj8YVV8E7PSzp1BZ9SJnJAsXdryw/h5ctboUVi4AFiCd+lQaYMw5z3LGTBKjLQOeUF35k89f58Vv/tGh+l+PE/wG0rgfIUbZK5AAAAABJRU5ErkJggg==",
                 "name": "组合"
               },
               "properties": {
                 "helpMsg": "it is a help message",
-                "name": "groupId",
-                "value": ""
+                "dllPath": "",
+                "modelID": "group",
+                "inPara": [
+                  {
+                    "varName": "count",
+                    "varType": "int",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": ""
+                  }
+                ],
+                "outPara": [
+                ]
               },
               "models": []
             }
