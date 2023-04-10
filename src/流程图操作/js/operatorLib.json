@@ -525,7 +525,7 @@
                                   "explanation": "输入图片 类型Mat"
                               },
                               {
-                                  "varName": "det model",
+                                  "varName": "det_model",
                                   "varType": "string",
                                   "from": "",
                                   "typeUI": "input",
