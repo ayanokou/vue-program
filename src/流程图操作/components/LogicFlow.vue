@@ -51,7 +51,7 @@
             <slot></slot>
         </el-main>
 
-        <el-dialog v-model="dialogVisible" :modal="false" :close-on-click-modal="false" :title="modelName" width="50%"
+        <el-dialog v-model="dialogVisible" :modal="false" :close-on-click-modal="false" :title="modelID" width="50%"
                    draggable>
             <el-form label-width="120px">
 
@@ -64,7 +64,7 @@
                             <el-option
                                 v-for="c in item.selectContent"
                                 :key="c.value"
-                                :label="c.value"
+                                :label="c.label"
                                 :value="c.value"
                             />
                         </el-select>
@@ -78,7 +78,7 @@
           </span>
             </template>
         </el-dialog>
-        <el-dialog v-model="dialogVisibleGV" :modal="false" :close-on-click-modal="false" :title="modelName" width="25%"
+        <el-dialog v-model="dialogVisibleGV" :modal="false" :close-on-click-modal="false" :title="modelID" width="25%"
                    draggable>
             <el-table :data="tableData" style="width: 100%" max-height="250">
                 <el-table-column prop="name" label="Name" width="120"/>
@@ -130,7 +130,7 @@
                     </span>
             </template>
         </el-dialog>
-        <el-dialog v-model="dialogVisibleEdge" :modal="false" :close-on-click-modal="false" :title="modelName" width="50%"
+        <el-dialog v-model="dialogVisibleEdge" :modal="false" :close-on-click-modal="false" :title="modelID" width="50%"
                    draggable>
             <el-form label-width="120px">
 

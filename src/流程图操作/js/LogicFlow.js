@@ -339,7 +339,7 @@ export default {
             //对话框UI
             dialogUI: null,
             //算子选中的方法名
-            modelName: "",
+            modelID: "",
             dialogVisible: false,
             formData: [],
             dialogControl: {}, // 左侧菜单栏对话跳窗控制
@@ -367,8 +367,8 @@ export default {
             let res = ""
             if (evt.data.properties.outPara) {
                 for (let x of evt.data.properties.outPara) {
-                    //res.push(evt.data.properties.modelName +`.${evt.data.id}`+ `.${x.varName}`)
-                    let str="<div>变量:&nbsp;"+evt.data.properties.modelName +`.${evt.data.id}`+ `.${x.varName}`+"&nbsp;&nbsp;&nbsp;;类型:&nbsp;"+`${x.varType}`+"</div>"
+                    //res.push(evt.data.properties.modelID +`.${evt.data.id}`+ `.${x.varName}`)
+                    let str="<div>变量:&nbsp;"+evt.data.properties.modelID +`.${evt.data.id}`+ `.${x.varName}`+"&nbsp;&nbsp;&nbsp;;类型:&nbsp;"+`${x.varType}`+"</div>"
                     res+=str
                 }
                 if (this.isDragging) {
@@ -390,14 +390,15 @@ export default {
         //设置节点点击事件监听, 修改帮助信息
         this.lf.on('node:click', (evt) => {
             this.dialogUI=evt.data.properties.inPara
-            this.modelName=evt.data.properties.modelName
+            this.modelID=evt.data.properties.modelID
+            console.log(this.modelID)
 
 
             //刷新nodeModel
             this.nodeModel = this.lf.getNodeModelById(evt.data.id)
             this.$store.commit('setVuexHelpInfo',this.nodeModel.getProperties().helpMsg)
 
-            if(this.modelName=="GlobalVariable"){
+            if(this.modelID=="GlobalVariable"){
                 this.dialogVisibleGV=true
             }else{
                 this.dialogVisible = true
@@ -439,28 +440,6 @@ export default {
         socket.on('revDoubles',(data)=>{
             //先传递给FlowArea组件
             this.$store.commit('setRevDoubles',data)
-        })
-        //与弹出的dialog和标签页通信
-        window.addEventListener('message', (evt) => {
-            if (evt.data.flag) {
-                //修改边的文本
-                this.edgeModel.updateText(evt.data.flag)
-            }
-            if (evt.data.conditionValue) {
-                //修改节点的值
-                this.nodeModel.setProperties({
-                    value: evt.data.conditionValue
-                })
-            }
-            if (evt.data.imgBase64) {
-
-                //发送后端
-                let jsonObject = {
-                    userName: "Pic",
-                    message: evt.data.imgBase64,
-                };
-                socket.emit('chatevent', jsonObject);
-            }
         })
         window.onresize = () => {
             this.initHeight = window.innerHeight-150
@@ -563,8 +542,25 @@ export default {
                                 y: y1 + height / 2,
                                 width,
                                 height,
+                                properties: {
+                                    "helpMsg": "it is a help message",
+                                    "dllPath": "",
+                                    "modelID": "group",
+                                    "inPara": [
+                                        {
+                                            "varName": "count",
+                                            "varType": "int",
+                                            "from": "",
+                                            "typeUI": "input",
+                                            "explanation": ""
+                                        }
+                                    ],
+                                    "outPara": [
+                                    ]
+                                },
                                 children: nodes.map((item) => item.id)
                             });
+
                         }
                     },
                 ]
