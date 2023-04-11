@@ -1,16 +1,24 @@
-import {eventHandle, events} from "@/sys/eventResponseController"
+import { eventHandle, events } from "@/sys/eventResponseController"
 import ProcessDp from "@/流程图操作/FlowArea.vue";
 import ImageArea from "@/图像操作/ImageArea.vue";
 import ResultArea from "@/流程图操作/结果描述与帮助/ResultArea.vue";
 import LayoutOne from "@/主窗口/components/layout/LayoutOne.vue";
 import LayoutTwo from "@/主窗口/components/layout/LayoutTwo.vue";
 import LayoutThree from "@/主窗口/components/layout/LayoutThree.vue";
-import {computed} from "vue";
-import {mapState} from "vuex";
+import { computed } from "vue";
+import { mapState } from "vuex";
 
 export default {
     data() {
         return {
+            //是否选中弹窗
+            dialogVisible: false,
+            //需要删除的解决方案的名称
+            selectedSolutionKeys: [],
+            solutionKeys: [],
+            //需要删除的流程图的名称
+            selectedFlowKeys: [],
+            flowKeys:[],
             //右半部分的高度
             height_right: window.innerHeight - 82,
             mainLayout: LayoutOne,
@@ -69,10 +77,10 @@ export default {
     //在顶端组件提供模块结果数据
     provide() {
         return {
-            moduleResultData: computed(()=>{return this.moduleResultData}),
-            currentTableData: computed(()=>this.currentTableData),
-            historyTableData: computed(()=>this.historyTableData),
-            helpInfo: computed(()=>this.helpInfo),
+            moduleResultData: computed(() => { return this.moduleResultData }),
+            currentTableData: computed(() => this.currentTableData),
+            historyTableData: computed(() => this.historyTableData),
+            helpInfo: computed(() => this.helpInfo),
         }
     },
 
@@ -103,7 +111,7 @@ export default {
             setChildren(10, this.moduleResultData)
         }, 5000)
     },
-    computed:{
+    computed: {
         ...mapState([])
     },
     methods: {
@@ -126,15 +134,78 @@ export default {
         },
         //新建方案
         newSolution() {
-            this.$store.commit('newSolutionEvent',true)
+            this.$store.commit('newSolutionEvent', true)
+        },
+        //删除方案
+        deleteSolution() {
+            let name = prompt("请输入要删除的方案的名称", "sln")
+            localStorage.removeItem(name);
         },
         //打开方案
-        openSolution(){
-            this.$store.commit('openSolutionEvent',true)
+        openSolution() {
+            this.$store.commit('openSolutionEvent', true)
+        },
+        //最近打开方案
+        lastOpenSolution() {
+            let gainKey = null
+            let lastTime = 0
+            // console.log(localStorage.getItem("SLN"))
+            // for(let key in localStorage){
+            //     let cur = localStorage.getItem(key)
+            //     console.log(cur)
+            //     let curJson = JSON.parse(cur)
+            //     console.log(curJson)
+            //     if(curJson.type === "solution"){
+            //         if(curJson.time > lastTime){
+            //             gainKey = key
+            //         }
+            //     }
+            // }
+            for (let i = 1; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                const value = localStorage.getItem(key);
+                let curJson = JSON.parse(value)
+                // console.log(curJson)
+                if (curJson.type === "solution") {
+                    // console.log(curJson)
+                    // console.log("时间是：" + curJson.time)
+                    if (curJson.time > lastTime) {
+                        gainKey = key
+                    }
+                }
+            }
+            alert("最近打开方案为：" + gainKey)
         },
         //保存方案
-        saveSolution(){
-            this.$store.commit('saveSolutionEvent',true)
-        }
+        saveSolution() {
+            this.$store.commit('saveSolutionEvent', true)
+        },
+        //另存为方案
+        saveSolutionAs() {
+            this.$store.commit('saveSolutionAsEvent', true)
+        },
+        //加载流程图
+        importFlow() {
+            this.$store.commit('flowAddEvent', true)
+        },
+        deleteFlow() {
+            this.FlowKeys = []
+            for (let i = 0; i < localStorage.length; i++) {
+                let key = localStorage.key(i);
+                let value = localStorage.getItem(key);
+                if(key === 'debug') continue
+                let cont = JSON.parse(value)
+                if(cont.type === 'flow'){
+                    let text = {
+                        name:key,
+                        check:0
+                    }
+                    this.FlowKeys.push(text)
+                    console.log(text)
+                }
+            }
+            this.dialogVisible = true;
+            // localStorage.removeItem(name);
+        },
     }
 }

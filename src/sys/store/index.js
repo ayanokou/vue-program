@@ -10,6 +10,8 @@ export default createStore({
             newSolutionTrigger:false,
             openSolutionTrigger:false,
             saveSolutionTrigger:false,
+            saveSolutionAsTrigger:false,
+            flowAddTrigger:false,
         }
     },
     mutations:{
@@ -27,7 +29,13 @@ export default createStore({
         },
         saveSolutionEvent(state, payload){
             state.saveSolutionTrigger = payload
-        }
+        },
+        saveSolutionAsEvent(state, payload){
+            state.saveSolutionAsTrigger = payload
+        },
+        flowAddEvent(state, payload){
+            state.flowAddTrigger = payload
+        },
     },
     modules:{
 

@@ -1,5 +1,5 @@
-import {Menu, BpmnElement, SelectionSelect, Control, Snapshot, Group, GroupNode} from '@logicflow/extension'
-import {lfJson2Xml} from '@logicflow/extension'
+import { Menu, BpmnElement, SelectionSelect, Control, Snapshot, Group, GroupNode } from '@logicflow/extension'
+import { lfJson2Xml } from '@logicflow/extension'
 //test 框选
 import '@logicflow/extension/lib/style/index.css'
 //test end
@@ -16,10 +16,10 @@ import {
     h
 } from '@logicflow/core'
 
-import {LeftMenus} from './LeftMenuItems.js'
-import {MiniMap} from './MiniMap.js'
-import {eventHandle, events} from "../../sys/eventResponseController";
-import {ElNotification} from 'element-plus'
+import { LeftMenus } from './LeftMenuItems.js'
+import { MiniMap } from './MiniMap.js'
+import { eventHandle, events } from "../../sys/eventResponseController";
+import { ElNotification } from 'element-plus'
 
 
 LogicFlow.use(SelectionSelect);
@@ -117,14 +117,14 @@ class MyGroupModel extends GroupNode.model {
     foldGroup(isFolded) {
         super.foldGroup(isFolded);
         if (isFolded) {
-            this.text = {...this.foldText};
+            this.text = { ...this.foldText };
             if (!this.text.value) {
                 this.text.value = "已折叠";
             }
             this.text.x = this.x + 10;
             this.text.y = this.y;
         } else {
-            this.foldText = {...this.text};
+            this.foldText = { ...this.text };
             this.text = {};
         }
 
@@ -150,7 +150,7 @@ class MyGroupModel extends GroupNode.model {
 //自定义Group节点的外观
 class MyGroup extends GroupNode.view {
     getFoldIcon() {
-        const {model} = this.props;
+        const { model } = this.props;
         const foldX = model.x - model.width / 2 + 5;
         const foldY = model.y - model.height / 2 + 5;
         if (!model.foldable) return null;
@@ -216,7 +216,7 @@ class MyGroup extends GroupNode.view {
     }
 
     getDeleteIcon() {
-        const {model} = this.props;
+        const { model } = this.props;
 
         return h("g", {}, [
             h("rect", {
@@ -290,8 +290,8 @@ const suanziItemList = data
 // const dialogVisible = ref(false) //dialogVisible若为true,则显示页面内弹窗
 export default {
     name: 'FlowDemo',
-    props:['tab'],
-    expose:['lfData'],
+    props: ['tab'],
+    expose: ['lfData'],
     data() {
         return {
             //logic-flow
@@ -313,18 +313,18 @@ export default {
             dialogVisible: false,
             formData: [],
             dialogControl: {}, // 左侧菜单栏对话跳窗控制
-            isDragging:false,
+            isDragging: false,
         }
     },
     computed: {
-        lfData(){
+        lfData() {
             return this.lf.getGraphData()
         }
     },
     mounted() {
-        this.initHeight = window.innerHeight-150
+        this.initHeight = window.innerHeight - 150
         this.init()
-        document.querySelector("#"+this.tab.title).firstElementChild.style.height=""+this.initHeight+"px"
+        document.querySelector("#" + this.tab.title).firstElementChild.style.height = "" + this.initHeight + "px"
         //鼠标移到节点显示帮助信息
         this.lf.on('node:mouseenter', (evt) => {
             let res = []
@@ -341,21 +341,21 @@ export default {
                 }
             }
         })
-        this.lf.on('node:dragstart',()=>{
-            this.isDragging=false
+        this.lf.on('node:dragstart', () => {
+            this.isDragging = false
         })
-        this.lf.on('node:drop',()=>{
-            this.isDragging=true
+        this.lf.on('node:drop', () => {
+            this.isDragging = true
         })
         //设置节点点击事件监听, 修改帮助信息
         this.lf.on('node:click', (evt) => {
-            this.dialogUI=evt.data.properties.inPara
-            this.modelName=evt.data.properties.modelName
+            this.dialogUI = evt.data.properties.inPara
+            this.modelName = evt.data.properties.modelName
 
 
             //刷新nodeModel
             this.nodeModel = this.lf.getNodeModelById(evt.data.id)
-            this.$store.commit('setVuexHelpInfo',this.nodeModel.getProperties().helpMsg)
+            this.$store.commit('setVuexHelpInfo', this.nodeModel.getProperties().helpMsg)
 
             this.dialogVisible = true
             let e = document.getElementsByClassName('el-overlay-dialog')[0].parentNode
@@ -377,11 +377,11 @@ export default {
         })
         socket.on('revBase64', (data) => {
             //先传递给FlowArea组件
-            this.$store.commit('setImgBase64',data)
+            this.$store.commit('setImgBase64', data)
         })
-        socket.on('revDoubles',(data)=>{
+        socket.on('revDoubles', (data) => {
             //先传递给FlowArea组件
-            this.$store.commit('setRevDoubles',data)
+            this.$store.commit('setRevDoubles', data)
         })
         //与弹出的dialog和标签页通信
         window.addEventListener('message', (evt) => {
@@ -406,19 +406,19 @@ export default {
             }
         })
         window.onresize = () => {
-            this.initHeight = window.innerHeight-150
+            this.initHeight = window.innerHeight - 150
             console.log(this.initHeight)
-            document.querySelector("#"+this.tab.title).firstElementChild.style.height=""+this.initHeight+"px"
+            document.querySelector("#" + this.tab.title).firstElementChild.style.height = "" + this.initHeight + "px"
             this.lf.render(this.lf.getGraphData())
             const position = this.lf.getPointByClient(document.documentElement.clientWidth - 150, document.documentElement.clientHeight - 230)
             this.lf.extension.miniMap.show(position.domOverlayPosition.x, position.domOverlayPosition.y)
         }
     },
     methods: {
-        test(){alert(test)},
+        test() { alert(test) },
         init() {
             const lf = new LogicFlow({
-                container: document.querySelector("#"+this.tab.title),
+                container: document.querySelector("#" + this.tab.title),
                 height: this.initHeight,
                 plugins: [Menu, BpmnElement, LeftMenus, SelectionSelect, Control, MiniMap, Snapshot, Group],
                 background: {
@@ -432,7 +432,7 @@ export default {
                     size: 20,
                     visible: true // 是否可见
                 },
-                stopMoveGraph:true
+                stopMoveGraph: true
             })
 
             lf.extension.menu.setMenuConfig({
@@ -475,42 +475,42 @@ export default {
                         alert("111");
                     }
                 },
-                    {
-                        text: '组合',
-                        callback() {
-                            //将选区数据存储
-                            const {nodes} = lf.getSelectElements();
-                            const {startPoint, endPoint} = lf.extension.selectionSelect;
-                            //清除选区数据
-                            lf.clearSelectElements();
-                            //如果节点中有不能组合的节点类型则返回
-                            // if(nodes.some((node) => node.type === "someNode")){
-                            //     return;
-                            // }
-                            //startPoint endPoint是dom坐标，需要转换成canvas坐标
-                            const {transformModel} = lf.graphModel;
-                            const [x1, y1] = transformModel.HtmlPointToCanvasPoint([
-                                startPoint.x, startPoint.y
-                            ]);
-                            const [x2, y2] = transformModel.HtmlPointToCanvasPoint([
-                                endPoint.x, endPoint.y
-                            ]);
-                            const width = x2 - x1;
-                            const height = y2 - y1;
-                            if (width < 175 && height < 40) {
-                                return;
-                            }
-                            //创建一个GroupNode
-                            lf.addNode({
-                                type: "mygroup",
-                                x: x1 + width / 2,
-                                y: y1 + height / 2,
-                                width,
-                                height,
-                                children: nodes.map((item) => item.id)
-                            });
+                {
+                    text: '组合',
+                    callback() {
+                        //将选区数据存储
+                        const { nodes } = lf.getSelectElements();
+                        const { startPoint, endPoint } = lf.extension.selectionSelect;
+                        //清除选区数据
+                        lf.clearSelectElements();
+                        //如果节点中有不能组合的节点类型则返回
+                        // if(nodes.some((node) => node.type === "someNode")){
+                        //     return;
+                        // }
+                        //startPoint endPoint是dom坐标，需要转换成canvas坐标
+                        const { transformModel } = lf.graphModel;
+                        const [x1, y1] = transformModel.HtmlPointToCanvasPoint([
+                            startPoint.x, startPoint.y
+                        ]);
+                        const [x2, y2] = transformModel.HtmlPointToCanvasPoint([
+                            endPoint.x, endPoint.y
+                        ]);
+                        const width = x2 - x1;
+                        const height = y2 - y1;
+                        if (width < 175 && height < 40) {
+                            return;
                         }
-                    },
+                        //创建一个GroupNode
+                        lf.addNode({
+                            type: "mygroup",
+                            x: x1 + width / 2,
+                            y: y1 + height / 2,
+                            width,
+                            height,
+                            children: nodes.map((item) => item.id)
+                        });
+                    }
+                },
                 ]
             })
 
@@ -607,33 +607,35 @@ export default {
                 }
             })
             lf.extension.control.addItem({
-                text:"导入Json",
-                onClick:()=>{
-                    this.loadJson()
-                }
-            })
-            lf.extension.control.addItem({
-                text: "下载Json",
+                text: "保存流程",
                 onClick: () => {
-                    this.downloadXML()
+                    let Name = prompt("请给要保存的流程图命名", "sln")
+                    let currentTime = Date.now()
+                    let text = {
+                        name: Name,
+                        type: "flow",
+                        time: currentTime,
+                        content: this.lf.getGraphData(),
+
+                    }
+                    localStorage.setItem(text.name, JSON.stringify(text))
                 }
             })
-
             console.log(this.tab.initLF)
             lf.render(this.tab.initLF)
-            const position = lf.getPointByClient(document.documentElement.clientWidth/2 - 150, document.documentElement.clientHeight - 230)
+            const position = lf.getPointByClient(document.documentElement.clientWidth / 2 - 150, document.documentElement.clientHeight - 230)
             lf.extension.miniMap.show(position.domOverlayPosition.x, position.domOverlayPosition.y)
             this.lf = lf
 
         },
-        run(){
+        run() {
             let jsonObject = {
                 userName: 'Flow',
                 message: JSON.stringify(this.lf.getGraphData())
             }
             socket.emit('chatevent', jsonObject);
         },
-        loadJson(){
+        loadJson() {
             let inputObj = document.createElement('input');
             inputObj.type = 'file';
             inputObj.accept = 'json';
@@ -647,9 +649,9 @@ export default {
                     console.log(solutionJson) // 读取json
                     this.lf.render(solutionJson)
                     //test tabName
-                    this.$emit('changeTabName',{
-                        index:this.tab.index,
-                        tabName:file.name.substring(0,file.name.lastIndexOf('.'))
+                    this.$emit('changeTabName', {
+                        index: this.tab.index,
+                        tabName: file.name.substring(0, file.name.lastIndexOf('.'))
                     })
                 };
             };
@@ -683,9 +685,9 @@ export default {
 
         },
         formDataSubmit() {
-            let inPara=this.dialogUI
-            for(let i in inPara){
-                inPara[i].from=this.formData[i]
+            let inPara = this.dialogUI
+            for (let i in inPara) {
+                inPara[i].from = this.formData[i]
             }
             this.nodeModel.setProperties({
                 "inPara": inPara,
@@ -721,10 +723,10 @@ export default {
                 properties: node.properties
             })
         },
-        clickLeftMenu(){
+        clickLeftMenu() {
             let es = document.getElementsByClassName('el-overlay-dialog')
-            for(let e of es){
-                e.parentNode.style.width='0px'
+            for (let e of es) {
+                e.parentNode.style.width = '0px'
             }
         }
     }

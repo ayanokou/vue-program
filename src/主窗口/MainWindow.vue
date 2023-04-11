@@ -1,5 +1,18 @@
 <template>
-
+    <el-dialog v-model="dialogVisible" :modal="false" :close-on-click-modal="false" :title="modelName" width="50%" draggable>
+        <div>
+            <el-checkbox-group v-model="selectedOptions">
+                <el-checkbox v-for="k in flowKeys" :key="k.check" :label="k.name">
+                </el-checkbox>
+            </el-checkbox-group>
+        </div>
+        <template #footer>
+            <span class="dialog-footer">
+                <el-button type="primary" @click="dialogVisible = false;formDataSubmit();clear()">Submit</el-button>
+                <el-button @click="dialogVisible = false;clear()">Cancel</el-button>
+            </span>
+        </template>
+    </el-dialog>
     <div class="common-layout">
         <img style="position:absolute;left:0px;top:0px" src="./img/logo_small.png"/>
         <el-container>
@@ -8,12 +21,15 @@
                     <el-sub-menu index="1">
                         <template #title><span style="color:aliceblue;">文件</span></template>
                         <el-menu-item value="1-1" @click="newSolution"><span style="color:aliceblue;">新建方案</span></el-menu-item>
+                        <el-menu-item @click="deleteSolution"><span style="color:aliceblue;">删除方案</span></el-menu-item>
                         <el-menu-item @click="openSolution"><span style="color:aliceblue;">打开方案</span></el-menu-item>
-                        <el-menu-item id="lastOpenSolution"><span style="color:aliceblue;">最近打开方案</span></el-menu-item>
+                        <el-menu-item id="lastOpenSolution" @click="lastOpenSolution"><span style="color:aliceblue;">最近打开方案</span></el-menu-item>
                         <el-menu-item id="openExample"><span style="color:aliceblue;">打开示例</span></el-menu-item>
                         <el-menu-item id="saveSolution" @click="saveSolution"><span style="color:aliceblue;">保存方案</span></el-menu-item>
-                        <el-menu-item id="saveSolutionAs"><span style="color:aliceblue;">方案另存为</span></el-menu-item>
-                        <el-menu-item id="importFlow"><span style="color:aliceblue;">导入流程</span></el-menu-item>
+                        <el-menu-item id="saveSolutionAs" @click="saveSolutionAs"><span style="color:aliceblue;">方案另存为</span></el-menu-item>
+                        <el-menu-item id="importFlow" @click="importFlow"><span style="color:aliceblue;">导入流程</span></el-menu-item>
+                        <el-menu-item id="deleteFlow" @click="deleteFlow"><span style="color:aliceblue;">删除流程</span></el-menu-item>
+                        
                         <el-menu-item id="export"><span style="color:aliceblue;">导出Java/C++/Python</span></el-menu-item>
                         <el-menu-item id="exit"><span style="color:aliceblue;">退出</span></el-menu-item>
                     </el-sub-menu>
@@ -125,16 +141,17 @@
 </template>
 
 
-<script src="./js/mainWindow.js"></script>
+<script src="./js/mainWindow.js">
+
+</script>
 
 <style>
-
-.el-overlay-dialog{
-    pointer-events:none;
+.el-overlay-dialog {
+    pointer-events: none;
 }
 
-.el-dialog{
-    pointer-events:auto;
+.el-dialog {
+    pointer-events: auto;
 }
 
 .el-header {
@@ -144,7 +161,6 @@
 .common-layout {
     height: 100%;
 }
-
 
 ul.el-menu.el-menu--horizontal.el-menu-demo {
     background-color: rgb(8, 36, 105);
@@ -168,14 +184,13 @@ ul.el-menu.el-menu--horizontal.el-menu-demo :hover {
     --el-color-primary-light-9: rgb(8, 36, 105);
     --el-color-primary: rgb(8, 36, 105);
     --el-menu-bg-color: white;
-    --el-menu-hover-bg-color: rgb(121, 187, 255)
+    --el-menu-hover-bg-color: rgb(121, 187, 255);
 }
 
 .el-menu--horizontal .el-menu .el-menu-item,
 .el-menu--horizontal .el-menu .el-sub-menu__title {
-    background-color: rgb(8, 36, 105)
+    background-color: rgb(8, 36, 105);
 }
-
 
 .el-main {
     padding: 0px;
