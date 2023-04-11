@@ -497,7 +497,7 @@
                 "outPara": [
                   {
                     "varName": "dst",
-                    "varType": "object",
+                    "varType": "Mat",
                     "explanation": ""
                   }
                 ]
@@ -529,11 +529,11 @@
                       "properties": {
                           "helpMsg": "it is a help message",
                           "dllPath": "server/src/main/resources/ppocr.dll",
-                          "modelName": "detectBoxes_",
+                          "modelID": "detectBoxes_",
                           "inPara": [
                               {
                                   "varName": "img_mat",
-                                  "varType": "Mat",
+                                  "varType": "object",
                                   "from": "",
                                   "typeUI": "input",
                                   "explanation": "输入图片 类型Mat"
@@ -608,7 +608,71 @@
               },
               "properties": {},
               "models" : [
-
+                  {
+                    "lfProperties": {
+                        "type": "operator",
+                        "label": "目标检测",
+                        "text": "目标检测",
+                        "name": "object-detection"
+                    },
+                    "properties": {
+                        "helpMsg": "it is a help message",
+                        "dllPath": "server/src/main/resources/ObjectDetect.dll",
+                        "modelID": "object_detect",
+                        "inPara": [
+                            {
+                                "varName": "confThreshold",
+                                "varType": "double",
+                                "from": "",
+                                "typeUI": "input",
+                                "explanation": "Confidence threshold"
+                            },
+                            {
+                                "varName": "nmsThreshold",
+                                "varType": "double",
+                                "from": "",
+                                "typeUI": "input",
+                                "explanation": "Non-maximum suppression"
+                            },
+                            {
+                                "varName": "objThreshold",
+                                "varType": "double",
+                                "from": "",
+                                "typeUI": "input",
+                                "explanation": "Object Confidence threshold"
+                            },
+                            {
+                              "varName": "input_mat",
+                              "varType": "object",
+                              "from": "",
+                              "typeUI": "input",
+                              "explanation": "输入图片矩阵"
+                            },
+                            {
+                                "varName": "modelpath",
+                                "varType": "string",
+                                "from": "",
+                                "typeUI": "input",
+                                "explanation": "模型路径"
+                            },
+                            {
+                                "varName": "cocodictPath",
+                                "varType": "string",
+                                "from": "",
+                                "typeUI": "input",
+                                "explanation": "coco字典路径"
+                            }
+                        ],
+                        "outPara": [
+                            {
+                                "varName": "dst",
+                                "varType": "Mat",
+                                "explanation": ""
+                            }
+                        ]
+                    },
+                    "models": []
+                }
               ]
           },
           {

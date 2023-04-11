@@ -441,6 +441,28 @@ export default {
             //先传递给FlowArea组件
             this.$store.commit('setRevDoubles',data)
         })
+        //与弹出的dialog和标签页通信
+        window.addEventListener('message', (evt) => {
+            if (evt.data.flag) {
+                //修改边的文本
+                this.edgeModel.updateText(evt.data.flag)
+            }
+            if (evt.data.conditionValue) {
+                //修改节点的值
+                this.nodeModel.setProperties({
+                    value: evt.data.conditionValue
+                })
+            }
+            if (evt.data.imgBase64) {
+
+                //发送后端
+                let jsonObject = {
+                    userName: "Pic",
+                    message: evt.data.imgBase64,
+                };
+                socket.emit('chatevent', jsonObject);
+            }
+        })
         window.onresize = () => {
             this.initHeight = window.innerHeight-150
             console.log(this.initHeight)
