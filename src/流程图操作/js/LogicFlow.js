@@ -391,6 +391,8 @@ export default {
         this.lf.on('node:click', (evt) => {
             this.dialogUI=evt.data.properties.inPara
             this.modelID=evt.data.properties.modelID
+            
+            this.formData = this.dialogUI.map(param => param.from)
             console.log(this.modelID)
 
 
