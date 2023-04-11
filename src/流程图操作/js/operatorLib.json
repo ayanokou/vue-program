@@ -4,12 +4,43 @@
   "models": [
     {
       "lfProperties": {
+        "name": "全局变量"
+      },
+      "properties": {},
+      "models": [
+        {
+          "lfProperties": {
+            "name": "全局变量"
+          },
+          "properties": {},
+          "models": [
+            {
+              "lfProperties": {
+                "name": "GlobalVariable",
+                "type": "operator",
+                "text": "全局变量",
+                "label": "全局变量"
+              },
+              "properties": {
+                "helpMsg": "it is a help message of GlobalVariable",
+                "dllPath": "",
+                "modelID": "GlobalVariable",
+                "inPara": [],
+                "outPara": []
+              },
+              "models": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lfProperties": {
         "name": "输入输出"
       },
       "properties": {},
       "models": [
         {
-
           "lfProperties": {
             "name": "数据输入"
           },
@@ -17,15 +48,15 @@
           "models": [
             {
               "lfProperties": {
-                "name": "Read",
+                "name": "文件输入",
                 "type": "operator",
                 "text": "文件输入",
                 "label": "文件输入"
               },
               "properties": {
                 "helpMsg": "it is a help message",
-                "dllPath": "server/src/main/resources/Read.dll",
-                "modelName": "Read",
+                "dllPath": "server/src/main/resources/general.dll",
+                "modelID": "read",
                 "inPara": [
                   {
                     "varName": "filename",
@@ -38,7 +69,17 @@
                     "varName": "flags",
                     "varType": "int",
                     "from": "",
-                    "typeUI": "input",
+                    "typeUI": "select",
+                    "selectContent": [
+                      {
+                        "value": "1",
+                        "label": "BGR"
+                      },
+                      {
+                        "value": "0",
+                        "label": "GRAY"
+                      }
+                    ],
                     "explanation": ""
                   }
                 ],
@@ -58,62 +99,42 @@
           "lfProperties": {
             "name": "输出模块"
           },
-          "properties": {
-            "upperName": "输入输出",
-            "helpMsg": "it is a help message",
-            "name": "outputFile",
-            "dllPath": "./dll/",
-            "modelName": ""
-          },
+          "properties": {},
           "models": [
             {
               "lfProperties": {
                 "type": "operator",
                 "text": "输出模块",
                 "label": "输出模块",
-                "name": "outputFile"
+                "name": "输出"
               },
               "properties": {
                 "helpMsg": "it is a help message",
-                "dllPath": "server/src/main/resources/Write.dll",
-                "modelName": "outputFile",
+                "dllPath": "server/src/main/resources/show.dll",
+                "modelID": "show",
                 "inPara": [
                   {
-                    "varName": "SuanziName",
-                    "varType": "void*",
+                    "varName": "object",
+                    "varType": "object",
                     "from": "",
                     "typeUI": "input",
                     "explanation": ""
                   },
                   {
-                    "varName": "outName",
+                    "varName": "mode",
                     "varType": "int",
                     "from": "",
                     "typeUI": "select",
                     "selectContent": [
                       {
-                        "value": "Mat"
-                      },
-                      {
-                        "value": "Int"
-                      },
-                      {
-                        "value": "Double"
-                      },
-                      {
-                        "value": "String"
+                        "value": "0",
+                        "label": "Mat"
                       }
                     ],
                     "explanation": ""
                   }
                 ],
-                "outPara": [
-                  {
-                    "varName": "dst",
-                    "varType": "OutputArray",
-                    "explanation": ""
-                  }
-                ]
+                "outPara": []
               },
               "models": []
             }
@@ -142,12 +163,12 @@
               },
               "properties": {
                 "helpMsg": "it is a help message",
-                "dllPath": "server/src/main/resources/GaussianBlur.dll",
-                "modelName": "GaussianBlur",
+                "dllPath": "server/src/main/resources/General.dll",
+                "modelID": "gaussianBlur",
                 "inPara": [
                   {
                     "varName": "src",
-                    "varType": "void*",
+                    "varType": "object",
                     "from": "",
                     "typeUI": "input",
                     "explanation": ""
@@ -193,46 +214,36 @@
             },
             {
               "lfProperties": {
-                "name": "MeanBlur",
+                "name": "中值模糊",
                 "type": "operator",
-                "text": "均值滤波",
-                "label": "均值滤波"
+                "text": "中值模糊",
+                "label": "中值模糊"
               },
-              "properties": {},
-              "models": []
-            },
-            {
-              "lfProperties":{
-                "name":"中值模糊",
-                "type":"operator",
-                "text":"中值模糊" ,
-                "label":"中值模糊"
-              },
-              "properties":{
-                "dllPath":"server/src/main/resources/general.dll",
-                "modelName":"median_blur",
-                "inPara":[
+              "properties": {
+                "dllPath": "server/src/main/resources/general.dll",
+                "modelID": "median_blur",
+                "inPara": [
                   {
-                    "varName":"src",
-                    "varType":"void*",
-                    "from":"",
-                    "typeUI":"input",
-                    "explanation":""
+                    "varName": "src",
+                    "varType": "object",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": ""
                   },
                   {
-                    "varName":"ksize",
-                    "varType":"int",
-                    "from":"",
-                    "typeUI":"input",
-                    "explanation":""
+                    "varName": "ksize",
+                    "varType": "int",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": ""
                   }
                 ],
-                "outPara":[
+                "outPara": [
                   {
-                    "varName":"dst",
-                    "varType":"void*",
-                    "explanation":""
-                  }   
+                    "varName": "dst",
+                    "varType": "object",
+                    "explanation": ""
+                  }
                 ]
               }
             }
@@ -254,11 +265,11 @@
               },
               "properties": {
                 "dllPath": "server/src/main/resources/general.dll",
-                "modelName": "threshold",
+                "modelID": "threshold",
                 "inPara": [
                   {
                     "varName": "src",
-                    "varType": "void*",
+                    "varType": "object",
                     "from": "",
                     "typeUI": "input",
                     "explanation": ""
@@ -288,7 +299,7 @@
                 "outPara": [
                   {
                     "varName": "dst",
-                    "varType": "void*",
+                    "varType": "object",
                     "explanation": ""
                   }
                 ]
@@ -312,11 +323,11 @@
               },
               "properties": {
                 "dllPath": "server/src/main/resources/general.dll",
-                "modelName": "convert_color",
+                "modelID": "convert_color",
                 "inPara": [
                   {
                     "varName": "src",
-                    "varType": "void*",
+                    "varType": "object",
                     "from": "",
                     "typeUI": "input",
                     "explanation": ""
@@ -332,7 +343,7 @@
                 "outPara": [
                   {
                     "varName": "dst",
-                    "varType": "void*",
+                    "varType": "object",
                     "explanation": ""
                   }
                 ]
@@ -356,11 +367,11 @@
               },
               "properties": {
                 "dllPath": "server/src/main/resources/general.dll",
-                "modelName": "morph_open",
+                "modelID": "morph_open",
                 "inPara": [
                   {
                     "varName": "src",
-                    "varType": "void*",
+                    "varType": "object",
                     "from": "",
                     "typeUI": "input",
                     "explanation": ""
@@ -376,13 +387,12 @@
                 "outPara": [
                   {
                     "varName": "dst",
-                    "varType": "void*",
+                    "varType": "object",
                     "explanation": ""
                   }
                 ]
               }
             },
-
             {
               "lfProperties": {
                 "name": "闭运算",
@@ -392,11 +402,11 @@
               },
               "properties": {
                 "dllPath": "server/src/main/resources/general.dll",
-                "modelName": "morph_close",
+                "modelID": "morph_close",
                 "inPara": [
                   {
                     "varName": "src",
-                    "varType": "void*",
+                    "varType": "object",
                     "from": "",
                     "typeUI": "input",
                     "explanation": ""
@@ -412,7 +422,7 @@
                 "outPara": [
                   {
                     "varName": "dst",
-                    "varType": "void*",
+                    "varType": "object",
                     "explanation": ""
                   }
                 ]
@@ -435,11 +445,11 @@
               },
               "properties": {
                 "dllPath": "server/src/main/resources/general.dll",
-                "modelName": "find_contours",
+                "modelID": "find_contours",
                 "inPara": [
                   {
                     "varName": "src",
-                    "varType": "void*",
+                    "varType": "object",
                     "from": "",
                     "typeUI": "input",
                     "explanation": ""
@@ -448,7 +458,7 @@
                 "outPara": [
                   {
                     "varName": "contours",
-                    "varType": "void*"
+                    "varType": "object"
                   }
                 ]
               }
@@ -462,18 +472,18 @@
               },
               "properties": {
                 "dllPath": "server/src/main/resources/general.dll",
-                "modelName": "draw_contours",
+                "modelID": "draw_contours",
                 "inPara": [
                   {
                     "varName": "src",
-                    "varType": "void*",
+                    "varType": "object",
                     "from": "",
                     "typeUI": "input",
                     "explanation": ""
                   },
                   {
                     "varName": "contours",
-                    "varType": "void*",
+                    "varType": "object",
                     "from": "",
                     "typeUI": "input",
                     "explanation": ""
@@ -482,13 +492,309 @@
                 "outPara": [
                   {
                     "varName": "dst",
-                    "varType": "void*",
+                    "varType": "Mat",
+                    "explanation": ""
+                  }
+                ]
+              }
+            },
+            {
+              "lfProperties": {
+                "name": "选轮廓",
+                "type": "operator",
+                "text": "选轮廓",
+                "label": "选轮廓"
+              },
+              "properties": {
+                "dllPath": "server/src/main/resources/general.dll",
+                "modelID": "select_contour",
+                "inPara": [
+                  {
+                    "varName": "contours",
+                    "varType": "object",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": ""
+                  },
+                  {
+                    "varName": "index",
+                    "varType": "int",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "contour",
+                    "varType": "object",
+                    "explanation": ""
+                  }
+                ]
+              }
+            },
+            {
+              "lfProperties": {
+                "name": "找最小面积外接矩形",
+                "type": "operator",
+                "text": "找最小面积外接矩形",
+                "label": "找最小面积外接矩形"
+              },
+              "properties": {
+                "dllPath": "server/src/main/resources/general.dll",
+                "modelID": "min_area_rect",
+                "inPara": [
+                  {
+                    "varName": "contour",
+                    "varType": "object",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "rect",
+                    "varType": "object",
+                    "explanation": ""
+                  }
+                ]
+              }
+            },
+            {
+              "lfProperties": {
+                "name": "找矩形角点",
+                "type": "operator",
+                "text": "找矩形角点",
+                "label": "找矩形角点"
+              },
+              "properties": {
+                "dllPath": "server/src/main/resources/general.dll",
+                "modelID": "box_points",
+                "inPara": [
+                  {
+                    "varName": "rect",
+                    "varType": "object",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "points",
+                    "varType": "object",
+                    "explanation": ""
+                  }
+                ]
+              }
+            },
+            {
+              "lfProperties": {
+                "name": "轮廓转轮廓数组",
+                "type": "operator",
+                "text": "轮廓转轮廓数组",
+                "label": "轮廓转轮廓数组"
+              },
+              "properties": {
+                "dllPath": "server/src/main/resources/general.dll",
+                "modelID": "contour_to_contours",
+                "inPara": [
+                  {
+                    "varName": "contour",
+                    "varType": "object",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "contours",
+                    "varType": "object",
                     "explanation": ""
                   }
                 ]
               }
             }
           ]
+        }
+      ]
+    },
+    {
+      "lfProperties": {
+        "name": "深度学习"
+      },
+      "properties": {},
+      "models": [
+        {
+          "lfProperties": {
+            "name": "ppocr"
+          },
+          "properties": {},
+          "models": [
+            {
+              "lfProperties": {
+                "type": "operator",
+                "label": "字符检测",
+                "text": "字符检测",
+                "name": "ocr-detection"
+              },
+              "properties": {
+                "helpMsg": "it is a help message",
+                "dllPath": "server/src/main/resources/ppocr.dll",
+                "modelID": "detectBoxes_",
+                "inPara": [
+                  {
+                    "varName": "img_mat",
+                    "varType": "object",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": "输入图片 类型Mat"
+                  },
+                  {
+                    "varName": "det_model",
+                    "varType": "string",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": "字符检测模型路径"
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "dst",
+                    "varType": "Mat",
+                    "explanation": ""
+                  }
+                ]
+              },
+              "models": []
+            },
+            {
+              "lfProperties": {
+                "type": "operator",
+                "label": "字符识别",
+                "text": "字符识别",
+                "name": "ocr-recognition"
+              },
+              "properties": {
+                "helpMsg": "it is a help message",
+                "dllPath": "server/src/main/resources/ppocr.dll",
+                "modelName": "detectText_",
+                "inPara": [
+                  {
+                    "varName": "img_mat",
+                    "varType": "Mat",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": "输入图片 类型Mat"
+                  },
+                  {
+                    "varName": "rec model",
+                    "varType": "string",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": "字符识别模型路径"
+                  },
+                  {
+                    "varName": "rec dict model",
+                    "varType": "string",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": "字符识别字典路径"
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "dst",
+                    "varType": "string",
+                    "explanation": ""
+                  }
+                ]
+              },
+              "models": []
+            }
+          ]
+        },
+        {
+          "lfProperties": {
+            "name": "onnxruntime"
+          },
+          "properties": {},
+          "models": [
+            {
+              "lfProperties": {
+                "type": "operator",
+                "label": "目标检测",
+                "text": "目标检测",
+                "name": "object-detection"
+              },
+              "properties": {
+                "helpMsg": "it is a help message",
+                "dllPath": "server/src/main/resources/ObjectDetect.dll",
+                "modelID": "object_detect",
+                "inPara": [
+                  {
+                    "varName": "confThreshold",
+                    "varType": "double",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": "Confidence threshold"
+                  },
+                  {
+                    "varName": "nmsThreshold",
+                    "varType": "double",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": "Non-maximum suppression"
+                  },
+                  {
+                    "varName": "objThreshold",
+                    "varType": "double",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": "Object Confidence threshold"
+                  },
+                  {
+                    "varName": "input_mat",
+                    "varType": "object",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": "输入图片矩阵"
+                  },
+                  {
+                    "varName": "modelpath",
+                    "varType": "string",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": "模型路径"
+                  },
+                  {
+                    "varName": "cocodictPath",
+                    "varType": "string",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": "coco字典路径"
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "dst",
+                    "varType": "Mat",
+                    "explanation": ""
+                  }
+                ]
+              },
+              "models": []
+            }
+          ]
+        },
+        {
+          "lfProperties": {
+            "name": "opencv"
+          },
+          "properties": {},
+          "models": []
         }
       ]
     },
@@ -509,45 +815,22 @@
                 "type": "diamond",
                 "label": "条件判断",
                 "text": "条件判断",
-                "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAVCAYAAAHeEJUAAAAABGdBTUEAALGPC/xhBQAAAvVJREFUOBGNVEFrE0EU/mY3bQoiFlOkaUJrQUQoWMGePLX24EH0IIoHKQiCV0G8iE1covgLiqA/QTzVm1JPogc9tIJYFaQtlhQxqYjSpunu+L7JvmUTU3AgmTfvffPNN++9WSA1DO182f6xwILzD5btfAoQmwL5KJEwiQyVbSVZ0IgRyV6PTpIJ81E5ZvqfHQR0HUOBHW4L5Et2kQ6Zf7iAOhTFAA8s0pEP7AXO1uAA52SbqGk6h/6J45LaLhO64ByfcUzM39V7ZiAdS2yCePPEIQYvTUHqM/n7dgQNfBKWPjpF4ISk8q3J4nB11qw6X8l+FsF3EhlkEMfrjIer3wJTLwS2aCNcj4DbGxXTw00JmAuO+Ni6bBxVUCvS5d9aa04+so4pHW5jLTywuXAL7jJ+D06sl82Sgl2JuVBQn498zkc2bGKxULHjCnSMadBKYDYYHAtsby1EQ5lNGrQd4Y3v4Zo0XdGEmDno46yCM9Tk+RiJmUYHS/aXHPNTcjxcbTFna000PFJHIVZ5lFRqRpJWk9/+QtlOUYJj9HG5pVFEU7zqIYDVsw2s+AJaD8wTd2umgSCCyUxgGsS1Y6TBwXQQTFuZaHcd8gAGioE90hlsY+wMcs30RduYtxanjMGal8H5dMW67dmT1JFtYUEe8LiQLRsPZ6IIc7A4J5tqco3T0pnv/4u0kyzrYUq7gASuEyI8VXKvB9Odytv6jS/PNaZBln0nioJG/AVQRZvApOdhjj3Jt8QC8Im09SafwdBdvIpztpxWxpeKCC+EsFdS8DCyuCn2munFpL7ctHKp+Xc5cMybeIyMAN33SPL3ZR9QV1XVwLyzHm6Iv0/yeUuUb7PPlZC4D4HZkeu6dpF4v9j9MreGtMbxMMRLIcjJic9yHi7WQ3yVKzZVWUr5UrViJvn1FfUlwe/KYVfYyWRLSGNu16hR01U9IacajXPei0wx/5BqgInvJN+MMNtNme7ReU9SBbgntovn0kKHpFg7UogZvaZiOue/q1SBo9ktHzQAAAAASUVORK5CYII=",
-                "name": "conditionJudge"
+                "name": "条件判断"
               },
               "properties": {
                 "helpMsg": "it is a help message",
-                "id": 55,
-                "name": "conditionJudge",
-                "value": ""
-              },
-              "models": []
-            },
-            {
-              "lfProperties": {
-                "type": "cycle",
-                "text": "循环开始",
-                "label": "循坏开始",
-                "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAAH6ji2bAAAABGdBTUEAALGPC/xhBQAAAnBJREFUOBGdVL1rU1EcPfdGBddmaZLiEhdx1MHZQXApraCzQ7GKLgoRBxMfcRELuihWKcXFRcEWF8HBf0DdDCKYRZpnl7p0svLe9Zzbd29eQhTbC8nv+9zf130AT63jvooOGS8Vf9Nt5zxba7sXQwODfkWpkbjTQfCGUd9gIp3uuPP8bZ946g56dYQvnBg+b1HB8VIQmMFrazKcKSvFW2dQTxJnJdQ77urmXWOMBCmXM2Rke4S7UAW+/8ywwFoewmBps2tu7mbTdp8VMOkIRAkKfrVawalJTtIliclFbaOBqa0M2xImHeVIfd/nKAfVq/LGnPss5Kh00VEdSzfwnBXPUpmykNss4lUI9C1ga+8PNrBD5YeqRY2Zz8PhjooIbfJXjowvQJBqkmEkVnktWhwu2SM7SMx7Cj0N9IC0oQXRo8xwAGzQms+xrB/nNSUWVveI48ayrFGyC2+E2C+aWrZHXvOuz+CiV6iycWe1Rd1Q6+QUG07nb5SbPrL4426d+9E1axKjY3AoRrlEeSQo2Eu0T6BWAAr6COhTcWjRaYfKG5csnvytvUr/WY4rrPMB53Uo7jZRjXaG6/CFfNMaXEu75nG47X+oepU7PKJvvzGDY1YLSKHJrK7vFUwXKkaxwhCW3u+sDFMVrIju54RYYbFKpALZAo7sB6wcKyyrd+aBMryMT2gPyD6GsQoRFkGHr14TthZni9ck0z+Pnmee460mHXbRAypKNy3nuMdrWgVKj8YVV8E7PSzp1BZ9SJnJAsXdryw/h5ctboUVi4AFiCd+lQaYMw5z3LGTBKjLQOeUF35k89f58Vv/tGh+l+PE/wG0rgfIUbZK5AAAAABJRU5ErkJggg==",
-                "name": "cycleStart"
-              },
-              "properties": {
-                "helpMsg": "it is a help message",
-                "id": 56,
-                "name": "cycleStart",
-                "value": ""
-              },
-              "models": []
-            },
-            {
-              "lfProperties": {
-                "type": "cycle",
-                "text": "循环结束",
-                "label": "循坏结束",
-                "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAAH6ji2bAAAABGdBTUEAALGPC/xhBQAAAnBJREFUOBGdVL1rU1EcPfdGBddmaZLiEhdx1MHZQXApraCzQ7GKLgoRBxMfcRELuihWKcXFRcEWF8HBf0DdDCKYRZpnl7p0svLe9Zzbd29eQhTbC8nv+9zf130AT63jvooOGS8Vf9Nt5zxba7sXQwODfkWpkbjTQfCGUd9gIp3uuPP8bZ946g56dYQvnBg+b1HB8VIQmMFrazKcKSvFW2dQTxJnJdQ77urmXWOMBCmXM2Rke4S7UAW+/8ywwFoewmBps2tu7mbTdp8VMOkIRAkKfrVawalJTtIliclFbaOBqa0M2xImHeVIfd/nKAfVq/LGnPss5Kh00VEdSzfwnBXPUpmykNss4lUI9C1ga+8PNrBD5YeqRY2Zz8PhjooIbfJXjowvQJBqkmEkVnktWhwu2SM7SMx7Cj0N9IC0oQXRo8xwAGzQms+xrB/nNSUWVveI48ayrFGyC2+E2C+aWrZHXvOuz+CiV6iycWe1Rd1Q6+QUG07nb5SbPrL4426d+9E1axKjY3AoRrlEeSQo2Eu0T6BWAAr6COhTcWjRaYfKG5csnvytvUr/WY4rrPMB53Uo7jZRjXaG6/CFfNMaXEu75nG47X+oepU7PKJvvzGDY1YLSKHJrK7vFUwXKkaxwhCW3u+sDFMVrIju54RYYbFKpALZAo7sB6wcKyyrd+aBMryMT2gPyD6GsQoRFkGHr14TthZni9ck0z+Pnmee460mHXbRAypKNy3nuMdrWgVKj8YVV8E7PSzp1BZ9SJnJAsXdryw/h5ctboUVi4AFiCd+lQaYMw5z3LGTBKjLQOeUF35k89f58Vv/tGh+l+PE/wG0rgfIUbZK5AAAAABJRU5ErkJggg==",
-                "name": "cycleEnd"
-              },
-              "properties": {
-                "helpMsg": "it is a help message",
-                "id": 57,
-                "name": "cycleEnd"
+                "dllPath": "",
+                "modelID": "conditionJudge",
+                "inPara": [
+                  {
+                    "varName": "expression",
+                    "varType": "string",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": ""
+                  }
+                ],
+                "outPara": []
               },
               "models": []
             },
@@ -556,13 +839,22 @@
                 "type": "mygroup",
                 "text": "组合",
                 "label": "组合",
-                "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAAH6ji2bAAAABGdBTUEAALGPC/xhBQAAAnBJREFUOBGdVL1rU1EcPfdGBddmaZLiEhdx1MHZQXApraCzQ7GKLgoRBxMfcRELuihWKcXFRcEWF8HBf0DdDCKYRZpnl7p0svLe9Zzbd29eQhTbC8nv+9zf130AT63jvooOGS8Vf9Nt5zxba7sXQwODfkWpkbjTQfCGUd9gIp3uuPP8bZ946g56dYQvnBg+b1HB8VIQmMFrazKcKSvFW2dQTxJnJdQ77urmXWOMBCmXM2Rke4S7UAW+/8ywwFoewmBps2tu7mbTdp8VMOkIRAkKfrVawalJTtIliclFbaOBqa0M2xImHeVIfd/nKAfVq/LGnPss5Kh00VEdSzfwnBXPUpmykNss4lUI9C1ga+8PNrBD5YeqRY2Zz8PhjooIbfJXjowvQJBqkmEkVnktWhwu2SM7SMx7Cj0N9IC0oQXRo8xwAGzQms+xrB/nNSUWVveI48ayrFGyC2+E2C+aWrZHXvOuz+CiV6iycWe1Rd1Q6+QUG07nb5SbPrL4426d+9E1axKjY3AoRrlEeSQo2Eu0T6BWAAr6COhTcWjRaYfKG5csnvytvUr/WY4rrPMB53Uo7jZRjXaG6/CFfNMaXEu75nG47X+oepU7PKJvvzGDY1YLSKHJrK7vFUwXKkaxwhCW3u+sDFMVrIju54RYYbFKpALZAo7sB6wcKyyrd+aBMryMT2gPyD6GsQoRFkGHr14TthZni9ck0z+Pnmee460mHXbRAypKNy3nuMdrWgVKj8YVV8E7PSzp1BZ9SJnJAsXdryw/h5ctboUVi4AFiCd+lQaYMw5z3LGTBKjLQOeUF35k89f58Vv/tGh+l+PE/wG0rgfIUbZK5AAAAABJRU5ErkJggg==",
-                "name": "groupId"
+                "name": "组合"
               },
               "properties": {
                 "helpMsg": "it is a help message",
-                "name": "groupId",
-                "value": ""
+                "dllPath": "",
+                "modelID": "group",
+                "inPara": [
+                  {
+                    "varName": "count",
+                    "varType": "int",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": ""
+                  }
+                ],
+                "outPara": []
               },
               "models": []
             }

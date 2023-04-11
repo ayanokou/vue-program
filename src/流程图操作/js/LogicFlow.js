@@ -33,7 +33,7 @@ const handleClose = (key, keyPath) => {
 //初始化socketio用于前后端传输
 let socket = io.connect('http://localhost:9092')
 
-let id = 1;
+
 
 class CycleModel extends CircleNodeModel {
     getNodeStyle() {
@@ -48,7 +48,12 @@ class CycleModel extends CircleNodeModel {
     }
 
     createId() {
-        return (id++) + "";
+        let max=0
+        for(let node of this.graphModel.nodes){
+            if(node.id>max)
+                max=node.id
+        }
+        return (++max) + "";
     }
 }
 
@@ -60,7 +65,12 @@ class SuanziModel extends RectNodeModel {
     }
 
     createId() {
-        return (id++) + "";
+        let max=0
+        for(let node of this.graphModel.nodes){
+            if(node.id>max)
+                max=node.id
+        }
+        return (++max) + "";
     }
 }
 
@@ -75,11 +85,26 @@ class ConditionJudgmentModel extends DiamondNodeModel {
         const size = this.properties.scale || 1;
         this.rx = 60 * size
         this.ry = 40 * size
+        this.limit_edge = 2;
+        this.current_edge = 0;
     }
 
     createId() {
-        return (id++) + "";
+        let max=0
+        for(let node of this.graphModel.nodes){
+            if(node.id>max)
+                max=node.id
+        }
+        return (++max) + "";
     }
+
+    isAllowConnectedAsSource(target) { 
+        if(this.current_edge < this.limit_edge)
+            return true;
+        else 
+            return false;
+    }
+
 }
 
 //定义Group节点，重写了节点的一些属性和方法
@@ -143,7 +168,12 @@ class MyGroupModel extends GroupNode.model {
     }
 
     createId() {
-        return (id++) + "";
+        let max=0
+        for(let node of this.graphModel.nodes){
+            if(node.id>max)
+                max=node.id
+        }
+        return (++max) + "";
     }
 }
 
@@ -309,12 +339,19 @@ export default {
             //对话框UI
             dialogUI: null,
             //算子选中的方法名
-            modelName: "",
+            modelID: "",
             dialogVisible: false,
             formData: [],
             dialogControl: {}, // 左侧菜单栏对话跳窗控制
-            isDragging: false,
-        }
+            isDragging:false,
+            dialogVisibleGV:false,
+            tableData :[
+            ],
+            tableForm:[],
+            innerVisible:false,
+            dialogVisibleEdge:false,//选YN边的对话框
+            yorn:"",//上面对话框的结果
+          }
     },
     computed: {
         lfData() {
@@ -327,14 +364,17 @@ export default {
         document.querySelector("#" + this.tab.title).firstElementChild.style.height = "" + this.initHeight + "px"
         //鼠标移到节点显示帮助信息
         this.lf.on('node:mouseenter', (evt) => {
-            let res = []
+            let res = ""
             if (evt.data.properties.outPara) {
                 for (let x of evt.data.properties.outPara) {
-                    res.push(evt.data.properties.modelName + `.${x.varName}`)
+                    //res.push(evt.data.properties.modelID +`.${evt.data.id}`+ `.${x.varName}`)
+                    let str="<div>变量:&nbsp;"+evt.data.properties.modelID +`.${evt.data.id}`+ `.${x.varName}`+"&nbsp;&nbsp;&nbsp;;类型:&nbsp;"+`${x.varType}`+"</div>"
+                    res+=str
                 }
                 if (this.isDragging) {
                     ElNotification({
-                        title: 'NAME',
+                        title: '输出变量:',
+                        dangerouslyUseHTMLString: true,
                         message: res,
                         duration: 2000,
                     })
@@ -349,28 +389,45 @@ export default {
         })
         //设置节点点击事件监听, 修改帮助信息
         this.lf.on('node:click', (evt) => {
-            this.dialogUI = evt.data.properties.inPara
-            this.modelName = evt.data.properties.modelName
-
+            this.dialogUI=evt.data.properties.inPara
+            this.modelID=evt.data.properties.modelID
+            console.log(this.modelID)
 
             //刷新nodeModel
             this.nodeModel = this.lf.getNodeModelById(evt.data.id)
             this.$store.commit('setVuexHelpInfo', this.nodeModel.getProperties().helpMsg)
 
-            this.dialogVisible = true
+            if(this.modelID=="GlobalVariable"){
+                this.dialogVisibleGV=true
+            }else{
+                this.dialogVisible = true
+            }
+
             let e = document.getElementsByClassName('el-overlay-dialog')[0].parentNode
             e.style.width = '0px';
 
         })
 
         this.lf.on('edge:click', (evt) => {
-            window.open('#/conditionEdge', "newwin", "toolbar=no,scrollbars=no,menubar=no")
+            this.dialogVisibleEdge=true;
             let edgeId = (evt.data.id)
             //获取边
             this.edgeModel = this.lf.getEdgeModelById(edgeId)
 
         })
-
+        //限制节点出边的数量 限制数目定义在每个节点的类里面 使用变量current_edge和limit_dege
+        this.lf.on('edge:add', (evt) => {
+            //获取边
+            let sourceNodeId = evt.data.sourceNodeId
+            let sourceNode = this.lf.getNodeModelById(sourceNodeId)
+            sourceNode.current_edge += 1
+        })
+        this.lf.on('edge:delete', (evt) => {
+            //获取边
+            let sourceNodeId = evt.data.sourceNodeId
+            let sourceNode = this.lf.getNodeModelById(sourceNodeId)
+            sourceNode.current_edge -= 1
+        })
         //接收java传来的数据
 
         socket.on('revJson', (data) => {
@@ -415,7 +472,6 @@ export default {
         }
     },
     methods: {
-        test() { alert(test) },
         init() {
             const lf = new LogicFlow({
                 container: document.querySelector("#" + this.tab.title),
@@ -475,42 +531,59 @@ export default {
                         alert("111");
                     }
                 },
-                {
-                    text: '组合',
-                    callback() {
-                        //将选区数据存储
-                        const { nodes } = lf.getSelectElements();
-                        const { startPoint, endPoint } = lf.extension.selectionSelect;
-                        //清除选区数据
-                        lf.clearSelectElements();
-                        //如果节点中有不能组合的节点类型则返回
-                        // if(nodes.some((node) => node.type === "someNode")){
-                        //     return;
-                        // }
-                        //startPoint endPoint是dom坐标，需要转换成canvas坐标
-                        const { transformModel } = lf.graphModel;
-                        const [x1, y1] = transformModel.HtmlPointToCanvasPoint([
-                            startPoint.x, startPoint.y
-                        ]);
-                        const [x2, y2] = transformModel.HtmlPointToCanvasPoint([
-                            endPoint.x, endPoint.y
-                        ]);
-                        const width = x2 - x1;
-                        const height = y2 - y1;
-                        if (width < 175 && height < 40) {
-                            return;
+                    {
+                        text: '组合',
+                        callback() {
+                            //将选区数据存储
+                            const {nodes} = lf.getSelectElements();
+                            const {startPoint, endPoint} = lf.extension.selectionSelect;
+                            //清除选区数据
+                            lf.clearSelectElements();
+                            //如果节点中有不能组合的节点类型则返回
+                            // if(nodes.some((node) => node.type === "someNode")){
+                            //     return;
+                            // }
+                            //startPoint endPoint是dom坐标，需要转换成canvas坐标
+                            const {transformModel} = lf.graphModel;
+                            const [x1, y1] = transformModel.HtmlPointToCanvasPoint([
+                                startPoint.x, startPoint.y
+                            ]);
+                            const [x2, y2] = transformModel.HtmlPointToCanvasPoint([
+                                endPoint.x, endPoint.y
+                            ]);
+                            const width = x2 - x1;
+                            const height = y2 - y1;
+                            if (width < 175 && height < 40) {
+                                return;
+                            }
+                            //创建一个GroupNode
+                            lf.addNode({
+                                type: "mygroup",
+                                x: x1 + width / 2,
+                                y: y1 + height / 2,
+                                width,
+                                height,
+                                properties: {
+                                    "helpMsg": "it is a help message",
+                                    "dllPath": "",
+                                    "modelID": "group",
+                                    "inPara": [
+                                        {
+                                            "varName": "count",
+                                            "varType": "int",
+                                            "from": "",
+                                            "typeUI": "input",
+                                            "explanation": ""
+                                        }
+                                    ],
+                                    "outPara": [
+                                    ]
+                                },
+                                children: nodes.map((item) => item.id)
+                            });
+
                         }
-                        //创建一个GroupNode
-                        lf.addNode({
-                            type: "mygroup",
-                            x: x1 + width / 2,
-                            y: y1 + height / 2,
-                            width,
-                            height,
-                            children: nodes.map((item) => item.id)
-                        });
-                    }
-                },
+                    },
                 ]
             })
 
@@ -698,36 +771,64 @@ export default {
         },
         // 三级菜单按下添加节点
         clickToAddNode(node) {
-            if (node.lfProperties.text != "选区") {
-                this.lf.addNode({
+                if (node.lfProperties.text != "选区") {
+                    this.lf.addNode({
+                        type: node.lfProperties.type,
+                        x: 100,
+                        y: 100,
+                        text: node.lfProperties.text,
+                        label: node.lfProperties.label,
+                        name: node.lfProperties.name,
+                        properties: node.properties
+                    })
+                }
+        },
+        // 三级菜单拖拽添加节点
+        dragToAddNode(event, node) {
+             this.lf.addNode({
                     type: node.lfProperties.type,
-                    x: 100,
-                    y: 100,
+                    x: event.clientX - 50,
+                    y: event.clientY - 100,
                     text: node.lfProperties.text,
                     label: node.lfProperties.label,
                     name: node.lfProperties.name,
                     properties: node.properties
                 })
-            }
-
-        },
-        // 三级菜单拖拽添加节点
-        dragToAddNode(event, node) {
-            this.lf.addNode({
-                type: node.lfProperties.type,
-                x: event.clientX - 50,
-                y: event.clientY - 100,
-                text: node.lfProperties.text,
-                label: node.lfProperties.label,
-                name: node.lfProperties.name,
-                properties: node.properties
-            })
+            this.currentNodeNum[node.lfProperties.text] += 1
         },
         clickLeftMenu() {
             let es = document.getElementsByClassName('el-overlay-dialog')
             for (let e of es) {
                 e.parentNode.style.width = '0px'
             }
+        },
+        deleteRow(index){
+            this.tableData.splice(index, 1)
+        },
+        onAddItem(){
+            //弹出一个对话框表单，输入参数
+            this.innerVisible=true
+            let es = document.getElementsByClassName('el-overlay-dialog')
+            for(let e of es){
+                e.parentNode.style.width='0px'
+            }
+        },
+        addItem(){
+            let item={
+                name:this.tableForm[0],
+                value:this.tableForm[1]
+            }
+            this.tableData.push(item)
+            console.log(this.tableData)
+            this.tableForm=[]
+        },
+        submitGV(){
+            this.nodeModel.setProperties({
+                "content": this.tableData,
+            })
+        },
+        edgeSubmit(){
+            this.edgeModel.updateText(this.yorn)
         }
     }
 }
