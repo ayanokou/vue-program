@@ -681,7 +681,43 @@
               },
               "properties": {},
               "models" : [
-
+                    {
+                      "lfProperties": {
+                          "type": "operator",
+                          "label": "图片放大",
+                          "text": "图片放大",
+                          "name": "image-rescale"
+                      },
+                      "properties": {
+                          "helpMsg": "it is a help message",
+                          "dllPath": "server/src/main/resources/image_rescale.dll",
+                          "modelID": "imageRescale",
+                          "inPara": [
+                              {
+                                  "varName": "img_mat",
+                                  "varType": "object",
+                                  "from": "",
+                                  "typeUI": "input",
+                                  "explanation": "输入图片 类型Mat"
+                              },
+                              {
+                                  "varName": "scale times",
+                                  "varType": "int",
+                                  "from": "",
+                                  "typeUI": "input",
+                                  "explanation": "放大倍数 支持2 3 4 8"
+                              }
+                          ],
+                          "outPara": [
+                              {
+                                  "varName": "dst",
+                                  "varType": "Mat",
+                                  "explanation": ""
+                              }
+                          ]
+                      },
+                      "models": []
+                  }
               ]
           }
       ]
@@ -751,6 +787,77 @@
           ]
         }
       ]
+        },
+        {
+            "lfProperties": {
+                "name" : "深度学习"
+            },
+            "properties": {},
+            "models" : [
+                {
+                    "lfProperties": {
+                        "name": "ppocr"
+                    },
+                    "properties": {},
+                    "models" : [
+                        {
+                            "lfProperties": {
+                                "type": "operator",
+                                "label": "字符检测",
+                                "text": "字符检测",
+                                "name": "ocr-detection"
+                            },
+                            "properties": {
+                                "helpMsg": "it is a help message",
+                                "dllPath": "server/src/main/resources/ppocr.dll",
+                                "modelName": "detectBoxes_",
+                                "inPara": [
+                                    {
+                                        "varName": "img_mat",
+                                        "varType": "Mat",
+                                        "from": "",
+                                        "typeUI": "input",
+                                        "explanation": "输入图片 类型Mat"
+                                    },
+                                    {
+                                        "varName": "det model",
+                                        "varType": "string",
+                                        "from": "",
+                                        "typeUI": "input",
+                                        "explanation": "字符检测模型路径"
+                                    }
+                                ],
+                                "outPara": [
+                                    {
+                                        "varName": "res",
+                                        "varType": "Mat",
+                                        "explanation": ""
+                                    }
+                                ]
+                            },
+                            "models": []
+                        }
+                    ]
+                },
+                {
+                    "lfProperties": {
+                        "name": "onnxruntime"
+                    },
+                    "properties": {},
+                    "models" : [
+
+                    ]
+                },
+                {
+                    "lfProperties": {
+                        "name": "opencv"
+                    },
+                    "properties": {},
+                    "models" : [
+
+                    ]
+                }
+            ]
     }
   ]
 }
