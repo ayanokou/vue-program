@@ -25,10 +25,8 @@
                 "helpMsg": "it is a help message of GlobalVariable",
                 "dllPath": "",
                 "modelID": "GlobalVariable",
-                "inPara": [
-                ],
-                "outPara": [
-                ]
+                "inPara": [],
+                "outPara": []
               },
               "models": []
             }
@@ -101,8 +99,7 @@
           "lfProperties": {
             "name": "输出模块"
           },
-          "properties": {
-          },
+          "properties": {},
           "models": [
             {
               "lfProperties": {
@@ -137,9 +134,7 @@
                     "explanation": ""
                   }
                 ],
-                "outPara": [
-
-                ]
+                "outPara": []
               },
               "models": []
             }
@@ -509,217 +504,217 @@
     },
     {
       "lfProperties": {
-          "name" : "深度学习"
+        "name": "深度学习"
       },
       "properties": {},
-      "models" : [
-          {
+      "models": [
+        {
+          "lfProperties": {
+            "name": "ppocr"
+          },
+          "properties": {},
+          "models": [
+            {
               "lfProperties": {
-                  "name": "ppocr"
+                "type": "operator",
+                "label": "字符检测",
+                "text": "字符检测",
+                "name": "ocr-detection"
               },
-              "properties": {},
-              "models" : [
+              "properties": {
+                "helpMsg": "it is a help message",
+                "dllPath": "server/src/main/resources/ppocr.dll",
+                "modelID": "detectBoxes_",
+                "inPara": [
                   {
-                      "lfProperties": {
-                          "type": "operator",
-                          "label": "字符检测",
-                          "text": "字符检测",
-                          "name": "ocr-detection"
-                      },
-                      "properties": {
-                          "helpMsg": "it is a help message",
-                          "dllPath": "server/src/main/resources/ppocr.dll",
-                          "modelID": "detectBoxes_",
-                          "inPara": [
-                              {
-                                  "varName": "img_mat",
-                                  "varType": "object",
-                                  "from": "",
-                                  "typeUI": "input",
-                                  "explanation": "输入图片 类型Mat"
-                              },
-                              {
-                                  "varName": "det_model",
-                                  "varType": "string",
-                                  "from": "",
-                                  "typeUI": "input",
-                                  "explanation": "字符检测模型路径"
-                              }
-                          ],
-                          "outPara": [
-                              {
-                                  "varName": "dst",
-                                  "varType": "Mat",
-                                  "explanation": ""
-                              }
-                          ]
-                      },
-                      "models": []
+                    "varName": "img_mat",
+                    "varType": "object",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": "输入图片 类型Mat"
                   },
                   {
-                      "lfProperties": {
-                          "type": "operator",
-                          "label": "字符识别",
-                          "text": "字符识别",
-                          "name": "ocr-recognition"
-                      },
-                      "properties": {
-                          "helpMsg": "it is a help message",
-                          "dllPath": "server/src/main/resources/ppocr.dll",
-                          "modelName": "detectText_",
-                          "inPara": [
-                              {
-                                  "varName": "img_mat",
-                                  "varType": "Mat",
-                                  "from": "",
-                                  "typeUI": "input",
-                                  "explanation": "输入图片 类型Mat"
-                              },
-                              {
-                                  "varName": "rec model",
-                                  "varType": "string",
-                                  "from": "",
-                                  "typeUI": "input",
-                                  "explanation": "字符识别模型路径"
-                              },
-                              {
-                                  "varName": "rec dict model",
-                                  "varType": "string",
-                                  "from": "",
-                                  "typeUI": "input",
-                                  "explanation": "字符识别字典路径"
-                              }
-                          ],
-                          "outPara": [
-                              {
-                                  "varName": "dst",
-                                  "varType": "string",
-                                  "explanation": ""
-                              }
-                          ]
-                      },
-                      "models": []
+                    "varName": "det_model",
+                    "varType": "string",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": "字符检测模型路径"
                   }
-              ]
-          },
-          {
-              "lfProperties": {
-                  "name": "onnxruntime"
-              },
-              "properties": {},
-              "models" : [
+                ],
+                "outPara": [
                   {
-                    "lfProperties": {
-                        "type": "operator",
-                        "label": "目标检测",
-                        "text": "目标检测",
-                        "name": "object-detection"
-                    },
-                    "properties": {
-                        "helpMsg": "it is a help message",
-                        "dllPath": "server/src/main/resources/ObjectDetect.dll",
-                        "modelID": "object_detect",
-                        "inPara": [
-                            {
-                                "varName": "confThreshold",
-                                "varType": "double",
-                                "from": "",
-                                "typeUI": "input",
-                                "explanation": "Confidence threshold"
-                            },
-                            {
-                                "varName": "nmsThreshold",
-                                "varType": "double",
-                                "from": "",
-                                "typeUI": "input",
-                                "explanation": "Non-maximum suppression"
-                            },
-                            {
-                                "varName": "objThreshold",
-                                "varType": "double",
-                                "from": "",
-                                "typeUI": "input",
-                                "explanation": "Object Confidence threshold"
-                            },
-                            {
-                              "varName": "input_mat",
-                              "varType": "object",
-                              "from": "",
-                              "typeUI": "input",
-                              "explanation": "输入图片矩阵"
-                            },
-                            {
-                                "varName": "modelpath",
-                                "varType": "string",
-                                "from": "",
-                                "typeUI": "input",
-                                "explanation": "模型路径"
-                            },
-                            {
-                                "varName": "cocodictPath",
-                                "varType": "string",
-                                "from": "",
-                                "typeUI": "input",
-                                "explanation": "coco字典路径"
-                            }
-                        ],
-                        "outPara": [
-                            {
-                                "varName": "dst",
-                                "varType": "Mat",
-                                "explanation": ""
-                            }
-                        ]
-                    },
-                    "models": []
-                }
-              ]
-          },
-          {
-              "lfProperties": {
-                  "name": "opencv"
-              },
-              "properties": {},
-              "models" : [
-                    {
-                      "lfProperties": {
-                          "type": "operator",
-                          "label": "图片放大",
-                          "text": "图片放大",
-                          "name": "image-rescale"
-                      },
-                      "properties": {
-                          "helpMsg": "it is a help message",
-                          "dllPath": "server/src/main/resources/image_rescale.dll",
-                          "modelID": "imageRescale",
-                          "inPara": [
-                              {
-                                  "varName": "img_mat",
-                                  "varType": "object",
-                                  "from": "",
-                                  "typeUI": "input",
-                                  "explanation": "输入图片 类型Mat"
-                              },
-                              {
-                                  "varName": "scale times",
-                                  "varType": "int",
-                                  "from": "",
-                                  "typeUI": "input",
-                                  "explanation": "放大倍数 支持2 3 4 8"
-                              }
-                          ],
-                          "outPara": [
-                              {
-                                  "varName": "dst",
-                                  "varType": "Mat",
-                                  "explanation": ""
-                              }
-                          ]
-                      },
-                      "models": []
+                    "varName": "dst",
+                    "varType": "Mat",
+                    "explanation": ""
                   }
-              ]
-          }
+                ]
+              },
+              "models": []
+            },
+            {
+              "lfProperties": {
+                "type": "operator",
+                "label": "字符识别",
+                "text": "字符识别",
+                "name": "ocr-recognition"
+              },
+              "properties": {
+                "helpMsg": "it is a help message",
+                "dllPath": "server/src/main/resources/ppocr.dll",
+                "modelName": "detectText_",
+                "inPara": [
+                  {
+                    "varName": "img_mat",
+                    "varType": "Mat",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": "输入图片 类型Mat"
+                  },
+                  {
+                    "varName": "rec model",
+                    "varType": "string",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": "字符识别模型路径"
+                  },
+                  {
+                    "varName": "rec dict model",
+                    "varType": "string",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": "字符识别字典路径"
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "dst",
+                    "varType": "string",
+                    "explanation": ""
+                  }
+                ]
+              },
+              "models": []
+            }
+          ]
+        },
+        {
+          "lfProperties": {
+            "name": "onnxruntime"
+          },
+          "properties": {},
+          "models": [
+            {
+              "lfProperties": {
+                "type": "operator",
+                "label": "目标检测",
+                "text": "目标检测",
+                "name": "object-detection"
+              },
+              "properties": {
+                "helpMsg": "it is a help message",
+                "dllPath": "server/src/main/resources/ObjectDetect.dll",
+                "modelID": "object_detect",
+                "inPara": [
+                  {
+                    "varName": "confThreshold",
+                    "varType": "double",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": "Confidence threshold"
+                  },
+                  {
+                    "varName": "nmsThreshold",
+                    "varType": "double",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": "Non-maximum suppression"
+                  },
+                  {
+                    "varName": "objThreshold",
+                    "varType": "double",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": "Object Confidence threshold"
+                  },
+                  {
+                    "varName": "input_mat",
+                    "varType": "object",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": "输入图片矩阵"
+                  },
+                  {
+                    "varName": "modelpath",
+                    "varType": "string",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": "模型路径"
+                  },
+                  {
+                    "varName": "cocodictPath",
+                    "varType": "string",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": "coco字典路径"
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "dst",
+                    "varType": "Mat",
+                    "explanation": ""
+                  }
+                ]
+              },
+              "models": []
+            }
+          ]
+        },
+        {
+          "lfProperties": {
+            "name": "opencv"
+          },
+          "properties": {},
+          "models": [
+            {
+              "lfProperties": {
+                "type": "operator",
+                "label": "图片放大",
+                "text": "图片放大",
+                "name": "image-rescale"
+              },
+              "properties": {
+                "helpMsg": "it is a help message",
+                "dllPath": "server/src/main/resources/image_rescale.dll",
+                "modelID": "imageRescale",
+                "inPara": [
+                  {
+                    "varName": "img_mat",
+                    "varType": "object",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": "输入图片 类型Mat"
+                  },
+                  {
+                    "varName": "scale times",
+                    "varType": "int",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": "放大倍数 支持2 3 4 8"
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "dst",
+                    "varType": "Mat",
+                    "explanation": ""
+                  }
+                ]
+              },
+              "models": []
+            }
+          ]
+        }
       ]
     },
     {
@@ -754,8 +749,7 @@
                     "explanation": ""
                   }
                 ],
-                "outPara": [
-                ]
+                "outPara": []
               },
               "models": []
             },
@@ -779,85 +773,13 @@
                     "explanation": ""
                   }
                 ],
-                "outPara": [
-                ]
+                "outPara": []
               },
               "models": []
             }
           ]
         }
       ]
-        },
-        {
-            "lfProperties": {
-                "name" : "深度学习"
-            },
-            "properties": {},
-            "models" : [
-                {
-                    "lfProperties": {
-                        "name": "ppocr"
-                    },
-                    "properties": {},
-                    "models" : [
-                        {
-                            "lfProperties": {
-                                "type": "operator",
-                                "label": "字符检测",
-                                "text": "字符检测",
-                                "name": "ocr-detection"
-                            },
-                            "properties": {
-                                "helpMsg": "it is a help message",
-                                "dllPath": "server/src/main/resources/ppocr.dll",
-                                "modelName": "detectBoxes_",
-                                "inPara": [
-                                    {
-                                        "varName": "img_mat",
-                                        "varType": "Mat",
-                                        "from": "",
-                                        "typeUI": "input",
-                                        "explanation": "输入图片 类型Mat"
-                                    },
-                                    {
-                                        "varName": "det model",
-                                        "varType": "string",
-                                        "from": "",
-                                        "typeUI": "input",
-                                        "explanation": "字符检测模型路径"
-                                    }
-                                ],
-                                "outPara": [
-                                    {
-                                        "varName": "res",
-                                        "varType": "Mat",
-                                        "explanation": ""
-                                    }
-                                ]
-                            },
-                            "models": []
-                        }
-                    ]
-                },
-                {
-                    "lfProperties": {
-                        "name": "onnxruntime"
-                    },
-                    "properties": {},
-                    "models" : [
-
-                    ]
-                },
-                {
-                    "lfProperties": {
-                        "name": "opencv"
-                    },
-                    "properties": {},
-                    "models" : [
-
-                    ]
-                }
-            ]
     }
   ]
 }
