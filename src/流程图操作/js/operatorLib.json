@@ -17,7 +17,7 @@
             {
               "lfProperties": {
                 "name": "GlobalVariable",
-                "type": "operator",
+                "type": "globalVariable",
                 "text": "全局变量",
                 "label": "全局变量"
               },
