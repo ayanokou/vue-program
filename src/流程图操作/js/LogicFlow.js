@@ -100,6 +100,8 @@ class ConditionJudgmentModel extends DiamondNodeModel {
         const size = this.properties.scale || 1;
         this.rx = 60 * size
         this.ry = 40 * size
+        this.limit_edge = 2;
+        this.current_edge = 0;
     }
 
     createId() {
@@ -110,6 +112,14 @@ class ConditionJudgmentModel extends DiamondNodeModel {
         }
         return (++max) + "";
     }
+
+    isAllowConnectedAsSource(target) { 
+        if(this.current_edge < this.limit_edge)
+            return true;
+        else 
+            return false;
+    }
+
 }
 
 //定义Group节点，重写了节点的一些属性和方法
@@ -355,8 +365,8 @@ export default {
             tableForm:[],
             innerVisible:false,
             dialogVisibleEdge:false,//选YN边的对话框
-            yorn:""//上面对话框的结果
-        }
+            yorn:"",//上面对话框的结果
+          }
     },
     computed: {
         lfData(){
@@ -396,6 +406,8 @@ export default {
         this.lf.on('node:click', (evt) => {
             this.dialogUI=evt.data.properties.inPara
             this.modelID=evt.data.properties.modelID
+            
+            this.formData = this.dialogUI.map(param => param.from)
             console.log(this.modelID)
 
 
@@ -421,7 +433,19 @@ export default {
             this.edgeModel = this.lf.getEdgeModelById(edgeId)
 
         })
-
+        //限制节点出边的数量 限制数目定义在每个节点的类里面 使用变量current_edge和limit_dege
+        this.lf.on('edge:add', (evt) => {
+            //获取边
+            let sourceNodeId = evt.data.sourceNodeId
+            let sourceNode = this.lf.getNodeModelById(sourceNodeId)
+            sourceNode.current_edge += 1
+        })
+        this.lf.on('edge:delete', (evt) => {
+            //获取边
+            let sourceNodeId = evt.data.sourceNodeId
+            let sourceNode = this.lf.getNodeModelById(sourceNodeId)
+            sourceNode.current_edge -= 1
+        })
         //接收java传来的数据
 
         socket.on('revJson', (data) => {
@@ -433,6 +457,28 @@ export default {
         socket.on('revDoubles',(data)=>{
             //先传递给FlowArea组件
             this.$store.commit('setRevDoubles',data)
+        })
+        //与弹出的dialog和标签页通信
+        window.addEventListener('message', (evt) => {
+            if (evt.data.flag) {
+                //修改边的文本
+                this.edgeModel.updateText(evt.data.flag)
+            }
+            if (evt.data.conditionValue) {
+                //修改节点的值
+                this.nodeModel.setProperties({
+                    value: evt.data.conditionValue
+                })
+            }
+            if (evt.data.imgBase64) {
+
+                //发送后端
+                let jsonObject = {
+                    userName: "Pic",
+                    message: evt.data.imgBase64,
+                };
+                socket.emit('chatevent', jsonObject);
+            }
         })
         window.onresize = () => {
             this.initHeight = window.innerHeight-150
@@ -746,30 +792,40 @@ export default {
         },
         // 三级菜单按下添加节点
         clickToAddNode(node) {
-            if (node.lfProperties.text != "选区") {
-                this.lf.addNode({
+                if (node.lfProperties.text != "选区") {
+                    const idSet = new Set()
+                    // find the smallest unused id
+                    this.lf.graphModel.nodes.forEach(node => {
+                        idSet.add(node.id)
+                    })
+                    let id = 0
+                    while (idSet.has(id.toString())) {
+                        id++
+                    }
+                    this.lf.addNode({
+                        id: id.toString(),
+                        type: node.lfProperties.type,
+                        x: 100,
+                        y: 100,
+                        text: node.lfProperties.text,
+                        label: node.lfProperties.label,
+                        name: node.lfProperties.name,
+                        properties: node.properties
+                    })
+                }
+        },
+        // 三级菜单拖拽添加节点
+        dragToAddNode(event, node) {
+             this.lf.addNode({
                     type: node.lfProperties.type,
-                    x: 100,
-                    y: 100,
+                    x: event.clientX - 50,
+                    y: event.clientY - 100,
                     text: node.lfProperties.text,
                     label: node.lfProperties.label,
                     name: node.lfProperties.name,
                     properties: node.properties
                 })
-            }
-
-        },
-        // 三级菜单拖拽添加节点
-        dragToAddNode(event, node) {
-            this.lf.addNode({
-                type: node.lfProperties.type,
-                x: event.clientX - 50,
-                y: event.clientY - 100,
-                text: node.lfProperties.text,
-                label: node.lfProperties.label,
-                name: node.lfProperties.name,
-                properties: node.properties
-            })
+            this.currentNodeNum[node.lfProperties.text] += 1
         },
         clickLeftMenu(){
             let es = document.getElementsByClassName('el-overlay-dialog')

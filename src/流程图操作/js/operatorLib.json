@@ -25,10 +25,8 @@
                 "helpMsg": "it is a help message of GlobalVariable",
                 "dllPath": "",
                 "modelID": "GlobalVariable",
-                "inPara": [
-                ],
-                "outPara": [
-                ]
+                "inPara": [],
+                "outPara": []
               },
               "models": []
             }
@@ -101,8 +99,7 @@
           "lfProperties": {
             "name": "输出模块"
           },
-          "properties": {
-          },
+          "properties": {},
           "models": [
             {
               "lfProperties": {
@@ -137,9 +134,7 @@
                     "explanation": ""
                   }
                 ],
-                "outPara": [
-
-                ]
+                "outPara": []
               },
               "models": []
             }
@@ -497,6 +492,125 @@
                 "outPara": [
                   {
                     "varName": "dst",
+                    "varType": "Mat",
+                    "explanation": ""
+                  }
+                ]
+              }
+            },
+            {
+              "lfProperties": {
+                "name": "选轮廓",
+                "type": "operator",
+                "text": "选轮廓",
+                "label": "选轮廓"
+              },
+              "properties": {
+                "dllPath": "server/src/main/resources/general.dll",
+                "modelID": "select_contour",
+                "inPara": [
+                  {
+                    "varName": "contours",
+                    "varType": "object",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": ""
+                  },
+                  {
+                    "varName": "index",
+                    "varType": "int",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "contour",
+                    "varType": "object",
+                    "explanation": ""
+                  }
+                ]
+              }
+            },
+            {
+              "lfProperties": {
+                "name": "找最小面积外接矩形",
+                "type": "operator",
+                "text": "找最小面积外接矩形",
+                "label": "找最小面积外接矩形"
+              },
+              "properties": {
+                "dllPath": "server/src/main/resources/general.dll",
+                "modelID": "min_area_rect",
+                "inPara": [
+                  {
+                    "varName": "contour",
+                    "varType": "object",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "rect",
+                    "varType": "object",
+                    "explanation": ""
+                  }
+                ]
+              }
+            },
+            {
+              "lfProperties": {
+                "name": "找矩形角点",
+                "type": "operator",
+                "text": "找矩形角点",
+                "label": "找矩形角点"
+              },
+              "properties": {
+                "dllPath": "server/src/main/resources/general.dll",
+                "modelID": "box_points",
+                "inPara": [
+                  {
+                    "varName": "rect",
+                    "varType": "object",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "points",
+                    "varType": "object",
+                    "explanation": ""
+                  }
+                ]
+              }
+            },
+            {
+              "lfProperties": {
+                "name": "轮廓转轮廓数组",
+                "type": "operator",
+                "text": "轮廓转轮廓数组",
+                "label": "轮廓转轮廓数组"
+              },
+              "properties": {
+                "dllPath": "server/src/main/resources/general.dll",
+                "modelID": "contour_to_contours",
+                "inPara": [
+                  {
+                    "varName": "contour",
+                    "varType": "object",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "contours",
                     "varType": "object",
                     "explanation": ""
                   }
@@ -504,6 +618,183 @@
               }
             }
           ]
+        }
+      ]
+    },
+    {
+      "lfProperties": {
+        "name": "深度学习"
+      },
+      "properties": {},
+      "models": [
+        {
+          "lfProperties": {
+            "name": "ppocr"
+          },
+          "properties": {},
+          "models": [
+            {
+              "lfProperties": {
+                "type": "operator",
+                "label": "字符检测",
+                "text": "字符检测",
+                "name": "ocr-detection"
+              },
+              "properties": {
+                "helpMsg": "it is a help message",
+                "dllPath": "server/src/main/resources/ppocr.dll",
+                "modelID": "detectBoxes_",
+                "inPara": [
+                  {
+                    "varName": "img_mat",
+                    "varType": "object",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": "输入图片 类型Mat"
+                  },
+                  {
+                    "varName": "det_model",
+                    "varType": "string",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": "字符检测模型路径"
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "dst",
+                    "varType": "Mat",
+                    "explanation": ""
+                  }
+                ]
+              },
+              "models": []
+            },
+            {
+              "lfProperties": {
+                "type": "operator",
+                "label": "字符识别",
+                "text": "字符识别",
+                "name": "ocr-recognition"
+              },
+              "properties": {
+                "helpMsg": "it is a help message",
+                "dllPath": "server/src/main/resources/ppocr.dll",
+                "modelName": "detectText_",
+                "inPara": [
+                  {
+                    "varName": "img_mat",
+                    "varType": "Mat",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": "输入图片 类型Mat"
+                  },
+                  {
+                    "varName": "rec model",
+                    "varType": "string",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": "字符识别模型路径"
+                  },
+                  {
+                    "varName": "rec dict model",
+                    "varType": "string",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": "字符识别字典路径"
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "dst",
+                    "varType": "string",
+                    "explanation": ""
+                  }
+                ]
+              },
+              "models": []
+            }
+          ]
+        },
+        {
+          "lfProperties": {
+            "name": "onnxruntime"
+          },
+          "properties": {},
+          "models": [
+            {
+              "lfProperties": {
+                "type": "operator",
+                "label": "目标检测",
+                "text": "目标检测",
+                "name": "object-detection"
+              },
+              "properties": {
+                "helpMsg": "it is a help message",
+                "dllPath": "server/src/main/resources/ObjectDetect.dll",
+                "modelID": "object_detect",
+                "inPara": [
+                  {
+                    "varName": "confThreshold",
+                    "varType": "double",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": "Confidence threshold"
+                  },
+                  {
+                    "varName": "nmsThreshold",
+                    "varType": "double",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": "Non-maximum suppression"
+                  },
+                  {
+                    "varName": "objThreshold",
+                    "varType": "double",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": "Object Confidence threshold"
+                  },
+                  {
+                    "varName": "input_mat",
+                    "varType": "object",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": "输入图片矩阵"
+                  },
+                  {
+                    "varName": "modelpath",
+                    "varType": "string",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": "模型路径"
+                  },
+                  {
+                    "varName": "cocodictPath",
+                    "varType": "string",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": "coco字典路径"
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "dst",
+                    "varType": "Mat",
+                    "explanation": ""
+                  }
+                ]
+              },
+              "models": []
+            }
+          ]
+        },
+        {
+          "lfProperties": {
+            "name": "opencv"
+          },
+          "properties": {},
+          "models": []
         }
       ]
     },
@@ -539,8 +830,7 @@
                     "explanation": ""
                   }
                 ],
-                "outPara": [
-                ]
+                "outPara": []
               },
               "models": []
             },
@@ -564,8 +854,7 @@
                     "explanation": ""
                   }
                 ],
-                "outPara": [
-                ]
+                "outPara": []
               },
               "models": []
             }
