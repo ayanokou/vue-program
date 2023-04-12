@@ -497,6 +497,125 @@
                   }
                 ]
               }
+            },
+            {
+              "lfProperties": {
+                "name": "选轮廓",
+                "type": "operator",
+                "text": "选轮廓",
+                "label": "选轮廓"
+              },
+              "properties": {
+                "dllPath": "server/src/main/resources/general.dll",
+                "modelID": "select_contour",
+                "inPara": [
+                  {
+                    "varName": "contours",
+                    "varType": "object",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": ""
+                  },
+                  {
+                    "varName": "index",
+                    "varType": "int",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "contour",
+                    "varType": "object",
+                    "explanation": ""
+                  }
+                ]
+              }
+            },
+            {
+              "lfProperties": {
+                "name": "找最小面积外接矩形",
+                "type": "operator",
+                "text": "找最小面积外接矩形",
+                "label": "找最小面积外接矩形"
+              },
+              "properties": {
+                "dllPath": "server/src/main/resources/general.dll",
+                "modelID": "min_area_rect",
+                "inPara": [
+                  {
+                    "varName": "contour",
+                    "varType": "object",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "rect",
+                    "varType": "object",
+                    "explanation": ""
+                  }
+                ]
+              }
+            },
+            {
+              "lfProperties": {
+                "name": "找矩形角点",
+                "type": "operator",
+                "text": "找矩形角点",
+                "label": "找矩形角点"
+              },
+              "properties": {
+                "dllPath": "server/src/main/resources/general.dll",
+                "modelID": "box_points",
+                "inPara": [
+                  {
+                    "varName": "rect",
+                    "varType": "object",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "points",
+                    "varType": "object",
+                    "explanation": ""
+                  }
+                ]
+              }
+            },
+            {
+              "lfProperties": {
+                "name": "轮廓转轮廓数组",
+                "type": "operator",
+                "text": "轮廓转轮廓数组",
+                "label": "轮廓转轮廓数组"
+              },
+              "properties": {
+                "dllPath": "server/src/main/resources/general.dll",
+                "modelID": "contour_to_contours",
+                "inPara": [
+                  {
+                    "varName": "contour",
+                    "varType": "object",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "contours",
+                    "varType": "object",
+                    "explanation": ""
+                  }
+                ]
+              }
             }
           ]
         }
