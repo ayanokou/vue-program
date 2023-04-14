@@ -786,6 +786,43 @@
                 ]
               },
               "models": []
+            },
+            {
+              "lfProperties": {
+                "type": "operator",
+                "label": "图片去噪",
+                "text": "图片去噪",
+                "name": "image-denoising"
+              },
+              "properties": {
+                "helpMsg": "it is a help message",
+                "dllPath": "server/src/main/resources/image_denoising.dll",
+                "modelID": "imgenDenosing",
+                "inPara": [
+                  {
+                    "varName": "input_mat",
+                    "varType": "object",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": "输入图片矩阵"
+                  },
+                  {
+                    "varName": "modelpath",
+                    "varType": "string",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": "模型路径"
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "dst",
+                    "varType": "Mat",
+                    "explanation": "结果去噪图片"
+                  }
+                ]
+              },
+              "models": []
             }
           ]
         },
