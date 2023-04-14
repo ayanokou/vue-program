@@ -391,6 +391,8 @@ export default {
         this.lf.on('node:click', (evt) => {
             this.dialogUI=evt.data.properties.inPara
             this.modelID=evt.data.properties.modelID
+            
+            this.formData = this.dialogUI.map(param => param.from)
             console.log(this.modelID)
 
             //刷新nodeModel
@@ -772,7 +774,17 @@ export default {
         // 三级菜单按下添加节点
         clickToAddNode(node) {
                 if (node.lfProperties.text != "选区") {
+                    const idSet = new Set()
+                    // find the smallest unused id
+                    this.lf.graphModel.nodes.forEach(node => {
+                        idSet.add(node.id)
+                    })
+                    let id = 0
+                    while (idSet.has(id.toString())) {
+                        id++
+                    }
                     this.lf.addNode({
+                        id: id.toString(),
                         type: node.lfProperties.type,
                         x: 100,
                         y: 100,
