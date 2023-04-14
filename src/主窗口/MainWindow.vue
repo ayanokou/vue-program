@@ -1,18 +1,5 @@
 <template>
-    <el-dialog v-model="dialogVisible" :modal="false" :close-on-click-modal="false" :title="modelName" width="50%" draggable>
-        <div>
-            <el-checkbox-group v-model="selectedOptions">
-                <el-checkbox v-for="k in flowKeys" :key="k.check" :label="k.name">
-                </el-checkbox>
-            </el-checkbox-group>
-        </div>
-        <template #footer>
-            <span class="dialog-footer">
-                <el-button type="primary" @click="dialogVisible = false;formDataSubmit();clear()">Submit</el-button>
-                <el-button @click="dialogVisible = false;clear()">Cancel</el-button>
-            </span>
-        </template>
-    </el-dialog>
+    
     <div class="common-layout">
         <img style="position:absolute;left:0px;top:0px" src="./img/logo_small.png"/>
         <el-container>
@@ -28,8 +15,6 @@
                         <el-menu-item id="saveSolution" @click="saveSolution"><span style="color:aliceblue;">保存方案</span></el-menu-item>
                         <el-menu-item id="saveSolutionAs" @click="saveSolutionAs"><span style="color:aliceblue;">方案另存为</span></el-menu-item>
                         <el-menu-item id="importFlow" @click="importFlow"><span style="color:aliceblue;">导入流程</span></el-menu-item>
-                        <el-menu-item id="deleteFlow" @click="deleteFlow"><span style="color:aliceblue;">删除流程</span></el-menu-item>
-                        
                         <el-menu-item id="export"><span style="color:aliceblue;">导出Java/C++/Python</span></el-menu-item>
                         <el-menu-item id="exit"><span style="color:aliceblue;">退出</span></el-menu-item>
                     </el-sub-menu>

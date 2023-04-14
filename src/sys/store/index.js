@@ -9,6 +9,7 @@ export default createStore({
             imgBase64:"",
             newSolutionTrigger:false,
             openSolutionTrigger:false,
+            deleteSolutionTrigger:false,
             saveSolutionTrigger:false,
             saveSolutionAsTrigger:false,
             flowAddTrigger:false,
@@ -26,6 +27,9 @@ export default createStore({
         },
         openSolutionEvent(state,payload){
             state.openSolutionTrigger=payload
+        },
+        deleteSolutionEvent(state,payload){
+            state.deleteSolutionTrigger=payload
         },
         saveSolutionEvent(state, payload){
             state.saveSolutionTrigger = payload

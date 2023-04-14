@@ -11,14 +11,8 @@ import { mapState } from "vuex";
 export default {
     data() {
         return {
-            //是否选中弹窗
-            dialogVisible: false,
-            //需要删除的解决方案的名称
-            selectedSolutionKeys: [],
-            solutionKeys: [],
-            //需要删除的流程图的名称
-            selectedFlowKeys: [],
-            flowKeys:[],
+            
+            
             //右半部分的高度
             height_right: window.innerHeight - 82,
             mainLayout: LayoutOne,
@@ -138,8 +132,7 @@ export default {
         },
         //删除方案
         deleteSolution() {
-            let name = prompt("请输入要删除的方案的名称", "sln")
-            localStorage.removeItem(name);
+            this.$store.commit('deleteSolutionEvent', true)
         },
         //打开方案
         openSolution() {
@@ -163,6 +156,7 @@ export default {
             // }
             for (let i = 1; i < localStorage.length; i++) {
                 const key = localStorage.key(i);
+                if(key === "debug") continue
                 const value = localStorage.getItem(key);
                 let curJson = JSON.parse(value)
                 // console.log(curJson)
