@@ -978,6 +978,43 @@
                 ]
               },
               "models": []
+            },
+            {
+              "lfProperties": {
+                "type": "operator",
+                "label": "图片去噪",
+                "text": "图片去噪",
+                "name": "image-denoising"
+              },
+              "properties": {
+                "helpMsg": "it is a help message",
+                "dllPath": "server/src/main/resources/image_denoising.dll",
+                "modelID": "imgenDenosing",
+                "inPara": [
+                  {
+                    "varName": "input_mat",
+                    "varType": "object",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": "输入图片矩阵"
+                  },
+                  {
+                    "varName": "modelpath",
+                    "varType": "string",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": "模型路径"
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "dst",
+                    "varType": "Mat",
+                    "explanation": "结果去噪图片"
+                  }
+                ]
+              },
+              "models": []
             }
           ]
         },
@@ -986,7 +1023,45 @@
             "name": "opencv"
           },
           "properties": {},
-          "models": []
+          "models": [
+            {
+              "lfProperties": {
+                "type": "operator",
+                "label": "图片放大",
+                "text": "图片放大",
+                "name": "image-rescale"
+              },
+              "properties": {
+                "helpMsg": "it is a help message",
+                "dllPath": "server/src/main/resources/image_rescale.dll",
+                "modelID": "imageRescale",
+                "inPara": [
+                  {
+                    "varName": "img_mat",
+                    "varType": "object",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": "输入图片 类型Mat"
+                  },
+                  {
+                    "varName": "scale times",
+                    "varType": "int",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": "放大倍数 支持2 3 4 8"
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "dst",
+                    "varType": "Mat",
+                    "explanation": ""
+                  }
+                ]
+              },
+              "models": []
+            }
+          ]
         }
       ]
     },
