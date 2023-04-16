@@ -164,7 +164,7 @@
               "properties": {
                 "helpMsg": "it is a help message",
                 "dllPath": "server/src/main/resources/General.dll",
-                "modelID": "gaussianBlur",
+                "modelID": "gaussian_blur",
                 "inPara": [
                   {
                     "varName": "src",
@@ -611,6 +611,101 @@
                 "outPara": [
                   {
                     "varName": "contours",
+                    "varType": "object",
+                    "explanation": ""
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "lfProperties": {
+            "name": "仿射变换",
+            "type": "operator",
+            "text": "仿射变换",
+            "label": "仿射变换"
+          },
+          "properties": {},
+          "models": [
+            {
+              "lfProperties": {
+                "name": "仿射变换",
+                "type": "operator",
+                "text": "仿射变换",
+                "label": "仿射变换"
+              },
+              "properties": {
+                "dllPath": "server/src/main/resources/general.dll",
+                "modelID": "warp_affine",
+                "inPara": [
+                  {
+                    "varName": "src",
+                    "varType": "object",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": ""
+                  },
+                  {
+                    "varName": "M",
+                    "varType": "object",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": ""
+                  },
+                  {
+                    "varName": "dsize",
+                    "varType": "object",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "dst",
+                    "varType": "object",
+                    "explanation": ""
+                  }
+                ]
+              }
+            },
+            {
+              "lfProperties": {
+                "name": "获得2D旋转矩阵",
+                "type": "operator",
+                "text": "获得2D旋转矩阵",
+                "label": "获得2D旋转矩阵"
+              },
+              "properties": {
+                "dllPath": "server/src/main/resources/general.dll",
+                "modelID": "get_rotation_matrix_2d",
+                "inPara": [
+                  {
+                    "varName": "center",
+                    "varType": "object",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": ""
+                  },
+                  {
+                    "varName": "angle",
+                    "varType": "double",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": ""
+                  },
+                  {
+                    "varName": "scale",
+                    "varType": "double",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "M",
                     "varType": "object",
                     "explanation": ""
                   }
