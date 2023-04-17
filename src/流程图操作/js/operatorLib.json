@@ -144,6 +144,38 @@
     },
     {
       "lfProperties": {
+        "name": "图像匹配"
+      },
+      "properties": {},
+      "models": [
+        {
+          "lfProperties": {
+            "name": "全局变量"
+          },
+          "properties": {},
+          "models": [
+            {
+              "lfProperties": {
+                "name": "GlobalVariable",
+                "type": "operator",
+                "text": "全局变量",
+                "label": "全局变量"
+              },
+              "properties": {
+                "helpMsg": "it is a help message of GlobalVariable",
+                "dllPath": "",
+                "modelID": "GlobalVariable",
+                "inPara": [],
+                "outPara": []
+              },
+              "models": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lfProperties": {
         "name": "图像处理"
       },
       "properties": {},
@@ -164,7 +196,7 @@
               "properties": {
                 "helpMsg": "it is a help message",
                 "dllPath": "server/src/main/resources/General.dll",
-                "modelID": "gaussianBlur",
+                "modelID": "gaussian_blur",
                 "inPara": [
                   {
                     "varName": "src",
@@ -618,6 +650,261 @@
               }
             }
           ]
+        },
+        {
+          "lfProperties": {
+            "name": "仿射变换",
+            "type": "operator",
+            "text": "仿射变换",
+            "label": "仿射变换"
+          },
+          "properties": {},
+          "models": [
+            {
+              "lfProperties": {
+                "name": "仿射变换",
+                "type": "operator",
+                "text": "仿射变换",
+                "label": "仿射变换"
+              },
+              "properties": {
+                "dllPath": "server/src/main/resources/general.dll",
+                "modelID": "warp_affine",
+                "inPara": [
+                  {
+                    "varName": "src",
+                    "varType": "object",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": ""
+                  },
+                  {
+                    "varName": "M",
+                    "varType": "object",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": ""
+                  },
+                  {
+                    "varName": "dsize",
+                    "varType": "object",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "dst",
+                    "varType": "object",
+                    "explanation": ""
+                  }
+                ]
+              }
+            },
+            {
+              "lfProperties": {
+                "name": "获得2D旋转矩阵",
+                "type": "operator",
+                "text": "获得2D旋转矩阵",
+                "label": "获得2D旋转矩阵"
+              },
+              "properties": {
+                "dllPath": "server/src/main/resources/general.dll",
+                "modelID": "get_rotation_matrix_2d",
+                "inPara": [
+                  {
+                    "varName": "center",
+                    "varType": "object",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": ""
+                  },
+                  {
+                    "varName": "angle",
+                    "varType": "double",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": ""
+                  },
+                  {
+                    "varName": "scale",
+                    "varType": "double",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "M",
+                    "varType": "object",
+                    "explanation": ""
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lfProperties": {
+        "name": "图像标定"
+      },
+      "properties": {},
+      "models": [
+        {
+          "lfProperties": {
+            "name": "全局变量"
+          },
+          "properties": {},
+          "models": [
+            {
+              "lfProperties": {
+                "name": "GlobalVariable",
+                "type": "operator",
+                "text": "全局变量",
+                "label": "全局变量"
+              },
+              "properties": {
+                "helpMsg": "it is a help message of GlobalVariable",
+                "dllPath": "",
+                "modelID": "GlobalVariable",
+                "inPara": [],
+                "outPara": []
+              },
+              "models": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lfProperties": {
+        "name": "图像测量"
+      },
+      "properties": {},
+      "models": [
+        {
+          "lfProperties": {
+            "name": "全局变量"
+          },
+          "properties": {},
+          "models": [
+            {
+              "lfProperties": {
+                "name": "GlobalVariable",
+                "type": "operator",
+                "text": "全局变量",
+                "label": "全局变量"
+              },
+              "properties": {
+                "helpMsg": "it is a help message of GlobalVariable",
+                "dllPath": "",
+                "modelID": "GlobalVariable",
+                "inPara": [],
+                "outPara": []
+              },
+              "models": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lfProperties": {
+        "name": "颜色处理"
+      },
+      "properties": {},
+      "models": [
+        {
+          "lfProperties": {
+            "name": "全局变量"
+          },
+          "properties": {},
+          "models": [
+            {
+              "lfProperties": {
+                "name": "GlobalVariable",
+                "type": "operator",
+                "text": "全局变量",
+                "label": "全局变量"
+              },
+              "properties": {
+                "helpMsg": "it is a help message of GlobalVariable",
+                "dllPath": "",
+                "modelID": "GlobalVariable",
+                "inPara": [],
+                "outPara": []
+              },
+              "models": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lfProperties": {
+        "name": "字符处理"
+      },
+      "properties": {},
+      "models": [
+        {
+          "lfProperties": {
+            "name": "全局变量"
+          },
+          "properties": {},
+          "models": [
+            {
+              "lfProperties": {
+                "name": "GlobalVariable",
+                "type": "operator",
+                "text": "全局变量",
+                "label": "全局变量"
+              },
+              "properties": {
+                "helpMsg": "it is a help message of GlobalVariable",
+                "dllPath": "",
+                "modelID": "GlobalVariable",
+                "inPara": [],
+                "outPara": []
+              },
+              "models": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lfProperties": {
+        "name": "空间解算"
+      },
+      "properties": {},
+      "models": [
+        {
+          "lfProperties": {
+            "name": "全局变量"
+          },
+          "properties": {},
+          "models": [
+            {
+              "lfProperties": {
+                "name": "GlobalVariable",
+                "type": "operator",
+                "text": "全局变量",
+                "label": "全局变量"
+              },
+              "properties": {
+                "helpMsg": "it is a help message of GlobalVariable",
+                "dllPath": "",
+                "modelID": "GlobalVariable",
+                "inPara": [],
+                "outPara": []
+              },
+              "models": []
+            }
+          ]
         }
       ]
     },
@@ -786,6 +1073,43 @@
                 ]
               },
               "models": []
+            },
+            {
+              "lfProperties": {
+                "type": "operator",
+                "label": "图片去噪",
+                "text": "图片去噪",
+                "name": "image-denoising"
+              },
+              "properties": {
+                "helpMsg": "it is a help message",
+                "dllPath": "server/src/main/resources/image_denoising.dll",
+                "modelID": "imgenDenosing",
+                "inPara": [
+                  {
+                    "varName": "input_mat",
+                    "varType": "object",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": "输入图片矩阵"
+                  },
+                  {
+                    "varName": "modelpath",
+                    "varType": "string",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": "模型路径"
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "dst",
+                    "varType": "Mat",
+                    "explanation": "结果去噪图片"
+                  }
+                ]
+              },
+              "models": []
             }
           ]
         },
@@ -838,6 +1162,38 @@
     },
     {
       "lfProperties": {
+        "name": "高级功能"
+      },
+      "properties": {},
+      "models": [
+        {
+          "lfProperties": {
+            "name": "全局变量"
+          },
+          "properties": {},
+          "models": [
+            {
+              "lfProperties": {
+                "name": "GlobalVariable",
+                "type": "operator",
+                "text": "全局变量",
+                "label": "全局变量"
+              },
+              "properties": {
+                "helpMsg": "it is a help message of GlobalVariable",
+                "dllPath": "",
+                "modelID": "GlobalVariable",
+                "inPara": [],
+                "outPara": []
+              },
+              "models": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lfProperties": {
         "name": "控制模块"
       },
       "properties": {},
@@ -859,6 +1215,30 @@
                 "helpMsg": "it is a help message",
                 "dllPath": "",
                 "modelID": "conditionJudge",
+                "inPara": [
+                  {
+                    "varName": "expression",
+                    "varType": "string",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": ""
+                  }
+                ],
+                "outPara": []
+              },
+              "models": []
+            },
+            {
+              "lfProperties": {
+                "type": "switchModel",
+                "label": "switch",
+                "text": "switch",
+                "name": "switch"
+              },
+              "properties": {
+                "helpMsg": "it is a help message",
+                "dllPath": "",
+                "modelID": "switch",
                 "inPara": [
                   {
                     "varName": "expression",

@@ -63,7 +63,7 @@
                 :tab="item"
                 @changeTabName="changeTabName"
             >
-                <div :id="item.title"></div>
+                <div :id="item.title" style="height:100%"></div>
             </LogicFlow>
             <!--            <iframe src='#/logicFlow' width='100%' :height="iframeHeight + 'px'" scrolling="no"></iframe>-->
         </el-tab-pane>
@@ -418,11 +418,15 @@ export default {
 };
 </script>
 <style scoped>
-.demo-tabs > .el-tabs__content {
-    padding: 32px;
-    color: #6b778c;
-    font-size: 32px;
-    font-weight: 600;
+.demo-tabs.el-tabs.el-tabs--top.el-tabs--card{
+    display: flex;
+    flex-direction: column;
+}
+.el-tabs__content{
+    flex: 1;
+}
+.el-tabs__header.is-top{
+    margin:0px;
 }
 
 .el-tabs.el-tabs--top.el-tabs--card.demo-tabs {

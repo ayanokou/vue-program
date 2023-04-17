@@ -30,6 +30,7 @@ const statusBar = {
             //待图片加载完后，将其显示在canvas上
             imgObj.onload = function () {
                 let ctx = cvs.getContext('2d');
+                ctx.clearRect(0, 0, cvs.width, cvs.height);
                 ctx.drawImage(this, 0, 0);
             }
             //在图片之上绘画

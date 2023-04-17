@@ -73,7 +73,38 @@ class SuanziModel extends RectNodeModel {
         return (++max) + "";
     }
 }
+class GlobalVariableModel extends RectNodeModel {
+    setAttributes() {
+        const size = this.properties.scale || 1;
+        this.width = 100 * size
+        this.height = 80 * size
+    }
 
+    createId() {
+        let max=0
+        for(let node of this.graphModel.nodes){
+            if(node.id>max)
+                max=node.id
+        }
+        return (++max) + "";
+    }
+}
+class SwitchModel extends RectNodeModel {
+    setAttributes() {
+        const size = this.properties.scale || 1;
+        this.width = 100 * size
+        this.height = 80 * size
+    }
+
+    createId() {
+        let max=0
+        for(let node of this.graphModel.nodes){
+            if(node.id>max)
+                max=node.id
+        }
+        return (++max) + "";
+    }
+}
 class ConditionJudgmentModel extends DiamondNodeModel {
     getNodeStyle() {
         const style = super.getNodeStyle();
@@ -359,9 +390,9 @@ export default {
         }
     },
     mounted() {
-        this.initHeight = window.innerHeight - 150
+        // this.initHeight = 800
+        // this.initHeight = window.innerHeight-150
         this.init()
-        document.querySelector("#" + this.tab.title).firstElementChild.style.height = "" + this.initHeight + "px"
         //鼠标移到节点显示帮助信息
         this.lf.on('node:mouseenter', (evt) => {
             let res = ""
@@ -464,20 +495,20 @@ export default {
                 socket.emit('chatevent', jsonObject);
             }
         })
-        window.onresize = () => {
-            this.initHeight = window.innerHeight - 150
-            console.log(this.initHeight)
-            document.querySelector("#" + this.tab.title).firstElementChild.style.height = "" + this.initHeight + "px"
-            this.lf.render(this.lf.getGraphData())
-            const position = this.lf.getPointByClient(document.documentElement.clientWidth - 150, document.documentElement.clientHeight - 230)
-            this.lf.extension.miniMap.show(position.domOverlayPosition.x, position.domOverlayPosition.y)
-        }
+        // window.onresize = () => {
+        //     this.initHeight = window.innerHeight-150
+        //     console.log(this.initHeight)
+        //     document.querySelector("#"+this.tab.title).firstElementChild.style.height=""+this.initHeight+"px"
+        //     this.lf.render(this.lf.getGraphData())
+        //     const position = this.lf.getPointByClient(document.documentElement.clientWidth - 150, document.documentElement.clientHeight - 230)
+        //     this.lf.extension.miniMap.show(position.domOverlayPosition.x, position.domOverlayPosition.y)
+        // }
     },
     methods: {
         init() {
             const lf = new LogicFlow({
-                container: document.querySelector("#" + this.tab.title),
-                height: this.initHeight,
+                container: document.querySelector("#"+this.tab.title),
+                // height: this.initHeight,
                 plugins: [Menu, BpmnElement, LeftMenus, SelectionSelect, Control, MiniMap, Snapshot, Group],
                 background: {
                     color: '#2b364a' // 网格背景颜色
@@ -604,6 +635,16 @@ export default {
                     type: 'operator',
                     view: RectNode,
                     model: SuanziModel
+                },
+                {
+                    type: 'globalVariable',
+                    view: RectNode,
+                    model: GlobalVariableModel
+                },
+                {
+                    type: 'switchModel',
+                    view: RectNode,
+                    model: SwitchModel
                 },
                 {
                     type: 'mygroup',

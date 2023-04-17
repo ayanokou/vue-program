@@ -2,7 +2,7 @@
     
     <div class="common-layout">
         <img style="position:absolute;left:0px;top:0px" src="./img/logo_small.png"/>
-        <el-container>
+        <el-container style="height: 100%;">
             <el-header style="padding-left:0px;padding-right:0px;background-color:rgb(8,36,105);">
                 <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect" menu-trigger="hover">
                     <el-sub-menu index="1">

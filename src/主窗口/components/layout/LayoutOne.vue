@@ -1,9 +1,7 @@
 <template>
     <splitpanes>
         <pane>
-            <el-aside width="99%">
                 <component :is="compnts[0]"></component>
-            </el-aside>
         </pane>
         <pane>
 
