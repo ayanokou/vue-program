@@ -17,11 +17,26 @@
             <el-button @click="submit">提交</el-button>
         </div>
     </el-dialog>
+    <!-- <div>
+        <el-message-box
+        v-model="showDeleteConfirmationDialog"
+        title="确认删除"
+        message="是否删除当前方案？"
+        show-confirm-button
+        show-cancel-button
+        confirm-button-text="确认"
+        cancel-button-text="取消"
+        :show-close="false"
+        :show="showDeleteDialog"
+        @confirm="deleteCurrentSolutionFunc"
+        @cancel="showDeleteConfirmationDialog = false"
+        ></el-message-box>
+    </div> -->
     <el-dialog  v-model="importFlowVisible" :modal="false" :close-on-click-modal="false" :show-close="false" :title="modelName" width="20%" height="30%" draggable>
         <p>请选择您要导入的流程</p>
         <div  class="scroll-container">
             <el-radio-group class="dialog-radio">
-                <el-radio v-for="(item, index) in solutionKeys" :key="index" :label="item" @change="importSomeFlow(item)">
+                <el-radio v-for="(item, index) in flowKeys" :key="index" :label="item" @change="importSomeFlow(item)">
                 </el-radio>
             </el-radio-group>
         </div>
@@ -73,6 +88,10 @@ export default {
             openSolutionVisible: false,
             //点击删除方案后弹窗
             deleteSolutionVisible: false,
+            //当前方案删除确认窗口
+            showDeleteConfirmationDialog: false,
+            //点击导入流程后弹窗
+            importFlowVisible: false,
             //保存多选框选中的要被删除的解决方案
             selectDeleteSolutions: [],
             //现有的解决方案
@@ -98,6 +117,7 @@ export default {
             "newSolutionTrigger",
             "openSolutionTrigger",
             "deleteSolutionTrigger",
+            "deleteCurrentSolutionTrigger",
             "saveSolutionTrigger",
             "saveSolutionAsTrigger",
             "open",
@@ -190,6 +210,19 @@ export default {
                 this.$store.commit("deleteSolutionEvent", false);
             }
         },
+        deleteCurrentSolutionTrigger(newValue){
+            if(newValue){
+                this.showDeleteConfirmationDialog = true;
+                localStorage.removeItem(this.solutionKey);
+                alert("方案：" + this.solutionKey + "已删除");
+                //处理逻辑
+                for (let tab of this.editableTabs) {
+                    //关掉所有标签页
+                    this.handleTabsEdit(tab.name, "remove");
+                }
+                this.$store.commit("deleteCurrentSolutionEvent", false);
+            }
+        },
         saveSolutionTrigger(newValue) {
             if (newValue) {
                 //逻辑
@@ -266,8 +299,8 @@ export default {
             }
         },
         flowAddTrigger(newvalue) {
-            console.log("flowAddTriggerg")
             if (newvalue) {
+                console.log("flowAddTrigger")
                 this.importFlowVisible = false;
                 this.flowKeys=[]
                 for (let i = 0; i < localStorage.length; i++) {
@@ -280,6 +313,7 @@ export default {
                     }
                 } 
                 this.importFlowVisible = true;
+                this.$store.commit("flowAddEvent", false);
             }     
         },
     },
@@ -321,6 +355,9 @@ export default {
                 localStorage.removeItem(this.selectDeleteSolutions[i]);
             }
 
+        },
+        deleteCurrentSolutionFunc(){
+            
         },
         changeTabName(data) {
             this.editableTabs[data.index].tabName = data.tabName;

@@ -10,6 +10,7 @@ export default createStore({
             newSolutionTrigger:false,
             openSolutionTrigger:false,
             deleteSolutionTrigger:false,
+            deleteCurrentSolutionTrigger:false,
             saveSolutionTrigger:false,
             saveSolutionAsTrigger:false,
             flowAddTrigger:false,
@@ -30,6 +31,9 @@ export default createStore({
         },
         deleteSolutionEvent(state,payload){
             state.deleteSolutionTrigger=payload
+        },
+        deleteCurrentSolutionEvent(state,payload){
+            state.deleteCurrentSolutionTrigger=payload
         },
         saveSolutionEvent(state, payload){
             state.saveSolutionTrigger = payload

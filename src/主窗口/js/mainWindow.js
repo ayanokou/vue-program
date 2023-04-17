@@ -134,6 +134,9 @@ export default {
         deleteSolution() {
             this.$store.commit('deleteSolutionEvent', true)
         },
+        deleteCurrentSolution(){
+            this.$store.commit('deleteCurrentSolutionEvent', true)
+        },
         //打开方案
         openSolution() {
             this.$store.commit('openSolutionEvent', true)

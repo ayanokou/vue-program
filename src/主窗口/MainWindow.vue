@@ -9,6 +9,7 @@
                         <template #title><span style="color:aliceblue;">文件</span></template>
                         <el-menu-item value="1-1" @click="newSolution"><span style="color:aliceblue;">新建方案</span></el-menu-item>
                         <el-menu-item @click="deleteSolution"><span style="color:aliceblue;">删除方案</span></el-menu-item>
+                        <el-menu-item @click="deleteCurrentSolution"><span style="color:aliceblue;">删除当前方案</span></el-menu-item>
                         <el-menu-item @click="openSolution"><span style="color:aliceblue;">打开方案</span></el-menu-item>
                         <el-menu-item id="lastOpenSolution" @click="lastOpenSolution"><span style="color:aliceblue;">最近打开方案</span></el-menu-item>
                         <el-menu-item id="openExample"><span style="color:aliceblue;">打开示例</span></el-menu-item>
