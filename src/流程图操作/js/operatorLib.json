@@ -1135,6 +1135,30 @@
             },
             {
               "lfProperties": {
+                "type": "switchModel",
+                "label": "switch",
+                "text": "switch",
+                "name": "switch"
+              },
+              "properties": {
+                "helpMsg": "it is a help message",
+                "dllPath": "",
+                "modelID": "switch",
+                "inPara": [
+                  {
+                    "varName": "expression",
+                    "varType": "string",
+                    "from": "",
+                    "typeUI": "input",
+                    "explanation": ""
+                  }
+                ],
+                "outPara": []
+              },
+              "models": []
+            },
+            {
+              "lfProperties": {
                 "type": "mygroup",
                 "text": "组合",
                 "label": "组合",
@@ -1154,59 +1178,6 @@
                   }
                 ],
                 "outPara": []
-              },
-              "models": []
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "lfProperties": {
-        "name": "test"
-      },
-      "properties": {},
-      "models": [
-        {
-          "lfProperties": {
-            "name": "rsy"
-          },
-          "properties": {},
-          "models": [
-            {
-              "lfProperties": {
-                "name": "test",
-                "type": "operator",
-                "text": "test",
-                "label": "test"
-              },
-              "properties": {
-                "helpMsg": "it is a help message of test",
-                "dllPath": "C:\\Projects\\cpp\\clientSDK\\clientSDK\\detectSticker.dll",
-                "modelID": "unet",
-                "inPara": [
-                  {
-                    "varName": "str1",
-                    "varType": "string",
-                    "from": "",
-                    "typeUI": "input",
-                    "explanation": ""
-                  },
-                  {
-                    "varName": "str2",
-                    "varType": "string",
-                    "from": "",
-                    "typeUI": "input",
-                    "explanation": ""
-                  }
-                ],
-                "outPara": [
-                  {
-                    "varName": "dst",
-                    "varType": "Mat",
-                    "explanation": ""
-                  }
-                ]
               },
               "models": []
             }

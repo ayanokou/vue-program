@@ -89,6 +89,22 @@ class GlobalVariableModel extends RectNodeModel {
         return (++max) + "";
     }
 }
+class SwitchModel extends RectNodeModel {
+    setAttributes() {
+        const size = this.properties.scale || 1;
+        this.width = 100 * size
+        this.height = 80 * size
+    }
+
+    createId() {
+        let max=0
+        for(let node of this.graphModel.nodes){
+            if(node.id>max)
+                max=node.id
+        }
+        return (++max) + "";
+    }
+}
 class ConditionJudgmentModel extends DiamondNodeModel {
     getNodeStyle() {
         const style = super.getNodeStyle();
@@ -625,6 +641,11 @@ export default {
                     type: 'globalVariable',
                     view: RectNode,
                     model: GlobalVariableModel
+                },
+                {
+                    type: 'switchModel',
+                    view: RectNode,
+                    model: SwitchModel
                 },
                 {
                     type: 'mygroup',
