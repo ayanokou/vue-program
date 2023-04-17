@@ -1,7 +1,8 @@
 <template>
-    <el-container>
-        <el-aside style="width:120px">
-            <el-menu class="el-menu-vertical" :collapse="true" style="width: 120px">
+    <el-container style="height:100%">
+        <el-aside style="width:150px;">
+            <el-scrollbar>
+            <el-menu class="el-menu-vertical" :collapse="true" style="width: 150px; height: 100%;">
 
                 <el-sub-menu v-for="(model_1, index1) in suanzis.models" :index="index1">
                     <template #title>
@@ -44,10 +45,11 @@
 
                 </el-sub-menu>
             </el-menu>
+        </el-scrollbar>
         </el-aside>
 
         <!--流程图区域-->
-        <el-main ref="lfMain" style=":height: 100%; padding: 0;">
+        <el-main ref="lfMain" style="height: 100%; padding: 0; overflow:hidden">
             <slot></slot>
         </el-main>
 

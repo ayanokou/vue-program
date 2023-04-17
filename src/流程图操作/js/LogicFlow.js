@@ -390,9 +390,9 @@ export default {
         }
     },
     mounted() {
-        this.initHeight = window.innerHeight-150
+        // this.initHeight = 800
+        // this.initHeight = window.innerHeight-150
         this.init()
-        document.querySelector("#"+this.tab.title).firstElementChild.style.height=""+this.initHeight+"px"
         //鼠标移到节点显示帮助信息
         this.lf.on('node:mouseenter', (evt) => {
             let res = ""
@@ -496,20 +496,20 @@ export default {
                 socket.emit('chatevent', jsonObject);
             }
         })
-        window.onresize = () => {
-            this.initHeight = window.innerHeight-150
-            console.log(this.initHeight)
-            document.querySelector("#"+this.tab.title).firstElementChild.style.height=""+this.initHeight+"px"
-            this.lf.render(this.lf.getGraphData())
-            const position = this.lf.getPointByClient(document.documentElement.clientWidth - 150, document.documentElement.clientHeight - 230)
-            this.lf.extension.miniMap.show(position.domOverlayPosition.x, position.domOverlayPosition.y)
-        }
+        // window.onresize = () => {
+        //     this.initHeight = window.innerHeight-150
+        //     console.log(this.initHeight)
+        //     document.querySelector("#"+this.tab.title).firstElementChild.style.height=""+this.initHeight+"px"
+        //     this.lf.render(this.lf.getGraphData())
+        //     const position = this.lf.getPointByClient(document.documentElement.clientWidth - 150, document.documentElement.clientHeight - 230)
+        //     this.lf.extension.miniMap.show(position.domOverlayPosition.x, position.domOverlayPosition.y)
+        // }
     },
     methods: {
         init() {
             const lf = new LogicFlow({
                 container: document.querySelector("#"+this.tab.title),
-                height: this.initHeight,
+                // height: this.initHeight,
                 plugins: [Menu, BpmnElement, LeftMenus, SelectionSelect, Control, MiniMap, Snapshot, Group],
                 background: {
                     color: '#2b364a' // 网格背景颜色
