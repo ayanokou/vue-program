@@ -423,7 +423,7 @@ export default {
             this.dialogUI=evt.data.properties.inPara
             this.modelID=evt.data.properties.modelID
             
-            this.formData = this.dialogUI.map(param => param.from)
+            this.formData = this.dialogUI.map(param => param.fromExpression)
             console.log(this.modelID)
 
 
@@ -605,7 +605,7 @@ export default {
                                         {
                                             "varName": "count",
                                             "varType": "int",
-                                            "from": "",
+                                            "fromExpression": "",
                                             "typeUI": "input",
                                             "explanation": ""
                                         }
@@ -802,7 +802,7 @@ export default {
         formDataSubmit() {
             let inPara=this.dialogUI
             for(let i in inPara){
-                inPara[i].from=this.formData[i]
+                inPara[i].fromExpression=this.formData[i]
             }
             this.nodeModel.setProperties({
                 "inPara": inPara,

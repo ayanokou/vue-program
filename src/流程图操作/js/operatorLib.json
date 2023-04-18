@@ -61,25 +61,19 @@
                   {
                     "varName": "filename",
                     "varType": "string",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": ""
                   },
                   {
                     "varName": "flags",
                     "varType": "int",
-                    "from": "",
-                    "typeUI": "select",
-                    "selectContent": [
-                      {
-                        "value": "1",
-                        "label": "BGR"
-                      },
-                      {
-                        "value": "0",
-                        "label": "GRAY"
-                      }
-                    ],
+                    "fromExpression": "",
+                    "defineInputWay": "selectedInputWay",
+                    "selectContent": {
+                      "BGR": "1",
+                      "GRAY": "0"
+                    },
                     "explanation": ""
                   }
                 ],
@@ -116,21 +110,18 @@
                   {
                     "varName": "object",
                     "varType": "object",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": ""
                   },
                   {
                     "varName": "mode",
                     "varType": "int",
-                    "from": "",
-                    "typeUI": "select",
-                    "selectContent": [
-                      {
-                        "value": "0",
-                        "label": "Mat"
-                      }
-                    ],
+                    "fromExpression": "",
+                    "defineInputWay": "selectedInputWay",
+                    "selectContent": {
+                      "Mat": "0"
+                    },
                     "explanation": ""
                   }
                 ],
@@ -201,36 +192,36 @@
                   {
                     "varName": "src",
                     "varType": "object",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": ""
                   },
                   {
                     "varName": "ksize",
                     "varType": "Size",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": ""
                   },
                   {
                     "varName": "sigmaX",
                     "varType": "double",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": ""
                   },
                   {
                     "varName": "sigmaY",
                     "varType": "double",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": ""
                   },
                   {
                     "varName": "borderType",
                     "varType": "int",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": ""
                   }
                 ],
@@ -258,15 +249,15 @@
                   {
                     "varName": "src",
                     "varType": "object",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": ""
                   },
                   {
                     "varName": "ksize",
                     "varType": "int",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": ""
                   }
                 ],
@@ -302,29 +293,29 @@
                   {
                     "varName": "src",
                     "varType": "object",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": ""
                   },
                   {
                     "varName": "thresh",
                     "varType": "double",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": ""
                   },
                   {
                     "varName": "maxval",
                     "varType": "double",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": ""
                   },
                   {
                     "varName": "type",
                     "varType": "int",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": ""
                   }
                 ],
@@ -360,15 +351,15 @@
                   {
                     "varName": "src",
                     "varType": "object",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": ""
                   },
                   {
                     "varName": "code",
                     "varType": "int",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": ""
                   }
                 ],
@@ -404,15 +395,15 @@
                   {
                     "varName": "src",
                     "varType": "object",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": ""
                   },
                   {
                     "varName": "size",
                     "varType": "Size",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": ""
                   }
                 ],
@@ -439,15 +430,15 @@
                   {
                     "varName": "src",
                     "varType": "object",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": ""
                   },
                   {
                     "varName": "size",
                     "varType": "Size",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": ""
                   }
                 ],
@@ -482,8 +473,8 @@
                   {
                     "varName": "src",
                     "varType": "object",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": ""
                   }
                 ],
@@ -509,15 +500,15 @@
                   {
                     "varName": "src",
                     "varType": "object",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": ""
                   },
                   {
                     "varName": "contours",
                     "varType": "object",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": ""
                   }
                 ],
@@ -544,15 +535,15 @@
                   {
                     "varName": "contours",
                     "varType": "object",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": ""
                   },
                   {
                     "varName": "index",
                     "varType": "int",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": ""
                   }
                 ],
@@ -579,8 +570,8 @@
                   {
                     "varName": "contour",
                     "varType": "object",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": ""
                   }
                 ],
@@ -607,8 +598,8 @@
                   {
                     "varName": "rect",
                     "varType": "object",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": ""
                   }
                 ],
@@ -635,8 +626,8 @@
                   {
                     "varName": "contour",
                     "varType": "object",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": ""
                   }
                 ],
@@ -674,22 +665,22 @@
                   {
                     "varName": "src",
                     "varType": "object",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": ""
                   },
                   {
                     "varName": "M",
                     "varType": "object",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": ""
                   },
                   {
                     "varName": "dsize",
                     "varType": "object",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": ""
                   }
                 ],
@@ -716,22 +707,22 @@
                   {
                     "varName": "center",
                     "varType": "object",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": ""
                   },
                   {
                     "varName": "angle",
                     "varType": "double",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": ""
                   },
                   {
                     "varName": "scale",
                     "varType": "double",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": ""
                   }
                 ],
@@ -935,15 +926,15 @@
                   {
                     "varName": "img_mat",
                     "varType": "object",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": "输入图片 类型Mat"
                   },
                   {
                     "varName": "det_model",
                     "varType": "string",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": "字符检测模型路径"
                   }
                 ],
@@ -972,22 +963,22 @@
                   {
                     "varName": "img_mat",
                     "varType": "Mat",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": "输入图片 类型Mat"
                   },
                   {
                     "varName": "rec model",
                     "varType": "string",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": "字符识别模型路径"
                   },
                   {
                     "varName": "rec dict model",
                     "varType": "string",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": "字符识别字典路径"
                   }
                 ],
@@ -1024,43 +1015,43 @@
                   {
                     "varName": "confThreshold",
                     "varType": "double",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": "Confidence threshold"
                   },
                   {
                     "varName": "nmsThreshold",
                     "varType": "double",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": "Non-maximum suppression"
                   },
                   {
                     "varName": "objThreshold",
                     "varType": "double",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": "Object Confidence threshold"
                   },
                   {
                     "varName": "input_mat",
                     "varType": "object",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": "输入图片矩阵"
                   },
                   {
                     "varName": "modelpath",
                     "varType": "string",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": "模型路径"
                   },
                   {
                     "varName": "cocodictPath",
                     "varType": "string",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": "coco字典路径"
                   }
                 ],
@@ -1089,15 +1080,15 @@
                   {
                     "varName": "input_mat",
                     "varType": "object",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": "输入图片矩阵"
                   },
                   {
                     "varName": "modelpath",
                     "varType": "string",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": "模型路径"
                   }
                 ],
@@ -1134,15 +1125,15 @@
                   {
                     "varName": "img_mat",
                     "varType": "object",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": "输入图片 类型Mat"
                   },
                   {
                     "varName": "scale times",
                     "varType": "int",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "input",
                     "explanation": "放大倍数 支持2 3 4 8"
                   }
                 ],
@@ -1219,8 +1210,8 @@
                   {
                     "varName": "expression",
                     "varType": "string",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": ""
                   }
                 ],
@@ -1243,8 +1234,8 @@
                   {
                     "varName": "expression",
                     "varType": "string",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": ""
                   }
                 ],
@@ -1267,8 +1258,8 @@
                   {
                     "varName": "count",
                     "varType": "int",
-                    "from": "",
-                    "typeUI": "input",
+                    "fromExpression": "",
+                    "defineInputWay": "directInputWay",
                     "explanation": ""
                   }
                 ],

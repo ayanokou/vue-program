@@ -56,16 +56,16 @@
             <el-form label-width="120px">
 
                 <el-form-item v-for="(item,index) in dialogUI" :label="item.varName">
-                    <div v-if="item.typeUI === 'input'">
+                    <div v-if="item.defineInputWay === 'directInputWay'">
                         <el-input v-model="formData[index]"/>
                     </div>
-                    <div v-if="item.typeUI==='select'">
+                    <div v-if="item.defineInputWay === 'selectedInputWay'">
                         <el-select v-model="formData[index]" placeholder="Select">
                             <el-option
-                                v-for="c in item.selectContent"
-                                :key="c.value"
-                                :label="c.label"
-                                :value="c.value"
+                                v-for="(value,key) in item.selectContent"
+                                :key="key"
+                                :label="key"
+                                :value="value"
                             />
                         </el-select>
                     </div>
