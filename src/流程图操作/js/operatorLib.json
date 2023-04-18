@@ -62,26 +62,26 @@
                     "varName": "filename",
                     "varType": "string",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": ""
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
                   },
                   {
                     "varName": "flags",
                     "varType": "int",
                     "fromExpression": "",
-                    "defineInputWay": "selectedInputWay",
-                    "selectContent": {
+                    "defineVarInputWay": "selectedInputWay",
+                    "comboList": {
                       "BGR": "1",
                       "GRAY": "0"
                     },
-                    "explanation": ""
+                    "varExplanation": ""
                   }
                 ],
                 "outPara": [
                   {
                     "varName": "dst",
                     "varType": "Mat",
-                    "explanation": ""
+                    "varExplanation": ""
                   }
                 ]
               },
@@ -111,18 +111,18 @@
                     "varName": "object",
                     "varType": "object",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": ""
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
                   },
                   {
                     "varName": "mode",
                     "varType": "int",
                     "fromExpression": "",
-                    "defineInputWay": "selectedInputWay",
-                    "selectContent": {
+                    "defineVarInputWay": "selectedInputWay",
+                    "comboList": {
                       "Mat": "0"
                     },
-                    "explanation": ""
+                    "varExplanation": ""
                   }
                 ],
                 "outPara": []
@@ -193,43 +193,43 @@
                     "varName": "src",
                     "varType": "object",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": ""
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
                   },
                   {
                     "varName": "ksize",
                     "varType": "Size",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": ""
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
                   },
                   {
                     "varName": "sigmaX",
                     "varType": "double",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": ""
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
                   },
                   {
                     "varName": "sigmaY",
                     "varType": "double",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": ""
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
                   },
                   {
                     "varName": "borderType",
                     "varType": "int",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": ""
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
                   }
                 ],
                 "outPara": [
                   {
                     "varName": "dst",
                     "varType": "Mat",
-                    "explanation": ""
+                    "varExplanation": ""
                   }
                 ]
               },
@@ -250,22 +250,22 @@
                     "varName": "src",
                     "varType": "object",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": ""
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
                   },
                   {
                     "varName": "ksize",
                     "varType": "int",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": ""
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
                   }
                 ],
                 "outPara": [
                   {
                     "varName": "dst",
                     "varType": "object",
-                    "explanation": ""
+                    "varExplanation": ""
                   }
                 ]
               }
@@ -294,36 +294,36 @@
                     "varName": "src",
                     "varType": "object",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": ""
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
                   },
                   {
                     "varName": "thresh",
                     "varType": "double",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": ""
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
                   },
                   {
                     "varName": "maxval",
                     "varType": "double",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": ""
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
                   },
                   {
                     "varName": "type",
                     "varType": "int",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": ""
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
                   }
                 ],
                 "outPara": [
                   {
                     "varName": "dst",
                     "varType": "object",
-                    "explanation": ""
+                    "varExplanation": ""
                   }
                 ]
               },
@@ -352,22 +352,22 @@
                     "varName": "src",
                     "varType": "object",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": ""
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
                   },
                   {
                     "varName": "code",
                     "varType": "int",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": ""
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
                   }
                 ],
                 "outPara": [
                   {
                     "varName": "dst",
                     "varType": "object",
-                    "explanation": ""
+                    "varExplanation": ""
                   }
                 ]
               },
@@ -396,22 +396,22 @@
                     "varName": "src",
                     "varType": "object",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": ""
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
                   },
                   {
                     "varName": "size",
                     "varType": "Size",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": ""
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
                   }
                 ],
                 "outPara": [
                   {
                     "varName": "dst",
                     "varType": "object",
-                    "explanation": ""
+                    "varExplanation": ""
                   }
                 ]
               }
@@ -431,22 +431,22 @@
                     "varName": "src",
                     "varType": "object",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": ""
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
                   },
                   {
                     "varName": "size",
                     "varType": "Size",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": ""
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
                   }
                 ],
                 "outPara": [
                   {
                     "varName": "dst",
                     "varType": "object",
-                    "explanation": ""
+                    "varExplanation": ""
                   }
                 ]
               }
@@ -474,8 +474,8 @@
                     "varName": "src",
                     "varType": "object",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": ""
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
                   }
                 ],
                 "outPara": [
@@ -501,22 +501,22 @@
                     "varName": "src",
                     "varType": "object",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": ""
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
                   },
                   {
                     "varName": "contours",
                     "varType": "object",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": ""
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
                   }
                 ],
                 "outPara": [
                   {
                     "varName": "dst",
                     "varType": "Mat",
-                    "explanation": ""
+                    "varExplanation": ""
                   }
                 ]
               }
@@ -536,22 +536,22 @@
                     "varName": "contours",
                     "varType": "object",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": ""
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
                   },
                   {
                     "varName": "index",
                     "varType": "int",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": ""
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
                   }
                 ],
                 "outPara": [
                   {
                     "varName": "contour",
                     "varType": "object",
-                    "explanation": ""
+                    "varExplanation": ""
                   }
                 ]
               }
@@ -571,15 +571,15 @@
                     "varName": "contour",
                     "varType": "object",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": ""
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
                   }
                 ],
                 "outPara": [
                   {
                     "varName": "rect",
                     "varType": "object",
-                    "explanation": ""
+                    "varExplanation": ""
                   }
                 ]
               }
@@ -599,15 +599,15 @@
                     "varName": "rect",
                     "varType": "object",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": ""
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
                   }
                 ],
                 "outPara": [
                   {
                     "varName": "points",
                     "varType": "object",
-                    "explanation": ""
+                    "varExplanation": ""
                   }
                 ]
               }
@@ -627,15 +627,15 @@
                     "varName": "contour",
                     "varType": "object",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": ""
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
                   }
                 ],
                 "outPara": [
                   {
                     "varName": "contours",
                     "varType": "object",
-                    "explanation": ""
+                    "varExplanation": ""
                   }
                 ]
               }
@@ -666,29 +666,29 @@
                     "varName": "src",
                     "varType": "object",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": ""
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
                   },
                   {
                     "varName": "M",
                     "varType": "object",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": ""
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
                   },
                   {
                     "varName": "dsize",
                     "varType": "object",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": ""
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
                   }
                 ],
                 "outPara": [
                   {
                     "varName": "dst",
                     "varType": "object",
-                    "explanation": ""
+                    "varExplanation": ""
                   }
                 ]
               }
@@ -708,29 +708,29 @@
                     "varName": "center",
                     "varType": "object",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": ""
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
                   },
                   {
                     "varName": "angle",
                     "varType": "double",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": ""
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
                   },
                   {
                     "varName": "scale",
                     "varType": "double",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": ""
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
                   }
                 ],
                 "outPara": [
                   {
                     "varName": "M",
                     "varType": "object",
-                    "explanation": ""
+                    "varExplanation": ""
                   }
                 ]
               }
@@ -927,22 +927,22 @@
                     "varName": "img_mat",
                     "varType": "object",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": "输入图片 类型Mat"
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": "输入图片 类型Mat"
                   },
                   {
                     "varName": "det_model",
                     "varType": "string",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": "字符检测模型路径"
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": "字符检测模型路径"
                   }
                 ],
                 "outPara": [
                   {
                     "varName": "dst",
                     "varType": "Mat",
-                    "explanation": ""
+                    "varExplanation": ""
                   }
                 ]
               },
@@ -964,29 +964,29 @@
                     "varName": "img_mat",
                     "varType": "Mat",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": "输入图片 类型Mat"
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": "输入图片 类型Mat"
                   },
                   {
                     "varName": "rec model",
                     "varType": "string",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": "字符识别模型路径"
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": "字符识别模型路径"
                   },
                   {
                     "varName": "rec dict model",
                     "varType": "string",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": "字符识别字典路径"
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": "字符识别字典路径"
                   }
                 ],
                 "outPara": [
                   {
                     "varName": "dst",
                     "varType": "string",
-                    "explanation": ""
+                    "varExplanation": ""
                   }
                 ]
               },
@@ -1016,50 +1016,50 @@
                     "varName": "confThreshold",
                     "varType": "double",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": "Confidence threshold"
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": "Confidence threshold"
                   },
                   {
                     "varName": "nmsThreshold",
                     "varType": "double",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": "Non-maximum suppression"
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": "Non-maximum suppression"
                   },
                   {
                     "varName": "objThreshold",
                     "varType": "double",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": "Object Confidence threshold"
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": "Object Confidence threshold"
                   },
                   {
                     "varName": "input_mat",
                     "varType": "object",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": "输入图片矩阵"
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": "输入图片矩阵"
                   },
                   {
                     "varName": "modelpath",
                     "varType": "string",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": "模型路径"
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": "模型路径"
                   },
                   {
                     "varName": "cocodictPath",
                     "varType": "string",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": "coco字典路径"
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": "coco字典路径"
                   }
                 ],
                 "outPara": [
                   {
                     "varName": "dst",
                     "varType": "Mat",
-                    "explanation": ""
+                    "varExplanation": ""
                   }
                 ]
               },
@@ -1081,22 +1081,22 @@
                     "varName": "input_mat",
                     "varType": "object",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": "输入图片矩阵"
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": "输入图片矩阵"
                   },
                   {
                     "varName": "modelpath",
                     "varType": "string",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": "模型路径"
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": "模型路径"
                   }
                 ],
                 "outPara": [
                   {
                     "varName": "dst",
                     "varType": "Mat",
-                    "explanation": "结果去噪图片"
+                    "varExplanation": "结果去噪图片"
                   }
                 ]
               },
@@ -1126,22 +1126,22 @@
                     "varName": "img_mat",
                     "varType": "object",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": "输入图片 类型Mat"
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": "输入图片 类型Mat"
                   },
                   {
                     "varName": "scale times",
                     "varType": "int",
                     "fromExpression": "",
-                    "defineInputWay": "input",
-                    "explanation": "放大倍数 支持2 3 4 8"
+                    "defineVarInputWay": "input",
+                    "varExplanation": "放大倍数 支持2 3 4 8"
                   }
                 ],
                 "outPara": [
                   {
                     "varName": "dst",
                     "varType": "Mat",
-                    "explanation": ""
+                    "varExplanation": ""
                   }
                 ]
               },
@@ -1211,8 +1211,8 @@
                     "varName": "expression",
                     "varType": "string",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": ""
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
                   }
                 ],
                 "outPara": []
@@ -1235,8 +1235,8 @@
                     "varName": "expression",
                     "varType": "string",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": ""
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
                   }
                 ],
                 "outPara": []
@@ -1259,8 +1259,8 @@
                     "varName": "count",
                     "varType": "int",
                     "fromExpression": "",
-                    "defineInputWay": "directInputWay",
-                    "explanation": ""
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
                   }
                 ],
                 "outPara": []
