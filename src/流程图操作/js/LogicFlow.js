@@ -737,6 +737,18 @@ export default {
                     localStorage.setItem(text.name, JSON.stringify(text))
                 }
             })
+            lf.extension.control.addItem({
+                text: "导入Json",
+                onClick: () => {
+                this.loadJson();
+                },
+            });
+            lf.extension.control.addItem({
+                text: "下载Json",
+                onClick: () => {
+                this.downloadXML();
+                },
+            });
             console.log(this.tab.initLF)
             lf.render(this.tab.initLF)
             const position = lf.getPointByClient(document.documentElement.clientWidth / 2 - 150, document.documentElement.clientHeight - 230)

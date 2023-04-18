@@ -422,11 +422,8 @@ export default {
     display: flex;
     flex-direction: column;
 }
-.el-tabs__content{
-    flex: 1;
-}
-.el-tabs__header.is-top{
-    margin:0px;
+>>> .el-tabs__header.is-top{
+    margin-bottom:5px;
 }
 
 .el-tabs.el-tabs--top.el-tabs--card.demo-tabs {
