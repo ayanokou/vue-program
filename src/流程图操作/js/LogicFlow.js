@@ -30,9 +30,6 @@ const handleOpen = (key, keyPath) => {
 const handleClose = (key, keyPath) => {
     console.log(key, keyPath)
 }
-//初始化socketio用于前后端传输
-let socket = io.connect('http://localhost:9092')
-
 
 
 class CycleModel extends CircleNodeModel {
@@ -424,7 +421,6 @@ export default {
             this.modelID=evt.data.properties.modelID
             
             this.formData = this.dialogUI.map(param => param.fromExpression)
-            console.log(this.modelID)
 
 
             //刷新nodeModel
@@ -462,43 +458,31 @@ export default {
             let sourceNode = this.lf.getNodeModelById(sourceNodeId)
             sourceNode.current_edge -= 1
         })
-        //接收java传来的数据
 
-        socket.on('revJson', (data) => {
-        })
-        socket.on('revBase64', (data) => {
-            //先传递给FlowArea组件
-            this.$store.commit('setImgBase64',data)
-        })
-        socket.on('revDoubles',(data)=>{
-            //先传递给FlowArea组件
-            this.$store.commit('setRevDoubles',data)
-        })
-        //与弹出的dialog和标签页通信
-        window.addEventListener('message', (evt) => {
-            if (evt.data.flag) {
-                //修改边的文本
-                this.edgeModel.updateText(evt.data.flag)
-            }
-            if (evt.data.conditionValue) {
-                //修改节点的值
-                this.nodeModel.setProperties({
-                    value: evt.data.conditionValue
-                })
-            }
-            if (evt.data.imgBase64) {
-
-                //发送后端
-                let jsonObject = {
-                    userName: "Pic",
-                    message: evt.data.imgBase64,
-                };
-                socket.emit('chatevent', jsonObject);
-            }
-        })
+        // //与弹出的dialog和标签页通信
+        // window.addEventListener('message', (evt) => {
+        //     if (evt.data.flag) {
+        //         //修改边的文本
+        //         this.edgeModel.updateText(evt.data.flag)
+        //     }
+        //     if (evt.data.conditionValue) {
+        //         //修改节点的值
+        //         this.nodeModel.setProperties({
+        //             value: evt.data.conditionValue
+        //         })
+        //     }
+        //     if (evt.data.imgBase64) {
+        //
+        //         //发送后端
+        //         let jsonObject = {
+        //             userName: "Pic",
+        //             message: evt.data.imgBase64,
+        //         };
+        //         socket.emit('chatevent', jsonObject);
+        //     }
+        // })
         window.onresize = () => {
             this.initHeight = window.innerHeight-150
-            console.log(this.initHeight)
             document.querySelector("#"+this.tab.title).firstElementChild.style.height=""+this.initHeight+"px"
             this.lf.render(this.lf.getGraphData())
             const position = this.lf.getPointByClient(document.documentElement.clientWidth - 150, document.documentElement.clientHeight - 230)
@@ -545,7 +529,6 @@ export default {
 
                             console.log(node)
                         }
-
                     }
                 ], // 覆盖默认的节点右键菜单
                 //edgeMenu: false, // 删除默认的边右键菜单
@@ -736,7 +719,6 @@ export default {
                 }
             })
 
-            console.log(this.tab.initLF)
             lf.render(this.tab.initLF)
             const position = lf.getPointByClient(document.documentElement.clientWidth/2 - 150, document.documentElement.clientHeight - 230)
             lf.extension.miniMap.show(position.domOverlayPosition.x, position.domOverlayPosition.y)
@@ -744,11 +726,18 @@ export default {
 
         },
         run(){
+
             let jsonObject = {
                 userName: 'Flow',
                 message: JSON.stringify(this.lf.getGraphData())
             }
-            socket.emit('chatevent', jsonObject);
+            let payload={
+                trigger:true,
+                mode:"chatevent",
+                data:jsonObject
+            }
+
+            this.$store.commit("setSocketEmit",payload)
         },
         loadJson(){
             let inputObj = document.createElement('input');
@@ -795,8 +784,6 @@ export default {
         downloadXML() {
             //下载json
             this.download('flow.json', JSON.stringify(this.lf.getGraphData()))
-            //前端开始运行逻辑不完善，因此将流程图json传到后端的语句写在这里了，以后实际开发的时候进行调整
-            //socket.emit('flowInformation',this.lf.getGraphData());
 
         },
         formDataSubmit() {

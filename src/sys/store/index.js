@@ -10,6 +10,7 @@ export default createStore({
             newSolutionTrigger:false,
             openSolutionTrigger:false,
             saveSolutionTrigger:false,
+            socketEmit:null
         }
     },
     mutations:{
@@ -27,6 +28,9 @@ export default createStore({
         },
         saveSolutionEvent(state, payload){
             state.saveSolutionTrigger = payload
+        },
+        setSocketEmit(state,payload){
+            state.socketEmit=payload
         }
     },
     modules:{

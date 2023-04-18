@@ -23,7 +23,6 @@
             >
                 <div :id="item.title"></div>
             </LogicFlow>
-            <!--            <iframe src='#/logicFlow' width='100%' :height="iframeHeight + 'px'" scrolling="no"></iframe>-->
         </el-tab-pane>
     </el-tabs>
 </template>
@@ -197,6 +196,7 @@ export default {
 .el-tabs.el-tabs--top.el-tabs--card.demo-tabs {
     height: 100%;
 }
+
 
 .el-tab-pane {
     height: 100%;
