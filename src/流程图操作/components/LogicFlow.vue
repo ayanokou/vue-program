@@ -1,7 +1,8 @@
 <template>
-    <el-container>
-        <el-aside style="width:120px">
-            <el-menu class="el-menu-vertical" :collapse="true" style="width: 120px">
+    <el-container style="height:100%">
+        <el-aside style="width:150px;">
+            <el-scrollbar>
+            <el-menu class="el-menu-vertical" :collapse="true" style="width: 150px; height: 100%;">
 
                 <el-sub-menu v-for="(model_1, index1) in suanzis.models" :index="index1">
                     <template #title>
@@ -44,10 +45,11 @@
 
                 </el-sub-menu>
             </el-menu>
+        </el-scrollbar>
         </el-aside>
 
         <!--流程图区域-->
-        <el-main ref="lfMain" style=":height: 100%; padding: 0;">
+        <el-main ref="lfMain" style="height: 100%; padding: 0; overflow:hidden">
             <slot></slot>
         </el-main>
 
@@ -56,16 +58,16 @@
             <el-form label-width="120px">
 
                 <el-form-item v-for="(item,index) in dialogUI" :label="item.varName">
-                    <div v-if="item.typeUI === 'input'">
+                    <div v-if="item.defineVarInputWay === 'directInputWay'">
                         <el-input v-model="formData[index]"/>
                     </div>
-                    <div v-if="item.typeUI==='select'">
+                    <div v-if="item.defineVarInputWay === 'selectedInputWay'">
                         <el-select v-model="formData[index]" placeholder="Select">
                             <el-option
-                                v-for="c in item.selectContent"
-                                :key="c.value"
-                                :label="c.label"
-                                :value="c.value"
+                                v-for="(value,key) in item.comboList"
+                                :key="key"
+                                :label="key"
+                                :value="value"
                             />
                         </el-select>
                     </div>
