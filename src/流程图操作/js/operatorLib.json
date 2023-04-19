@@ -115,12 +115,13 @@
                     "varExplanation": ""
                   },
                   {
-                    "varName": "mode",
+                    "varName": "type",
                     "varType": "int",
                     "fromExpression": "",
                     "defineVarInputWay": "selectedInputWay",
                     "comboList": {
-                      "Mat": "0"
+                      "显示图片": "0",
+                      "Java控制台显示字符串": "3"
                     },
                     "varExplanation": ""
                   }

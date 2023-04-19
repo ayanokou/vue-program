@@ -50,12 +50,14 @@ public class DemoApplication {
 //							System.out.println(res);
 
 						switch(resType){
-							//传图片
+
 							case 0:
 								client.sendEvent("revBase64","data:image/jpeg;base64,"+mat);
 								break;
 							case 1:
-								System.out.println();
+								for(int num : paramInt){
+									System.out.println(num);
+								}
 								break;
 							case 2:
 								//传double数组
@@ -65,6 +67,11 @@ public class DemoApplication {
 									System.out.print(paramDouble[i]);
 									if((i+1)%4==0)
 										System.out.println();
+								}
+								break;
+							case 3:
+								for(String str : paramString){
+									System.out.println(str);
 								}
 								break;
 						}
