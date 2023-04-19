@@ -9,8 +9,13 @@ export default createStore({
             imgBase64:"",
             newSolutionTrigger:false,
             openSolutionTrigger:false,
+            deleteSolutionTrigger:false,
+            deleteCurrentSolutionTrigger:false,
             saveSolutionTrigger:false,
-            socketEmit:null
+            socketEmit:null,
+            saveSolutionAsTrigger:false,
+            flowAddTrigger:false,
+
         }
     },
     mutations:{
@@ -26,12 +31,27 @@ export default createStore({
         openSolutionEvent(state,payload){
             state.openSolutionTrigger=payload
         },
+        deleteSolutionEvent(state,payload){
+            state.deleteSolutionTrigger=payload
+        },
+        deleteCurrentSolutionEvent(state,payload){
+            state.deleteCurrentSolutionTrigger=payload
+        },
         saveSolutionEvent(state, payload){
             state.saveSolutionTrigger = payload
         },
+
         setSocketEmit(state,payload){
             state.socketEmit=payload
-        }
+        },
+
+        saveSolutionAsEvent(state, payload){
+            state.saveSolutionAsTrigger = payload
+        },
+        flowAddEvent(state, payload){
+            state.flowAddTrigger = payload
+        },
+
     },
     modules:{
 
