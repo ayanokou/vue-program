@@ -446,7 +446,7 @@ export default {
     display: flex;
     flex-direction: column;
 }
->>> .el-tabs__header.is-top{
+.el-tabs__header.is-top{
     margin-bottom:5px;
 }
 
