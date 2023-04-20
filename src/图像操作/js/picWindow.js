@@ -15,27 +15,27 @@ const statusBar = {
         }
     },
     computed:{
-        ...mapState(['imgBase64','revDoubles'])
+        ...mapState(['revDoubles'])
     },
     mounted() {
 
     },
     watch:{
-        imgBase64(){
-            //canvas标签插入图片
-            let cvs = document.getElementById("cvs");
-            //创建image对象
-            let imgObj = new Image();
-            imgObj.src = this.imgBase64;
-            //待图片加载完后，将其显示在canvas上
-            imgObj.onload = function () {
-                let ctx = cvs.getContext('2d');
-                ctx.clearRect(0, 0, cvs.width, cvs.height);
-                ctx.drawImage(this, 0, 0);
-            }
-            //在图片之上绘画
+        // imgBase64(){
+        //     //canvas标签插入图片
+        //     let cvs = document.getElementById("cvs");
+        //     //创建image对象
+        //     let imgObj = new Image();
+        //     imgObj.src = this.imgBase64;
+        //     //待图片加载完后，将其显示在canvas上
+        //     imgObj.onload = function () {
+        //         let ctx = cvs.getContext('2d');
+        //         ctx.clearRect(0, 0, cvs.width, cvs.height);
+        //         ctx.drawImage(this, 0, 0);
+        //     }
+        //     //在图片之上绘画
 
-        },
+        // },
         revDoubles(){
             const cvs = document.getElementById("cvs")
             const ctx=cvs.getContext('2d')

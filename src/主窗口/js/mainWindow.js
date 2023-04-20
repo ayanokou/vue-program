@@ -87,28 +87,6 @@ export default {
         //动态调整右半部分尺寸
         window.addEventListener('resize', this.dynamicRightHeight)
 
-        setInterval(() => { //不用管
-            this.moduleResultData = [];
-            let count = 0;
-
-            function setChildren(num, data) {
-                let times = Math.floor(Math.random() * num);
-                for (; times > 0; --times) {
-                    let node = {
-                        id: count++,
-                        paramName: Math.random(),
-                        currentResult: Math.random(),
-                        globalVariable: Math.random(),
-                        children: [],
-                    };
-                    setChildren(Math.floor(num / 2), node.children);
-                    data.push(node);
-                }
-            }
-
-            setChildren(10, this.moduleResultData)
-        }, 5000)
-
         socket.on('revBase64', (data) => {
             //先传递给FlowArea组件
             this.$store.commit('setImgBase64',data)
