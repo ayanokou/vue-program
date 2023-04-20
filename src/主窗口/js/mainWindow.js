@@ -8,6 +8,9 @@ import LayoutThree from "@/主窗口/components/layout/LayoutThree.vue";
 import { computed } from "vue";
 import { mapState } from "vuex";
 
+//初始化socketio用于前后端传输
+let socket = io.connect('http://localhost:9092')
+
 export default {
     data() {
         return {
@@ -84,7 +87,6 @@ export default {
         //动态调整右半部分尺寸
         window.addEventListener('resize', this.dynamicRightHeight)
 
-
         setInterval(() => { //不用管
             this.moduleResultData = [];
             let count = 0;
@@ -106,9 +108,32 @@ export default {
 
             setChildren(10, this.moduleResultData)
         }, 5000)
+
+        socket.on('revBase64', (data) => {
+            //先传递给FlowArea组件
+            this.$store.commit('setImgBase64',data)
+        })
+        socket.on('revDoubles',(data)=>{
+            //先传递给FlowArea组件
+            this.$store.commit('setRevDoubles',data)
+        })
     },
-    computed: {
-        ...mapState([])
+    computed:{
+        ...mapState(['socketEmit'])
+    },
+    watch:{
+        socketEmit(newValue){
+            if(newValue.trigger){
+                //
+                console.log('running...')
+                socket.emit(newValue.mode, newValue.data);
+                //
+                this.$store.commit("setSocketEmit",{
+                    trigger:false
+                })
+            }
+        }
+
     },
     methods: {
         //动态布局

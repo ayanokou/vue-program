@@ -16,8 +16,10 @@ export default createStore({
             deleteSolutionTrigger:false,
             deleteCurrentSolutionTrigger:false,
             saveSolutionTrigger:false,
+            socketEmit:null,
             saveSolutionAsTrigger:false,
             flowAddTrigger:false,
+
         }
     },
     mutations:{
@@ -45,12 +47,18 @@ export default createStore({
         saveSolutionEvent(state, payload){
             state.saveSolutionTrigger = payload
         },
+
+        setSocketEmit(state,payload){
+            state.socketEmit=payload
+        },
+
         saveSolutionAsEvent(state, payload){
             state.saveSolutionAsTrigger = payload
         },
         flowAddEvent(state, payload){
             state.flowAddTrigger = payload
         },
+
     },
     modules:{
 

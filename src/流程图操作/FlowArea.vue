@@ -63,7 +63,6 @@
             >
                 <div :id="item.title" style="height:100%"></div>
             </LogicFlow>
-            <!--            <iframe src='#/logicFlow' width='100%' :height="iframeHeight + 'px'" scrolling="no"></iframe>-->
         </el-tab-pane>
     </el-tabs>
 </template>
@@ -447,16 +446,14 @@ export default {
     display: flex;
     flex-direction: column;
 }
-.el-tabs__content{
-    flex: 1;
-}
-.el-tabs__header.is-top{
-    margin:0px;
+>>> .el-tabs__header.is-top{
+    margin-bottom:5px;
 }
 
 .el-tabs.el-tabs--top.el-tabs--card.demo-tabs {
     height: 100%;
 }
+
 
 .scroll-container {
   height: 300px;
@@ -492,6 +489,7 @@ export default {
   flex: 1; /* 子元素均分剩余空间 */
   margin: 0 5px; /* 设置子元素间的间距 */
 }
+
 
 .el-tab-pane {
     height: 100%;
