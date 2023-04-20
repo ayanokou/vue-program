@@ -11,8 +11,10 @@ import { mapState } from "vuex";
 export default {
     data() {
         return {
-            
-            
+            //是否显示最近打开方案子菜单栏
+           showLastOpenSolution: false, 
+            //最近打开的方案名，存三个
+            lastOpenSolutions: [],
             //右半部分的高度
             height_right: window.innerHeight - 82,
             mainLayout: LayoutOne,
@@ -141,6 +143,13 @@ export default {
         openSolution() {
             this.$store.commit('openSolutionEvent', true)
         },
+        openSelectedSolution(key){
+            let cont = {
+                trigger:true,
+                key:key,
+            }
+            this.$store.commit('openSelectedSolutionEvent', cont)
+        },
         //最近打开方案
         lastOpenSolution() {
             let gainKey = null
@@ -172,6 +181,27 @@ export default {
                 }
             }
             alert("最近打开方案为：" + gainKey)
+        },
+        //刷新最近打开方案
+        updateLastOpenSolutions(){
+            this.lastOpenSolutions = []
+            for(let i = 0; i < localStorage.length; ++i){
+                let key = localStorage.key(i)
+                let value = localStorage.getItem(key);
+                if (key === "debug") continue;
+                let cont = JSON.parse(value);
+                if (cont.type === "solution") {
+                    let pos = this.lastOpenSolutions.length - 1;
+                    for(let j = 0; j < this.lastOpenSolutions.length; ++j){
+                        pos = j;
+                        if(cont.time < this.lastOpenSolutions[j].time) continue;
+                        break;
+                    }
+                    this.lastOpenSolutions.splice(pos, 0, {name:key, time:cont.time})
+                    this.lastOpenSolutions.splice(3)
+                }
+            }
+            this.lastOpenSolutions = this.lastOpenSolutions.splice(0, 3);
         },
         //保存方案
         saveSolution() {
