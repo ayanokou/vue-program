@@ -46,7 +46,7 @@
         type="card"
         editable
         class="demo-tabs"
-        @edit="handleTabsEdit"
+        @edit="addFlow"
     >
         <el-tab-pane
             v-for="item in editableTabs"
@@ -55,8 +55,6 @@
         >
             <template #label>
                 {{ item.tabName }}
-                <el-button icon="pointer">开始</el-button>
-                <el-button icon="finished">结束</el-button>
             </template>
             <LogicFlow
                 ref="lfComponent"
@@ -115,6 +113,7 @@ export default {
         ...mapState([
             "newSolutionTrigger",
             "openSolutionTrigger",
+            "openSelectedSolutionTrigger",
             "deleteSolutionTrigger",
             "deleteCurrentSolutionTrigger",
             "saveSolutionTrigger",
@@ -190,6 +189,32 @@ export default {
                 this.openSolutionVisible = true;
                 //关掉触发器
                 this.$store.commit("openSolutionEvent", false);
+            }
+        },
+        openSelectedSolutionTrigger(newValue){
+            if(newValue.trigger){
+                //处理逻辑
+                for (let tab of this.editableTabs) {
+                    //关掉所有标签页
+                    this.handleTabsEdit(tab.name, "remove");
+                }
+                this.solutionKey = newValue.key;
+                let cnts = localStorage.getItem(newValue.key);
+                let solutionJson = JSON.parse(cnts);
+                // //循环：打开标签页
+                for (let singleLogicflow of solutionJson.contents) {
+                    this.handleTabsEdit(
+                        "",
+                        "add",
+                        singleLogicflow.content,
+                        singleLogicflow.name
+                    );
+                }
+                let upCondition = {
+                    trigger:false,
+                    key:""
+                }
+                this.$store.commit("openSelectedSolutionEvent", upCondition);
             }
         },
         deleteSolutionTrigger(newValue){
@@ -297,8 +322,8 @@ export default {
                 this.$store.commit("saveSolutionAsEvent", false);
             }
         },
-        flowAddTrigger(newvalue) {
-            if (newvalue) {
+        flowAddTrigger(newValue) {
+            if (newValue) {
                 console.log("flowAddTrigger")
                 this.importFlowVisible = false;
                 this.flowKeys=[]
@@ -328,7 +353,6 @@ export default {
             this.solutionKey = item;
             let cnts = localStorage.getItem(item);
             let solutionJson = JSON.parse(cnts);
-            console.log(solutionJson);
             // //循环：打开标签页
             for (let singleLogicflow of solutionJson.contents) {
                 this.handleTabsEdit(
@@ -347,6 +371,10 @@ export default {
             this.flowAdd(flowJson.content, flowJson.name);
             this.$store.commit("flowAddEvent", false);
         },
+        addFlow(){
+            let name = prompt("请输入新建流程名", "lf")
+            this.handleTabsEdit("", "add", {}, name)
+        },
         submit(){
             console.log('选中的选项：', this.selectDeleteSolutions);
             this.deleteSolutionVisible = false
@@ -354,9 +382,6 @@ export default {
                 localStorage.removeItem(this.selectDeleteSolutions[i]);
             }
 
-        },
-        deleteCurrentSolutionFunc(){
-            
         },
         changeTabName(data) {
             this.editableTabs[data.index].tabName = data.tabName;
@@ -436,7 +461,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* align-items: center; */
+  align-items: center;
   align-items:flex-start;
 }
 
@@ -444,7 +469,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content:left;
-  /* align-items:flex-start; */
+  align-items:flex-start;
 }
 
 .dialog-checkbox {
@@ -460,7 +485,7 @@ export default {
 }
 
 .dialog-radio el-radio {
-  /* align-items:flex-start; */
+  align-items:flex-start;
   flex: 1; /* 子元素均分剩余空间 */
   margin: 0 5px; /* 设置子元素间的间距 */
 }

@@ -11,7 +11,10 @@
                         <el-menu-item @click="deleteSolution"><span style="color:aliceblue;">删除方案</span></el-menu-item>
                         <el-menu-item @click="deleteCurrentSolution"><span style="color:aliceblue;">删除当前方案</span></el-menu-item>
                         <el-menu-item @click="openSolution"><span style="color:aliceblue;">打开方案</span></el-menu-item>
-                        <el-menu-item id="lastOpenSolution" @click="lastOpenSolution"><span style="color:aliceblue;">最近打开方案</span></el-menu-item>
+                        <el-sub-menu index="1-1" @mouseenter="updateLastOpenSolutions">
+                            <template #title><span style="color:aliceblue;">最近打开方案</span></template>
+                            <el-menu-item v-for="(item, index) in lastOpenSolutions" :key="index" @click="openSelectedSolution(item.name)"><span style="color:aliceblue;">{{ item.name }}</span></el-menu-item>
+                        </el-sub-menu>
                         <el-menu-item id="openExample"><span style="color:aliceblue;">打开示例</span></el-menu-item>
                         <el-menu-item id="saveSolution" @click="saveSolution"><span style="color:aliceblue;">保存方案</span></el-menu-item>
                         <el-menu-item id="saveSolutionAs" @click="saveSolutionAs"><span style="color:aliceblue;">方案另存为</span></el-menu-item>
