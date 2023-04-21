@@ -963,7 +963,7 @@
                 "inPara": [
                   {
                     "varName": "img_mat",
-                    "varType": "Mat",
+                    "varType": "object",
                     "fromExpression": "",
                     "defineVarInputWay": "directInputWay",
                     "varExplanation": "输入图片 类型Mat"
@@ -1134,7 +1134,7 @@
                     "varName": "scale times",
                     "varType": "int",
                     "fromExpression": "",
-                    "defineVarInputWay": "input",
+                    "defineVarInputWay": "directInputWay",
                     "varExplanation": "放大倍数 支持2 3 4 8"
                   }
                 ],
