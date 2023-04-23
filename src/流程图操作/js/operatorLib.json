@@ -1271,6 +1271,52 @@
           ]
         }
       ]
+    },
+    {
+      "lfProperties": {
+        "name": "test"
+      },
+      "properties": {},
+      "models": [
+        {
+          "lfProperties": {
+            "name": "test"
+          },
+          "properties": {},
+          "models": [
+            {
+              "lfProperties": {
+                "type": "operator",
+                "label": "int输入输出",
+                "text": "int输入输出",
+                "name": "int输入输出"
+              },
+              "properties": {
+                "helpMsg": "it is a help message",
+                "dllPath": "server/src/main/resources/general.dll",
+                "modelID": "intIO",
+                "inPara": [
+                  {
+                    "varName": "intVar",
+                    "varType": "int",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "dst",
+                    "varType": "int",
+                    "varExplanation": "将输入的int类型的数据输出"
+                  }
+                ]
+              },
+              "models": []
+            }
+          ]
+        }
+      ]
     }
   ]
 }

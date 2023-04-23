@@ -377,8 +377,10 @@ export default {
             ],
             tableForm:[],
             innerVisible:false,
-            dialogVisibleEdge:false,//选YN边的对话框
-            yorn:"",//上面对话框的结果
+            dialogVisibleConditionalEdge:false,//ConditionalJudge出边对话框
+            dialogVisibleSwitchEdge:false,//switch出边对话框
+            yorn:"",
+            switchEdge:""
           }
     },
     computed: {
@@ -438,10 +440,20 @@ export default {
         })
 
         this.lf.on('edge:click', (evt) => {
-            this.dialogVisibleEdge=true;
+
             let edgeId = (evt.data.id)
-            //获取边
             this.edgeModel = this.lf.getEdgeModelById(edgeId)
+
+            let edge_sourceNodeId=evt.data.sourceNodeId
+            let sourceNode=this.lf.getNodeModelById(edge_sourceNodeId)
+            let sourceNodeName=sourceNode.getProperties().modelID
+            if(sourceNodeName=="conditionJudge"){
+                this.dialogVisibleConditionalEdge=true
+            }
+            else if(sourceNodeName=="switch"){
+                this.dialogVisibleSwitchEdge=true
+            }
+
 
         })
         //限制节点出边的数量 限制数目定义在每个节点的类里面 使用变量current_edge和limit_dege
@@ -859,9 +871,13 @@ export default {
                 "content": this.tableData,
             })
         },
-        edgeSubmit(){
+        edgeConditionalSubmit(){
             this.edgeModel.updateText(this.yorn)
+        },
+        edgeSwitchSubmit(){
+            this.edgeModel.updateText(this.switchEdge)
         }
+
     }
 }
 

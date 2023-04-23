@@ -26,8 +26,8 @@ public class DemoApplication {
 		System.out.println(System.getProperty("java.library.path"));
 		System.loadLibrary("opencv_world470");
 		System.loadLibrary("opencv_core343");
+		System.loadLibrary("opencv_world470_contrib");
 		System.loadLibrary("opencv_imgproc343");
-
 		System.loadLibrary("clientSDK");
 	}
 

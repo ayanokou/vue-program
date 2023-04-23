@@ -132,7 +132,7 @@
                     </span>
             </template>
         </el-dialog>
-        <el-dialog v-model="dialogVisibleEdge" :modal="false" :close-on-click-modal="false" :title="modelID" width="50%"
+        <el-dialog v-model="dialogVisibleConditionalEdge" :modal="false" :close-on-click-modal="false" :title="modelID" width="50%"
                    draggable>
             <el-form label-width="120px">
 
@@ -155,12 +155,29 @@
             </el-form>
             <template #footer>
           <span class="dialog-footer">
-            <el-button type="primary" @click="dialogVisibleEdge = false;edgeSubmit();">Submit</el-button>
-            <el-button @click="dialogVisibleEdge = false;">Cancel</el-button>
+            <el-button type="primary" @click="dialogVisibleConditionalEdge = false;edgeConditionalSubmit();">Submit</el-button>
+            <el-button @click="dialogVisibleConditionalEdge = false;">Cancel</el-button>
           </span>
             </template>
         </el-dialog>
 
+        <el-dialog v-model="dialogVisibleSwitchEdge" :modal="false" :close-on-click-modal="false" :title="modelID" width="50%"
+                   draggable>
+            <el-form label-width="120px">
+
+                <el-form-item  label="编辑switch文本">
+                    <div>
+                        <el-input v-model="switchEdge"/>
+                    </div>
+                </el-form-item>
+            </el-form>
+            <template #footer>
+          <span class="dialog-footer">
+            <el-button type="primary" @click="dialogVisibleSwitchEdge = false;edgeSwitchSubmit();">Submit</el-button>
+            <el-button @click="dialogVisibleSwitchEdge = false;">Cancel</el-button>
+          </span>
+            </template>
+        </el-dialog>
     </el-container>
 
 

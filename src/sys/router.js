@@ -15,35 +15,15 @@ const router = createRouter({
             path: '/main',
             name: 'main',
             component: () => import('@/主窗口/MainWindow.vue'),
-            children: [
-                {
-                    path: '/processDp',
-                    name: 'process',
-                    component: () => import('@/流程图操作/FlowArea.vue')
-                },
-            ]
+            // children: [
+            //     {
+            //         path: '/processDp',
+            //         name: 'process',
+            //         component: () => import('@/流程图操作/FlowArea.vue')
+            //     },
+            // ]
         },
-        {
-            path: '/logicFlow',
-            name: 'lf',
-            component: () => import('@/流程图操作/components/LogicFlow.vue')
-        },
-        {
-            path: '/conditionEdge',
-            name: 'conditionEdge',
-            component: () => import('@/流程图操作/components/dialog/ConditionEdgeDialog.vue')
-        },
-        {
-            path: '/conditionNode',
-            name: 'conditionNode',
-            component: () => import('@/流程图操作/components/dialog/ConditionNodeDialog.vue')
-        },
-        {
-            path: '/input',
-            name: 'input',
-            component: () => import('@/流程图操作/components/dialog/InputDialog.vue')
 
-        }
     ]
 })
 
