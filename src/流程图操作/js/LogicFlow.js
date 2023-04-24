@@ -52,6 +52,10 @@ class CycleModel extends CircleNodeModel {
         }
         return (++max) + "";
     }
+
+    isAllowConnectedAsSource(target) { 
+        return false;
+    }
 }
 
 class SuanziModel extends RectNodeModel {
@@ -59,6 +63,8 @@ class SuanziModel extends RectNodeModel {
         const size = this.properties.scale || 1;
         this.width = 100 * size
         this.height = 80 * size
+        this.limit_edge = 1;
+        this.current_edge = 0;
     }
 
     createId() {
@@ -68,6 +74,13 @@ class SuanziModel extends RectNodeModel {
                 max=node.id
         }
         return (++max) + "";
+    }
+
+    isAllowConnectedAsSource(target) { 
+        if(this.current_edge < this.limit_edge)
+            return true;
+        else 
+            return false;
     }
 }
 class GlobalVariableModel extends RectNodeModel {
@@ -84,6 +97,15 @@ class GlobalVariableModel extends RectNodeModel {
                 max=node.id
         }
         return (++max) + "";
+    }
+
+    //全局变量类型的节点不允许有出边和入边
+    isAllowConnectedAsSource(target) { 
+        return false;
+    }
+
+    isAllowConnectedAsTarget(target) {
+        return false;
     }
 }
 class SwitchModel extends RectNodeModel {

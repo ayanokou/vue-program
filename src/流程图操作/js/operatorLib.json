@@ -17,7 +17,7 @@
             {
               "lfProperties": {
                 "name": "GlobalVariable",
-                "type": "operator",
+                "type": "globalVariable",
                 "text": "全局变量",
                 "label": "全局变量"
               },
@@ -149,7 +149,7 @@
             {
               "lfProperties": {
                 "name": "GlobalVariable",
-                "type": "operator",
+                "type": "globalVariable",
                 "text": "全局变量",
                 "label": "全局变量"
               },
@@ -755,7 +755,7 @@
             {
               "lfProperties": {
                 "name": "GlobalVariable",
-                "type": "operator",
+                "type": "globalVariable",
                 "text": "全局变量",
                 "label": "全局变量"
               },
@@ -787,7 +787,7 @@
             {
               "lfProperties": {
                 "name": "GlobalVariable",
-                "type": "operator",
+                "type": "globalVariable",
                 "text": "全局变量",
                 "label": "全局变量"
               },
@@ -819,7 +819,7 @@
             {
               "lfProperties": {
                 "name": "GlobalVariable",
-                "type": "operator",
+                "type": "globalVariable",
                 "text": "全局变量",
                 "label": "全局变量"
               },
@@ -851,7 +851,7 @@
             {
               "lfProperties": {
                 "name": "GlobalVariable",
-                "type": "operator",
+                "type": "globalVariable",
                 "text": "全局变量",
                 "label": "全局变量"
               },
@@ -883,7 +883,7 @@
             {
               "lfProperties": {
                 "name": "GlobalVariable",
-                "type": "operator",
+                "type": "globalVariable",
                 "text": "全局变量",
                 "label": "全局变量"
               },
@@ -963,7 +963,7 @@
                 "inPara": [
                   {
                     "varName": "img_mat",
-                    "varType": "Mat",
+                    "varType": "object",
                     "fromExpression": "",
                     "defineVarInputWay": "directInputWay",
                     "varExplanation": "输入图片 类型Mat"
@@ -1134,7 +1134,7 @@
                     "varName": "scale times",
                     "varType": "int",
                     "fromExpression": "",
-                    "defineVarInputWay": "input",
+                    "defineVarInputWay": "directInputWay",
                     "varExplanation": "放大倍数 支持2 3 4 8"
                   }
                 ],
@@ -1167,7 +1167,7 @@
             {
               "lfProperties": {
                 "name": "GlobalVariable",
-                "type": "operator",
+                "type": "globalVariable",
                 "text": "全局变量",
                 "label": "全局变量"
               },
