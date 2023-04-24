@@ -95,6 +95,9 @@ export default {
             //先传递给FlowArea组件
             this.$store.commit('setRevDoubles',data)
         })
+        socket.on('revStr',(data)=>{
+            console.log("this is string result:"+data);
+        })
     },
     computed:{
         ...mapState(['socketEmit'])

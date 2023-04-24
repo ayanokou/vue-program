@@ -45,36 +45,8 @@ public class DemoApplication {
 			public void onData(SocketIOClient client, ChatObject data, AckRequest ackRequest) {
 				FCListener listenerForCpp = new FCListener() {
 					@Override
-					public void onMessage(int resType,String mat,int[] paramInt,double[] paramDouble,String[] paramString) {
-//							client.sendEvent("revJson",res);
-//							System.out.println(res);
-
-						switch(resType){
-
-							case 0:
-								client.sendEvent("revBase64","data:image/jpeg;base64,"+mat);
-								break;
-							case 1:
-								for(int num : paramInt){
-									System.out.println(num);
-								}
-								break;
-							case 2:
-								//传double数组
-								client.sendEvent("revDoubles", paramDouble);
-								for(int i=0;i<paramDouble.length;i++)
-								{
-									System.out.print(paramDouble[i]);
-									if((i+1)%4==0)
-										System.out.println();
-								}
-								break;
-							case 3:
-								for(String str : paramString){
-									System.out.println(str);
-								}
-								break;
-						}
+					public void onMessage(String event,String data) {
+						client.sendEvent(event,data);
 					}
 				};
 				//发送类

@@ -121,7 +121,7 @@
                     "defineVarInputWay": "selectedInputWay",
                     "comboList": {
                       "显示图片": "0",
-                      "Java控制台显示字符串": "3"
+                      "浏览器控制台显示字符串": "3"
                     },
                     "varExplanation": ""
                   }
@@ -1257,8 +1257,8 @@
                 "modelID": "group",
                 "inPara": [
                   {
-                    "varName": "count",
-                    "varType": "int",
+                    "varName": "expression",
+                    "varType": "string",
                     "fromExpression": "",
                     "defineVarInputWay": "directInputWay",
                     "varExplanation": ""
