@@ -7,18 +7,18 @@ export default createStore({
             vuexHelpInfo:"",
             //网络通讯传过来的图片
             imgBase64:"",
-            newSolutionTrigger:false,
-            openSolutionTrigger:false,
+            newSolution:false,
+            openSolution:false,
             openSelectedSolutionCont:{
                 trigger:false,
                 key:"",
             },
-            deleteSolutionTrigger:false,
-            deleteCurrentSolutionTrigger:false,
-            saveSolutionTrigger:false,
+            deleteSolution:false,
+            deleteCurrentSolution:false,
+            saveSolution:false,
             socketEmit:null,
-            saveSolutionAsTrigger:false,
-            flowAddTrigger:false,
+            saveSolutionAs:false,
+            flowAdd:false,
 
         }
     },
@@ -30,22 +30,22 @@ export default createStore({
             state.imgBase64=payload
         },
         newSolutionEvent(state,payload){
-            state.newSolutionTrigger=payload
+            state.newSolution=payload
         },
         openSolutionEvent(state,payload){
-            state.openSolutionTrigger=payload
+            state.openSolution=payload
         },
         openSelectedSolutionEvent(state, payload){
-            state.openSelectedSolutionTrigger=payload
+            state.openSelectedSolution=payload
         },
         deleteSolutionEvent(state,payload){
-            state.deleteSolutionTrigger=payload
+            state.deleteSolution=payload
         },
         deleteCurrentSolutionEvent(state,payload){
-            state.deleteCurrentSolutionCont = payload
+            state.deleteCurrentSolution = payload
         },
         saveSolutionEvent(state, payload){
-            state.saveSolutionTrigger = payload
+            state.saveSolution = payload
         },
 
         setSocketEmit(state,payload){
@@ -53,10 +53,10 @@ export default createStore({
         },
 
         saveSolutionAsEvent(state, payload){
-            state.saveSolutionAsTrigger = payload
+            state.saveSolutionAs = payload
         },
         flowAddEvent(state, payload){
-            state.flowAddTrigger = payload
+            state.flowAdd = payload
         },
 
     },

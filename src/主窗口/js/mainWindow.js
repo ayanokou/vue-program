@@ -18,6 +18,8 @@ export default {
            showLastOpenSolution: false, 
             //最近打开的方案名，存三个
             lastOpenSolutions: [],
+            //存储示例方案
+            exampleSolutions: [],
             //右半部分的高度
             height_right: window.innerHeight - 82,
             mainLayout: LayoutOne,
@@ -134,6 +136,9 @@ export default {
         dynamicRightHeight() {
             this.height_right = window.innerHeight - 82
         },
+        eventTrigger(event, cont){
+            this.$store.commit(event, cont)
+        },
         //新建方案
         newSolution() {
             this.$store.commit('newSolutionEvent', true)
@@ -154,39 +159,61 @@ export default {
                 trigger:true,
                 key:key,
             }
-            this.$store.commit('openSelectedSolutionEvent', cont)
+            this.$store.commit('openSelectedSolutionEvent', {trigger:true, key:key})
         },
-        //最近打开方案
-        lastOpenSolution() {
-            let gainKey = null
-            let lastTime = 0
-            // console.log(localStorage.getItem("SLN"))
-            // for(let key in localStorage){
-            //     let cur = localStorage.getItem(key)
-            //     console.log(cur)
-            //     let curJson = JSON.parse(cur)
-            //     console.log(curJson)
-            //     if(curJson.type === "solution"){
-            //         if(curJson.time > lastTime){
-            //             gainKey = key
-            //         }
-            //     }
-            // }
-            for (let i = 1; i < localStorage.length; i++) {
-                const key = localStorage.key(i);
-                if(key === "debug") continue
-                const value = localStorage.getItem(key);
-                let curJson = JSON.parse(value)
-                // console.log(curJson)
-                if (curJson.type === "solution") {
-                    // console.log(curJson)
-                    // console.log("时间是：" + curJson.time)
-                    if (curJson.time > lastTime) {
-                        gainKey = key
+        // //最近打开方案
+        // lastOpenSolution() {
+        //     let gainKey = null
+        //     let lastTime = 0
+        //     // console.log(localStorage.getItem("SLN"))
+        //     // for(let key in localStorage){
+        //     //     let cur = localStorage.getItem(key)
+        //     //     console.log(cur)
+        //     //     let curJson = JSON.parse(cur)
+        //     //     console.log(curJson)
+        //     //     if(curJson.type === "solution"){
+        //     //         if(curJson.time > lastTime){
+        //     //             gainKey = key
+        //     //         }
+        //     //     }
+        //     // }
+        //     for (let i = 1; i < localStorage.length; i++) {
+        //         const key = localStorage.key(i);
+        //         if(key === "debug") continue
+        //         const value = localStorage.getItem(key);
+        //         let curJson = JSON.parse(value)
+        //         // console.log(curJson)
+        //         if (curJson.type === "solution") {
+        //             // console.log(curJson)
+        //             // console.log("时间是：" + curJson.time)
+        //             if (curJson.time > lastTime) {
+        //                 gainKey = key
+        //             }
+        //         }
+        //     }
+        //     alert("最近打开方案为：" + gainKey)
+        // },
+        //打开示例方案
+        updateExampleSolutions(){
+             this.exampleSolutions = []
+            for(let i = 0; i < localStorage.length; ++i){
+                let key = localStorage.key(i)
+                let value = localStorage.getItem(key);
+                if (key === "debug") continue;
+                let cont = JSON.parse(value);
+                if (cont.type === "solution") {
+                    // let pos = this.lastOpenSolutions.length - 1;
+                    // for(let j = 0; j < this.lastOpenSolutions.length; ++j){
+                    //     pos = j;
+                    //     if(cont.time < this.lastOpenSolutions[j].time) continue;
+                    //     break;
+                    // }
+                    // this.lastOpenSolutions.splice(pos, 0, {name:key, time:cont.time})
+                    if(cont.solutionType === "Yes"){
+                        this.exampleSolutions.push(key)
                     }
                 }
             }
-            alert("最近打开方案为：" + gainKey)
         },
         //刷新最近打开方案
         updateLastOpenSolutions(){
@@ -240,5 +267,8 @@ export default {
             this.dialogVisible = true;
             // localStorage.removeItem(name);
         },
+        exitFunc(){
+            this.$router.push('/')
+        }
     }
 }

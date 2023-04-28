@@ -11,7 +11,7 @@
     <el-dialog v-model="deleteSolutionVisible" :modal="false" :close-on-click-modal="false" :show-close="false" :title="modelName" width="20%" draggable>
         <p>请选择您要删除的方案</p>
         <div class="scroll-container">
-            <el-checkbox-group v-model="selectDeleteSolutions" class="dialog-checkbox">
+            <el-checkbox-group v-model="selectSolutionsToDelete" class="dialog-checkbox">
                 <el-checkbox v-for="(item, index) in solutionKeys" :key="index" :label="item" />
             </el-checkbox-group>
             <el-button @click="submit">提交</el-button>
@@ -46,7 +46,7 @@
         type="card"
         editable
         class="demo-tabs"
-        @edit="addFlow"
+        @edit="handleFlowsEdit"
     >
         <el-tab-pane
             v-for="item in editableTabs"
@@ -90,7 +90,7 @@ export default {
             //点击导入流程后弹窗
             importFlowVisible: false,
             //保存多选框选中的要被删除的解决方案
-            selectDeleteSolutions: [],
+            selectSolutionsToDelete: [],
             //现有的解决方案
             solutionKeys:[],
             //现有的流程图
@@ -111,27 +111,27 @@ export default {
     },
     computed: {
         ...mapState([
-            "newSolutionTrigger",
-            "openSolutionTrigger",
-            "openSelectedSolutionTrigger",
-            "deleteSolutionTrigger",
-            "deleteCurrentSolutionTrigger",
-            "saveSolutionTrigger",
-            "saveSolutionAsTrigger",
+            "newSolution",
+            "openSolution",
+            "openSelectedSolution",
+            "deleteSolution",
+            "deleteCurrentSolution",
+            "saveSolution",
+            "saveSolutionAs",
             "open",
-            "flowAddTrigger",
+            "flowAdd",
         ]),
     },
     watch: {
-        newSolutionTrigger(newValue) {
+        newSolution(newValue) {
             if (newValue) {
                 //处理逻辑
                 for (let tab of this.editableTabs) {
                     //获得每一个tab的name
                     this.handleTabsEdit(tab.name, "remove");
                 }
-                let Name = prompt("请输入方案名");
-                this.solutionKey = Name;
+                let name = prompt("请输入方案名", "default");
+                this.solutionKey = name;
                 this.handleTabsEdit("", "add");
                 let lfs = [];
                 //得到每个标签页的流程图内容
@@ -141,10 +141,12 @@ export default {
                         content: this.$refs.lfComponent[index].lfData,
                     });
                 }
+                let solutionType = "No"
                 let currentTime = Date.now();
                 let text = {
                     name: this.solutionKey,
                     type: "solution",
+                    solutionType:solutionType,
                     time: currentTime,
                     contents: lfs,
                 };
@@ -153,7 +155,7 @@ export default {
                 this.$store.commit("newSolutionEvent", false);
             }
         },
-        openSolutionTrigger(newValue) {
+        openSolution(newValue) {
             if (newValue) {
                 
                 // let inputObj = document.createElement("input");
@@ -191,7 +193,7 @@ export default {
                 this.$store.commit("openSolutionEvent", false);
             }
         },
-        openSelectedSolutionTrigger(newValue){
+        openSelectedSolution(newValue){
             if(newValue.trigger){
                 //处理逻辑
                 for (let tab of this.editableTabs) {
@@ -217,10 +219,10 @@ export default {
                 this.$store.commit("openSelectedSolutionEvent", upCondition);
             }
         },
-        deleteSolutionTrigger(newValue){
+        deleteSolution(newValue){
             if(newValue){
                 this.solutionKeys = []
-                this.selectDeleteSolutions = []
+                this.selectSolutionsToDelete = []
                 for (let i = 0; i < localStorage.length; i++) {
                     let key = localStorage.key(i);
                     let value = localStorage.getItem(key);
@@ -234,9 +236,9 @@ export default {
                 this.$store.commit("deleteSolutionEvent", false);
             }
         },
-        deleteCurrentSolutionTrigger(newValue){
+        deleteCurrentSolution(newValue){
             if(newValue){
-                this.showDeleteConfirmationDialog = true;
+                // this.showDeleteConfirmationDialog = true;
                 localStorage.removeItem(this.solutionKey);
                 alert("方案：" + this.solutionKey + "已删除");
                 //处理逻辑
@@ -247,7 +249,7 @@ export default {
                 this.$store.commit("deleteCurrentSolutionEvent", false);
             }
         },
-        saveSolutionTrigger(newValue) {
+        saveSolution(newValue) {
             if (newValue) {
                 //逻辑
                 let lfs = [];
@@ -258,11 +260,12 @@ export default {
                         content: this.$refs.lfComponent[index].lfData,
                     });
                 }
+                let solutionType = prompt("是否是示例方案，请输入Yes或No", "No")
                 let currentTime = Date.now();
-                console.log("时间是"+currentTime)
                 let text = {
                     name: this.solutionKey,
                     type: "solution",
+                    solutionType:solutionType,
                     time: currentTime,
                     contents: lfs,
                 };
@@ -285,7 +288,7 @@ export default {
                 this.$store.commit("saveSolutionEvent", false);
             }
         },
-        saveSolutionAsTrigger(newValue) {
+        saveSolutionAs(newValue) {
             if (newValue) {
                 //逻辑
                 let lfs = [];
@@ -296,11 +299,13 @@ export default {
                         content: this.$refs.lfComponent[index].lfData,
                     });
                 }
+                let solutionType = prompt("是否是示例方案，请输入Yes或No", "No")
                 let Name = prompt("请输入解决方案名称", "sln");
                 let currentTime = Date.now();
                 let text = {
                     name: Name,
                     type: "solution",
+                    solutionType:solutionType,
                     time: currentTime,
                     contents: lfs,
                 };
@@ -322,9 +327,9 @@ export default {
                 this.$store.commit("saveSolutionAsEvent", false);
             }
         },
-        flowAddTrigger(newValue) {
+        flowAdd(newValue) {
             if (newValue) {
-                console.log("flowAddTrigger")
+                console.log("flowAdd")
                 this.importFlowVisible = false;
                 this.flowKeys=[]
                 for (let i = 0; i < localStorage.length; i++) {
@@ -362,7 +367,8 @@ export default {
                     singleLogicflow.name
                 );
             }
-            
+            solutionJson.time = Date.now()
+            localStorage.setItem(this.solutionKey, JSON.stringify(solutionJson));
         },
         importSomeFlow(item){
             this.importFlowVisible = false
@@ -376,15 +382,22 @@ export default {
             this.handleTabsEdit("", "add", {}, name)
         },
         submit(){
-            console.log('选中的选项：', this.selectDeleteSolutions);
+            console.log('选中的选项：', this.selectSolutionsToDelete);
             this.deleteSolutionVisible = false
-            for(let i = 0; i < this.selectDeleteSolutions.length; ++i){
-                localStorage.removeItem(this.selectDeleteSolutions[i]);
+            for(let i = 0; i < this.selectSolutionsToDelete.length; ++i){
+                localStorage.removeItem(this.selectSolutionsToDelete[i]);
             }
 
         },
         changeTabName(data) {
             this.editableTabs[data.index].tabName = data.tabName;
+        },
+        handleFlowsEdit(targetName, action, singleJSON = {}){
+            if (action === "add") {
+                this.addFlow();
+            } else if (action === "remove") {
+                this.handleTabsEdit(targetName, "remove");
+            }
         },
         handleTabsEdit(targetName, action, singleJSON = {}, tabName = "lf") {
             if (action === "add") {
