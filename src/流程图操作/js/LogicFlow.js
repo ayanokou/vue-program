@@ -83,7 +83,7 @@ class SuanziModel extends RectNodeModel {
             return false;
     }
 }
-class GlobalVariableModel extends RectNodeModel {
+class noEdgeModel extends RectNodeModel {
     setAttributes() {
         const size = this.properties.scale || 1;
         this.width = 100 * size
@@ -100,7 +100,7 @@ class GlobalVariableModel extends RectNodeModel {
     }
 
     //全局变量类型的节点不允许有出边和入边
-    isAllowConnectedAsSource(target) { 
+    isAllowConnectedAsSource(target) {
         return false;
     }
 
@@ -346,28 +346,11 @@ class MyGroup extends GroupNode.view {
 }
 
 
-//读json文件
-//法一
-// $(document).ready(function(){
-//     $.getJSON("operatorLib.json",function(result){
-//         console.log(result)
-//         //var obj = JSON.parse(result);
-//         //console.log(obj)
-//
-//     });
-// });
-//法二
-// fetch('')
-//     .then((response) => response.json())
-//     .then((json)=>console.log(json))
-
-//法三
 import data from './operatorLib.json'
 
 const suanziItemList = data
 
 
-// const dialogVisible = ref(false) //dialogVisible若为true,则显示页面内弹窗
 export default {
     name: 'FlowDemo',
     props: ['tab'],
@@ -395,10 +378,13 @@ export default {
             dialogControl: {}, // 左侧菜单栏对话跳窗控制
             isDragging:false,
             dialogVisibleGV:false,
-            tableData :[
-            ],
+            tableData :[],
             tableForm:[],
             innerVisible:false,
+            dialogVisiblePersist:false,
+            tableDataPersist:[],
+            tableFormPersist:[],
+            innerVisiblePersist:false,
             dialogVisibleConditionalEdge:false,//ConditionalJudge出边对话框
             dialogVisibleSwitchEdge:false,//switch出边对话框
             yorn:"",
@@ -452,6 +438,9 @@ export default {
 
             if(this.modelID=="GlobalVariable"){
                 this.dialogVisibleGV=true
+            }
+            else if(this.modelID=="PersistVariable"){
+                this.dialogVisiblePersist=true
             }else{
                 this.dialogVisible = true
             }
@@ -633,9 +622,9 @@ export default {
                     model: SuanziModel
                 },
                 {
-                    type: 'globalVariable',
+                    type: 'noEdgeModel',
                     view: RectNode,
-                    model: GlobalVariableModel
+                    model: noEdgeModel
                 },
                 {
                     type: 'switchModel',
@@ -882,10 +871,10 @@ export default {
         addItem(){
             let item={
                 name:this.tableForm[0],
-                value:this.tableForm[1]
+                value:this.tableForm[1],
+                type:this.tableForm[2]
             }
             this.tableData.push(item)
-            console.log(this.tableData)
             this.tableForm=[]
         },
         submitGV(){
@@ -893,6 +882,29 @@ export default {
                 "content": this.tableData,
             })
         },
+        onAddItemPersist(){
+            //弹出一个对话框表单，输入参数
+            this.innerVisiblePersist=true
+            let es = document.getElementsByClassName('el-overlay-dialog')
+            for(let e of es){
+                e.parentNode.style.width='0px'
+            }
+        },
+        addItemPersist(){
+            let item={
+                name:this.tableFormPersist[0],
+                value:this.tableFormPersist[1],
+                type:this.tableFormPersist[2]
+            }
+            this.tableDataPersist.push(item)
+            this.tableFormPersist=[]
+        },
+        submitPersist(){
+            this.nodeModel.setProperties({
+                "content":this.tableDataPersist
+            })
+        },
+
         edgeConditionalSubmit(){
             this.edgeModel.updateText(this.yorn)
         },

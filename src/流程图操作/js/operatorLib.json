@@ -17,7 +17,7 @@
             {
               "lfProperties": {
                 "name": "GlobalVariable",
-                "type": "globalVariable",
+                "type": "noEdgeModel",
                 "text": "全局变量",
                 "label": "全局变量"
               },
@@ -25,6 +25,30 @@
                 "helpMsg": "it is a help message of GlobalVariable",
                 "dllPath": "",
                 "modelID": "GlobalVariable",
+                "inPara": [],
+                "outPara": []
+              },
+              "models": []
+            }
+          ]
+        },
+        {
+          "lfProperties": {
+            "name": "持久层"
+          },
+          "properties": {},
+          "models": [
+            {
+              "lfProperties": {
+                "name": "PersistVariable",
+                "type": "noEdgeModel",
+                "text": "持久层",
+                "label": "持久层"
+              },
+              "properties": {
+                "helpMsg": "it is a help message of GlobalVariable",
+                "dllPath": "",
+                "modelID": "PersistVariable",
                 "inPara": [],
                 "outPara": []
               },
@@ -113,17 +137,6 @@
                     "fromExpression": "",
                     "defineVarInputWay": "directInputWay",
                     "varExplanation": ""
-                  },
-                  {
-                    "varName": "type",
-                    "varType": "int",
-                    "fromExpression": "",
-                    "defineVarInputWay": "selectedInputWay",
-                    "comboList": {
-                      "显示图片": "0",
-                      "浏览器控制台显示字符串": "3"
-                    },
-                    "varExplanation": ""
                   }
                 ],
                 "outPara": []
@@ -149,7 +162,7 @@
             {
               "lfProperties": {
                 "name": "GlobalVariable",
-                "type": "globalVariable",
+                "type": "noEdgeModel",
                 "text": "全局变量",
                 "label": "全局变量"
               },
@@ -755,7 +768,7 @@
             {
               "lfProperties": {
                 "name": "GlobalVariable",
-                "type": "globalVariable",
+                "type": "noEdgeModel",
                 "text": "全局变量",
                 "label": "全局变量"
               },
@@ -787,7 +800,7 @@
             {
               "lfProperties": {
                 "name": "GlobalVariable",
-                "type": "globalVariable",
+                "type": "noEdgeModel",
                 "text": "全局变量",
                 "label": "全局变量"
               },
@@ -819,7 +832,7 @@
             {
               "lfProperties": {
                 "name": "GlobalVariable",
-                "type": "globalVariable",
+                "type": "noEdgeModel",
                 "text": "全局变量",
                 "label": "全局变量"
               },
@@ -851,7 +864,7 @@
             {
               "lfProperties": {
                 "name": "GlobalVariable",
-                "type": "globalVariable",
+                "type": "noEdgeModel",
                 "text": "全局变量",
                 "label": "全局变量"
               },
@@ -883,7 +896,7 @@
             {
               "lfProperties": {
                 "name": "GlobalVariable",
-                "type": "globalVariable",
+                "type": "noEdgeModel",
                 "text": "全局变量",
                 "label": "全局变量"
               },
@@ -1167,7 +1180,7 @@
             {
               "lfProperties": {
                 "name": "GlobalVariable",
-                "type": "globalVariable",
+                "type": "noEdgeModel",
                 "text": "全局变量",
                 "label": "全局变量"
               },
