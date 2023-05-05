@@ -564,7 +564,7 @@
                 "outPara": [
                   {
                     "varName": "contour",
-                    "varType": "object",
+                    "varType": "vector<vector<Point>>",
                     "varExplanation": ""
                   }
                 ]
@@ -592,7 +592,7 @@
                 "outPara": [
                   {
                     "varName": "rect",
-                    "varType": "object",
+                    "varType": "RotatedRect",
                     "varExplanation": ""
                   }
                 ]
@@ -620,7 +620,7 @@
                 "outPara": [
                   {
                     "varName": "points",
-                    "varType": "object",
+                    "varType": "vector<Point>",
                     "varExplanation": ""
                   }
                 ]
@@ -648,7 +648,7 @@
                 "outPara": [
                   {
                     "varName": "contours",
-                    "varType": "object",
+                    "varType": "vector<vector<Point>>",
                     "varExplanation": ""
                   }
                 ]
@@ -701,7 +701,7 @@
                 "outPara": [
                   {
                     "varName": "dst",
-                    "varType": "object",
+                    "varType": "Mat",
                     "varExplanation": ""
                   }
                 ]
@@ -742,8 +742,8 @@
                 ],
                 "outPara": [
                   {
-                    "varName": "M",
-                    "varType": "object",
+                    "varName": "dst",
+                    "varType": "Mat",
                     "varExplanation": ""
                   }
                 ]
