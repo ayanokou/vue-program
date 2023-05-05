@@ -1,0 +1,971 @@
+{
+    "nodes": [
+        {
+            "id": "0",
+            "type": "operator",
+            "x": 220,
+            "y": 160,
+            "properties": {
+                "helpMsg": "it is a help message",
+                "dllPath": "server/src/main/resources/general.dll",
+                "modelID": "read",
+                "inPara": [
+                    {
+                        "varName": "filename",
+                        "varType": "string",
+                        "fromExpression": "server/src/main/resources/img/1.jpg",
+                        "defineVarInputWay": "directInputWay",
+                        "varExplanation": ""
+                    },
+                    {
+                        "varName": "flags",
+                        "varType": "int",
+                        "fromExpression": "1",
+                        "defineVarInputWay": "selectedInputWay",
+                        "comboList": {
+                            "BGR": "1",
+                            "GRAY": "0"
+                        },
+                        "varExplanation": ""
+                    }
+                ],
+                "outPara": [
+                    {
+                        "varName": "dst",
+                        "varType": "Mat",
+                        "varExplanation": ""
+                    }
+                ]
+            },
+            "text": {
+                "x": 220,
+                "y": 160,
+                "value": "文件输入"
+            }
+        },
+        {
+            "id": "1",
+            "type": "operator",
+            "x": 220,
+            "y": 260,
+            "properties": {
+                "dllPath": "server/src/main/resources/general.dll",
+                "modelID": "convert_color",
+                "inPara": [
+                    {
+                        "varName": "src",
+                        "varType": "object",
+                        "fromExpression": "0.dst",
+                        "defineVarInputWay": "directInputWay",
+                        "varExplanation": ""
+                    },
+                    {
+                        "varName": "code",
+                        "varType": "int",
+                        "fromExpression": "6",
+                        "defineVarInputWay": "directInputWay",
+                        "varExplanation": ""
+                    }
+                ],
+                "outPara": [
+                    {
+                        "varName": "dst",
+                        "varType": "object",
+                        "varExplanation": ""
+                    }
+                ]
+            },
+            "text": {
+                "x": 220,
+                "y": 260,
+                "value": "转换颜色空间"
+            }
+        },
+        {
+            "id": "2",
+            "type": "operator",
+            "x": 220,
+            "y": 360,
+            "properties": {
+                "dllPath": "server/src/main/resources/general.dll",
+                "modelID": "threshold",
+                "inPara": [
+                    {
+                        "varName": "src",
+                        "varType": "object",
+                        "fromExpression": "1.dst",
+                        "defineVarInputWay": "directInputWay",
+                        "varExplanation": ""
+                    },
+                    {
+                        "varName": "thresh",
+                        "varType": "double",
+                        "fromExpression": "0",
+                        "defineVarInputWay": "directInputWay",
+                        "varExplanation": ""
+                    },
+                    {
+                        "varName": "maxval",
+                        "varType": "double",
+                        "fromExpression": "255",
+                        "defineVarInputWay": "directInputWay",
+                        "varExplanation": ""
+                    },
+                    {
+                        "varName": "type",
+                        "varType": "int",
+                        "fromExpression": "8",
+                        "defineVarInputWay": "directInputWay",
+                        "varExplanation": ""
+                    }
+                ],
+                "outPara": [
+                    {
+                        "varName": "dst",
+                        "varType": "object",
+                        "varExplanation": ""
+                    }
+                ]
+            },
+            "text": {
+                "x": 220,
+                "y": 360,
+                "value": "二值化"
+            }
+        },
+        {
+            "id": "3",
+            "type": "operator",
+            "x": 220,
+            "y": 460,
+            "properties": {
+                "dllPath": "server/src/main/resources/general.dll",
+                "modelID": "morph_open",
+                "inPara": [
+                    {
+                        "varName": "src",
+                        "varType": "object",
+                        "fromExpression": "2.dst",
+                        "defineVarInputWay": "directInputWay",
+                        "varExplanation": ""
+                    },
+                    {
+                        "varName": "size",
+                        "varType": "Size",
+                        "fromExpression": "3,3",
+                        "defineVarInputWay": "directInputWay",
+                        "varExplanation": ""
+                    }
+                ],
+                "outPara": [
+                    {
+                        "varName": "dst",
+                        "varType": "object",
+                        "varExplanation": ""
+                    }
+                ]
+            },
+            "text": {
+                "x": 220,
+                "y": 460,
+                "value": "开运算"
+            }
+        },
+        {
+            "id": "4",
+            "type": "operator",
+            "x": 220,
+            "y": 560,
+            "properties": {
+                "dllPath": "server/src/main/resources/general.dll",
+                "modelID": "morph_close",
+                "inPara": [
+                    {
+                        "varName": "src",
+                        "varType": "object",
+                        "fromExpression": "3.dst",
+                        "defineVarInputWay": "directInputWay",
+                        "varExplanation": ""
+                    },
+                    {
+                        "varName": "size",
+                        "varType": "Size",
+                        "fromExpression": "3,3",
+                        "defineVarInputWay": "directInputWay",
+                        "varExplanation": ""
+                    }
+                ],
+                "outPara": [
+                    {
+                        "varName": "dst",
+                        "varType": "object",
+                        "varExplanation": ""
+                    }
+                ]
+            },
+            "text": {
+                "x": 220,
+                "y": 560,
+                "value": "闭运算"
+            }
+        },
+        {
+            "id": "5",
+            "type": "operator",
+            "x": 220,
+            "y": 660,
+            "properties": {
+                "dllPath": "server/src/main/resources/general.dll",
+                "modelID": "median_blur",
+                "inPara": [
+                    {
+                        "varName": "src",
+                        "varType": "object",
+                        "fromExpression": "4.dst",
+                        "defineVarInputWay": "directInputWay",
+                        "varExplanation": ""
+                    },
+                    {
+                        "varName": "ksize",
+                        "varType": "int",
+                        "fromExpression": "5",
+                        "defineVarInputWay": "directInputWay",
+                        "varExplanation": ""
+                    }
+                ],
+                "outPara": [
+                    {
+                        "varName": "dst",
+                        "varType": "object",
+                        "varExplanation": ""
+                    }
+                ]
+            },
+            "text": {
+                "x": 220,
+                "y": 660,
+                "value": "中值模糊"
+            }
+        },
+        {
+            "id": "6",
+            "type": "operator",
+            "x": 220,
+            "y": 760,
+            "properties": {
+                "dllPath": "server/src/main/resources/general.dll",
+                "modelID": "find_contours",
+                "inPara": [
+                    {
+                        "varName": "src",
+                        "varType": "object",
+                        "fromExpression": "5.dst",
+                        "defineVarInputWay": "directInputWay",
+                        "varExplanation": ""
+                    }
+                ],
+                "outPara": [
+                    {
+                        "varName": "contours",
+                        "varType": "object",
+                        "varExplanation": ""
+                    }
+                ]
+            },
+            "text": {
+                "x": 220,
+                "y": 760,
+                "value": "找轮廓"
+            }
+        },
+        {
+            "id": "7",
+            "type": "operator",
+            "x": 220,
+            "y": 860,
+            "properties": {
+                "dllPath": "server/src/main/resources/general.dll",
+                "modelID": "select_contour",
+                "inPara": [
+                    {
+                        "varName": "contours",
+                        "varType": "object",
+                        "fromExpression": "6.contours",
+                        "defineVarInputWay": "directInputWay",
+                        "varExplanation": ""
+                    },
+                    {
+                        "varName": "index",
+                        "varType": "int",
+                        "fromExpression": "0",
+                        "defineVarInputWay": "directInputWay",
+                        "varExplanation": ""
+                    }
+                ],
+                "outPara": [
+                    {
+                        "varName": "contour",
+                        "varType": "vector<vector<Point>>",
+                        "varExplanation": ""
+                    }
+                ]
+            },
+            "text": {
+                "x": 220,
+                "y": 860,
+                "value": "选轮廓"
+            }
+        },
+        {
+            "id": "8",
+            "type": "operator",
+            "x": 220,
+            "y": 960,
+            "properties": {
+                "dllPath": "server/src/main/resources/general.dll",
+                "modelID": "min_area_rect",
+                "inPara": [
+                    {
+                        "varName": "contour",
+                        "varType": "object",
+                        "fromExpression": "7.contour",
+                        "defineVarInputWay": "directInputWay",
+                        "varExplanation": ""
+                    }
+                ],
+                "outPara": [
+                    {
+                        "varName": "rect",
+                        "varType": "RotatedRect",
+                        "varExplanation": ""
+                    }
+                ]
+            },
+            "text": {
+                "x": 220,
+                "y": 960,
+                "value": "找最小面积外接矩形"
+            }
+        },
+        {
+            "id": "9",
+            "type": "operator",
+            "x": 220,
+            "y": 1060,
+            "properties": {
+                "dllPath": "server/src/main/resources/general.dll",
+                "modelID": "box_points",
+                "inPara": [
+                    {
+                        "varName": "rect",
+                        "varType": "object",
+                        "fromExpression": "8.rect",
+                        "defineVarInputWay": "directInputWay",
+                        "varExplanation": ""
+                    }
+                ],
+                "outPara": [
+                    {
+                        "varName": "points",
+                        "varType": "vector<Point>",
+                        "varExplanation": ""
+                    }
+                ]
+            },
+            "text": {
+                "x": 220,
+                "y": 1060,
+                "value": "找矩形角点"
+            }
+        },
+        {
+            "id": "10",
+            "type": "operator",
+            "x": 220,
+            "y": 1160,
+            "properties": {
+                "dllPath": "server/src/main/resources/general.dll",
+                "modelID": "contour_to_contours",
+                "inPara": [
+                    {
+                        "varName": "contour",
+                        "varType": "object",
+                        "fromExpression": "9.points",
+                        "defineVarInputWay": "directInputWay",
+                        "varExplanation": ""
+                    }
+                ],
+                "outPara": [
+                    {
+                        "varName": "contours",
+                        "varType": "vector<vector<Point>>",
+                        "varExplanation": ""
+                    }
+                ]
+            },
+            "text": {
+                "x": 220,
+                "y": 1160,
+                "value": "轮廓转轮廓数组"
+            }
+        },
+        {
+            "id": "11",
+            "type": "operator",
+            "x": 220,
+            "y": 1260,
+            "properties": {
+                "dllPath": "server/src/main/resources/general.dll",
+                "modelID": "draw_contours",
+                "inPara": [
+                    {
+                        "varName": "src",
+                        "varType": "object",
+                        "fromExpression": "0.dst",
+                        "defineVarInputWay": "directInputWay",
+                        "varExplanation": ""
+                    },
+                    {
+                        "varName": "contours",
+                        "varType": "object",
+                        "fromExpression": "10.contours",
+                        "defineVarInputWay": "directInputWay",
+                        "varExplanation": ""
+                    }
+                ],
+                "outPara": [
+                    {
+                        "varName": "dst",
+                        "varType": "Mat",
+                        "varExplanation": ""
+                    }
+                ]
+            },
+            "text": {
+                "x": 220,
+                "y": 1260,
+                "value": "画轮廓"
+            }
+        },
+        {
+            "id": "12",
+            "type": "operator",
+            "x": 220,
+            "y": 1360,
+            "properties": {
+                "helpMsg": "it is a help message",
+                "dllPath": "server/src/main/resources/show.dll",
+                "modelID": "show",
+                "inPara": [
+                    {
+                        "varName": "object",
+                        "varType": "object",
+                        "fromExpression": "11.dst",
+                        "defineVarInputWay": "directInputWay",
+                        "varExplanation": ""
+                    }
+                ],
+                "outPara": []
+            },
+            "text": {
+                "x": 220,
+                "y": 1360,
+                "value": "输出模块"
+            }
+        }
+    ],
+    "edges": [
+        {
+            "id": "Flow_1endirh",
+            "type": "bpmn:sequenceFlow",
+            "sourceNodeId": "0",
+            "targetNodeId": "1",
+            "startPoint": {
+                "x": 220,
+                "y": 200
+            },
+            "endPoint": {
+                "x": 220,
+                "y": 220
+            },
+            "properties": {},
+            "pointsList": [
+                {
+                    "x": 220,
+                    "y": 200
+                },
+                {
+                    "x": 220,
+                    "y": 230
+                },
+                {
+                    "x": 220,
+                    "y": 230
+                },
+                {
+                    "x": 220,
+                    "y": 190
+                },
+                {
+                    "x": 220,
+                    "y": 190
+                },
+                {
+                    "x": 220,
+                    "y": 220
+                }
+            ]
+        },
+        {
+            "id": "Flow_0if9fqc",
+            "type": "bpmn:sequenceFlow",
+            "sourceNodeId": "1",
+            "targetNodeId": "2",
+            "startPoint": {
+                "x": 220,
+                "y": 300
+            },
+            "endPoint": {
+                "x": 220,
+                "y": 320
+            },
+            "properties": {},
+            "pointsList": [
+                {
+                    "x": 220,
+                    "y": 300
+                },
+                {
+                    "x": 220,
+                    "y": 330
+                },
+                {
+                    "x": 220,
+                    "y": 330
+                },
+                {
+                    "x": 220,
+                    "y": 290
+                },
+                {
+                    "x": 220,
+                    "y": 290
+                },
+                {
+                    "x": 220,
+                    "y": 320
+                }
+            ]
+        },
+        {
+            "id": "Flow_27l6kan",
+            "type": "bpmn:sequenceFlow",
+            "sourceNodeId": "2",
+            "targetNodeId": "3",
+            "startPoint": {
+                "x": 220,
+                "y": 400
+            },
+            "endPoint": {
+                "x": 220,
+                "y": 420
+            },
+            "properties": {},
+            "pointsList": [
+                {
+                    "x": 220,
+                    "y": 400
+                },
+                {
+                    "x": 220,
+                    "y": 430
+                },
+                {
+                    "x": 220,
+                    "y": 430
+                },
+                {
+                    "x": 220,
+                    "y": 390
+                },
+                {
+                    "x": 220,
+                    "y": 390
+                },
+                {
+                    "x": 220,
+                    "y": 420
+                }
+            ]
+        },
+        {
+            "id": "Flow_0un2blu",
+            "type": "bpmn:sequenceFlow",
+            "sourceNodeId": "3",
+            "targetNodeId": "4",
+            "startPoint": {
+                "x": 220,
+                "y": 500
+            },
+            "endPoint": {
+                "x": 220,
+                "y": 520
+            },
+            "properties": {},
+            "pointsList": [
+                {
+                    "x": 220,
+                    "y": 500
+                },
+                {
+                    "x": 220,
+                    "y": 530
+                },
+                {
+                    "x": 220,
+                    "y": 530
+                },
+                {
+                    "x": 220,
+                    "y": 490
+                },
+                {
+                    "x": 220,
+                    "y": 490
+                },
+                {
+                    "x": 220,
+                    "y": 520
+                }
+            ]
+        },
+        {
+            "id": "Flow_2gu61ms",
+            "type": "bpmn:sequenceFlow",
+            "sourceNodeId": "4",
+            "targetNodeId": "5",
+            "startPoint": {
+                "x": 220,
+                "y": 600
+            },
+            "endPoint": {
+                "x": 220,
+                "y": 620
+            },
+            "properties": {},
+            "pointsList": [
+                {
+                    "x": 220,
+                    "y": 600
+                },
+                {
+                    "x": 220,
+                    "y": 630
+                },
+                {
+                    "x": 220,
+                    "y": 630
+                },
+                {
+                    "x": 220,
+                    "y": 590
+                },
+                {
+                    "x": 220,
+                    "y": 590
+                },
+                {
+                    "x": 220,
+                    "y": 620
+                }
+            ]
+        },
+        {
+            "id": "Flow_1glfe4n",
+            "type": "bpmn:sequenceFlow",
+            "sourceNodeId": "5",
+            "targetNodeId": "6",
+            "startPoint": {
+                "x": 220,
+                "y": 700
+            },
+            "endPoint": {
+                "x": 220,
+                "y": 720
+            },
+            "properties": {},
+            "pointsList": [
+                {
+                    "x": 220,
+                    "y": 700
+                },
+                {
+                    "x": 220,
+                    "y": 730
+                },
+                {
+                    "x": 220,
+                    "y": 730
+                },
+                {
+                    "x": 220,
+                    "y": 690
+                },
+                {
+                    "x": 220,
+                    "y": 690
+                },
+                {
+                    "x": 220,
+                    "y": 720
+                }
+            ]
+        },
+        {
+            "id": "Flow_1iph0aj",
+            "type": "bpmn:sequenceFlow",
+            "sourceNodeId": "6",
+            "targetNodeId": "7",
+            "startPoint": {
+                "x": 220,
+                "y": 800
+            },
+            "endPoint": {
+                "x": 220,
+                "y": 820
+            },
+            "properties": {},
+            "pointsList": [
+                {
+                    "x": 220,
+                    "y": 800
+                },
+                {
+                    "x": 220,
+                    "y": 830
+                },
+                {
+                    "x": 220,
+                    "y": 830
+                },
+                {
+                    "x": 220,
+                    "y": 790
+                },
+                {
+                    "x": 220,
+                    "y": 790
+                },
+                {
+                    "x": 220,
+                    "y": 820
+                }
+            ]
+        },
+        {
+            "id": "Flow_113b29q",
+            "type": "bpmn:sequenceFlow",
+            "sourceNodeId": "7",
+            "targetNodeId": "8",
+            "startPoint": {
+                "x": 220,
+                "y": 900
+            },
+            "endPoint": {
+                "x": 220,
+                "y": 920
+            },
+            "properties": {},
+            "pointsList": [
+                {
+                    "x": 220,
+                    "y": 900
+                },
+                {
+                    "x": 220,
+                    "y": 930
+                },
+                {
+                    "x": 220,
+                    "y": 930
+                },
+                {
+                    "x": 220,
+                    "y": 890
+                },
+                {
+                    "x": 220,
+                    "y": 890
+                },
+                {
+                    "x": 220,
+                    "y": 920
+                }
+            ]
+        },
+        {
+            "id": "Flow_1lrkjnh",
+            "type": "bpmn:sequenceFlow",
+            "sourceNodeId": "8",
+            "targetNodeId": "9",
+            "startPoint": {
+                "x": 220,
+                "y": 1000
+            },
+            "endPoint": {
+                "x": 220,
+                "y": 1020
+            },
+            "properties": {},
+            "pointsList": [
+                {
+                    "x": 220,
+                    "y": 1000
+                },
+                {
+                    "x": 220,
+                    "y": 1030
+                },
+                {
+                    "x": 220,
+                    "y": 1030
+                },
+                {
+                    "x": 220,
+                    "y": 990
+                },
+                {
+                    "x": 220,
+                    "y": 990
+                },
+                {
+                    "x": 220,
+                    "y": 1020
+                }
+            ]
+        },
+        {
+            "id": "Flow_3df627i",
+            "type": "bpmn:sequenceFlow",
+            "sourceNodeId": "9",
+            "targetNodeId": "10",
+            "startPoint": {
+                "x": 220,
+                "y": 1100
+            },
+            "endPoint": {
+                "x": 220,
+                "y": 1120
+            },
+            "properties": {},
+            "pointsList": [
+                {
+                    "x": 220,
+                    "y": 1100
+                },
+                {
+                    "x": 220,
+                    "y": 1130
+                },
+                {
+                    "x": 220,
+                    "y": 1130
+                },
+                {
+                    "x": 220,
+                    "y": 1090
+                },
+                {
+                    "x": 220,
+                    "y": 1090
+                },
+                {
+                    "x": 220,
+                    "y": 1120
+                }
+            ]
+        },
+        {
+            "id": "Flow_2q5jsgm",
+            "type": "bpmn:sequenceFlow",
+            "sourceNodeId": "10",
+            "targetNodeId": "11",
+            "startPoint": {
+                "x": 220,
+                "y": 1200
+            },
+            "endPoint": {
+                "x": 220,
+                "y": 1220
+            },
+            "properties": {},
+            "pointsList": [
+                {
+                    "x": 220,
+                    "y": 1200
+                },
+                {
+                    "x": 220,
+                    "y": 1230
+                },
+                {
+                    "x": 220,
+                    "y": 1230
+                },
+                {
+                    "x": 220,
+                    "y": 1190
+                },
+                {
+                    "x": 220,
+                    "y": 1190
+                },
+                {
+                    "x": 220,
+                    "y": 1220
+                }
+            ]
+        },
+        {
+            "id": "Flow_3pnfgns",
+            "type": "bpmn:sequenceFlow",
+            "sourceNodeId": "11",
+            "targetNodeId": "12",
+            "startPoint": {
+                "x": 220,
+                "y": 1300
+            },
+            "endPoint": {
+                "x": 220,
+                "y": 1320
+            },
+            "properties": {},
+            "pointsList": [
+                {
+                    "x": 220,
+                    "y": 1300
+                },
+                {
+                    "x": 220,
+                    "y": 1330
+                },
+                {
+                    "x": 220,
+                    "y": 1330
+                },
+                {
+                    "x": 220,
+                    "y": 1290
+                },
+                {
+                    "x": 220,
+                    "y": 1290
+                },
+                {
+                    "x": 220,
+                    "y": 1320
+                }
+            ]
+        }
+    ]
+}
