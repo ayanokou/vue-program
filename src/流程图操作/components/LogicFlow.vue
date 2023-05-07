@@ -12,21 +12,21 @@
                         {{ model_1.lfProperties.name }}
                     </template>
 
-                    <el-space warp>
-                        <el-button type="primary" v-for="(model_2, index2) in model_1.models"
+                    <el-space wrap class="second_left_menus_container">
+                        <el-button class="second_left_menus" type="primary" v-for="(model_2, index2) in model_1.models"
                                    :index="'suanzi' + index1 + '-' + index2"
                                    @click="dialogControl[model_2.lfProperties.name]=true;clickLeftMenu()">
 
                             {{ model_2.lfProperties.name }}
 
-                            <el-dialog v-model="dialogControl[model_2.lfProperties.name]" width="30%" :modal="false"
+                            <el-dialog v-model="dialogControl[model_2.lfProperties.name]" width="400px" :modal="false"
                                        :close-on-click-modal="false" draggable append-to-body="true" modal="false">
 
                                 <template #title>
                                     {{ model_2.lfProperties.name }}
                                 </template>
                                 <el-space wrap>
-                                    <el-button type="primary" :icon="Place" v-for="(model_3, index3) in model_2.models"
+                                    <el-button class="third_menus" type="primary" :icon="Place" v-for="(model_3, index3) in model_2.models"
                                                :index="'suanzi' + index1 + '-' + index2 + '-' + index3"
                                                :id="model_3.lfProperties.name"
                                                @click="dialogControl[model_2.lfProperties.name]=false;clickToAddNode(model_3)"
@@ -271,9 +271,16 @@
     padding-left: 10px
 }
 
-.el-menu--popup {
-    min-width: 180px;
-    width: 180px;
+/*设置样式 让按钮一行最多放三个*/
+.second_left_menus_container { 
+    width:327px;
+}
+.second_left_menus {
+    width: 99px;
+}
+
+.third_menus {
+    width: 110px;
 }
 
 .el-menu-item {
