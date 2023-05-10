@@ -60,6 +60,262 @@
     },
     {
       "lfProperties": {
+        "name": "网络通讯"
+      },
+      "properties": {},
+      "models": [
+        {
+          "lfProperties": {
+            "name": "udp通讯"
+          },
+          "properties": {},
+          "models": [
+            {
+              "lfProperties": {
+                "name": "udp通讯",
+                "type": "operator",
+                "text": "udp通讯",
+                "label": "udp通讯"
+              },
+              "properties": {
+                "helpMsg": "it is a help message",
+                "dllPath": "server/src/main/resources/udpCommunicate.dll",
+                "modelID": "outALLfuncpointer",
+                "inPara": [
+
+                ],
+                "outPara": [
+                  {
+                    "varName": "dst1",
+                    "varType": "function<void(char*, int)>*",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "dst2",
+                    "varType": "function<void(char*,int, char*)>*",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "dst3",
+                    "varType": "function<void()>*",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "dst4",
+                    "varType": "function<void()>*",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "dst5",
+                    "varType": "function<void(void(*server_receive_data)(char* ip, int port, char *data))>*",
+                    "varExplanation": ""
+                  }
+                ]
+              },
+              "models": []
+            }
+          ]
+        },
+        {
+          "lfProperties": {
+            "name": "tcp通讯"
+          },
+          "properties": {},
+          "models": [
+            {
+              "lfProperties": {
+                "name": "tcp通讯",
+                "type": "operator",
+                "text": "tcp通讯",
+                "label": "tcp通讯"
+              },
+              "properties": {
+                "helpMsg": "it is a help message",
+                "dllPath": "server/src/main/resources/tcpDll.dll",
+                "modelID": "outTcpALLfuncpointer",
+                "inPara": [
+
+                ],
+                "outPara": [
+                  {
+                    "varName": "dst1",
+                    "varType": "function<void(char* ip, int port)>*",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "dst2",
+                    "varType": "function<void(char * str)>*",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "dst3",
+                    "varType": "function<void()>*",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "dst4",
+                    "varType": "function<void()>*",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "dst5",
+                    "varType": "function<void()>*",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "dst6",
+                    "varType": "function<void(void(*)(char *data))>*",
+                    "varExplanation": ""
+                  }
+                ]
+              },
+              "models": []
+            }
+          ]
+        },
+        {
+          "lfProperties": {
+            "name": "udpTest"
+          },
+          "properties": {},
+          "models": [
+            {
+              "lfProperties": {
+                "name": "udpTest",
+                "type": "operator",
+                "text": "udpTest",
+                "label": "udpTest"
+              },
+              "properties": {
+                "helpMsg": "it is a help message",
+                "dllPath": "server/src/main/resources/udpInFlow.dll",
+                "modelID": "netTestInFlow",
+                "inPara": [
+                  {
+                    "varName": "in1",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "in2",
+                    "varType": "object",
+                    "varExplanation": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "in3",
+                    "varType": "object",
+                    "varExplanation": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "in4",
+                    "varType":  "object",
+                    "varExplanation": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "in5",
+                    "varType": "object",
+                    "varExplanation": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "dst",
+                    "varType": "string",
+                    "varExplanation": ""
+                  }
+                ]
+              },
+              "models": []
+            }
+          ]
+        },
+        {
+          "lfProperties": {
+            "name": "tcpTest"
+          },
+          "properties": {},
+          "models": [
+            {
+              "lfProperties": {
+                "name": "tcpTest",
+                "type": "operator",
+                "text": "tcpTest",
+                "label": "tcpTest"
+              },
+              "properties": {
+                "helpMsg": "it is a help message",
+                "dllPath": "server/src/main/resources/tcpInFlow.dll",
+                "modelID": "tcptTestInFlow",
+                "inPara": [
+                  {
+                    "varName": "in1",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "in2",
+                    "varType": "object",
+                    "varExplanation": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "in3",
+                    "varType": "object",
+                    "varExplanation": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "in4",
+                    "varType":  "object",
+                    "varExplanation": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "in5",
+                    "varType": "object",
+                    "varExplanation": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "in6",
+                    "varType": "object",
+                    "varExplanation": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "dst",
+                    "varType": "string",
+                    "varExplanation": ""
+                  }
+                ]
+              },
+              "models": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lfProperties": {
         "name": "输入输出"
       },
       "properties": {},
@@ -283,6 +539,109 @@
                   }
                 ]
               }
+            },
+            {
+              "lfProperties": {
+                "name": "双边滤波",
+                "type": "operator",
+                "text": "双边滤波",
+                "label": "双边滤波"
+              },
+              "properties": {
+                "helpMsg": "it is a help message",
+                "dllPath": "server/src/main/resources/bilateralFilter.dll",
+                "modelID": "myBilateralFilter",
+                "inPara": [
+                  {
+                    "varName": "src",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "d",
+                    "varType": "int",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "sigmaColor",
+                    "varType": "double",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "sigmaSpace",
+                    "varType": "double",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "borderType",
+                    "varType": "int",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "dst",
+                    "varType": "Mat",
+                    "varExplanation": ""
+                  }
+                ]
+              },
+              "models": []
+            }
+          ]
+        },
+        {
+          "lfProperties": {
+            "name": "图像增强"
+          },
+          "properties": {},
+          "models": [
+            {
+              "lfProperties": {
+                "name": "ShadowCorrection",
+                "type": "operator",
+                "text": "阴影校正",
+                "label": "阴影校正"
+              },
+              "properties": {
+                "helpMsg": "it is a help message",
+                "dllPath": "server/src/main/resources/shadowcorrection.dll",
+                "modelID": "myShadowCorrection",
+                "inPara": [
+                  {
+                    "varName": "src",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "light",
+                    "varType": "int",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "dst",
+                    "varType": "Mat",
+                    "varExplanation": ""
+                  }
+                ]
+              },
+              "models": []
             }
           ]
         },
