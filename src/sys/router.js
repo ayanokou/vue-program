@@ -16,7 +16,7 @@ const router = createRouter({
             path: '/main',
             name: 'main',
             component: () => import('@/主窗口/MainWindow.vue'),
-            meta: { requireAuth: true }
+            
             // children: [
             //     {
             //         path: '/processDp',
