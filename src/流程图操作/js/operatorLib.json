@@ -409,30 +409,6 @@
       },
       "properties": {},
       "models": [
-        {
-          "lfProperties": {
-            "name": "全局变量"
-          },
-          "properties": {},
-          "models": [
-            {
-              "lfProperties": {
-                "name": "GlobalVariable",
-                "type": "noEdgeModel",
-                "text": "全局变量",
-                "label": "全局变量"
-              },
-              "properties": {
-                "helpMsg": "it is a help message of GlobalVariable",
-                "dllPath": "",
-                "modelID": "GlobalVariable",
-                "inPara": [],
-                "outPara": []
-              },
-              "models": []
-            }
-          ]
-        }
       ]
     },
     {
@@ -1118,30 +1094,6 @@
       },
       "properties": {},
       "models": [
-        {
-          "lfProperties": {
-            "name": "全局变量"
-          },
-          "properties": {},
-          "models": [
-            {
-              "lfProperties": {
-                "name": "GlobalVariable",
-                "type": "noEdgeModel",
-                "text": "全局变量",
-                "label": "全局变量"
-              },
-              "properties": {
-                "helpMsg": "it is a help message of GlobalVariable",
-                "dllPath": "",
-                "modelID": "GlobalVariable",
-                "inPara": [],
-                "outPara": []
-              },
-              "models": []
-            }
-          ]
-        }
       ]
     },
     {
@@ -1151,29 +1103,6 @@
       "properties": {},
       "models": [
         {
-          "lfProperties": {
-            "name": "全局变量"
-          },
-          "properties": {},
-          "models": [
-            {
-              "lfProperties": {
-                "name": "GlobalVariable",
-                "type": "noEdgeModel",
-                "text": "全局变量",
-                "label": "全局变量"
-              },
-              "properties": {
-                "helpMsg": "it is a help message of GlobalVariable",
-                "dllPath": "",
-                "modelID": "GlobalVariable",
-                "inPara": [],
-                "outPara": []
-              },
-              "models": []
-            }
-          ]
-        },        {
           "lfProperties": {
             "name": "直方图统计"
           },
@@ -1398,31 +1327,6 @@
       },
       "properties": {},
       "models": [
-        {
-          "lfProperties": {
-            "name": "全局变量"
-          },
-          "properties": {},
-          "models": [
-            {
-              "lfProperties": {
-                "name": "GlobalVariable",
-                "type": "noEdgeModel",
-                "text": "全局变量",
-                "label": "全局变量"
-              },
-              "properties": {
-                "helpMsg": "it is a help message of GlobalVariable",
-                "dllPath": "",
-                "modelID": "GlobalVariable",
-                "inPara": [],
-                "outPara": []
-              },
-              "models": []
-            }
-          ]
-        }
-
       ]
     },
     {
@@ -1431,30 +1335,6 @@
       },
       "properties": {},
       "models": [
-        {
-          "lfProperties": {
-            "name": "全局变量"
-          },
-          "properties": {},
-          "models": [
-            {
-              "lfProperties": {
-                "name": "GlobalVariable",
-                "type": "noEdgeModel",
-                "text": "全局变量",
-                "label": "全局变量"
-              },
-              "properties": {
-                "helpMsg": "it is a help message of GlobalVariable",
-                "dllPath": "",
-                "modelID": "GlobalVariable",
-                "inPara": [],
-                "outPara": []
-              },
-              "models": []
-            }
-          ]
-        }
       ]
     },
     {
@@ -1463,30 +1343,6 @@
       },
       "properties": {},
       "models": [
-        {
-          "lfProperties": {
-            "name": "全局变量"
-          },
-          "properties": {},
-          "models": [
-            {
-              "lfProperties": {
-                "name": "GlobalVariable",
-                "type": "noEdgeModel",
-                "text": "全局变量",
-                "label": "全局变量"
-              },
-              "properties": {
-                "helpMsg": "it is a help message of GlobalVariable",
-                "dllPath": "",
-                "modelID": "GlobalVariable",
-                "inPara": [],
-                "outPara": []
-              },
-              "models": []
-            }
-          ]
-        }
       ]
     },
     {
@@ -1746,30 +1602,6 @@
       },
       "properties": {},
       "models": [
-        {
-          "lfProperties": {
-            "name": "全局变量"
-          },
-          "properties": {},
-          "models": [
-            {
-              "lfProperties": {
-                "name": "GlobalVariable",
-                "type": "noEdgeModel",
-                "text": "全局变量",
-                "label": "全局变量"
-              },
-              "properties": {
-                "helpMsg": "it is a help message of GlobalVariable",
-                "dllPath": "",
-                "modelID": "GlobalVariable",
-                "inPara": [],
-                "outPara": []
-              },
-              "models": []
-            }
-          ]
-        }
       ]
     },
     {
@@ -1784,6 +1616,22 @@
           },
           "properties": {},
           "models": [
+            {
+              "lfProperties": {
+                "type": "circle",
+                "label": "开始",
+                "text": "开始",
+                "name": "开始"
+              },
+              "properties": {
+                "helpMsg": "it is a help message",
+                "dllPath": "",
+                "modelID": "start",
+                "inPara": [],
+                "outPara": []
+              },
+              "models": []
+            },
             {
               "lfProperties": {
                 "type": "diamond",
@@ -1858,6 +1706,7 @@
             }
           ]
         }
+
       ]
     },
     {

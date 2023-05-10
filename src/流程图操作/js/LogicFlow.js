@@ -32,7 +32,7 @@ const handleClose = (key, keyPath) => {
 }
 
 
-class CycleModel extends CircleNodeModel {
+class MyCircleModel extends CircleNodeModel {
     getNodeStyle() {
         const style = super.getNodeStyle();
         style.stroke = 'blue';
@@ -42,19 +42,6 @@ class CycleModel extends CircleNodeModel {
     setAttributes() {
         const size = this.properties.scale || 1;
         this.r = 25 * size
-    }
-
-    createId() {
-        let max=0
-        for(let node of this.graphModel.nodes){
-            if(node.id>max)
-                max=node.id
-        }
-        return (++max) + "";
-    }
-
-    isAllowConnectedAsSource(target) { 
-        return false;
     }
 }
 
@@ -607,9 +594,9 @@ export default {
 
             lf.batchRegister([
                 { // 圆形结点：标志循环开始循环结束
-                    type: 'cycle',
+                    type: 'circle',
                     view: CircleNode,
-                    model: CycleModel
+                    model: MyCircleModel
                 },
                 {
                     type: 'diamond',
