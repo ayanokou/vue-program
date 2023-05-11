@@ -19,6 +19,7 @@ export default createStore({
             socketEmit:null,
             saveSolutionAs:false,
             flowAdd:false,
+            timeConsume: "",
 
         }
     },
@@ -58,7 +59,9 @@ export default createStore({
         flowAddEvent(state, payload){
             state.flowAdd = payload
         },
-
+        timeConsumeEvent(state, payload){
+            state.timeConsume = payload
+        }
     },
     modules:{
 

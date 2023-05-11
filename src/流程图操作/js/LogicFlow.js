@@ -22,6 +22,7 @@ import { eventHandle, events } from "../../sys/eventResponseController";
 import { ElNotification } from 'element-plus'
 
 
+
 LogicFlow.use(SelectionSelect);
 LogicFlow.use(Menu);
 const handleOpen = (key, keyPath) => {
@@ -334,7 +335,7 @@ class MyGroup extends GroupNode.view {
 
 
 import data from './operatorLib.json'
-
+import { mapState } from "vuex";
 const suanziItemList = data
 
 
@@ -349,6 +350,8 @@ export default {
             initHeight: '',
             //点击事件的节点对象
             nodeModel: '',
+            //当前选中的算子id
+            selectedAlgorithm:0,
             //点击事件的边对象
             edgeModel: '',
             //框选选中的数据
@@ -375,12 +378,31 @@ export default {
             dialogVisibleConditionalEdge:false,//ConditionalJudge出边对话框
             dialogVisibleSwitchEdge:false,//switch出边对话框
             yorn:"",
-            switchEdge:""
+            switchEdge:"",
+            timeRunTimeJson:{},//流程和所有算子的用时
+            flowRunTime: 0, //流程用时
+            algorithmRunTime: 0, //算法用时
           }
     },
     computed: {
         lfData() {
             return this.lf.getGraphData()
+        },
+        ...mapState([
+            "timeConsume",
+        ]),
+    },
+    watch:{
+        timeConsume(newValue){
+            console.log("curNodeId: " + this.nodeModel)
+            this.timeRunTimeJson = JSON.parse(newValue);
+            this.flowRunTime = this.timeRunTimeJson.totalConsuming;
+            for(let algorithm of this.timeRunTimeJson.eachConsuming){
+                console.log("JsonNodeId: " + algorithm.id)
+                if(algorithm.id === this.selectedAlgorithm){
+                    this.algorithmRunTime = algorithm.consume;
+                }
+            }
         }
     },
     mounted() {
@@ -421,6 +443,8 @@ export default {
 
             //刷新nodeModel
             this.nodeModel = this.lf.getNodeModelById(evt.data.id)
+            this.selectedAlgorithm = evt.data.id
+            this.updateTimeConsuming();
             this.$store.commit('setVuexHelpInfo', this.nodeModel.getProperties().helpMsg)
 
             if(this.modelID=="GlobalVariable"){
@@ -897,6 +921,14 @@ export default {
         },
         edgeSwitchSubmit(){
             this.edgeModel.updateText(this.switchEdge)
+        },
+        updateTimeConsuming(){
+            for(let algorithm of this.timeRunTimeJson.eachConsuming){
+                console.log("algorithm: " + algorithm.id)
+                if(algorithm.id == this.selectedAlgorithm){
+                    this.algorithmRunTime = algorithm.consume;
+                }
+            }
         }
 
     }

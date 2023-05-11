@@ -50,6 +50,11 @@
 
         <!--流程图区域-->
         <el-main ref="lfMain" style="height: 100%; padding: 0; overflow:hidden">
+            <div id="runtime-container">
+                <span id="runtime">流程用时：{{ flowRunTime }}us</span><!-- {{ flowRunTime }} {{ algorithmRunTime }}-->
+                <span style="margin-right: 20px"></span>
+                <span id="runtime">算法用时：{{ algorithmRunTime }}us</span>
+            </div>
             <slot></slot>
         </el-main>
 
@@ -304,5 +309,24 @@
 .lf-dnd-text {
     user-select: none;
     /* CSS3属性 */
+}
+
+#runtime-container {
+  position: absolute;
+  top: 10px; /* 距离顶部的距离 */
+  left:15%; /* 距离左侧的距离 */
+  z-index: 999; /* 将其z-index设置为比流程图更高的值 */
+}
+
+#runtime {
+  display: inline-block;
+  width: 150px; /* 控制显示时间的小方块的宽度 */
+  height: 20px; /* 控制显示时间的小方块的高度 */
+  background-color: rgba(119, 76, 187, 0.452); /* 设置小方块的背景色，半透明 */
+  color: #fff; /* 设置小方块中文字的颜色 */
+  font-size: 14px; /* 控制小方块中文字的大小 */
+  text-align: center; /* 设置小方块中文字居中 */
+  line-height: 20px; /* 控制小方块中文字的行高，使其居中显示 */
+  border-radius: 4px; /* 设置小方块的圆角 */
 }
 </style>
