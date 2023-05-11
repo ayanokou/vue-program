@@ -101,6 +101,9 @@ export default {
         socket.on('revStr',(data)=>{
             console.log("this is string result:"+data);
         })
+        socket.on('revTimeConsume',(data)=>{
+            this.$store.commit('timeConsumeEvent', data);
+        })
     },
     computed:{
         ...mapState(['socketEmit'])
@@ -268,6 +271,9 @@ export default {
             }
             this.dialogVisible = true;
             // localStorage.removeItem(name);
+        },
+        sendEvent(event, cont = {trigger:true}){
+            this.$store.commit(event, cont)
         },
         exitFunc(){
             this.$router.push('/')
