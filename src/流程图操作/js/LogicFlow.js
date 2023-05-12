@@ -395,6 +395,7 @@ export default {
             timeRunTimeJson:{},//流程和所有算子的用时
             flowRunTime: 0, //流程用时
             algorithmRunTime: 0, //算法用时
+            isRan: false
           }
     },
     computed: {
@@ -776,7 +777,7 @@ export default {
                 mode:"chatevent",
                 data:jsonObject
             }
-
+            this.isRan = true;
             this.$store.commit("setSocketEmit",payload)
         },
         loadJson() {
@@ -936,6 +937,7 @@ export default {
             this.edgeModel.updateText(this.switchEdge)
         },
         updateTimeConsuming(){
+            if(this.isRan == false) return;
             for(let algorithm of this.timeRunTimeJson.eachConsuming){
                 console.log("algorithm: " + algorithm.id)
                 if(algorithm.id == this.selectedAlgorithm){
