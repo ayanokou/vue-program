@@ -723,9 +723,9 @@ export default {
                 }
             })
             lf.extension.control.addItem({
-                text: "导入Json",
+                text: "导入流程",
                 onClick: () => {
-                    this.loadJson();
+                    this.loadFlowChart();
                 },
             });
             lf.extension.control.addItem({
@@ -755,7 +755,7 @@ export default {
 
             this.$store.commit("setSocketEmit",payload)
         },
-        loadJson() {
+        loadFlowChart() {
             let inputObj = document.createElement('input');
             inputObj.type = 'file';
             inputObj.accept = 'json';

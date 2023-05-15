@@ -793,23 +793,52 @@
       "models": [
         {
           "lfProperties": {
-            "name": "全局变量"
+            "name": "像素统计"
           },
           "properties": {},
           "models": [
             {
               "lfProperties": {
-                "name": "GlobalVariable",
-                "type": "noEdgeModel",
-                "text": "全局变量",
-                "label": "全局变量"
+                "name": "pixesStatistics",
+                "type": "operator",
+                "text": "像素统计",
+                "label": "像素统计"
               },
               "properties": {
                 "helpMsg": "it is a help message of GlobalVariable",
-                "dllPath": "",
-                "modelID": "GlobalVariable",
-                "inPara": [],
-                "outPara": []
+                "dllPath": "server\\src\\main\\resources\\PixesStatistic.dll",
+                "modelID": "pixesStatistic",
+                "inPara": [
+                  {
+                    "varName": "srcImage",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "lowthresHold",
+                    "varType": "int",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "highthresHold",
+                    "varType": "int",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "dst",
+                    "varType": "vector<int>",
+                    "varExplanation": ""
+                  }
+                ]
+                
               },
               "models": []
             }
@@ -1155,6 +1184,50 @@
                   {
                     "varName": "dst",
                     "varType": "Mat",
+                    "varExplanation": ""
+                  }
+                ]
+              },
+              "models": []
+            },
+            {
+              "lfProperties": {
+                "type": "operator",
+                "label": "图片分类",
+                "text": "图片分类",
+                "name": "image-classification"
+              },
+              "properties": {
+                "helpMsg": "分裂模型可以有两个inceptionv3.onnx和resnet50-v1-12.onnx，类别字典文件为imagenet_classes.txt",
+                "dllPath": "server/src/main/resources/image_classification.dll",
+                "modelID": "image_classification",
+                "inPara": [
+                  {
+                    "varName": "img_mat",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": "输入图片 类型Mat"
+                  },
+                  {
+                    "varName": "cls_model_path",
+                    "varType": "string",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": "模型路径"
+                  },
+                  {
+                    "varName": "image_net_classes",
+                    "varType": "string",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": "类别字典路径"
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "dst",
+                    "varType": "string",
                     "varExplanation": ""
                   }
                 ]
