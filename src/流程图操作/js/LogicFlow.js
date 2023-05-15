@@ -379,7 +379,7 @@ export default {
             dialogVisibleSwitchEdge:false,//switch出边对话框
             yorn:"",
             switchEdge:"",
-            timeRunTimeJson:{},//流程和所有算子的用时
+            timeRunTimeJson:{eachConsuming:[]},//流程和所有算子的用时
             flowRunTime: 0, //流程用时
             algorithmRunTime: 0, //算法用时
           }
