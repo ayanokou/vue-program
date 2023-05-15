@@ -7,6 +7,7 @@ import LayoutTwo from "@/主窗口/components/layout/LayoutTwo.vue";
 import LayoutThree from "@/主窗口/components/layout/LayoutThree.vue";
 import { computed } from "vue";
 import { mapState } from "vuex";
+import axiosInstance from "../../axios"
 
 //初始化socketio用于前后端传输
 let socket = io.connect('http://localhost:9092')
@@ -100,6 +101,9 @@ export default {
         socket.on('revStr',(data)=>{
             console.log("this is string result:"+data);
         })
+        socket.on('revTimeConsume',(data)=>{
+            this.$store.commit('timeConsumeEvent', data);
+        })
     },
     computed:{
         ...mapState(['socketEmit'])
@@ -119,6 +123,7 @@ export default {
 
     },
     methods: {
+
         //动态布局
         layout(i) {
             switch (i) {
@@ -267,8 +272,30 @@ export default {
             this.dialogVisible = true;
             // localStorage.removeItem(name);
         },
+        sendEvent(event, cont = {trigger:true}){
+            this.$store.commit(event, cont)
+        },
         exitFunc(){
             this.$router.push('/')
-        }
+        },
+
+        logout(){
+            axiosInstance.get('/logout')
+              .then(response => {
+                this.$message({
+                  message: '退出成功',
+                  type: 'success',
+                  duration: 1500,
+                });
+                sessionStorage.clear();
+              })
+              .catch(error => {
+                console.error(error);
+              });
+            //sessionStorage.clear();
+            
+          
+          },
+        
     }
 }

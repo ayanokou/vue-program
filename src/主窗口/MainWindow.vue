@@ -7,23 +7,24 @@
                 <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect" menu-trigger="hover">
                     <el-sub-menu index="1">
                         <template #title><span style="color:aliceblue;">文件</span></template>
-                        <el-menu-item @click="eventTrigger('newSolutionEvent', true)"><span style="color:aliceblue;">新建方案</span></el-menu-item>
-                        <el-menu-item @click="eventTrigger('deleteSolutionEvent', true)"><span style="color:aliceblue;">删除方案</span></el-menu-item>
-                        <el-menu-item @click="eventTrigger('deleteCurrentSolutionEvent', true)"><span style="color:aliceblue;">删除当前方案</span></el-menu-item>
-                        <el-menu-item @click="eventTrigger('openSolutionEvent', true)"><span style="color:aliceblue;">打开方案</span></el-menu-item>
-                        <el-sub-menu index="1-1" @mouseenter="updateLastOpenSolutions">
+                        <el-menu-item @click="sendEvent('newSolutionEvent')"><span style="color:aliceblue;">新建方案</span></el-menu-item>
+                        <el-menu-item @click="sendEvent('deleteSolutionEvent')"><span style="color:aliceblue;">删除方案</span></el-menu-item>
+                        <el-menu-item @click="sendEvent('deleteCurrentSolutionEvent')"><span style="color:aliceblue;">删除当前方案</span></el-menu-item>
+                        <el-menu-item @click="sendEvent('openSolutionEvent')"><span style="color:aliceblue;">打开方案</span></el-menu-item>
+                        <el-sub-menu @mouseenter="updateLastOpenSolutions">
                             <template #title><span style="color:aliceblue;">最近打开方案</span></template>
-                            <el-menu-item v-for="(item, index) in lastOpenSolutions" :key="index" @click="eventTrigger('openSelectedSolutionEvent', {trigger: true, key: item.name})"><span style="color:aliceblue;">{{ item.name }}</span></el-menu-item>
+                            <el-menu-item v-for="(item, index) in lastOpenSolutions" :key="index" @click="sendEvent('openSelectedSolutionEvent', {trigger: true, key: item.name})"><span style="color:aliceblue;">{{ item.name }}</span></el-menu-item>
                         </el-sub-menu>
                         <el-sub-menu index="2-1" @mouseenter="updateExampleSolutions">
                             <template #title><span style="color:aliceblue;">打开示例</span></template>
-                            <el-menu-item v-for="(item, index) in exampleSolutions" :key="index" @click="eventTrigger('openSelectedSolutionEvent', {trigger: true, key: item})"><span style="color:aliceblue;">{{ item }}</span></el-menu-item>
+                            <el-menu-item v-for="(item, index) in exampleSolutions" :key="index" @click="sendEvent('openSelectedSolutionEvent',{trigger: true, key: item} )"><span style="color:aliceblue;">{{ item }}</span></el-menu-item>
                         </el-sub-menu>
-                        <el-menu-item @click="eventTrigger('saveSolutionEvent', true)"><span style="color:aliceblue;">保存方案</span></el-menu-item>
-                        <el-menu-item @click="eventTrigger('saveSolutionAsEvent', true)"><span style="color:aliceblue;">方案另存为</span></el-menu-item>
-                        <el-menu-item @click="eventTrigger('importFlowEvent', true)"><span style="color:aliceblue;">导入流程</span></el-menu-item>
+                        <el-menu-item @click="sendEvent('saveSolutionEvent')"><span style="color:aliceblue;">保存方案</span></el-menu-item>
+                        <el-menu-item @click="sendEvent('saveSolutionAsEvent')"><span style="color:aliceblue;">方案另存为</span></el-menu-item>
+                        <el-menu-item @click="sendEvent('importFlowEvent')"><span style="color:aliceblue;">导入流程</span></el-menu-item>
                         <el-menu-item id="export"><span style="color:aliceblue;">导出Java/C++/Python</span></el-menu-item>
-                        <el-menu-item id="exit" @click="exitFunc"><span style="color:aliceblue;">退出</span></el-menu-item>
+                        <el-menu-item id="exit" @click="sendEvent('exitEvent')"><span style="color:aliceblue;">退出</span></el-menu-item>
+                        <!-- <el-menu-item id="exit" @click="logout"><span style="color:aliceblue;">退出</span></el-menu-item> -->
                     </el-sub-menu>
 
                     
