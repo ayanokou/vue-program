@@ -1748,23 +1748,37 @@
       "models": [
         {
           "lfProperties": {
-            "name": "全局变量"
+            "name": "划痕检测"
           },
           "properties": {},
           "models": [
             {
               "lfProperties": {
-                "name": "GlobalVariable",
-                "type": "noEdgeModel",
-                "text": "全局变量",
-                "label": "全局变量"
+                "name": "scratchDetection",
+                "type": "operator",
+                "text": "划痕检测",
+                "label": "划痕检测"
               },
               "properties": {
                 "helpMsg": "it is a help message of GlobalVariable",
-                "dllPath": "",
-                "modelID": "GlobalVariable",
-                "inPara": [],
-                "outPara": []
+                "dllPath": "server/src/main/resources/scratchDetection.dll",
+                "modelID": "myScratchDetection",
+                "inPara": [
+                  {
+                    "varName": "src",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "dst",
+                    "varType": "vector<Rect>",
+                    "varExplanation": ""
+                  }
+                ]
               },
               "models": []
             }
