@@ -1934,7 +1934,46 @@
         "name": "高级功能"
       },
       "properties": {},
-      "models": []
+      "models": [
+        {
+          "lfProperties": {
+            "name": "划痕检测"
+          },
+          "properties": {},
+          "models": [
+            {
+              "lfProperties": {
+                "name": "scratchDetection",
+                "type": "operator",
+                "text": "划痕检测",
+                "label": "划痕检测"
+              },
+              "properties": {
+                "helpMsg": "it is a help message of GlobalVariable",
+                "dllPath": "server/src/main/resources/scratchDetection.dll",
+                "modelID": "myScratchDetection",
+                "inPara": [
+                  {
+                    "varName": "src",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "dst",
+                    "varType": "vector<Rect>",
+                    "varExplanation": ""
+                  }
+                ]
+              },
+              "models": []
+            }
+          ]
+        }
+      ]
     },
     {
       "lfProperties": {
