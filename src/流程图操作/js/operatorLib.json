@@ -1488,14 +1488,28 @@
                     "varExplanation": ""
                   },
                   {
-                    "varName": "lowthresHold",
+                    "varName": "x",
                     "varType": "int",
                     "fromExpression": "",
                     "defineVarInputWay": "directInputWay",
                     "varExplanation": ""
                   },
                   {
-                    "varName": "highthresHold",
+                    "varName": "y",
+                    "varType": "int",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "width",
+                    "varType": "int",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "height",
                     "varType": "int",
                     "fromExpression": "",
                     "defineVarInputWay": "directInputWay",
