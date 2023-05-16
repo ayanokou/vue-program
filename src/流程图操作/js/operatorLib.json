@@ -1470,15 +1470,15 @@
           "models": [
             {
               "lfProperties": {
-                "name": "统计像素个数",
+                "name": "直方图统计",
                 "type": "noEdgeModel",
-                "text": "统计像素个数",
-                "label": "统计像素个数"
+                "text": "直方图统计",
+                "label": "直方图统计"
               },
               "properties": {
                 "helpMsg": "it is a help message of GlobalVariable",
                 "dllPath": "server/src/main/resources/general.dll",
-                "modelID": "total_pixels",
+                "modelID": "hist_stat",
                 "inPara": [
                   {
                     "varName": "src",
@@ -1504,179 +1504,40 @@
                 ],
                 "outPara": [
                   {
-                    "varName": "total",
+                    "varName": "num_pixels",
                     "varType": "int",
                     "varExplanation": ""
-                  }
-                ]
-              }
-            },
-            {
-              "lfProperties": {
-                "name": "统计灰度均值",
-                "type": "noEdgeModel",
-                "text": "统计灰度均值",
-                "label": "统计灰度均值"
-              },
-              "properties": {
-                "helpMsg": "it is a help message of GlobalVariable",
-                "dllPath": "server/src/main/resources/general.dll",
-                "modelID": "mean",
-                "inPara": [
-                  {
-                    "varName": "src",
-                    "varType": "object",
-                    "fromExpression": "",
-                    "defineVarInputWay": "directInputWay",
+                  },{
+                    "varName": "mean_gray",
+                    "varType": "Scalar",
                     "varExplanation": ""
-                  },
-                  {
-                    "varName": "x",
-                    "varType": "int",
-                    "fromExpression": "",
-                    "defineVarInputWay": "directInputWay",
+                  },{
+                    "varName": "min_gray",
+                    "varType": "double",
                     "varExplanation": ""
-                  },
-                  {
-                    "varName": "y",
-                    "varType": "int",
-                    "fromExpression": "",
-                    "defineVarInputWay": "directInputWay",
+                  },{
+                    "varName": "max_gray",
+                    "varType": "double",
                     "varExplanation": ""
-                  },
-                  {
-                    "varName": "width",
-                    "varType": "int",
-                    "fromExpression": "",
-                    "defineVarInputWay": "directInputWay",
+                  },{
+                    "varName": "hist_max_val",
+                    "varType": "double",
                     "varExplanation": ""
-                  },
-                  {
-                    "varName": "height",
-                    "varType": "int",
-                    "fromExpression": "",
-                    "defineVarInputWay": "directInputWay",
+                  },{
+                    "varName": "hist_max_loc",
+                    "varType": "Point",
                     "varExplanation": ""
-                  }
-                ],
-                "outPara": [
-                  {
-                    "varName": "mean_value",
-                    "varType": "int",
+                  },{
+                    "varName": "std_dev",
+                    "varType": "Scalar",
                     "varExplanation": ""
-                  }
-                ]
-              }
-            },
-            {
-              "lfProperties": {
-                "name": "统计灰度最小值",
-                "type": "noEdgeModel",
-                "text": "统计灰度最小值",
-                "label": "统计灰度最小值"
-              },
-              "properties": {
-                "helpMsg": "it is a help message of GlobalVariable",
-                "dllPath": "server/src/main/resources/general.dll",
-                "modelID": "min_value",
-                "inPara": [
-                  {
-                    "varName": "src",
-                    "varType": "object",
-                    "fromExpression": "",
-                    "defineVarInputWay": "directInputWay",
+                  },{
+                    "varName": "contrast",
+                    "varType": "double",
                     "varExplanation": ""
-                  },
-                  {
-                    "varName": "x",
-                    "varType": "int",
-                    "fromExpression": "",
-                    "defineVarInputWay": "directInputWay",
-                    "varExplanation": ""
-                  },
-                  {
-                    "varName": "y",
-                    "varType": "int",
-                    "fromExpression": "",
-                    "defineVarInputWay": "directInputWay",
-                    "varExplanation": ""
-                  },
-                  {
-                    "varName": "width",
-                    "varType": "int",
-                    "fromExpression": "",
-                    "defineVarInputWay": "directInputWay",
-                    "varExplanation": ""
-                  },
-                  {
-                    "varName": "height",
-                    "varType": "int",
-                    "fromExpression": "",
-                    "defineVarInputWay": "directInputWay",
-                    "varExplanation": ""
-                  }
-                ],
-                "outPara": [
-                  {
-                    "varName": "min_value",
-                    "varType": "int",
-                    "varExplanation": ""
-                  }
-                ]
-              }
-            },
-            {
-              "lfProperties": {
-                "name": "统计灰度最大值",
-                "type": "noEdgeModel",
-                "text": "统计灰度最大值",
-                "label": "统计灰度最大值"
-              },
-              "properties": {
-                "helpMsg": "it is a help message of GlobalVariable",
-                "dllPath": "server/src/main/resources/general.dll",
-                "modelID": "max_value",
-                "inPara": [
-                  {
-                    "varName": "src",
-                    "varType": "object",
-                    "fromExpression": "",
-                    "defineVarInputWay": "directInputWay",
-                    "varExplanation": ""
-                  },
-                  {
-                    "varName": "x",
-                    "varType": "int",
-                    "fromExpression": "",
-                    "defineVarInputWay": "directInputWay",
-                    "varExplanation": ""
-                  },
-                  {
-                    "varName": "y",
-                    "varType": "int",
-                    "fromExpression": "",
-                    "defineVarInputWay": "directInputWay",
-                    "varExplanation": ""
-                  },
-                  {
-                    "varName": "width",
-                    "varType": "int",
-                    "fromExpression": "",
-                    "defineVarInputWay": "directInputWay",
-                    "varExplanation": ""
-                  },
-                  {
-                    "varName": "height",
-                    "varType": "int",
-                    "fromExpression": "",
-                    "defineVarInputWay": "directInputWay",
-                    "varExplanation": ""
-                  }
-                ],
-                "outPara": [
-                  {
-                    "varName": "max_value",
-                    "varType": "int",
+                  },{
+                    "varName": "hist_image",
+                    "varType": "Mat",
                     "varExplanation": ""
                   }
                 ]
