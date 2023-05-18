@@ -33,7 +33,7 @@ const handleClose = (key, keyPath) => {
 }
 
 
-class CycleModel extends CircleNodeModel {
+class MyCircleModel extends CircleNodeModel {
     getNodeStyle() {
         const style = super.getNodeStyle();
         style.stroke = 'blue';
@@ -43,19 +43,6 @@ class CycleModel extends CircleNodeModel {
     setAttributes() {
         const size = this.properties.scale || 1;
         this.r = 25 * size
-    }
-
-    createId() {
-        let max=0
-        for(let node of this.graphModel.nodes){
-            if(node.id>max)
-                max=node.id
-        }
-        return (++max) + "";
-    }
-
-    isAllowConnectedAsSource(target) { 
-        return false;
     }
 }
 
@@ -392,10 +379,11 @@ export default {
             dialogVisibleSwitchEdge:false,//switch出边对话框
             yorn:"",
             switchEdge:"",
-            timeRunTimeJson:{},//流程和所有算子的用时
+            timeRunTimeJson:{eachConsuming:[]},//流程和所有算子的用时
             flowRunTime: 0, //流程用时
             algorithmRunTime: 0, //算法用时
-            isRan: false
+            isRan: false,
+            addNodePosition_x: 100,
           }
     },
     computed: {
@@ -632,9 +620,9 @@ export default {
 
             lf.batchRegister([
                 { // 圆形结点：标志循环开始循环结束
-                    type: 'cycle',
+                    type: 'circle',
                     view: CircleNode,
-                    model: CycleModel
+                    model: MyCircleModel
                 },
                 {
                     type: 'diamond',
@@ -748,9 +736,9 @@ export default {
                 }
             })
             lf.extension.control.addItem({
-                text: "导入Json",
+                text: "导入流程",
                 onClick: () => {
-                    this.loadJson();
+                    this.loadFlowChart();
                 },
             });
             lf.extension.control.addItem({
@@ -780,7 +768,7 @@ export default {
             this.isRan = true;
             this.$store.commit("setSocketEmit",payload)
         },
-        loadJson() {
+        loadFlowChart() {
             let inputObj = document.createElement('input');
             inputObj.type = 'file';
             inputObj.accept = 'json';
@@ -855,12 +843,13 @@ export default {
                         id: id.toString(),
                         type: node.lfProperties.type,
                         x: 100,
-                        y: 100,
+                        y: this.addNodePosition_x,
                         text: node.lfProperties.text,
                         label: node.lfProperties.label,
                         name: node.lfProperties.name,
                         properties: node.properties
                     })
+                    this.addNodePosition_x += 45
                 }
         },
         // 三级菜单拖拽添加节点
