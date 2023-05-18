@@ -382,6 +382,7 @@ export default {
             timeRunTimeJson:{eachConsuming:[]},//流程和所有算子的用时
             flowRunTime: 0, //流程用时
             algorithmRunTime: 0, //算法用时
+            addNodePosition_x: 100,
           }
     },
     computed: {
@@ -841,12 +842,13 @@ export default {
                         id: id.toString(),
                         type: node.lfProperties.type,
                         x: 100,
-                        y: 100,
+                        y: this.addNodePosition_x,
                         text: node.lfProperties.text,
                         label: node.lfProperties.label,
                         name: node.lfProperties.name,
                         properties: node.properties
                     })
+                    this.addNodePosition_x += 45
                 }
         },
         // 三级菜单拖拽添加节点
