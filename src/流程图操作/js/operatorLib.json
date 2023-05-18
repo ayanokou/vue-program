@@ -461,7 +461,11 @@
                   }
                 ],
                 "outPara": [
-                  
+                  {
+                    "varName": "dst",
+                    "varType": "object",
+                    "varExplanation": ""
+                  }
                 ]
               },
               "models": []
@@ -1341,6 +1345,44 @@
                 "modelID": "GlobalVariable",
                 "inPara": [],
                 "outPara": []
+              },
+              "models": []
+            }
+          ]
+        },
+        {
+          "lfProperties": {
+            "name": "亮度测量"
+          },
+          "properties": {},
+          "models": [
+            {
+              "lfProperties": {
+                "name": "亮度测量",
+                "type": "operator",
+                "text": "亮度测量",
+                "label": "亮度测量"
+              },
+              "properties": {
+                "helpMsg": "it is a help message of GlobalVariable",
+                "dllPath": "server/src/main/resources/General.dll/BrightnessMeasurement.dll",
+                "modelID": "brightnessMeasurement",
+                "inPara": [
+                  {
+                    "varName": "measured picture",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "dst",
+                    "varType": "object",
+                    "varExplanation": ""
+                  }
+                ]
               },
               "models": []
             }
