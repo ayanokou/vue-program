@@ -32,6 +32,7 @@ public class DemoApplication {
 		System.loadLibrary("opencv_imgproc343");
 		System.loadLibrary("bilateralFilter");
 		System.loadLibrary("shadowcorrection");
+		System.loadLibrary("scratchDetection");
 		System.loadLibrary("uv");
 		System.loadLibrary("udpInFlow");
 		System.loadLibrary("udpCommunicate");

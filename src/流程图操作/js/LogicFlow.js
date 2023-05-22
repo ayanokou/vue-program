@@ -382,6 +382,8 @@ export default {
             timeRunTimeJson:{eachConsuming:[]},//流程和所有算子的用时
             flowRunTime: 0, //流程用时
             algorithmRunTime: 0, //算法用时
+            isRan: false,
+            addNodePosition_x: 100,
           }
     },
     computed: {
@@ -734,9 +736,9 @@ export default {
                 }
             })
             lf.extension.control.addItem({
-                text: "导入Json",
+                text: "导入流程",
                 onClick: () => {
-                    this.loadJson();
+                    this.loadFlowChart();
                 },
             });
             lf.extension.control.addItem({
@@ -763,10 +765,10 @@ export default {
                 mode:"chatevent",
                 data:jsonObject
             }
-
+            this.isRan = true;
             this.$store.commit("setSocketEmit",payload)
         },
-        loadJson() {
+        loadFlowChart() {
             let inputObj = document.createElement('input');
             inputObj.type = 'file';
             inputObj.accept = 'json';
@@ -841,12 +843,13 @@ export default {
                         id: id.toString(),
                         type: node.lfProperties.type,
                         x: 100,
-                        y: 100,
+                        y: this.addNodePosition_x,
                         text: node.lfProperties.text,
                         label: node.lfProperties.label,
                         name: node.lfProperties.name,
                         properties: node.properties
                     })
+                    this.addNodePosition_x += 45
                 }
         },
         // 三级菜单拖拽添加节点
@@ -923,6 +926,7 @@ export default {
             this.edgeModel.updateText(this.switchEdge)
         },
         updateTimeConsuming(){
+            if(this.isRan == false) return;
             for(let algorithm of this.timeRunTimeJson.eachConsuming){
                 console.log("algorithm: " + algorithm.id)
                 if(algorithm.id == this.selectedAlgorithm){
