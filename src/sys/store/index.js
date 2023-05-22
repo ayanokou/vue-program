@@ -20,7 +20,8 @@ export default createStore({
             saveSolutionAs:false,
             flowAdd:false,
             timeConsume: "",
-
+            //模块结果，树形数据
+            moduleResultData:"[]"
         }
     },
     mutations:{
@@ -61,7 +62,11 @@ export default createStore({
         },
         timeConsumeEvent(state, payload){
             state.timeConsume = payload
+        },
+        setModuleResultData(state,payload){
+            state.moduleResultData=payload
         }
+
     },
     modules:{
 

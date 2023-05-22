@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Base64;
+import java.util.HashMap;
 
 import com.corundumstudio.socketio.listener.*;
 import com.corundumstudio.socketio.*;
@@ -16,6 +17,7 @@ import com.corundumstudio.socketio.*;
 public class DemoApplication {
 
 	private static String imgFormat;
+	private HashMap<Integer, Boolean> flags;
 
 	static {
 		String path1 = "server/src/main/resources";
@@ -36,6 +38,10 @@ public class DemoApplication {
 		System.loadLibrary("tcpInFlow");
 		System.loadLibrary("tcpDll");
 		System.loadLibrary("clientSDK");
+	}
+
+	public boolean checkRunning(int port){
+		return flags.get(port);
 	}
 
 	public static void main(String[] args) {
@@ -70,6 +76,16 @@ public class DemoApplication {
 
 
 
+				}
+				else if(data.getUserName().equals("new")){
+					String result = data.getMessage();
+					clientForCpp.eventHandle(listenerForCpp, 0, result);
+					System.out.println("new"+result);
+				}
+				else if(data.getUserName().equals("get")){
+					String result = data.getMessage();
+					clientForCpp.eventHandle(listenerForCpp, 3, result);
+					System.out.println("get"+result);
 				}
 				// test end
 //				else if (data.getUserName().equals("Pic")) {

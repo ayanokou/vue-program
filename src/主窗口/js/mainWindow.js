@@ -104,6 +104,9 @@ export default {
         socket.on('revTimeConsume',(data)=>{
             this.$store.commit('timeConsumeEvent', data);
         })
+        socket.on('revRects',(data)=>{
+            this.$store.commit('setModuleResultData', data);
+        })
     },
     computed:{
         ...mapState(['socketEmit'])
@@ -123,7 +126,18 @@ export default {
 
     },
     methods: {
-
+        newInt(){
+            socket.emit("chatevent", {
+                userName: 'new',
+                message: "new"
+            });
+        },
+        getInt(){
+            socket.emit("chatevent", {
+                userName: 'get',
+                message: "get"
+            });
+        },
         //动态布局
         layout(i) {
             switch (i) {
