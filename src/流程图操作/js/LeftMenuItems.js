@@ -70,7 +70,7 @@ const LeftMenus = (function () {
                 shapeItem.callback(_this.lf, _this.domContainer);
             }
             //设置拖动开始时也显示帮助信息
-            window.parent.postMessage({nodeHelpMsg : shapeItem.properties.helpMsg});
+            console.log(shapeItem.properties.helpMsg);
         };
         return el;
     };

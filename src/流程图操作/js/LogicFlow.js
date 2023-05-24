@@ -60,12 +60,17 @@ class SuanziModel extends RectNodeModel {
     }
 
     createId() {
-        let max=0
-        for(let node of this.graphModel.nodes){
-            if(node.id>max)
-                max=node.id
+
+        const idSet = new Set()
+        // find the smallest unused id
+        this.graphModel.nodes.forEach(node => {
+            idSet.add(node.id)
+        })
+        let id = 0
+        while (idSet.has(id.toString())) {
+            id++
         }
-        return (++max) + "";
+        return id.toString()
     }
 
     isAllowConnectedAsSource(target) { 
@@ -338,7 +343,7 @@ class MyGroup extends GroupNode.view {
 }
 
 
-import data from './operatorLib.json'
+import data from './newOperatorLib.json'
 import { mapState } from "vuex";
 const suanziItemList = data
 
@@ -363,14 +368,11 @@ export default {
             //赋值变量 算子和图形
             suanzis: suanziItemList,
             imgBase64: "",
-            //对话框UI
-            dialogUI: null,
-            //算子选中的方法名
-            modelID: "",
+            operator:{lfProperties:{name:""},models:[]},//{"lfPropertires":{"name":"图像滤波"...}...}
+            modelName:"",//"高斯"
             dialogVisible: false,
             formData: [],
             dialogControl: {}, // 左侧菜单栏对话跳窗控制
-            isDragging:false,
             dialogVisibleGV:false,
             tableData :[],
             tableForm:[],
@@ -397,6 +399,17 @@ export default {
         ...mapState([
             "timeConsume",
         ]),
+        modelProperties(){
+            let data=null
+            this.operator.models.forEach((item)=>{
+                if(item.lfProperties.name==this.modelName){
+                    data=item.properties
+                }
+
+            })
+            return data
+        },
+
     },
     watch:{
         timeConsume(newValue){
@@ -424,39 +437,42 @@ export default {
                     let str="<div>变量:&nbsp;"+evt.data.properties.modelID +`.${evt.data.id}`+ `.${x.varName}`+"&nbsp;&nbsp;&nbsp;;类型:&nbsp;"+`${x.varType}`+"</div>"
                     res+=str
                 }
-                if (this.isDragging) {
+
                     ElNotification({
                         title: '输出变量:',
                         dangerouslyUseHTMLString: true,
                         message: res,
                         duration: 2000,
                     })
-                }
+
             }
-        })
-        this.lf.on('node:dragstart', () => {
-            this.isDragging = false
-        })
-        this.lf.on('node:drop', () => {
-            this.isDragging = true
         })
         //设置节点点击事件监听, 修改帮助信息
         this.lf.on('node:click', (evt) => {
             let operator_array=suanziItemList[evt.data.properties.superName]
-            //默认方法名
-            let operator=operator_array.filter(function(elem){elem.})
+            //
+            operator_array.forEach((item)=>{
+                if (item.lfProperties.name==evt.data.properties.name)
+                    this.operator=item
+            })
+            console.log(this.operator)
+            this.modelName=evt.data.properties.modelName;
+            if(this.modelName==""&&this.operator.models.length>0)
+                this.modelName=this.operator.models[0].lfProperties.name
 
 
 
 
 
-            this.dialogUI=evt.data.properties.inPara
-            this.modelID=evt.data.properties.modelID
-            
-            this.formData = this.dialogUI.map(param => param.fromExpression)
+            //
+            // this.dialogUI=evt.data.properties.inPara
+            // this.modelID=evt.data.properties.modelID
+            //
+            this.formData = this.modelProperties.inPara.map(param => param.fromExpression)
 
             //刷新nodeModel
             this.nodeModel = this.lf.getNodeModelById(evt.data.id)
+            console.log(this.nodeModel)
             this.selectedAlgorithm = evt.data.id
             this.updateTimeConsuming();
             this.$store.commit('setVuexHelpInfo', this.nodeModel.getProperties().helpMsg)
@@ -663,48 +679,47 @@ export default {
                 }
 
             ])
-            // // 设置算子面板, 换成三级菜单后这段代码没用了, 初始化lf的时候设置stopMoveGraph为true就是默认框选
-            // var suanziItemListConcat = []
+            // 设置算子面板, 换成三级菜单后这段代码没用了, 初始化lf的时候设置stopMoveGraph为true就是默认框选
+            var suanziItemListConcat = []
 
-            // suanziItemList.models.forEach((i)=>{
-            //     i.models.forEach((j)=>{
-            //         this.dialogControl[j.lfProperties.name] = false
-            //         j.models.forEach((k) => {
-            //             var temp = {
-            //                 label : k.lfProperties.label,
-            //                 text : k.lfProperties.text,
-            //                 type : k.lfProperties.type,
-            //                 name : k.lfProperties.name,
-            //                 properties : k.properties,
-            //                 icon : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAEFVwZaAAAABGdBTUEAALGPC/xhBQAAAqlJREFUOBF9VM9rE0EUfrMJNUKLihGbpLGtaCOIR8VjQMGDePCgCCIiCNqzCAp2MyYUCXhUtF5E0D+g1t48qAd7CCLqQUQKEWkStcEfVGlLdp/fm3aW2QQdyLzf33zz5m2IsAZ9XhDpyaaIZkTS4ASzK41TFao88GuJ3hsr2pAbipHxuSYyKRugagICGANkfFnNh3HeE2N0b3nN2cgnpcictw5veJIzxmDamSlxxQZicq/mflxhbaH8BLRbuRwNtZp0JAhoplVRUdzmCe/vO27wFuuA3S5qXruGdboy5/PRGFsbFGKo/haRtQHIrM83bVeTrOgNhZReWaYGnE4aUQgTJNvijJFF4jQ8BxJE5xfKatZWmZcTQ+BVgh7s8SgPlCkcec4mGTmieTP4xd7PcpIEg1TX6gdeLW8rTVMVLVvb7ctXoH0Cydl2QOPJBG21STE5OsnbweVYzAnD3A7PVILuY0yiiyDwSm2g441r6rMSgp6iK42yqroI2QoXeJVeA+YeZSa47gZdXaZWQKTrG93rukk/l2Al6Kzh5AZEl7dDQy+JjgFahQjRopSxPbrbvK7GRe9ePWBo1wcU7sYrFZtavXALwGw/7Dnc50urrHJuTPSoO2IMV3gUQGNg87IbSOIY9BpiT9HV7FCZ94nPXb3MSnwHn/FFFE1vG6DTby+r31KAkUktB3Qf6ikUPWxW1BkXSPQeMHHiW0+HAd2GelJsZz1OJegCxqzl+CLVHa/IibuHeJ1HAKzhuDR+ymNaRFM+4jU6UWKXorRmbyqkq/D76FffevwdCp+jN3UAN/C9JRVTDuOxC/oh+EdMnqIOrlYteKSfadVRGLJFJPSB/ti/6K8f0CNymg/iH2gO/f0DwE0yjAFO6l8JaR5j0VPwPwfaYHqOqrCI319WzwhwzNW/aQAAAABJRU5ErkJggg=="
-            //             }
-            //             if(temp.label == "选区"){
-            //                 temp.callback = () => {
-            //                     //开启框选
-            //                     lf.openSelectionSelect()
-            //                     lf.once("selection:selected", (data) => {
-            //                         let result = { nodes: [], edges: [] }
-            //                         for (let x of data) {
-            //                             //通过id获得model
-            //                             let model = this.lf.getNodeModelById(x.id)
-            //                             //通过model获得data
-            //                             if (!model) {
-            //                                 model = this.lf.getEdgeModelById(x.id)
-            //                                 result.edges.push(model.getData())
-            //                             } else {
-            //                                 result.nodes.push(model.getData())
-            //                             }
-            //                         }
-            //                         this.selectedMSG = result
-            //                         console.log(this.selectedMSG)
-            //                     });
-            //                 }
-            //             }
-            //             suanziItemListConcat = suanziItemListConcat.concat(temp)
-            //         })
-            //     })
-            // })
-            // lf.extension.leftMenus.setPatternItems(suanziItemListConcat)
+
+            Object.entries(suanziItemList).forEach(([key_1, value_1])=>{
+                value_1.forEach((value_2)=>{
+                    var temp = {
+                        label : value_2.lfProperties.label,
+                        text : value_2.lfProperties.text,
+                        type : value_2.lfProperties.type,
+                        name : value_2.lfProperties.name,
+                        properties : value_2.properties,
+                        icon : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAEFVwZaAAAABGdBTUEAALGPC/xhBQAAAqlJREFUOBF9VM9rE0EUfrMJNUKLihGbpLGtaCOIR8VjQMGDePCgCCIiCNqzCAp2MyYUCXhUtF5E0D+g1t48qAd7CCLqQUQKEWkStcEfVGlLdp/fm3aW2QQdyLzf33zz5m2IsAZ9XhDpyaaIZkTS4ASzK41TFao88GuJ3hsr2pAbipHxuSYyKRugagICGANkfFnNh3HeE2N0b3nN2cgnpcictw5veJIzxmDamSlxxQZicq/mflxhbaH8BLRbuRwNtZp0JAhoplVRUdzmCe/vO27wFuuA3S5qXruGdboy5/PRGFsbFGKo/haRtQHIrM83bVeTrOgNhZReWaYGnE4aUQgTJNvijJFF4jQ8BxJE5xfKatZWmZcTQ+BVgh7s8SgPlCkcec4mGTmieTP4xd7PcpIEg1TX6gdeLW8rTVMVLVvb7ctXoH0Cydl2QOPJBG21STE5OsnbweVYzAnD3A7PVILuY0yiiyDwSm2g441r6rMSgp6iK42yqroI2QoXeJVeA+YeZSa47gZdXaZWQKTrG93rukk/l2Al6Kzh5AZEl7dDQy+JjgFahQjRopSxPbrbvK7GRe9ePWBo1wcU7sYrFZtavXALwGw/7Dnc50urrHJuTPSoO2IMV3gUQGNg87IbSOIY9BpiT9HV7FCZ94nPXb3MSnwHn/FFFE1vG6DTby+r31KAkUktB3Qf6ikUPWxW1BkXSPQeMHHiW0+HAd2GelJsZz1OJegCxqzl+CLVHa/IibuHeJ1HAKzhuDR+ymNaRFM+4jU6UWKXorRmbyqkq/D76FffevwdCp+jN3UAN/C9JRVTDuOxC/oh+EdMnqIOrlYteKSfadVRGLJFJPSB/ti/6K8f0CNymg/iH2gO/f0DwE0yjAFO6l8JaR5j0VPwPwfaYHqOqrCI319WzwhwzNW/aQAAAABJRU5ErkJggg=="
+                    }
+                    if(temp.label == "选区"){
+                        temp.callback = () => {
+                            //开启框选
+                            lf.openSelectionSelect()
+                            lf.once("selection:selected", (data) => {
+                                let result = { nodes: [], edges: [] }
+                                for (let x of data) {
+                                    //通过id获得model
+                                    let model = this.lf.getNodeModelById(x.id)
+                                    //通过model获得data
+                                    if (!model) {
+                                        model = this.lf.getEdgeModelById(x.id)
+                                        result.edges.push(model.getData())
+                                    } else {
+                                        result.nodes.push(model.getData())
+                                    }
+                                }
+                                this.selectedMSG = result
+                                console.log(this.selectedMSG)
+                            });
+                        }
+                    }
+                    suanziItemListConcat = suanziItemListConcat.concat(temp)
+                })
+            })
+
+            lf.extension.leftMenus.setPatternItems(suanziItemListConcat)
             // // 设置节点面板, 设置框选回调
             // suanziItemList['控制模块'][0].callback = () => {
             //     //开启框选
@@ -837,12 +852,18 @@ export default {
 
         },
         formDataSubmit() {
-            let inPara=this.dialogUI
+            let inPara=this.modelProperties.inPara
+            console.log(inPara)
             for(let i in inPara){
                 inPara[i].fromExpression=this.formData[i]
             }
             this.nodeModel.setProperties({
+                "modelName":this.modelName,
+                "helpMsg":this.modelProperties.helpMsg,
+                "dllPath":this.modelProperties.dllPath,
+                "modelID":this.modelProperties.modelID,
                 "inPara": inPara,
+                "outPara":this.modelProperties.outPara
             })
         },
         clear() {
