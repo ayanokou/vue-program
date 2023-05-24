@@ -54,6 +54,10 @@ class SuanziModel extends RectNodeModel {
         this.limit_edge = 1;
         this.current_edge = 0;
     }
+    setColor(){
+        let style = super.getNodeStyle();
+        style.stroke="red"
+    }
 
     createId() {
         let max=0
@@ -438,6 +442,14 @@ export default {
         })
         //设置节点点击事件监听, 修改帮助信息
         this.lf.on('node:click', (evt) => {
+            let operator_array=suanziItemList[evt.data.properties.superName]
+            //默认方法名
+            let operator=operator_array.filter(function(elem){elem.})
+
+
+
+
+
             this.dialogUI=evt.data.properties.inPara
             this.modelID=evt.data.properties.modelID
             
@@ -747,6 +759,12 @@ export default {
                     this.downloadXML()
                 }
             })
+            lf.extension.control.addItem({
+                text: "test",
+                onClick: () => {
+                    this.setColor()
+                }
+            })
 
 
             lf.render(this.tab.initLF)
@@ -754,6 +772,9 @@ export default {
             lf.extension.miniMap.show(position.domOverlayPosition.x, position.domOverlayPosition.y)
             this.lf = lf
 
+        },
+        setColor(){
+            this.nodeModel.setColor()
         },
         run(){
             let jsonObject = {

@@ -1,0 +1,189 @@
+{
+  "输入输出": [
+
+  ],
+  "图像匹配": [
+
+  ],
+  "图像处理": [
+    {
+      "lfProperties": {
+        "type": "operator",
+        "text": "图像滤波",
+        "label": "图像滤波",
+        "name": "图像滤波",
+        "icon": ""
+      },
+      "properties": {
+        "superName": "图像处理"
+      },
+      "models": [
+        {
+          "lfProperties": {
+            "name": "高斯"
+          },
+          "properties": {
+            "helpMsg": "it is a help message",
+            "dllPath": "server/src/main/resources/imgProc/imgFilter/GaussianBlur.dll",
+            "modelID": "gaussian_blur",
+            "inPara": [
+              {
+                "varName": "src",
+                "varType": "object",
+                "fromExpression": "",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              },
+              {
+                "varName": "ksize",
+                "varType": "Size",
+                "fromExpression": "",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              },
+              {
+                "varName": "sigmaX",
+                "varType": "double",
+                "fromExpression": "",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              },
+              {
+                "varName": "sigmaY",
+                "varType": "double",
+                "fromExpression": "",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              },
+              {
+                "varName": "borderType",
+                "varType": "int",
+                "fromExpression": "",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              }
+            ],
+            "outPara": [
+              {
+                "varName": "dst",
+                "varType": "Mat",
+                "varExplanation": ""
+              }
+            ]
+          }
+        },
+        {
+          "lfProperties": {
+            "name": "中值"
+          },
+          "properties": {
+            "dllPath": "server/src/main/resources/general.dll",
+            "modelID": "median_blur",
+            "inPara": [
+              {
+                "varName": "src",
+                "varType": "object",
+                "fromExpression": "",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              },
+              {
+                "varName": "ksize",
+                "varType": "int",
+                "fromExpression": "",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              }
+            ],
+            "outPara": [
+              {
+                "varName": "dst",
+                "varType": "object",
+                "varExplanation": ""
+              }
+            ]
+          }
+        },
+        {
+          "lfProperties": {
+            "name": "双边滤波"
+          },
+          "properties": {
+            "helpMsg": "it is a help message",
+            "dllPath": "server/src/main/resources/bilateralFilter.dll",
+            "modelID": "myBilateralFilter",
+            "inPara": [
+              {
+                "varName": "src",
+                "varType": "object",
+                "fromExpression": "",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              },
+              {
+                "varName": "d",
+                "varType": "int",
+                "fromExpression": "",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              },
+              {
+                "varName": "sigmaColor",
+                "varType": "double",
+                "fromExpression": "",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              },
+              {
+                "varName": "sigmaSpace",
+                "varType": "double",
+                "fromExpression": "",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              },
+              {
+                "varName": "borderType",
+                "varType": "int",
+                "fromExpression": "",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              }
+            ],
+            "outPara": [
+              {
+                "varName": "dst",
+                "varType": "Mat",
+                "varExplanation": ""
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+
+  "图像标定": [
+
+  ],
+  "图像测量": [
+
+  ],
+  "颜色处理": [
+
+  ],
+  "图像识别": [
+
+  ],
+  "空间解算": [
+
+  ],
+  "深度学习": [
+
+  ],
+  "高级功能": [
+
+  ],
+  "控制模块": [
+
+  ]
+}

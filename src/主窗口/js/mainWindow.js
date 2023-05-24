@@ -90,9 +90,9 @@ export default {
         //动态调整右半部分尺寸
         window.addEventListener('resize', this.dynamicRightHeight)
 
-        socket.on('revBase64', (data) => {
+        socket.on('revRunResult', (data) => {
             //先传递给FlowArea组件
-            this.$store.commit('setImgBase64',data)
+            this.$store.commit('setRunResult',data)
         })
         socket.on('revDoubles',(data)=>{
             //先传递给FlowArea组件
@@ -104,9 +104,9 @@ export default {
         socket.on('revTimeConsume',(data)=>{
             this.$store.commit('timeConsumeEvent', data);
         })
-        socket.on('revRects',(data)=>{
-            this.$store.commit('setModuleResultData', data);
-        })
+        // socket.on('revRects',(data)=>{
+        //     this.$store.commit('setModuleResultData', data);
+        // })
     },
     computed:{
         ...mapState(['socketEmit'])

@@ -60,23 +60,20 @@ public class DemoApplication {
 				FCListener listenerForCpp = new FCListener() {
 					@Override
 					public void onMessage(String event,String data) {
+						System.out.println(event);
+						System.out.println(data);
 						client.sendEvent(event,data);
 					}
 				};
 				//发送类
 				FCClient clientForCpp = new FCClient();
 
-
 				if (data.getUserName().equals("Flow")) {
 					//创建与cpp通讯类
 					//接听类
-
 					String result = data.getMessage();
 					//发送dll数据
 					clientForCpp.eventHandle(listenerForCpp, 2, result);
-
-
-
 				}
 				else if(data.getUserName().equals("new")){
 					String result = data.getMessage();
