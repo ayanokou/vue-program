@@ -1701,6 +1701,110 @@
               "models": []
             }
           ]
+        },
+        {
+          "lfProperties": {
+            "name": "直线拟合"
+          },
+          "properties": {},
+          "models": [
+            {
+              "lfProperties": {
+                "name": "fitLine",
+                "type": "operator",
+                "text": "直线拟合",
+                "label": "直线拟合"
+              },
+              "properties": {
+                "helpMsg": "it is a help message of GlobalVariable",
+                "dllPath": "server\\src\\main\\resources\\fitLine.dll",
+                "modelID": "myFitLine",
+                "inPara": [
+                  {
+                    "varName": "_points",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "distType",
+                    "varType": "int",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "param",
+                    "varType": "double",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "reps",
+                    "varType": "double",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "aeps",
+                    "varType": "double",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "_line",
+                    "varType": "OutputArray",
+                    "varExplanation": ""
+                  }
+                ]
+              },
+              "models": []
+            }
+          ]
+        },
+        {
+          "lfProperties": {
+            "name": "椭圆拟合"
+          },
+          "properties": {},
+          "models": [
+            {
+              "lfProperties": {
+                "name": "fitEllipse",
+                "type": "operator",
+                "text": "椭圆拟合",
+                "label": "椭圆拟合"
+              },
+              "properties": {
+                "helpMsg": "it is a help message of GlobalVariable",
+                "dllPath": "server\\src\\main\\resources\\fitEllipse.dll",
+                "modelID": "myFitEllipse",
+                "inPara": [
+                  {
+                    "varName": "_points",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "dst",
+                    "varType": "RotatedRect",
+                    "varExplanation": ""
+                  }
+                ]
+              },
+              "models": []
+            }
+          ]
         }
       ]
     },
