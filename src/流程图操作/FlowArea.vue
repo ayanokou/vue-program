@@ -55,6 +55,17 @@
         >
             <template #label>
                 {{ item.tabName }}
+
+                <el-button class="tab-button">
+                    <el-icon style="color:black;">
+                        <CaretRight />
+                    </el-icon>
+                </el-button>
+                <el-button class="tab-button">
+                    <el-icon style="color:black;">
+                        <Refresh />
+                    </el-icon>
+                </el-button>
             </template>
             <LogicFlow
                 ref="lfComponent"
@@ -455,6 +466,9 @@ export default {
 };
 </script>
 <style scoped>
+.el-button{
+    --el-button-hover-bg-color:rgb(121, 187, 255);
+}
 .demo-tabs.el-tabs.el-tabs--top.el-tabs--card{
     display: flex;
     flex-direction: column;
@@ -466,7 +480,12 @@ export default {
 .el-tabs.el-tabs--top.el-tabs--card.demo-tabs {
     height: 100%;
 }
-
+.tab-button:hover{
+    background-color:rgb(121, 187, 255)
+}
+.tab-button:active{
+    background-color:rgb(121, 187, 255)
+}
 
 .scroll-container {
   height: 300px;
