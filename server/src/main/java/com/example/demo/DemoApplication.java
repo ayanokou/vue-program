@@ -29,6 +29,8 @@ public class DemoApplication {
 		System.loadLibrary("opencv_core343");
 		System.loadLibrary("opencv_imgproc343");
 		System.loadLibrary("bilateralFilter");
+		System.loadLibrary("fitLine");
+		System.loadLibrary("fitEllipse");
 		System.loadLibrary("shadowcorrection");
 		System.loadLibrary("scratchDetection");
 		System.loadLibrary("uv");
