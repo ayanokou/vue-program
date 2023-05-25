@@ -53,10 +53,14 @@ class SuanziModel extends RectNodeModel {
         this.height = 80 * size
         this.limit_edge = 1;
         this.current_edge = 0;
+        this.node_stage = "init"
+        this.strokeWidth = 3
     }
-    setColor(){
+    
+    getNodeStyle(){
         let style = super.getNodeStyle();
-        style.stroke="red"
+        style.stroke=color[this.node_stage];
+        return style;
     }
 
     createId() {
@@ -346,7 +350,8 @@ class MyGroup extends GroupNode.view {
 import data from './newOperatorLib.json'
 import { mapState } from "vuex";
 const suanziItemList = data
-
+//节点状态颜色字典
+const color = {"init" : "blue", "running" : "green", "finished" : "gray", "error" : "red"}
 
 export default {
     name: 'FlowDemo',
@@ -472,6 +477,9 @@ export default {
 
             //刷新nodeModel
             this.nodeModel = this.lf.getNodeModelById(evt.data.id)
+
+            this.changeNodeStage(evt.data.id, "running") //改变节点状态 再节点类中getnodestyle方法中会根据状态改变节点颜色
+            
             console.log(this.nodeModel)
             this.selectedAlgorithm = evt.data.id
             this.updateTimeConsuming();
@@ -975,6 +983,12 @@ export default {
                     this.algorithmRunTime = algorithm.consume;
                 }
             }
+        },
+        //根据节点运行状态改变节点边的颜色 状态init running finished
+        //let color = {"init" : "blue", "running" : "green", "finished" : "gray"}
+        changeNodeStage(nodeId, stage){
+            let node = this.lf.getNodeModelById(nodeId)
+            node.node_stage = stage;
         }
 
     }

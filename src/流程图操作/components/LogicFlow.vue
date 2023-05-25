@@ -41,7 +41,7 @@
                             </el-icon>
                             {{key}}
                         </template>
-                        <el-menu-item-group>
+                        <el-menu-item-group class="second_left_menus_container">
                             <!--vue 插入元素-->
                             <el-menu-item v-for="(model_2, index2) in value" :index="'suanzi' + index1 + '-' + index2" :id="model_2.lfProperties.name">
                             </el-menu-item>
@@ -292,10 +292,11 @@
 
 /*设置样式 让按钮一行最多放三个*/
 .second_left_menus_container { 
-    width:327px;
+    width:288px;
+    user-select:none;
 }
 .second_left_menus {
-    width: 99px;
+    width: 80px;
 }
 
 .third_menus {
