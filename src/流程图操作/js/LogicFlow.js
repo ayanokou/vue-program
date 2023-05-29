@@ -21,18 +21,8 @@ import { MiniMap } from './MiniMap.js'
 import { eventHandle, events } from "../../sys/eventResponseController";
 import { ElNotification } from 'element-plus'
 
-
-
 LogicFlow.use(SelectionSelect);
 LogicFlow.use(Menu);
-const handleOpen = (key, keyPath) => {
-    console.log(key, keyPath)
-}
-const handleClose = (key, keyPath) => {
-    console.log(key, keyPath)
-}
-
-
 class MyCircleModel extends CircleNodeModel {
     getNodeStyle() {
         const style = super.getNodeStyle();
@@ -372,12 +362,11 @@ export default {
             selectedMSG: null,
             //赋值变量 算子和图形
             suanzis: suanziItemList,
-            imgBase64: "",
             operator:{lfProperties:{name:""},models:[]},//{"lfPropertires":{"name":"图像滤波"...}...}
             modelName:"",//"高斯"
             dialogVisible: false,
             formData: [],
-            dialogControl: {}, // 左侧菜单栏对话跳窗控制
+            //dialogControl: {}, // 左侧菜单栏对话跳窗控制
             dialogVisibleGV:false,
             tableData :[],
             tableForm:[],
@@ -452,8 +441,14 @@ export default {
 
             }
         })
+        this.lf.on('node:click',(evt)=>{
+            //刷新nodeModel
+            this.nodeModel = this.lf.getNodeModelById(evt.data.id)
+            this.selectedAlgorithm = evt.data.id
+            this.changeNodeStage(evt.data.id, "running") //改变节点状态 再节点类中getnodestyle方法中会根据状态改变节点颜色
+        })
         //设置节点点击事件监听, 修改帮助信息
-        this.lf.on('node:click', (evt) => {
+        this.lf.on('node:dbclick', (evt) => {
             let operator_array=suanziItemList[evt.data.properties.superName]
             //
             operator_array.forEach((item)=>{
@@ -465,22 +460,11 @@ export default {
             if(this.modelName==""&&this.operator.models.length>0)
                 this.modelName=this.operator.models[0].lfProperties.name
 
-
-
-
-
-            //
-            // this.dialogUI=evt.data.properties.inPara
-            // this.modelID=evt.data.properties.modelID
-            //
             this.formData = this.modelProperties.inPara.map(param => param.fromExpression)
 
             //刷新nodeModel
             this.nodeModel = this.lf.getNodeModelById(evt.data.id)
 
-            this.changeNodeStage(evt.data.id, "running") //改变节点状态 再节点类中getnodestyle方法中会根据状态改变节点颜色
-            
-            console.log(this.nodeModel)
             this.selectedAlgorithm = evt.data.id
             this.updateTimeConsuming();
             this.$store.commit('setVuexHelpInfo', this.nodeModel.getProperties().helpMsg)
@@ -497,6 +481,12 @@ export default {
             let e = document.getElementsByClassName('el-overlay-dialog')[0].parentNode
             e.style.width = '0px';
 
+        })
+
+        this.lf.on('node:dnd-add',(evt)=>{
+            console.log(evt.data)
+
+            this.lf.getNodeModelById(evt.data.id).updateText(evt.data.id+evt.data.text.value)
         })
 
         this.lf.on('edge:click', (evt) => {
@@ -750,12 +740,6 @@ export default {
             //     });
             // }
             lf.extension.control.addItem({
-                text: "运行",
-                onClick: () => {
-                    this.run()
-                }
-            })
-            lf.extension.control.addItem({
                 text: "保存流程",
                 onClick: () => {
                     let Name = prompt("请给要保存的流程图命名", "sln")
@@ -782,36 +766,25 @@ export default {
                     this.downloadXML()
                 }
             })
-            lf.extension.control.addItem({
-                text: "test",
-                onClick: () => {
-                    this.setColor()
-                }
-            })
-
-
             lf.render(this.tab.initLF)
             const position = lf.getPointByClient(document.documentElement.clientWidth / 2 - 150, document.documentElement.clientHeight - 230)
             lf.extension.miniMap.show(position.domOverlayPosition.x, position.domOverlayPosition.y)
             this.lf = lf
 
         },
-        setColor(){
-            this.nodeModel.setColor()
-        },
-        run(){
-            let jsonObject = {
-                userName: 'Flow',
-                message: JSON.stringify(this.lf.getGraphData())
-            }
-            let payload={
-                trigger:true,
-                mode:"chatevent",
-                data:jsonObject
-            }
-            this.isRan = true;
-            this.$store.commit("setSocketEmit",payload)
-        },
+        // run(){
+        //     let jsonObject = {
+        //         userName: 'Flow',
+        //         message: JSON.stringify(this.lf.getGraphData())
+        //     }
+        //     let payload={
+        //         trigger:true,
+        //         mode:"chatevent",
+        //         data:jsonObject
+        //     }
+        //     this.isRan = true;
+        //     this.$store.commit("setSocketEmit",payload)
+        // },
         loadFlowChart() {
             let inputObj = document.createElement('input');
             inputObj.type = 'file';

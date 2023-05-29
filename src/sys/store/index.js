@@ -21,10 +21,14 @@ export default createStore({
             flowAdd:false,
             timeConsume: "",
             //模块结果，树形数据
-            moduleResultData:"[]"
+            moduleResultData:"[]",
+            //流程运行结束信号
+            flowChartOK:{trigger:false,index:-1},
+            generalResult:""
         }
     },
     mutations:{
+
         setVuexHelpInfo(state,payload){
             state.vuexHelpInfo=payload
         },
@@ -65,8 +69,13 @@ export default createStore({
         },
         setModuleResultData(state,payload){
             state.moduleResultData=payload
+        },
+        setFlowChartOK(state,payload){
+            state.flowChartOK=payload
+        },
+        setGeneralResult(state,payload){
+            state.generalResult=payload
         }
-
     },
     modules:{
 

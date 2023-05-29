@@ -89,7 +89,19 @@ export default {
     mounted() {
         //动态调整右半部分尺寸
         window.addEventListener('resize', this.dynamicRightHeight)
+        socket.on('flowChartOK',(data)=>{
+            this.$store.commit('setFlowChartOK',{
+                trigger:true,
+                index:parseInt(data)
+            })
+        })
+        socket.on('revBase64',(data)=>{
 
+            this.$store.commit('setImgBase64',JSON.parse(data).content)
+        })
+        socket.on('revGeneral',(data)=>{
+            this.$store.commit('setGeneralResult',data)
+        })
         socket.on('revRunResult', (data) => {
             //先传递给FlowArea组件
             this.$store.commit('setRunResult',data)

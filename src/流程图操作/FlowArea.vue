@@ -56,7 +56,7 @@
             <template #label>
                 {{ item.tabName }}
 
-                <el-button class="tab-button">
+                <el-button  class="tab-button run-button" @click="run(item.index)">
                     <el-icon style="color:black;">
                         <CaretRight />
                     </el-icon>
@@ -131,9 +131,21 @@ export default {
             "saveSolutionAs",
             "open",
             "flowAdd",
+            "flowChartOK"
         ]),
     },
     watch: {
+        flowChartOK(newValue){
+            if(newValue.trigger){
+                let index=newValue.index
+                let run_button=document.getElementsByClassName('run-button')[index]
+                run_button.classList.remove('running')
+                run_button.classList.add('runover')
+
+
+                this.$store.commit('setFlowChartOK',{trigger:false,index:-1})
+            }
+        },
         newSolution(newValue) {
             if (newValue) {
                 //处理逻辑
@@ -358,7 +370,25 @@ export default {
         },
     },
 
-    methods: { 
+    methods: {
+        run(index){
+            let run_button=document.getElementsByClassName('run-button')[index]
+            run_button.classList.add('running');
+            let msg={
+                tabIndex:index,
+                content:this.$refs.lfComponent[index].lfData
+            }
+            let jsonObject = {
+                userName: 'Flow',
+                message: JSON.stringify(msg)
+            }
+            let payload={
+                trigger:true,
+                mode:"chatevent",
+                data:jsonObject
+            }
+            this.$store.commit("setSocketEmit",payload)
+        },
         openSomeSolution(item){
             this.openSolutionVisible = false
             //处理逻辑
@@ -466,6 +496,13 @@ export default {
 };
 </script>
 <style scoped>
+.running{
+    /*background-color: rgb(121, 187, 255);*/
+    background-color: red;
+}
+.runover{
+    background-color: white;
+}
 .el-button{
     --el-button-hover-bg-color:rgb(121, 187, 255);
 }

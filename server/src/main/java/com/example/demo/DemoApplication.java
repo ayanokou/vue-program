@@ -72,18 +72,9 @@ public class DemoApplication {
 					//创建与cpp通讯类
 					//接听类
 					String result = data.getMessage();
+					System.out.println(result);
 					//发送dll数据
-					clientForCpp.eventHandle(listenerForCpp, 2, result);
-				}
-				else if(data.getUserName().equals("new")){
-					String result = data.getMessage();
 					clientForCpp.eventHandle(listenerForCpp, 0, result);
-					System.out.println("new"+result);
-				}
-				else if(data.getUserName().equals("get")){
-					String result = data.getMessage();
-					clientForCpp.eventHandle(listenerForCpp, 3, result);
-					System.out.println("get"+result);
 				}
 				// test end
 //				else if (data.getUserName().equals("Pic")) {
