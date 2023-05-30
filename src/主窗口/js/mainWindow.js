@@ -90,9 +90,16 @@ export default {
         //动态调整右半部分尺寸
         window.addEventListener('resize', this.dynamicRightHeight)
         socket.on('flowChartOK',(data)=>{
+            console.log('in flow chart ok'+data)
             this.$store.commit('setFlowChartOK',{
                 trigger:true,
                 index:parseInt(data)
+            })
+        })
+        socket.on('run_state',(data)=>{
+            this.$store.commit('setRunState',{
+                trigger:true,
+                content:JSON.parse(data)
             })
         })
         socket.on('revBase64',(data)=>{
@@ -106,13 +113,7 @@ export default {
             //先传递给FlowArea组件
             this.$store.commit('setRunResult',data)
         })
-        socket.on('revDoubles',(data)=>{
-            //先传递给FlowArea组件
-            this.$store.commit('setRevDoubles',data)
-        })
-        socket.on('revStr',(data)=>{
-            console.log("this is string result:"+data);
-        })
+
         socket.on('revTimeConsume',(data)=>{
             this.$store.commit('timeConsumeEvent', data);
         })

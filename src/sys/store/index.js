@@ -24,11 +24,12 @@ export default createStore({
             moduleResultData:"[]",
             //流程运行结束信号
             flowChartOK:{trigger:false,index:-1},
-            generalResult:""
+            generalResult:"",
+            runState:{trigger:false,content:null},
+            runSolution:null
         }
     },
     mutations:{
-
         setVuexHelpInfo(state,payload){
             state.vuexHelpInfo=payload
         },
@@ -53,6 +54,9 @@ export default createStore({
         saveSolutionEvent(state, payload){
             state.saveSolution = payload
         },
+        runSolutionEvent(state,payload){
+            state.runSolution=payload
+        },
 
         setSocketEmit(state,payload){
             state.socketEmit=payload
@@ -75,6 +79,9 @@ export default createStore({
         },
         setGeneralResult(state,payload){
             state.generalResult=payload
+        },
+        setRunState(state,payload){
+            state.runState=payload
         }
     },
     modules:{

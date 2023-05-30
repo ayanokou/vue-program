@@ -78,7 +78,7 @@
                             <RefreshLeft />
                         </el-icon>
                     </el-menu-item>
-                    <el-menu-item title="单次运行" id="singleRun" index="3">
+                    <el-menu-item title="单次运行" id="singleRun" index="3" @click="sendEvent('runSolutionEvent')">
                         <el-icon style="color:aliceblue;">
                             <Right />
                         </el-icon>

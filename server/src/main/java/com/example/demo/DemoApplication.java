@@ -78,6 +78,11 @@ public class DemoApplication {
 					//发送dll数据
 					clientForCpp.eventHandle(listenerForCpp, 0, result);
 				}
+				else if(data.getUserName().equals("Solution")){
+					String result=data.getMessage();
+					System.out.println(result);
+					clientForCpp.eventHandle(listenerForCpp,1,result);
+				}
 				// test end
 //				else if (data.getUserName().equals("Pic")) {
 //

@@ -31,8 +31,6 @@
                             </el-button>
 
                         </el-space>
-
-
                     </el-sub-menu> -->
                     <el-sub-menu v-for="(value, key, index1) in suanzis" :index="index1">
                         <template #title>
@@ -43,14 +41,13 @@
                         </template>
                         <el-menu-item-group class="second_left_menus_container">
                             <!--vue 插入元素-->
-                            <el-menu-item v-for="(model_2, index2) in value" :index="'suanzi' + index1 + '-' + index2" :id="model_2.lfProperties.name">
+                            <el-menu-item v-for="(model_2, index2) in value" :index="'suanzi' + index1 + '-' + index2" :id="model_2.lfProperties.name+tab.index">
                             </el-menu-item>
                         </el-menu-item-group>
                     </el-sub-menu>
                 </el-menu>
         </el-scrollbar>
         </el-aside>
-
         <!--流程图区域-->
         <el-main ref="lfMain" style="height: 100%; padding: 0; overflow:hidden">
             <div id="runtime-container">

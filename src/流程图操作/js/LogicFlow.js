@@ -392,6 +392,7 @@ export default {
         },
         ...mapState([
             "timeConsume",
+            "runState"
         ]),
         modelProperties(){
             let data=null
@@ -406,12 +407,21 @@ export default {
 
     },
     watch:{
+        runState(newValue){
+            if(newValue.trigger){
+                if(newValue.content && newValue.content.tab_index==this.tab.index){
+                    console.log("in tab_index:"+this.tab.index)
+                    console.log(newValue.content)
+                    this.$store.commit('setRunState',{trigger:false,content:null})
+                }
+
+            }
+        },
         timeConsume(newValue){
-            console.log("curNodeId: " + this.nodeModel)
+            //console.log("curNodeId: " + this.nodeModel)
             this.timeRunTimeJson = JSON.parse(newValue);
             this.flowRunTime = this.timeRunTimeJson.totalConsuming;
             for(let algorithm of this.timeRunTimeJson.eachConsuming){
-                console.log("JsonNodeId: " + algorithm.id)
                 if(algorithm.id === this.selectedAlgorithm){
                     this.algorithmRunTime = algorithm.consume;
                 }
@@ -717,7 +727,7 @@ export default {
                 })
             })
 
-            lf.extension.leftMenus.setPatternItems(suanziItemListConcat)
+            lf.extension.leftMenus.setPatternItems(suanziItemListConcat,this.tab.index)
             // // 设置节点面板, 设置框选回调
             // suanziItemList['控制模块'][0].callback = () => {
             //     //开启框选
