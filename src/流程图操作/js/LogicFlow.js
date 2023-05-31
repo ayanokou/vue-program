@@ -482,7 +482,7 @@ export default {
             if(this.modelID=="GlobalVariable"){
                 this.dialogVisibleGV=true
             }
-            else if(this.modelID=="PersistVariable"){
+            else if(this.modelID=="PersistVariable"){f
                 this.dialogVisiblePersist=true
             }else{
                 this.dialogVisible = true

@@ -8,6 +8,7 @@
         "label": "文件输入"
       },
       "properties": {
+
         "superName": "输入输出",
         "name": "文件输入",
         "modelName": ""
@@ -1530,6 +1531,104 @@
               {
                 "varName": "dst",
                 "varType": "string",
+                "varExplanation": ""
+              }
+            ]
+          },
+          "models": []
+        }
+      ]
+    },
+    {
+      "lfProperties": {
+        "name": "位置检测",
+        "type": "operator",
+        "text": "位置检测",
+        "label": "positionDetect"
+      },
+      "properties": {
+        "superName": "深度学习",
+        "name": "位置检测",
+        "modelName": ""
+      },
+      "models": [
+        {
+          "lfProperties": {
+            "name": "position-detect"
+          },
+          "properties": {
+            "helpMsg": "it is a help message of GlobalVariable",
+            "dllPath": "server/src/main/resources/getPosition.dll",
+            "modelID": "getPosition",
+            "inPara": [
+              {
+                "varName": "r1",
+                "varType": "object",
+                "fromExpression": "",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              },
+              {
+                "varName": "r2",
+                "varType": "object",
+                "fromExpression": "",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              }
+            ],
+            "outPara": [
+              {
+                "varName": "dst",
+                "varType": "RotatedRect",
+                "varExplanation": ""
+              }
+            ]
+          },
+          "models": []
+        }
+      ]
+    },
+    {
+      "lfProperties": {
+        "name": "区域检测",
+        "type": "operator",
+        "text": "区域检测",
+        "label": "detectField"
+      },
+      "properties": {
+        "superName": "深度学习",
+        "name": "区域检测",
+        "modelName": ""
+      },
+      "models": [
+        {
+          "lfProperties": {
+            "name": "new_field_detect"
+          },
+          "properties": {
+            "helpMsg": "it is a help message of GlobalVariable",
+            "dllPath": "server/src/main/resources/detectField.dll",
+            "modelID": "detectField",
+            "inPara": [
+              {
+                "varName": "srcimg",
+                "varType": "object",
+                "fromExpression": "",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              },
+              {
+                "varName": "sticker_path",
+                "varType": "string",
+                "fromExpression": "",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              }
+            ],
+            "outPara": [
+              {
+                "varName": "dst",
+                "varType": "vector<RotatedRect>",
                 "varExplanation": ""
               }
             ]
