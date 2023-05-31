@@ -469,15 +469,21 @@ export default {
                 if (item.lfProperties.name==evt.data.properties.name)
                     this.operator=item
             })
-            console.log(this.operator)
-            this.modelName=evt.data.properties.modelName;
-            if(this.modelName==""&&this.operator.models.length>0)
-                this.modelName=this.operator.models[0].lfProperties.name
-
-            this.formData = this.modelProperties.inPara.map(param => param.fromExpression)
 
             //刷新nodeModel
             this.nodeModel = this.lf.getNodeModelById(evt.data.id)
+            //选择默认模型方法，如滤波默认选第一个模型：高斯
+            this.modelName=evt.data.properties.modelName;
+            if(this.modelName==""&&this.operator.models.length>0)
+                this.modelName=this.operator.models[0].lfProperties.name
+            //更新formData
+            if( this.nodeModel.getProperties().inPara)
+                this.formData = this.nodeModel.getProperties().inPara.map(param => param.fromExpression)
+            else
+                this.formData=[]
+
+
+
 
             this.selectedAlgorithm = evt.data.id
             this.updateTimeConsuming();
