@@ -44,12 +44,12 @@ class SuanziModel extends RectNodeModel {
         this.limit_edge = 1;
         this.current_edge = 0;
         this.node_stage = "init"
-        this.strokeWidth = 3
+        this.style.strokeWidth = 3
     }
     
     getNodeStyle(){
-        let style = super.getNodeStyle();
-        style.stroke=color[this.node_stage];
+        const style = super.getNodeStyle();
+        style.stroke = color[this.properties.state];
         return style;
     }
 
@@ -74,6 +74,7 @@ class SuanziModel extends RectNodeModel {
             return false;
     }
 }
+
 class noEdgeModel extends RectNodeModel {
     setAttributes() {
         const size = this.properties.scale || 1;
@@ -341,7 +342,7 @@ import data from './newOperatorLib.json'
 import { mapState } from "vuex";
 const suanziItemList = data
 //节点状态颜色字典
-const color = {"init" : "blue", "running" : "green", "finished" : "gray", "error" : "red"}
+const color = {"init" : "blue", "running" : "green", "success" : "gray", "error" : "red"}
 
 export default {
     name: 'FlowDemo',
@@ -412,6 +413,9 @@ export default {
                 if(newValue.content && newValue.content.tab_index==this.tab.index){
                     console.log("in tab_index:"+this.tab.index)
                     console.log(newValue.content)
+                    ////节点状态颜色字典
+                    //  const color = {"init" : "blue", "running" : "green", "success" : "gray", "error" : "red"}
+                    this.changeNodeStage(newValue.content.node_id, newValue.content.state) //改变节点状态 再节点类中getnodestyle方法中会根据状态改变节点颜色
                     this.$store.commit('setRunState',{trigger:false,content:null})
                 }
 
@@ -455,7 +459,7 @@ export default {
             //刷新nodeModel
             this.nodeModel = this.lf.getNodeModelById(evt.data.id)
             this.selectedAlgorithm = evt.data.id
-            this.changeNodeStage(evt.data.id, "running") //改变节点状态 再节点类中getnodestyle方法中会根据状态改变节点颜色
+            // this.changeNodeStage(evt.data.id, "running") //改变节点状态 再节点类中getnodestyle方法中会根据状态改变节点颜色
         })
         //设置节点点击事件监听, 修改帮助信息
         this.lf.on('node:dbclick', (evt) => {
@@ -556,7 +560,8 @@ export default {
                     size: 20,
                     visible: true // 是否可见
                 },
-                stopMoveGraph: true
+                stopMoveGraph: true,
+                nodeTextEdit : false, // 使得节点文本不可选
             })
 
             lf.extension.menu.setMenuConfig({
@@ -968,10 +973,10 @@ export default {
             }
         },
         //根据节点运行状态改变节点边的颜色 状态init running finished
-        //let color = {"init" : "blue", "running" : "green", "finished" : "gray"}
+        //let color = {"init" : "blue", "running" : "green", "success" : "gray", "error" : "red"}
         changeNodeStage(nodeId, stage){
             let node = this.lf.getNodeModelById(nodeId)
-            node.node_stage = stage;
+            node.properties.state = stage;
         }
 
     }
