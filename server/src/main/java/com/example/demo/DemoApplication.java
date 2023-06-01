@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Base64;
+import java.util.HashMap;
 
 import com.corundumstudio.socketio.listener.*;
 import com.corundumstudio.socketio.*;
@@ -16,6 +17,7 @@ import com.corundumstudio.socketio.*;
 public class DemoApplication {
 
 	private static String imgFormat;
+	private HashMap<Integer, Boolean> flags;
 
 	static {
 		String path1 = "server/src/main/resources";
@@ -29,6 +31,8 @@ public class DemoApplication {
 		System.loadLibrary("opencv_core343");
 		System.loadLibrary("opencv_imgproc343");
 		System.loadLibrary("bilateralFilter");
+		System.loadLibrary("fitLine");
+		System.loadLibrary("fitEllipse");
 		System.loadLibrary("shadowcorrection");
 		System.loadLibrary("scratchDetection");
 		System.loadLibrary("uv");
@@ -37,6 +41,10 @@ public class DemoApplication {
 		System.loadLibrary("tcpInFlow");
 		System.loadLibrary("tcpDll");
 		System.loadLibrary("clientSDK");
+	}
+
+	public boolean checkRunning(int port){
+		return flags.get(port);
 	}
 
 	public static void main(String[] args) {
@@ -54,23 +62,26 @@ public class DemoApplication {
 				FCListener listenerForCpp = new FCListener() {
 					@Override
 					public void onMessage(String event,String data) {
+						System.out.println(event);
+						System.out.println(data);
 						client.sendEvent(event,data);
 					}
 				};
 				//发送类
 				FCClient clientForCpp = new FCClient();
 
-
 				if (data.getUserName().equals("Flow")) {
 					//创建与cpp通讯类
 					//接听类
-
 					String result = data.getMessage();
+					System.out.println(result);
 					//发送dll数据
-					clientForCpp.eventHandle(listenerForCpp, 2, result);
-
-
-
+					clientForCpp.eventHandle(listenerForCpp, 0, result);
+				}
+				else if(data.getUserName().equals("Solution")){
+					String result=data.getMessage();
+					System.out.println(result);
+					clientForCpp.eventHandle(listenerForCpp,1,result);
 				}
 				// test end
 //				else if (data.getUserName().equals("Pic")) {

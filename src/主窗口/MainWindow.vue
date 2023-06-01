@@ -78,7 +78,7 @@
                             <RefreshLeft />
                         </el-icon>
                     </el-menu-item>
-                    <el-menu-item title="单次运行" id="singleRun" index="3">
+                    <el-menu-item title="单次运行" id="singleRun" index="3" @click="sendEvent('runSolutionEvent')">
                         <el-icon style="color:aliceblue;">
                             <Right />
                         </el-icon>
@@ -98,12 +98,12 @@
                             <CircleClose />
                         </el-icon>
                     </el-menu-item>
-                    <el-menu-item title="全局变量" id="globalVariable" index="7">
+                    <el-menu-item title="全局变量" id="globalVariable" index="7" @click="newInt()">
                         <el-icon style="color:aliceblue;">
                             <Notification />
                         </el-icon>
                     </el-menu-item>
-                    <el-menu-item title="全局触发" id="globalTrigger" index="8">
+                    <el-menu-item title="全局触发" id="globalTrigger" index="8" @click="getInt()">
                         <el-icon style="color:aliceblue;">
                             <ZoomOut />
                         </el-icon>
@@ -130,11 +130,13 @@
             </el-main>
         </el-container>
     </div>
+<!--    <GlobalVar :dialogVisible_gloabalVar=""></GlobalVar>-->
 
 </template>
 
 
 <script src="./js/mainWindow.js">
+//import GlobalVar from "./components/GlobalVar";
 
 </script>
 

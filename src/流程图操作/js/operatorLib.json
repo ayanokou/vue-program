@@ -395,7 +395,60 @@
         "name": "图像匹配"
       },
       "properties": {},
-      "models": []
+      "models": [
+        {
+          "lfProperties": {
+            "name": "轮廓比对"
+          },
+          "properties": {},
+          "models": [
+            {
+              "lfProperties": {
+                "name": "轮廓比对",
+                "type": "operator",
+                "text": "轮廓缺陷检测",
+                "label": "轮廓缺陷检测"
+              },
+              "properties": {
+                "helpMsg": "it is a help message of GlobalVariable",
+                "dllPath": "server/src/main/resources/General.dll/MatchContourShape.dll",
+                "modelID": "contourMatch",
+                "inPara": [
+                  {
+                    "varName": "standard image filename",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "detect image filename",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "threshold",
+                    "varType": "double",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "dst",
+                    "varType": "object",
+                    "varExplanation": ""
+                  }
+                ]
+              },
+              "models": []
+            }
+          ]
+        }
+      ]
     },
     {
       "lfProperties": {
@@ -1464,6 +1517,44 @@
         },
         {
           "lfProperties": {
+            "name": "亮度测量"
+          },
+          "properties": {},
+          "models": [
+            {
+              "lfProperties": {
+                "name": "亮度测量",
+                "type": "operator",
+                "text": "亮度测量",
+                "label": "亮度测量"
+              },
+              "properties": {
+                "helpMsg": "it is a help message of GlobalVariable",
+                "dllPath": "server/src/main/resources/General.dll/BrightnessMeasurement.dll",
+                "modelID": "brightnessMeasurement",
+                "inPara": [
+                  {
+                    "varName": "measured picture",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "dst",
+                    "varType": "object",
+                    "varExplanation": ""
+                  }
+                ]
+              },
+              "models": []
+            }
+          ]
+        },
+        {
+          "lfProperties": {
             "name": "直方图统计"
           },
           "properties": {},
@@ -1603,6 +1694,110 @@
                   {
                     "varName": "dst",
                     "varType": "vector<int>",
+                    "varExplanation": ""
+                  }
+                ]
+              },
+              "models": []
+            }
+          ]
+        },
+        {
+          "lfProperties": {
+            "name": "直线拟合"
+          },
+          "properties": {},
+          "models": [
+            {
+              "lfProperties": {
+                "name": "fitLine",
+                "type": "operator",
+                "text": "直线拟合",
+                "label": "直线拟合"
+              },
+              "properties": {
+                "helpMsg": "it is a help message of GlobalVariable",
+                "dllPath": "server\\src\\main\\resources\\fitLine.dll",
+                "modelID": "myFitLine",
+                "inPara": [
+                  {
+                    "varName": "_points",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "distType",
+                    "varType": "int",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "param",
+                    "varType": "double",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "reps",
+                    "varType": "double",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "aeps",
+                    "varType": "double",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "_line",
+                    "varType": "OutputArray",
+                    "varExplanation": ""
+                  }
+                ]
+              },
+              "models": []
+            }
+          ]
+        },
+        {
+          "lfProperties": {
+            "name": "椭圆拟合"
+          },
+          "properties": {},
+          "models": [
+            {
+              "lfProperties": {
+                "name": "fitEllipse",
+                "type": "operator",
+                "text": "椭圆拟合",
+                "label": "椭圆拟合"
+              },
+              "properties": {
+                "helpMsg": "it is a help message of GlobalVariable",
+                "dllPath": "server\\src\\main\\resources\\fitEllipse.dll",
+                "modelID": "myFitEllipse",
+                "inPara": [
+                  {
+                    "varName": "_points",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "dst",
+                    "varType": "RotatedRect",
                     "varExplanation": ""
                   }
                 ]

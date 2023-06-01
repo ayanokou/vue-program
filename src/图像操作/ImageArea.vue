@@ -28,6 +28,7 @@ const store = useStore()
 
 const imgBase64 = computed(() => store.state.imgBase64)
 
+
 // watch(imgBase64, (newVal, oldVal) => {
 //     if (showInPicWindow.value) {
 //         //canvas标签插入图片

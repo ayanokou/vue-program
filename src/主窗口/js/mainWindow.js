@@ -89,21 +89,37 @@ export default {
     mounted() {
         //动态调整右半部分尺寸
         window.addEventListener('resize', this.dynamicRightHeight)
+        socket.on('flowChartOK',(data)=>{
+            console.log('in flow chart ok'+data)
+            this.$store.commit('setFlowChartOK',{
+                trigger:true,
+                index:parseInt(data)
+            })
+        })
+        socket.on('run_state',(data)=>{
+            this.$store.commit('setRunState',{
+                trigger:true,
+                content:JSON.parse(data)
+            })
+        })
+        socket.on('revBase64',(data)=>{
 
-        socket.on('revBase64', (data) => {
+            this.$store.commit('setImgBase64',JSON.parse(data).content)
+        })
+        socket.on('revGeneral',(data)=>{
+            this.$store.commit('setGeneralResult',data)
+        })
+        socket.on('revRunResult', (data) => {
             //先传递给FlowArea组件
-            this.$store.commit('setImgBase64',data)
+            this.$store.commit('setRunResult',data)
         })
-        socket.on('revDoubles',(data)=>{
-            //先传递给FlowArea组件
-            this.$store.commit('setRevDoubles',data)
-        })
-        socket.on('revStr',(data)=>{
-            console.log("this is string result:"+data);
-        })
+
         socket.on('revTimeConsume',(data)=>{
             this.$store.commit('timeConsumeEvent', data);
         })
+        // socket.on('revRects',(data)=>{
+        //     this.$store.commit('setModuleResultData', data);
+        // })
     },
     computed:{
         ...mapState(['socketEmit'])
@@ -123,7 +139,18 @@ export default {
 
     },
     methods: {
-
+        newInt(){
+            socket.emit("chatevent", {
+                userName: 'new',
+                message: "new"
+            });
+        },
+        getInt(){
+            socket.emit("chatevent", {
+                userName: 'get',
+                message: "get"
+            });
+        },
         //动态布局
         layout(i) {
             switch (i) {
