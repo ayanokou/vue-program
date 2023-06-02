@@ -58,22 +58,25 @@
             <slot></slot>
         </el-main>
 
-        <el-dialog v-model="dialogVisible" :modal="false" :close-on-click-modal="false" :title="operator.lfProperties.name" width="50%"
+        <el-dialog v-model="dialogVisible" :modal="false" :close-on-click-modal="false" :title="operatorData.name" width="50%"
                    draggable>
             <el-form label-width="120px">
-                <el-form-item v-if="operator.models.length>1" label="类型">
+                <el-form-item v-if="operatorData.models.length>1" label="类型">
                     <el-select placeholder="选择类型" v-model="modelName">
-                        <el-option v-for="model in operator.models" :label="model.lfProperties.name" :key="model.lfProperties.name" :value="model.lfProperties.name">
+                        <el-option v-for="model in operatorData.models" :label="model.modelName" :key="model.modelName" :value="model.modelName">
                         </el-option>
                     </el-select>
                 </el-form-item>
 
-                <template v-for="model in operator.models">
-                    <el-form-item v-if="model.lfProperties.name==modelName" v-for="(item,index) in model.properties.inPara" :label="item.varName">
+
+
+
+                <template v-for="m in operatorData.models">
+                    <el-form-item v-if="m.modelName==modelName" v-for="(item,index) in m.inPara" :label="item.varName">
                         <div v-if="item.defineVarInputWay === 'directInputWay'">
                             <el-input v-model="formData[index]"/>
                         </div>
-                        <div v-if="item.defineVarInputWay === 'selectedInputWay'">
+                        <div v-if="item.defineVarInputWay === 'selectedInputWay'||item.defineVarInputWay === 'smartInputWay'">
                             <el-select v-model="formData[index]" placeholder="Select">
                                 <el-option
                                     v-for="(value,key) in item.comboList"
