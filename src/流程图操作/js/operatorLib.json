@@ -484,28 +484,28 @@
                   {
                     "varName": "ksize",
                     "varType": "Size",
-                    "fromExpression": "",
+                    "fromExpression": "3,3",
                     "defineVarInputWay": "directInputWay",
                     "varExplanation": ""
                   },
                   {
                     "varName": "sigmaX",
                     "varType": "double",
-                    "fromExpression": "",
+                    "fromExpression": "1",
                     "defineVarInputWay": "directInputWay",
                     "varExplanation": ""
                   },
                   {
                     "varName": "sigmaY",
                     "varType": "double",
-                    "fromExpression": "",
+                    "fromExpression": "1",
                     "defineVarInputWay": "directInputWay",
                     "varExplanation": ""
                   },
                   {
                     "varName": "borderType",
                     "varType": "int",
-                    "fromExpression": "",
+                    "fromExpression": "4",
                     "defineVarInputWay": "directInputWay",
                     "varExplanation": ""
                   }
@@ -534,14 +534,14 @@
                   {
                     "varName": "src",
                     "varType": "object",
-                    "fromExpression": "",
+                    "fromExpression": "5,5",
                     "defineVarInputWay": "directInputWay",
                     "varExplanation": ""
                   },
                   {
                     "varName": "ksize",
                     "varType": "int",
-                    "fromExpression": "",
+                    "fromExpression": "3,3",
                     "defineVarInputWay": "directInputWay",
                     "varExplanation": ""
                   }
