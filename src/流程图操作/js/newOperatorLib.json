@@ -421,7 +421,7 @@
               {
                 "varName": "sigmaY",
                 "varType": "double",
-                "fromExpression": "1",
+                "fromExpression": "0",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
               },

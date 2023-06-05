@@ -412,6 +412,7 @@ export default {
     watch:{
         //在对话框中监听修改模型,同时切换nodelModel也会触发
         modelName(newValue){
+            console.log("in watch modelName")
             if(this.operatorData.models){
                 //更新formData、outPara
                 let outPara
@@ -420,6 +421,7 @@ export default {
                     this.formData=this.nodeModel.getProperties().inPara.map(param=>param.fromExpression)
 
                 else
+                    console.log(this.operatorData)
                     this.formData=(this.operatorData.models.find(item=>item.modelName==newValue)).inPara.map(param=>param.fromExpression)
 
                 //this.operatorData.models.find(item=>item.modelName==newValue)
@@ -557,6 +559,8 @@ export default {
 
         this.lf.on('node:dnd-add',(evt)=>{
             this.nodeModel=this.lf.getNodeModelById(evt.data.id)
+            let array=suanziItemList[evt.data.properties.superName]
+            this.operatorData=(array.find(item=>item.lfProperties.name==evt.data.properties.name)).properties
             //更改text加序号
             this.nodeModel.updateText(evt.data.id+evt.data.text.value)
             //初始化模型和outPara
@@ -854,7 +858,7 @@ export default {
             lf.extension.control.addItem({
                 text: "测试",
                 onClick: () => {
-                    this.findInPara(0)
+
                 }
             })
             lf.render(this.tab.initLF)
@@ -877,18 +881,21 @@ export default {
         //     this.$store.commit("setSocketEmit",payload)
         // },
         findInPara(id) {
+            console.log('in findInPara')
             let set=new Set()
             let comboList={}
             let queue=[id]
             while(queue.length>0){
                 let targetid=queue.shift()
-                for(let edge of this.lfData.edges){
+
+                for(let edge of this.lf.getGraphData().edges){
                     if(edge.targetNodeId==targetid){
                         queue.push(edge.sourceNodeId)
                         set.add(edge.sourceNodeId)
                     }
                 }
             }
+            console.log(set.size)
 
             set.forEach(item=>{
                 let each_outPara=[]
@@ -900,6 +907,7 @@ export default {
                 }
 
             })
+
             set.clear()
             //获得model
             let model=this.operatorData.models.find(item=>item.modelName==this.modelName)
