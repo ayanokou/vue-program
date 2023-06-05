@@ -342,7 +342,7 @@ import data from './newOperatorLib.json'
 import { mapState } from "vuex";
 const suanziItemList = data
 //节点状态颜色字典
-const color = {"init" : "blue", "running" : "green", "success" : "gray", "error" : "red"}
+const color = {"init" : "blue", "running" : "gray", "success" : "green", "error" : "red"}
 
 export default {
     name: 'FlowDemo',
@@ -412,7 +412,7 @@ export default {
     watch:{
         //在对话框中监听修改模型,同时切换nodelModel也会触发
         modelName(newValue){
-            if(this.operatorData){
+            if(this.operatorData.models){
                 //更新formData、outPara
                 let outPara
                 //如果这个结点有inPara,就是提交过的，那么就从里面读
@@ -422,7 +422,7 @@ export default {
                 else
                     this.formData=(this.operatorData.models.find(item=>item.modelName==newValue)).inPara.map(param=>param.fromExpression)
 
-                this.operatorData.models.find(item=>item.modelName==newValue)
+                //this.operatorData.models.find(item=>item.modelName==newValue)
             }
        },
         // 'model.modelName':function(newValue,oldValue){
@@ -896,24 +896,31 @@ export default {
                     each_outPara=this.lf.getNodeModelById(item).getProperties().outPara
                 let text=this.lf.getNodeModelById(item).getData().text.value
                 for(let para of each_outPara){
-                    comboList[text+para.varName]=item.toString()+"."+para.varName+"#"+para.varType
+                    comboList[text+"."+para.varExplanation+"."+para.varName]=item.toString()+"."+para.varName+"#"+para.varType
                 }
 
             })
+            set.clear()
             //获得model
             let model=this.operatorData.models.find(item=>item.modelName==this.modelName)
             //获得inPara
             let inPara=JSON.parse(JSON.stringify(model.inPara))
             for(let p of model.inPara){
                 if(p.defineVarInputWay=="smartInputWay"){
-                    for(let i in comboList){
-                        let type=comboList[i].split('#')[1]
-                        if(type==p.varType)
+                    if(p.varType=="object"){
+                        for(let i in comboList)
                             p.comboList[i]=comboList[i].split('#')[0]
+
+                    }else{
+                        for(let i in comboList){
+                            let type=comboList[i].split('#')[1]
+                            if(type==p.varType)
+                                p.comboList[i]=comboList[i].split('#')[0]
+                        }
                     }
+
                 }
             }
-            return inPara
         },
         loadFlowChart() {
             let inputObj = document.createElement('input');

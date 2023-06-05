@@ -70,7 +70,8 @@
                 "varName": "object",
                 "varType": "object",
                 "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
                 "varExplanation": ""
               }
             ],
@@ -428,7 +429,16 @@
                 "varName": "borderType",
                 "varType": "int",
                 "fromExpression": "4",
-                "defineVarInputWay": "directInputWay",
+                "defineVarInputWay": "selectedInputWay",
+                "comboList": {
+                  "BORDER_CONSTANT": "0",
+                  "BORDER_REPLICATE": "1",
+                  "BORDER_REFLECT": "2",
+                  "BORDER_WRAP": "3",
+                  "BORDER_REFLECT_101": "4",
+                  "BORDER_TRANSPARENT": "5",
+                  "BORDER_ISOLATED": "16"
+                },
                 "varExplanation": ""
               }
             ],
