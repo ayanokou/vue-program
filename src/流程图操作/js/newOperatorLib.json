@@ -417,6 +417,63 @@
           }
         }
       ]
+    },
+    {
+      "lfProperties": {
+        "name": "多边形查找",
+        "type": "operator",
+        "text": "多边形查找",
+        "label": "多边形查找"
+      },
+
+      "properties": {
+        "state" : "init",
+        "superName": "图像匹配",
+        "name": "多边形查找",
+        "modelName": ""
+      },
+      "models": [
+        {
+          "lfProperties": {
+            "name": "多边形查找"
+          },
+          "properties": {
+            "helpMsg": "it is a help message of GlobalVariable",
+            "dllPath": "server/src/main/resources/PolygonDetect.dll",
+            "modelID": "polygonDetect",
+            "inPara": [
+              {
+                "varName": "srcImg",
+                "varType": "object",
+                "fromExpression": "",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": "输入的彩色图片"
+              },
+              {
+                "varName": "epsilon",
+                "varType": "double",
+                "fromExpression": "",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": "指定精度逼近多边形曲线"
+              },
+              {
+                "varName": "minAcreage",
+                "varType": "int",
+                "fromExpression": "",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": "面积筛选"
+              }
+            ],
+            "outPara": [
+              {
+                "varName": "contours_poly",
+                "varType": "vector<vector<Point>>",
+                "varExplanation": "每个多边形及其顶点"
+              }
+            ]
+          }
+        }
+      ]
     }
   ],
   "图像处理": [
@@ -1684,13 +1741,13 @@
     },
     {
       "lfProperties": {
-        "name": "pixesStatistics",
+        "name": "灰度像素统计",
         "type": "operator",
         "text": "像素统计",
         "label": "像素统计"
       },
       "properties": {
-        "name": "灰度图像素统计",
+        "name": "灰度像素统计",
         "state" : "init",
         "superName": "图像测量",
         "modelName": ""
