@@ -8,17 +8,12 @@
         "label": "文件输入"
       },
       "properties": {
-        "state" : "init",
+        "state": "init",
         "superName": "输入输出",
         "name": "文件输入",
-        "modelName": ""
-      },
-      "models": [
-        {
-          "lfProperties": {
-            "name": "文件输入"
-          },
-          "properties": {
+        "models": [
+          {
+            "modelName": "文件输入",
             "helpMsg": "it is a help message",
             "dllPath": "server/src/main/resources/general.dll",
             "modelID": "read",
@@ -50,8 +45,8 @@
               }
             ]
           }
-        }
-      ]
+        ]
+      }
     },
     {
       "lfProperties": {
@@ -61,17 +56,12 @@
         "name": "输出"
       },
       "properties": {
-        "state" : "init",
+        "state": "init",
         "superName": "输入输出",
         "name": "输出",
-        "modelName": "输出模块"
-      },
-      "models": [
-        {
-          "lfProperties": {
-            "name": "输出模块"
-          },
-          "properties": {
+        "models": [
+          {
+            "modelName": "输出模块",
             "helpMsg": "it is a help message",
             "dllPath": "server/src/main/resources/show.dll",
             "modelID": "show",
@@ -80,14 +70,15 @@
                 "varName": "object",
                 "varType": "object",
                 "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
                 "varExplanation": ""
               }
             ],
             "outPara": []
           }
-        }
-      ]
+        ]
+      }
     }
   ],
   "图像匹配": [
@@ -98,19 +89,13 @@
         "text": "轮廓缺陷检测",
         "label": "轮廓缺陷检测"
       },
-
       "properties": {
-        "state" : "init",
+        "state": "init",
         "superName": "图像匹配",
         "name": "轮廓比对",
-        "modelName": ""
-      },
-      "models": [
-        {
-          "lfProperties": {
-            "name": "轮廓比对"
-          },
-          "properties": {
+        "models": [
+          {
+            "modelName": "轮廓比对",
             "helpMsg": "it is a help message of GlobalVariable",
             "dllPath": "server/src/main/resources/General.dll/MatchContourShape.dll",
             "modelID": "contourMatch",
@@ -145,8 +130,8 @@
               }
             ]
           }
-        }
-      ]
+        ]
+      }
     },
     {
       "lfProperties": {
@@ -155,19 +140,13 @@
         "text": "最小二乘法",
         "label": "最小二乘法"
       },
-
       "properties": {
-        "state" : "init",
+        "state": "init",
         "superName": "图像匹配",
         "name": "最小二乘法",
-        "modelName": ""
-      },
-      "models": [
-        {
-          "lfProperties": {
-            "name": "最小二乘法拟合直线"
-          },
-          "properties": {
+        "models": [
+          {
+            "modelName": "最小二乘法拟合直线",
             "helpMsg": "it is a help message of GlobalVariable",
             "dllPath": "server/src/main/resources/LeastSquares.dll",
             "modelID": "fitLine_leastSquare",
@@ -176,27 +155,28 @@
                 "varName": "points",
                 "varType": "vector<Point>",
                 "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
                 "varExplanation": ""
               },
               {
                 "varName": "param",
                 "varType": "double",
-                "fromExpression": "",
+                "fromExpression": "0",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
               },
               {
                 "varName": "reps",
                 "varType": "double",
-                "fromExpression": "",
+                "fromExpression": "0.01",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
               },
               {
                 "varName": "aeps",
                 "varType": "double",
-                "fromExpression": "",
+                "fromExpression": "0.01",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
               }
@@ -208,22 +188,19 @@
                 "varExplanation": " 四个值分别表示 斜率k = line_para[0] / line_para[1]; 直线上一点(line_para[3], line_para[2])"
               }
             ]
-          }
-        },
-        {
-          "lfProperties": {
-            "name": "最小二乘法找直线"
           },
-          "properties": {
+          {
+            "modelName": "最小二乘法找直线",
             "helpMsg": "it is a help message of GlobalVariable",
             "dllPath": "server/src/main/resources/LeastSquares.dll",
             "modelID": "find_line_leastSquare",
             "inPara": [
               {
                 "varName": "src",
-                "varType": "object",
+                "varType": "Mat",
                 "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
                 "varExplanation": "canny处理后的二值图片"
               }
             ],
@@ -239,13 +216,9 @@
                 "varExplanation": ""
               }
             ]
-          }
-        },
-        {
-          "lfProperties": {
-            "name": "最小二乘法拟合圆"
           },
-          "properties": {
+          {
+            "modelName": "最小二乘法拟合圆",
             "helpMsg": "it is a help message of GlobalVariable",
             "dllPath": "server/src/main/resources/LeastSquares.dll",
             "modelID": "fitLine_leastSquare",
@@ -254,7 +227,8 @@
                 "varName": "points",
                 "varType": "vector<Point2f>",
                 "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
                 "varExplanation": ""
               }
             ],
@@ -265,22 +239,19 @@
                 "varExplanation": " 返回结果float向量 前两个数表示圆心 第三个数表示半径"
               }
             ]
-          }
-        },
-        {
-          "lfProperties": {
-            "name": "最小二乘法找圆"
           },
-          "properties": {
+          {
+            "modelName": "最小二乘法找圆",
             "helpMsg": "it is a help message of GlobalVariable",
             "dllPath": "server/src/main/resources/LeastSquares.dll",
             "modelID": "find_circle_leastSquare",
             "inPara": [
               {
                 "varName": "src",
-                "varType": "object",
+                "varType": "Mat",
                 "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
                 "varExplanation": "canny处理后的二值图片"
               }
             ],
@@ -297,8 +268,8 @@
               }
             ]
           }
-        }
-      ]
+        ]
+      }
     },
     {
       "lfProperties": {
@@ -307,19 +278,13 @@
         "text": "Ransac",
         "label": "Ransac"
       },
-
       "properties": {
-        "state" : "init",
+        "state": "init",
         "superName": "图像匹配",
         "name": "Ransac",
-        "modelName": ""
-      },
-      "models": [
-        {
-          "lfProperties": {
-            "name": "Ransac拟合直线"
-          },
-          "properties": {
+        "models": [
+          {
+            "modelName": "Ransac拟合直线",
             "helpMsg": "it is a help message of GlobalVariable",
             "dllPath": "server/src/main/resources/Ransac.dll",
             "modelID": "fitLine_Ransac",
@@ -328,34 +293,35 @@
                 "varName": "points",
                 "varType": "cv::Point2f",
                 "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
                 "varExplanation": ""
               },
               {
                 "varName": "iterations",
                 "varType": "int",
-                "fromExpression": "",
+                "fromExpression": "1000",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
               },
               {
                 "varName": "sigma",
                 "varType": "double",
-                "fromExpression": "",
+                "fromExpression": "5",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
               },
               {
                 "varName": "k_min",
                 "varType": "double",
-                "fromExpression": "",
+                "fromExpression": "-7",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
               },
               {
                 "varName": "k_max",
                 "varType": "double",
-                "fromExpression": "",
+                "fromExpression": "-7",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
               }
@@ -367,13 +333,9 @@
                 "varExplanation": " 四个值分别表示 斜率k = line_para[0] / line_para[1]; 直线上一点(line_para[3], line_para[2])"
               }
             ]
-          }
-        },
-        {
-          "lfProperties": {
-            "name": "Ransac拟合圆"
           },
-          "properties": {
+          {
+            "modelName": "Ransac拟合圆",
             "helpMsg": "it is a help message of GlobalVariable",
             "dllPath": "server/src/main/resources/Ransac.dll",
             "modelID": "fitCircle_Ransac",
@@ -388,21 +350,21 @@
               {
                 "varName": "inlier_threshold",
                 "varType": "float",
-                "fromExpression": "",
+                "fromExpression": "5",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
               },
               {
                 "varName": "iterate_nums",
                 "varType": "int",
-                "fromExpression": "",
+                "fromExpression": "500",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
               },
               {
                 "varName": "sample_points_min_distance",
                 "varType": "float",
-                "fromExpression": "",
+                "fromExpression": "5",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
               }
@@ -415,8 +377,8 @@
               }
             ]
           }
-        }
-      ]
+        ]
+      }
     },
     {
       "lfProperties": {
@@ -425,41 +387,36 @@
         "text": "多边形查找",
         "label": "多边形查找"
       },
-
       "properties": {
-        "state" : "init",
+        "state": "init",
         "superName": "图像匹配",
         "name": "多边形查找",
-        "modelName": ""
-      },
-      "models": [
-        {
-          "lfProperties": {
-            "name": "多边形查找"
-          },
-          "properties": {
+        "models": [
+          {
+            "modelName": "多边形查找",
             "helpMsg": "it is a help message of GlobalVariable",
             "dllPath": "server/src/main/resources/PolygonDetect.dll",
             "modelID": "polygonDetect",
             "inPara": [
               {
                 "varName": "srcImg",
-                "varType": "object",
+                "varType": "Mat",
                 "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
                 "varExplanation": "输入的彩色图片"
               },
               {
                 "varName": "epsilon",
                 "varType": "double",
-                "fromExpression": "",
+                "fromExpression": "8",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": "指定精度逼近多边形曲线"
               },
               {
                 "varName": "minAcreage",
                 "varType": "int",
-                "fromExpression": "",
+                "fromExpression": "2000",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": "面积筛选"
               }
@@ -472,8 +429,8 @@
               }
             ]
           }
-        }
-      ]
+        ]
+      }
     }
   ],
   "图像处理": [
@@ -485,54 +442,59 @@
         "name": "图像滤波"
       },
       "properties": {
-        "state" : "init",
+        "state": "init",
         "superName": "图像处理",
         "name": "图像滤波",
-        "modelName": ""
-      },
-      "models": [
-        {
-          "lfProperties": {
-            "name": "高斯"
-          },
-          "properties": {
-            "helpMsg": "it is a help message",
+        "models": [
+          {
+            "modelName": "高斯",
+            "helpMsg": "it is a help msg",
             "dllPath": "server/src/main/resources/imgProc/imgFilter/GaussianBlur.dll",
             "modelID": "gaussian_blur",
             "inPara": [
               {
                 "varName": "src",
-                "varType": "object",
+                "varType": "Mat",
                 "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
                 "varExplanation": ""
               },
               {
                 "varName": "ksize",
                 "varType": "Size",
-                "fromExpression": "",
+                "fromExpression": "3,3",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
               },
               {
                 "varName": "sigmaX",
                 "varType": "double",
-                "fromExpression": "",
+                "fromExpression": "1",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
               },
               {
                 "varName": "sigmaY",
                 "varType": "double",
-                "fromExpression": "",
+                "fromExpression": "0",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
               },
               {
                 "varName": "borderType",
                 "varType": "int",
-                "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
+                "fromExpression": "4",
+                "defineVarInputWay": "selectedInputWay",
+                "comboList": {
+                  "BORDER_CONSTANT": "0",
+                  "BORDER_REPLICATE": "1",
+                  "BORDER_REFLECT": "2",
+                  "BORDER_WRAP": "3",
+                  "BORDER_REFLECT_101": "4",
+                  "BORDER_TRANSPARENT": "5",
+                  "BORDER_ISOLATED": "16"
+                },
                 "varExplanation": ""
               }
             ],
@@ -540,16 +502,12 @@
               {
                 "varName": "dst",
                 "varType": "Mat",
-                "varExplanation": ""
+                "varExplanation": "高斯滤波后的图像"
               }
             ]
-          }
-        },
-        {
-          "lfProperties": {
-            "name": "中值"
           },
-          "properties": {
+          {
+            "modelName": "中值",
             "dllPath": "server/src/main/resources/general.dll",
             "modelID": "median_blur",
             "inPara": [
@@ -557,13 +515,13 @@
                 "varName": "src",
                 "varType": "object",
                 "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
+                "defineVarInputWay": "smartInputWay",
                 "varExplanation": ""
               },
               {
                 "varName": "ksize",
                 "varType": "int",
-                "fromExpression": "",
+                "fromExpression": "5,5",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
               }
@@ -572,16 +530,12 @@
               {
                 "varName": "dst",
                 "varType": "object",
-                "varExplanation": ""
+                "varExplanation": "中值滤波后的图像"
               }
             ]
-          }
-        },
-        {
-          "lfProperties": {
-            "name": "双边滤波"
           },
-          "properties": {
+          {
+            "modelName": "双边滤波",
             "helpMsg": "it is a help message",
             "dllPath": "server/src/main/resources/bilateralFilter.dll",
             "modelID": "myBilateralFilter",
@@ -626,12 +580,12 @@
               {
                 "varName": "dst",
                 "varType": "Mat",
-                "varExplanation": ""
+                "varExplanation": "双边滤波后的图像"
               }
             ]
           }
-        }
-      ]
+        ]
+      }
     },
     {
       "lfProperties": {
@@ -641,17 +595,12 @@
         "label": "阴影校正"
       },
       "properties": {
-        "state" : "init",
+        "state": "init",
         "superName": "图像处理",
         "name": "阴影校正",
-        "modelName": ""
-      },
-      "models": [
-        {
-          "lfProperties": {
-            "name": "阴影校正"
-          },
-          "properties": {
+        "models": [
+          {
+            "modelName": "阴影校正",
             "helpMsg": "it is a help message",
             "dllPath": "server/src/main/resources/shadowcorrection.dll",
             "modelID": "myShadowCorrection",
@@ -678,10 +627,9 @@
                 "varExplanation": ""
               }
             ]
-          },
-          "models": []
-        }
-      ]
+          }
+        ]
+      }
     },
     {
       "lfProperties": {
@@ -691,17 +639,12 @@
         "label": "二值化"
       },
       "properties": {
-        "state" : "init",
+        "state": "init",
         "superName": "图像处理",
         "name": "二值化",
-        "modelName": ""
-      },
-      "models": [
-        {
-          "lfProperties": {
-            "name": "threshold"
-          },
-          "properties": {
+        "models": [
+          {
+            "modelName": "threshold",
             "dllPath": "server/src/main/resources/imgProc/imgBinary/Threshold.dll",
             "modelID": "threshold",
             "inPara": [
@@ -741,13 +684,9 @@
                 "varExplanation": ""
               }
             ]
-          }
-        },
-        {
-          "lfProperties": {
-            "name": "基于区域二值化"
           },
-          "properties": {
+          {
+            "modelName": "基于区域二值化",
             "dllPath": "server/src/main/resources/imgProc/imgBinary/RegionGrow.dll",
             "modelID": "regionGrow_threshold",
             "inPara": [
@@ -781,8 +720,8 @@
               }
             ]
           }
-        }
-      ]
+        ]
+      }
     },
     {
       "lfProperties": {
@@ -792,17 +731,12 @@
         "label": "形态学操作"
       },
       "properties": {
-        "state" : "init",
+        "state": "init",
         "superName": "图像处理",
         "name": "形态学操作",
-        "modelName": ""
-      },
-      "models": [
-        {
-          "lfProperties": {
-            "name": "开运算"
-          },
-          "properties": {
+        "models": [
+          {
+            "modelName": "开运算",
             "dllPath": "server/src/main/resources/general.dll",
             "modelID": "morph_open",
             "inPara": [
@@ -828,13 +762,9 @@
                 "varExplanation": ""
               }
             ]
-          }
-        },
-        {
-          "lfProperties": {
-            "name": "闭运算"
           },
-          "properties": {
+          {
+            "modelName": "闭运算",
             "dllPath": "server/src/main/resources/general.dll",
             "modelID": "morph_close",
             "inPara": [
@@ -861,8 +791,8 @@
               }
             ]
           }
-        }
-      ]
+        ]
+      }
     },
     {
       "lfProperties": {
@@ -872,39 +802,35 @@
         "label": "边缘检测"
       },
       "properties": {
-        "state" : "init",
+        "state": "init",
         "superName": "图像处理",
         "name": "边缘检测",
-        "modelName": ""
-      },
-      "models": [
-        {
-          "lfProperties": {
-            "name": "canny边缘检测"
-          },
-          "properties": {
+        "models": [
+          {
+            "modelName": "canny边缘检测",
             "helpMsg": "it is a help message",
             "dllPath": "server/src/main/resources/EdgeDetect.dll",
             "modelID": "edgeDetectCanny",
             "inPara": [
               {
                 "varName": "src",
-                "varType": "object",
+                "varType": "Mat",
                 "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
                 "varExplanation": "输入灰度图片"
               },
               {
                 "varName": "lowthresHold",
                 "varType": "double",
-                "fromExpression": "",
+                "fromExpression": "40",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
               },
               {
                 "varName": "highthresHold",
                 "varType": "double",
-                "fromExpression": "",
+                "fromExpression": "200",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
               }
@@ -916,13 +842,9 @@
                 "varExplanation": ""
               }
             ]
-          }
-        },
-        {
-          "lfProperties": {
-            "name": "找轮廓"
           },
-          "properties": {
+          {
+            "modelName": "找轮廓",
             "dllPath": "server/src/main/resources/general.dll",
             "modelID": "find_contours",
             "inPara": [
@@ -941,13 +863,9 @@
                 "varExplanation": ""
               }
             ]
-          }
-        },
-        {
-          "lfProperties": {
-            "name": "画轮廓"
           },
-          "properties": {
+          {
+            "modelName": "画轮廓",
             "dllPath": "server/src/main/resources/general.dll",
             "modelID": "draw_contours",
             "inPara": [
@@ -973,13 +891,9 @@
                 "varExplanation": ""
               }
             ]
-          }
-        },
-        {
-          "lfProperties": {
-            "name": "选轮廓"
           },
-          "properties": {
+          {
+            "modelName": "选轮廓",
             "dllPath": "server/src/main/resources/general.dll",
             "modelID": "select_contour",
             "inPara": [
@@ -1005,13 +919,9 @@
                 "varExplanation": ""
               }
             ]
-          }
-        },
-        {
-          "lfProperties": {
-            "name": "找最小面积外接矩形"
           },
-          "properties": {
+          {
+            "modelName": "找最小面积外接矩形",
             "dllPath": "server/src/main/resources/general.dll",
             "modelID": "min_area_rect",
             "inPara": [
@@ -1030,13 +940,9 @@
                 "varExplanation": ""
               }
             ]
-          }
-        },
-        {
-          "lfProperties": {
-            "name": "找矩形角点"
           },
-          "properties": {
+          {
+            "modelName": "找矩形角点",
             "dllPath": "server/src/main/resources/general.dll",
             "modelID": "box_points",
             "inPara": [
@@ -1055,13 +961,9 @@
                 "varExplanation": ""
               }
             ]
-          }
-        },
-        {
-          "lfProperties": {
-            "name": "轮廓转轮廓数组"
           },
-          "properties": {
+          {
+            "modelName": "轮廓转轮廓数组",
             "dllPath": "server/src/main/resources/general.dll",
             "modelID": "contour_to_contours",
             "inPara": [
@@ -1081,8 +983,8 @@
               }
             ]
           }
-        }
-      ]
+        ]
+      }
     },
     {
       "lfProperties": {
@@ -1092,17 +994,12 @@
         "label": "仿射变换"
       },
       "properties": {
-        "state" : "init",
+        "state": "init",
         "superName": "图像处理",
         "name": "仿射变换",
-        "modelName": ""
-      },
-      "models": [
-        {
-          "lfProperties": {
-            "name": "仿射变换"
-          },
-          "properties": {
+        "models": [
+          {
+            "modelName": "仿射变换",
             "dllPath": "server/src/main/resources/general.dll",
             "modelID": "warp_affine",
             "inPara": [
@@ -1135,13 +1032,9 @@
                 "varExplanation": ""
               }
             ]
-          }
-        },
-        {
-          "lfProperties": {
-            "name": "获得2D旋转矩阵"
           },
-          "properties": {
+          {
+            "modelName": "获得2D旋转矩阵",
             "dllPath": "server/src/main/resources/general.dll",
             "modelID": "get_rotation_matrix_2d",
             "inPara": [
@@ -1175,8 +1068,8 @@
               }
             ]
           }
-        }
-      ]
+        ]
+      }
     },
     {
       "lfProperties": {
@@ -1186,17 +1079,12 @@
         "label": "基本变换"
       },
       "properties": {
-        "state" : "init",
+        "state": "init",
         "superName": "图像处理",
         "name": "基本变换",
-        "modelName": ""
-      },
-      "models": [
-        {
-          "lfProperties": {
-            "name": "翻转"
-          },
-          "properties": {
+        "models": [
+          {
+            "modelName": "翻转",
             "dllPath": "server/src/main/resources/general.dll",
             "modelID": "flip",
             "inPara": [
@@ -1222,13 +1110,9 @@
                 "varExplanation": ""
               }
             ]
-          }
-        },
-        {
-          "lfProperties": {
-            "name": "缩放"
           },
-          "properties": {
+          {
+            "modelName": "缩放",
             "dllPath": "server/src/main/resources/general.dll",
             "modelID": "resize",
             "inPara": [
@@ -1254,13 +1138,9 @@
                 "varExplanation": ""
               }
             ]
-          }
-        },
-        {
-          "lfProperties": {
-            "name": "裁切"
           },
-          "properties": {
+          {
+            "modelName": "裁切",
             "dllPath": "server/src/main/resources/general.dll",
             "modelID": "crop",
             "inPara": [
@@ -1308,8 +1188,8 @@
               }
             ]
           }
-        }
-      ]
+        ]
+      }
     },
     {
       "lfProperties": {
@@ -1319,66 +1199,62 @@
         "label": "霍夫变换"
       },
       "properties": {
-        "state" : "init",
+        "state": "init",
         "superName": "图像处理",
         "name": "霍夫检测",
-        "modelName": ""
-      },
-      "models": [
-        {
-          "lfProperties": {
-            "name": "基本霍夫变换检测直线"
-          },
-          "properties": {
+        "models": [
+          {
+            "modelName": "基本霍夫变换检测直线",
             "dllPath": "server/src/main/resources/DetectHough.dll",
             "modelID": "lines_detect_Hough",
             "inPara": [
               {
                 "varName": "src",
-                "varType": "object",
+                "varType": "Mat",
                 "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
                 "varExplanation": ""
               },
               {
                 "varName": "rho",
                 "varType": "double",
-                "fromExpression": "",
+                "fromExpression": "1",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
               },
               {
                 "varName": "theta",
                 "varType": "double",
-                "fromExpression": "",
+                "fromExpression": "0.0174",
                 "defineVarInputWay": "directInputWay",
-                "varExplanation": ""
+                "varExplanation": "3.14 / 180"
               },
               {
                 "varName": "threshold",
                 "varType": "double",
-                "fromExpression": "",
+                "fromExpression": "130",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
               },
               {
                 "varName": "srn",
                 "varType": "double",
-                "fromExpression": "",
+                "fromExpression": "0",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
               },
               {
                 "varName": "stn",
                 "varType": "double",
-                "fromExpression": "",
+                "fromExpression": "0",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
               },
               {
                 "varName": "min_theta",
                 "varType": "double",
-                "fromExpression": "",
+                "fromExpression": "0",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
               },
@@ -1387,7 +1263,7 @@
                 "varType": "double",
                 "fromExpression": "",
                 "defineVarInputWay": "directInputWay",
-                "varExplanation": ""
+                "varExplanation": "3.14"
               }
             ],
             "outPara": [
@@ -1397,55 +1273,52 @@
                 "varExplanation": ""
               }
             ]
-          }
-        },
-        {
-          "lfProperties": {
-            "name": "概率式霍夫检测直线"
           },
-          "properties": {
+          {
+            "modelName": "概率式霍夫检测直线",
             "dllPath": "server/src/main/resources/DetectHough.dll",
             "modelID": "linesP_detect_Hough",
             "inPara": [
               {
                 "varName": "src",
-                "varType": "object",
+                "varType": "Mat",
                 "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
                 "varExplanation": ""
               },
               {
                 "varName": "rho",
                 "varType": "double",
-                "fromExpression": "",
+                "fromExpression": "1",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
               },
               {
                 "varName": "theta",
                 "varType": "double",
-                "fromExpression": "",
+                "fromExpression": "0.0174",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
               },
               {
                 "varName": "threshold",
                 "varType": "double",
-                "fromExpression": "",
+                "fromExpression": "10",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
               },
               {
                 "varName": "minLineLength",
                 "varType": "double",
-                "fromExpression": "",
+                "fromExpression": "0",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
               },
               {
                 "varName": "maxGap",
                 "varType": "double",
-                "fromExpression": "",
+                "fromExpression": "10",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
               }
@@ -1457,69 +1330,66 @@
                 "varExplanation": ""
               }
             ]
-          }
-        },
-        {
-          "lfProperties": {
-            "name": "霍夫检测圆"
           },
-          "properties": {
+          {
+            "modelName": "霍夫检测圆",
             "dllPath": "server/src/main/resources/DetectHough.dll",
             "modelID": "circles_detect_Hough",
             "inPara": [
               {
                 "varName": "src",
-                "varType": "object",
+                "varType": "Mat",
                 "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
                 "varExplanation": ""
               },
               {
                 "varName": "method",
                 "varType": "int",
-                "fromExpression": "",
+                "fromExpression": "3",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
               },
               {
                 "varName": "dp",
                 "varType": "double",
-                "fromExpression": "",
+                "fromExpression": "1",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
               },
               {
                 "varName": "minDist",
                 "varType": "double",
-                "fromExpression": "",
+                "fromExpression": "60",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
               },
               {
                 "varName": "param1",
                 "varType": "double",
-                "fromExpression": "",
+                "fromExpression": "200",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
               },
               {
                 "varName": "param2",
                 "varType": "double",
-                "fromExpression": "",
+                "fromExpression": "100",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
               },
               {
                 "varName": "minRadius",
                 "varType": "int",
-                "fromExpression": "",
+                "fromExpression": "0",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
               },
               {
                 "varName": "maxRadius",
                 "varType": "int",
-                "fromExpression": "",
+                "fromExpression": "20",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
               }
@@ -1532,13 +1402,11 @@
               }
             ]
           }
-        }
-      ]
+        ]
+      }
     }
   ],
-
-  "图像标定": [
-  ],
+  "图像标定": [],
   "图像测量": [
     {
       "lfProperties": {
@@ -1549,16 +1417,11 @@
       },
       "properties": {
         "name": "面积测量",
-        "state" : "init",
+        "state": "init",
         "superName": "图像测量",
-        "modelName": ""
-      },
-      "models": [
-        {
-          "lfProperties": {
-            "name": "面积测量"
-          },
-          "properties": {
+        "models": [
+          {
+            "modelName": "面积测量",
             "dllPath": "server/src/main/resources/imgMeasure/areaMeasure/ContourArea.dll",
             "modelID": "contour_area",
             "inPara": [
@@ -1588,10 +1451,9 @@
                 "varExplanation": "面积"
               }
             ]
-          },
-          "models": []
-        }
-      ]
+          }
+        ]
+      }
     },
     {
       "lfProperties": {
@@ -1600,19 +1462,13 @@
         "text": "亮度测量",
         "label": "亮度测量"
       },
-
       "properties": {
         "name": "亮度测量",
-        "state" : "init",
+        "state": "init",
         "superName": "图像测量",
-        "modelName": ""
-      },
-      "models": [
-        {
-          "lfProperties": {
-            "name": "亮度测量"
-          },
-          "properties": {
+        "models": [
+          {
+            "modelNname": "亮度测量",
             "helpMsg": "it is a help message of GlobalVariable",
             "dllPath": "server/src/main/resources/General.dll/BrightnessMeasurement.dll",
             "modelID": "brightnessMeasurement",
@@ -1632,10 +1488,9 @@
                 "varExplanation": ""
               }
             ]
-          },
-          "models": []
-        }
-      ]
+          }
+        ]
+      }
     },
     {
       "lfProperties": {
@@ -1646,16 +1501,11 @@
       },
       "properties": {
         "name": "直方图统计",
-        "state" : "init",
+        "state": "init",
         "superName": "图像测量",
-        "modelName": ""
-      },
-      "models": [
-        {
-          "lfProperties": {
-            "name": "直方图统计"
-          },
-          "properties": {
+        "models": [
+          {
+            "modelName": "直方图统计",
             "helpMsg": "it is a help message of GlobalVariable",
             "dllPath": "server/src/main/resources/general.dll",
             "modelID": "hist_stat",
@@ -1701,85 +1551,89 @@
                 "varName": "num_pixels",
                 "varType": "int",
                 "varExplanation": ""
-              },{
+              },
+              {
                 "varName": "mean_gray",
                 "varType": "Scalar",
                 "varExplanation": ""
-              },{
+              },
+              {
                 "varName": "min_gray",
                 "varType": "double",
                 "varExplanation": ""
-              },{
+              },
+              {
                 "varName": "max_gray",
                 "varType": "double",
                 "varExplanation": ""
-              },{
+              },
+              {
                 "varName": "hist_max_val",
                 "varType": "double",
                 "varExplanation": ""
-              },{
+              },
+              {
                 "varName": "hist_max_loc",
                 "varType": "Point",
                 "varExplanation": ""
-              },{
+              },
+              {
                 "varName": "std_dev",
                 "varType": "Scalar",
                 "varExplanation": ""
-              },{
+              },
+              {
                 "varName": "contrast",
                 "varType": "double",
                 "varExplanation": ""
-              },{
+              },
+              {
                 "varName": "hist_image",
                 "varType": "Mat",
                 "varExplanation": ""
               }
             ]
           }
-        }
-      ]
+        ]
+      }
     },
     {
       "lfProperties": {
         "name": "灰度像素统计",
         "type": "operator",
-        "text": "像素统计",
-        "label": "像素统计"
+        "text": "灰度像素统计",
+        "label": "灰度像素统计"
       },
       "properties": {
+        "state": "init",
         "name": "灰度像素统计",
-        "state" : "init",
         "superName": "图像测量",
-        "modelName": ""
-      },
-      "models": [
-        {
-          "lfProperties": {
-            "name": "pixesStatistics"
-          },
-          "properties": {
+        "models": [
+          {
+            "modelName": "灰度像素统计",
             "helpMsg": "it is a help message of GlobalVariable",
             "dllPath": "server\\src\\main\\resources\\PixesStatistic.dll",
             "modelID": "pixesStatistic",
             "inPara": [
               {
                 "varName": "srcImage",
-                "varType": "object",
+                "varType": "Mat",
                 "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
                 "varExplanation": ""
               },
               {
                 "varName": "lowthresHold",
                 "varType": "int",
-                "fromExpression": "",
+                "fromExpression": "40",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
               },
               {
                 "varName": "highthresHold",
                 "varType": "int",
-                "fromExpression": "",
+                "fromExpression": "200",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
               }
@@ -1791,10 +1645,9 @@
                 "varExplanation": ""
               }
             ]
-          },
-          "models": []
-        }
-      ]
+          }
+        ]
+      }
     }
   ],
   "颜色处理": [
@@ -1806,10 +1659,9 @@
         "label": "转换颜色空间"
       },
       "properties": {
-        "state" : "init",
+        "state": "init",
         "superName": "颜色处理",
-        "name": "转换颜色空间",
-        "modelName": ""
+        "name": "转换颜色空间"
       },
       "models": [
         {
@@ -1848,12 +1700,8 @@
       ]
     }
   ],
-  "图像识别": [
-
-  ],
-  "空间解算": [
-
-  ],
+  "图像识别": [],
+  "空间解算": [],
   "深度学习": [
     {
       "lfProperties": {
@@ -1863,32 +1711,28 @@
         "text": "ppocr"
       },
       "properties": {
-        "state" : "init",
+        "state": "init",
         "superName": "深度学习",
         "name": "ppocr",
-        "modelName": ""
-      },
-      "models": [
-        {
-          "lfProperties": {
-            "name": "ocr-detection"
-          },
-          "properties": {
+        "models": [
+          {
+            "modelName": "ocr-detection",
             "helpMsg": "it is a help message",
             "dllPath": "server/src/main/resources/ppocr.dll",
             "modelID": "detectBoxes_",
             "inPara": [
               {
                 "varName": "img_mat",
-                "varType": "object",
+                "varType": "Mat",
                 "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
                 "varExplanation": "输入图片 类型Mat"
               },
               {
                 "varName": "det_model",
                 "varType": "string",
-                "fromExpression": "",
+                "fromExpression": "server/src/main/resources/models/ch_PP-OCRv3_det_infer",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": "字符检测模型路径"
               }
@@ -1900,35 +1744,32 @@
                 "varExplanation": ""
               }
             ]
-          }
-        },
-        {
-          "lfProperties": {
-            "name": "ocr-recognition"
           },
-          "properties": {
+          {
+            "modelName": "ocr-recognition",
             "helpMsg": "it is a help message",
             "dllPath": "server/src/main/resources/ppocr.dll",
-            "modelName": "detectText_",
+            "modelID": "detectText_",
             "inPara": [
               {
                 "varName": "img_mat",
-                "varType": "object",
+                "varType": "Mat",
                 "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
                 "varExplanation": "输入图片 类型Mat"
               },
               {
                 "varName": "rec model",
                 "varType": "string",
-                "fromExpression": "",
+                "fromExpression": "server/src/main/resources/models/ch_PP-OCRv3_rec_infer",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": "字符识别模型路径"
               },
               {
                 "varName": "rec dict model",
                 "varType": "string",
-                "fromExpression": "",
+                "fromExpression": "server/src/main/resources/models/ppocr_keys_v1.txt",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": "字符识别字典路径"
               }
@@ -1940,10 +1781,9 @@
                 "varExplanation": ""
               }
             ]
-          },
-          "models": []
-        }
-      ]
+          }
+        ]
+      }
     },
     {
       "lfProperties": {
@@ -1953,17 +1793,12 @@
         "text": "onnxruntime"
       },
       "properties": {
-        "state" : "init",
+        "state": "init",
         "superName": "深度学习",
         "name": "onnxruntime",
-        "modelName": ""
-      },
-      "models": [
-        {
-          "lfProperties": {
-            "name": "object-detection"
-          },
-          "properties": {
+        "models": [
+          {
+            "modelName": "object-detection",
             "helpMsg": "it is a help message",
             "dllPath": "server/src/main/resources/ObjectDetect.dll",
             "modelID": "object_detect",
@@ -1971,42 +1806,43 @@
               {
                 "varName": "confThreshold",
                 "varType": "double",
-                "fromExpression": "",
+                "fromExpression": "0.3",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": "Confidence threshold"
               },
               {
                 "varName": "nmsThreshold",
                 "varType": "double",
-                "fromExpression": "",
+                "fromExpression": "0.5",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": "Non-maximum suppression"
               },
               {
                 "varName": "objThreshold",
                 "varType": "double",
-                "fromExpression": "",
+                "fromExpression": "0.3",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": "Object Confidence threshold"
               },
               {
                 "varName": "input_mat",
-                "varType": "object",
+                "varType": "Mat",
                 "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
                 "varExplanation": "输入图片矩阵"
               },
               {
                 "varName": "modelpath",
                 "varType": "string",
-                "fromExpression": "",
+                "fromExpression": "server/src/main/resources/models/yolov5s.onnx",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": "模型路径"
               },
               {
                 "varName": "cocodictPath",
                 "varType": "string",
-                "fromExpression": "",
+                "fromExpression": "server/src/main/resources/models/coco.names",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": "coco字典路径"
               }
@@ -2019,28 +1855,24 @@
               }
             ]
           },
-          "models": []
-        },
-        {
-          "lfProperties": {
-            "name": "image-denoising"
-          },
-          "properties": {
+          {
+            "modelName": "imageDenoising",
             "helpMsg": "it is a help message",
             "dllPath": "server/src/main/resources/image_denoising.dll",
             "modelID": "imgenDenosing",
             "inPara": [
               {
                 "varName": "input_mat",
-                "varType": "object",
+                "varType": "Mat",
                 "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
                 "varExplanation": "输入图片矩阵"
               },
               {
                 "varName": "modelpath",
                 "varType": "string",
-                "fromExpression": "",
+                "fromExpression": "server/src/main/resources/models/mode_denosing.onnx",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": "模型路径"
               }
@@ -2052,10 +1884,9 @@
                 "varExplanation": "结果去噪图片"
               }
             ]
-          },
-          "models": []
-        }
-      ]
+          }
+        ]
+      }
     },
     {
       "lfProperties": {
@@ -2065,33 +1896,35 @@
         "text": "opencv"
       },
       "properties": {
-        "state" : "init",
+        "state": "init",
         "superName": "深度学习",
         "name": "opencv",
-        "modelName": ""
-      },
-      "models": [
-        {
-          "lfProperties": {
-            "name": "image-rescale"
-          },
-          "properties": {
+        "models": [
+          {
+            "modelName": "imageRescale",
             "helpMsg": "it is a help message",
             "dllPath": "server/src/main/resources/image_rescale.dll",
             "modelID": "imageRescale",
             "inPara": [
               {
                 "varName": "img_mat",
-                "varType": "object",
+                "varType": "Mat",
                 "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
                 "varExplanation": "输入图片 类型Mat"
               },
               {
                 "varName": "scale times",
                 "varType": "int",
                 "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
+                "defineVarInputWay": "selectedInputWay",
+                "comboList" : {
+                  "2倍" : "2",
+                  "3倍" : "3",
+                  "4倍" : "4",
+                  "8倍" : "8"
+                },
                 "varExplanation": "放大倍数 支持2 3 4 8"
               }
             ],
@@ -2103,35 +1936,35 @@
               }
             ]
           },
-          "models": []
-        },
-        {
-          "lfProperties": {
-            "name": "image-classification"
-          },
-          "properties": {
+          {
+            "modelName": "image-classification",
             "helpMsg": "分裂模型可以有两个inceptionv3.onnx和resnet50-v1-12.onnx，类别字典文件为imagenet_classes.txt",
             "dllPath": "server/src/main/resources/image_classification.dll",
             "modelID": "image_classification",
             "inPara": [
               {
                 "varName": "img_mat",
-                "varType": "object",
+                "varType": "Mat",
                 "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
                 "varExplanation": "输入图片 类型Mat"
               },
               {
                 "varName": "cls_model_path",
                 "varType": "string",
-                "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
+                "fromExpression": "server/src/main/resources/models/inceptionv3.onnx",
+                "defineVarInputWay": "selectedInputWay",
+                "comboList" : {
+                  "inceptionv3" : "server/src/main/resources/models/inceptionv3.onnx",
+                  "resnetv50" : "server/src/main/resources/models/resnet50-v1-12.onnx"
+                },
                 "varExplanation": "模型路径"
               },
               {
                 "varName": "image_net_classes",
                 "varType": "string",
-                "fromExpression": "",
+                "fromExpression": "server/src/main/resources/models/imagenet_classes.txt",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": "类别字典路径"
               }
@@ -2143,10 +1976,98 @@
                 "varExplanation": ""
               }
             ]
-          },
-          "models": []
-        }
-      ]
+          }
+        ]
+      }
+    },
+    {
+      "lfProperties": {
+        "name": "位置检测",
+        "type": "operator",
+        "text": "位置检测",
+        "label": "positionDetect"
+      },
+      "properties": {
+        "state": "init",
+        "superName": "深度学习",
+        "name": "位置检测",
+        "models": [
+          {
+            "modelNname": "position-detect",
+            "helpMsg": "it is a help message of GlobalVariable",
+            "dllPath": "server/src/main/resources/getPosition.dll",
+            "modelID": "getPosition",
+            "inPara": [
+              {
+                "varName": "r1",
+                "varType": "object",
+                "fromExpression": "",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              },
+              {
+                "varName": "r2",
+                "varType": "object",
+                "fromExpression": "",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              }
+            ],
+            "outPara": [
+              {
+                "varName": "dst",
+                "varType": "RotatedRect",
+                "varExplanation": ""
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "lfProperties": {
+        "name": "区域检测",
+        "type": "operator",
+        "text": "区域检测",
+        "label": "detectField"
+      },
+      "properties": {
+        "state": "init",
+        "superName": "深度学习",
+        "name": "区域检测",
+        "models": [
+          {
+            "modelName": "new_field_detect",
+            "helpMsg": "it is a help message of GlobalVariable",
+            "dllPath": "server/src/main/resources/detectField.dll",
+            "modelID": "detectField",
+            "inPara": [
+              {
+                "varName": "srcimg",
+                "varType": "Mat",
+                "fromExpression": "",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
+                "varExplanation": ""
+              },
+              {
+                "varName": "sticker_path",
+                "varType": "string",
+                "fromExpression": "",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              }
+            ],
+            "outPara": [
+              {
+                "varName": "dst",
+                "varType": "vector<RotatedRect>",
+                "varExplanation": ""
+              }
+            ]
+          }
+        ]
+      }
     }
   ],
   "高级功能": [
@@ -2158,10 +2079,9 @@
         "label": "划痕检测"
       },
       "properties": {
-        "state" : "init",
+        "state": "init",
         "superName": "高级功能",
-        "name": "划痕检测",
-        "modelName": ""
+        "name": "划痕检测"
       },
       "models": [
         {
@@ -2203,10 +2123,9 @@
         "name": "组合"
       },
       "properties": {
-        "state" : "init",
+        "state": "init",
         "superName": "逻辑工具",
-        "name": "组合",
-        "modelName": ""
+        "name": "组合"
       },
       "models": [
         {
