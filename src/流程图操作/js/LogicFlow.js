@@ -342,7 +342,7 @@ import data from './newOperatorLib.json'
 import { mapState } from "vuex";
 const suanziItemList = data
 //节点状态颜色字典
-const color = {"init" : "blue", "running" : "gray", "success" : "green", "error" : "red"}
+const color = {"init" : "brown", "ready" : "gray", "success" : "green", "error" : "red"}
 
 export default {
     name: 'FlowDemo',
@@ -981,12 +981,17 @@ export default {
             this.nodeModel.deleteProperty("models")
             let model=this.operatorData.models.find(item=>item.modelName==this.modelName)
             let model_copy=JSON.parse(JSON.stringify(model))
-
+            
+            let paramReady = true
             for(let i in model_copy["inPara"]){
                 model_copy["inPara"][i].fromExpression=this.formData[i]
+                if(this.formData[i]=="") paramReady = false
             }
 
             this.nodeModel.setProperties(model_copy)
+            if(paramReady) { //参数配置完成 改变状态
+                this.nodeModel.properties.state = "ready"
+            }
         },
         clear() {
             this.formData = []
