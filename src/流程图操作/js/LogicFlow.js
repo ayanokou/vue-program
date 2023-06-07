@@ -987,6 +987,8 @@ export default {
             }
 
             this.nodeModel.setProperties(model_copy)
+
+
         },
         clear() {
             this.formData = []
