@@ -1537,6 +1537,104 @@
           "models": []
         }
       ]
+    },
+    {
+      "lfProperties": {
+        "name": "位置检测",
+        "type": "operator",
+        "text": "位置检测",
+        "label": "positionDetect"
+      },
+      "properties": {
+        "superName": "深度学习",
+        "name": "位置检测",
+        "modelName": ""
+      },
+      "models": [
+        {
+          "lfProperties": {
+            "name": "position-detect"
+          },
+          "properties": {
+            "helpMsg": "it is a help message of GlobalVariable",
+            "dllPath": "server/src/main/resources/getPosition.dll",
+            "modelID": "getPosition",
+            "inPara": [
+              {
+                "varName": "r1",
+                "varType": "object",
+                "fromExpression": "",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              },
+              {
+                "varName": "r2",
+                "varType": "object",
+                "fromExpression": "",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              }
+            ],
+            "outPara": [
+              {
+                "varName": "dst",
+                "varType": "RotatedRect",
+                "varExplanation": ""
+              }
+            ]
+          },
+          "models": []
+        }
+      ]
+    },
+    {
+      "lfProperties": {
+        "name": "检测字段",
+        "type": "operator",
+        "text": "检测字段",
+        "label": "detectField"
+      },
+      "properties": {
+        "superName": "深度学习",
+        "name": "检测字段",
+        "modelName": ""
+      },
+      "models": [
+        {
+          "lfProperties": {
+            "name": "new_field_detect"
+          },
+          "properties": {
+            "helpMsg": "it is a help message of GlobalVariable",
+            "dllPath": "server/src/main/resources/detectField.dll",
+            "modelID": "detectField",
+            "inPara": [
+              {
+                "varName": "srcimg",
+                "varType": "object",
+                "fromExpression": "",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              },
+              {
+                "varName": "sticker_path",
+                "varType": "string",
+                "fromExpression": "",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              }
+            ],
+            "outPara": [
+              {
+                "varName": "dst",
+                "varType": "vector<RotatedRect>",
+                "varExplanation": ""
+              }
+            ]
+          },
+          "models": []
+        }
+      ]
     }
   ],
   "高级功能": [
