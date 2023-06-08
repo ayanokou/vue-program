@@ -342,7 +342,7 @@ import data from './newOperatorLib.json'
 import { mapState } from "vuex";
 const suanziItemList = data
 //节点状态颜色字典
-const color = {"init" : "brown", "ready" : "gray", "success" : "green", "error" : "red"}
+const color = {"init" : "orange", "ready" : "gray", "success" : "green", "error" : "red"}
 
 export default {
     name: 'FlowDemo',
@@ -427,44 +427,6 @@ export default {
                 //this.operatorData.models.find(item=>item.modelName==newValue)
             }
        },
-        // 'model.modelName':function(newValue,oldValue){
-        //     //解决在对话框中修改模型不会立即修改表单
-        //     //默认表单
-        //     for(let m of this.nodeProperties.models){
-        //         if(m.modelName==newValue) {
-        //             this.formData = m.inPara.map(param => param.fromExpression)
-        //             if(!oldValue)
-        //                 //载入outPara到Properties
-        //                 this.nodeModel.setProperties({
-        //                     outPara:m.outPara
-        //                  })
-        //         }
-        //     }
-        //     //非默认表单
-        //     if(this.nodeModel.getProperties().inPara)
-        //         this.formData = this.nodeModel.getProperties().inPara.map(param => param.fromExpression)
-        // },
-        // modelName(newValue){
-        //     //更新formData
-        //     //this.formData = this.nodeModel.getProperties().inPara.map(param => param.fromExpression)
-        //     console.log('in watch modelname')
-        //     this.operator.models.forEach((item)=>{
-        //         if(item.lfProperties.name==newValue){
-        //             this.modelProperties=item.properties
-        //             this.formData=item.properties.inPara.map(param => param.fromExpression)
-        //         }
-        //     })
-        //     console.log(this.modelProperties.inPara)
-        //     //inPara比较复杂，要根据输入源的连线进行处理
-        //     // this.nodeModel.setProperties({
-        //     //     "modelName":this.modelName,
-        //     //     "helpMsg":this.modelProperties.helpMsg,
-        //     //     "dllPath":this.modelProperties.dllPath,
-        //     //     "modelID":this.modelProperties.modelID,
-        //     //     "inPara": this.findInPara(this.nodeModel.getData().id),
-        //     //     "outPara":this.modelProperties.outPara
-        //     // })
-        // },
         runState(newValue){
             if(newValue.trigger){
                 if(newValue.content && newValue.content.tab_index==this.tab.index){
@@ -909,12 +871,15 @@ export default {
             })
 
             set.clear()
+            //bug：修改了this.operatorData,对话框用operatorData绘制。连接过之后，再删除连接，依然可以选择
             //获得model
             let model=this.operatorData.models.find(item=>item.modelName==this.modelName)
             //获得inPara
-            let inPara=JSON.parse(JSON.stringify(model.inPara))
+
             for(let p of model.inPara){
                 if(p.defineVarInputWay=="smartInputWay"){
+                    //修改bug，清除之前连接的记录
+                    p.comboList={}
                     if(p.varType=="object"){
                         for(let i in comboList)
                             p.comboList[i]=comboList[i].split('#')[0]
@@ -989,9 +954,11 @@ export default {
             }
 
             this.nodeModel.setProperties(model_copy)
+
             if(paramReady) { //参数配置完成 改变状态
                 this.nodeModel.properties.state = "ready"
             }
+
         },
         clear() {
             this.formData = []

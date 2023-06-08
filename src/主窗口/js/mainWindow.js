@@ -1,10 +1,11 @@
-import { eventHandle, events } from "@/sys/eventResponseController"
+
 import ProcessDp from "@/流程图操作/FlowArea.vue";
 import ImageArea from "@/图像操作/ImageArea.vue";
 import ResultArea from "@/流程图操作/结果描述与帮助/ResultArea.vue";
 import LayoutOne from "@/主窗口/components/layout/LayoutOne.vue";
 import LayoutTwo from "@/主窗口/components/layout/LayoutTwo.vue";
 import LayoutThree from "@/主窗口/components/layout/LayoutThree.vue";
+import GlobalVar from "../components/GlobalVar.vue";
 import { computed } from "vue";
 import { mapState } from "vuex";
 import axiosInstance from "../../axios"
@@ -13,6 +14,9 @@ import axiosInstance from "../../axios"
 let socket = io.connect('http://localhost:9092')
 
 export default {
+    components:{
+        GlobalVar
+    },
     data() {
         return {
             //是否显示最近打开方案子菜单栏
@@ -122,7 +126,7 @@ export default {
         // })
     },
     computed:{
-        ...mapState(['socketEmit'])
+        ...mapState(['socketEmit','dialogVisibleGlobalVar'])
     },
     watch:{
         socketEmit(newValue){
@@ -139,18 +143,11 @@ export default {
 
     },
     methods: {
-        newInt(){
-            socket.emit("chatevent", {
-                userName: 'new',
-                message: "new"
-            });
-        },
-        getInt(){
-            socket.emit("chatevent", {
-                userName: 'get',
-                message: "get"
-            });
-        },
+
+        openDialogGV(){
+            this.$store.commit('setDialogVisibleGlobalVar',true)
+        }
+        ,
         //动态布局
         layout(i) {
             switch (i) {

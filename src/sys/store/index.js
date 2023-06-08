@@ -26,7 +26,8 @@ export default createStore({
             flowChartOK:{trigger:false,index:-1},
             generalResult:"",
             runState:{trigger:false,content:null},
-            runSolution:null
+            runSolution:null,
+            dialogVisibleGlobalVar:false
         }
     },
     mutations:{
@@ -82,6 +83,9 @@ export default createStore({
         },
         setRunState(state,payload){
             state.runState=payload
+        },
+        setDialogVisibleGlobalVar(state,payload){
+            state.dialogVisibleGlobalVar=payload
         }
     },
     modules:{
