@@ -1919,11 +1919,11 @@
                 "varType": "int",
                 "fromExpression": "",
                 "defineVarInputWay": "selectedInputWay",
-                "comboList" : {
-                  "2倍" : "2",
-                  "3倍" : "3",
-                  "4倍" : "4",
-                  "8倍" : "8"
+                "comboList": {
+                  "2倍": "2",
+                  "3倍": "3",
+                  "4倍": "4",
+                  "8倍": "8"
                 },
                 "varExplanation": "放大倍数 支持2 3 4 8"
               }
@@ -1955,9 +1955,9 @@
                 "varType": "string",
                 "fromExpression": "server/src/main/resources/models/inceptionv3.onnx",
                 "defineVarInputWay": "selectedInputWay",
-                "comboList" : {
-                  "inceptionv3" : "server/src/main/resources/models/inceptionv3.onnx",
-                  "resnetv50" : "server/src/main/resources/models/resnet50-v1-12.onnx"
+                "comboList": {
+                  "inceptionv3": "server/src/main/resources/models/inceptionv3.onnx",
+                  "resnetv50": "server/src/main/resources/models/resnet50-v1-12.onnx"
                 },
                 "varExplanation": "模型路径"
               },
@@ -2112,6 +2112,44 @@
           "models": []
         }
       ]
+    },
+    {
+      "lfProperties": {
+        "name": "条码检测",
+        "type": "operator",
+        "text": "条码检测",
+        "label": "条码检测"
+      },
+      "properties": {
+        "state": "init",
+        "superName": "高级功能",
+        "name": "条码检测",
+        "models": [
+          {
+            "modelName": "CodeDetect",
+            "helpMsg": "it is a help message of GlobalVariable",
+            "dllPath": "server/src/main/resources/QrcodeDetect.dll",
+            "modelID": "codeDetect",
+            "inPara": [
+              {
+                "varName": "src",
+                "varType": "Mat",
+                "fromExpression": "",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
+                "varExplanation": ""
+              }
+            ],
+            "outPara": [
+              {
+                "varName": "dst",
+                "varType": "vector<string>",
+                "varExplanation": ""
+              }
+            ]
+          }
+        ]
+      }
     }
   ],
   "逻辑工具": [
