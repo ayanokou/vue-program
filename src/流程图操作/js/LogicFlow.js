@@ -942,6 +942,30 @@ export default {
             this.download('flow.json', JSON.stringify(this.lf.getGraphData()))
 
         },
+        paramCheck(data,type){
+            const int_regex=/^-?\d+$/
+            const double_regex=/^-?\d+(.\d+)?$/
+            const Size_regex=/^\d+,\d+$/
+            let flag=true;
+            switch(type){
+                case "int":
+                    flag=int_regex.test(data)
+                    break;
+                case "double":
+                    flag=double_regex.test(data)
+                    break;
+                case "Size":
+                    flag=Size_regex.test(data)
+                    break;
+                default:
+                    break;
+            }
+            console.log(flag)
+            if(!flag){
+                alert("提交类型出错!")
+            }
+            return flag
+        },
         formDataSubmit() {
             this.nodeModel.deleteProperty("models")
             let model=this.operatorData.models.find(item=>item.modelName==this.modelName)
@@ -949,8 +973,9 @@ export default {
             
             let paramReady = true
             for(let i in model_copy["inPara"]){
-                model_copy["inPara"][i].fromExpression=this.formData[i]
-                if(this.formData[i]=="") paramReady = false
+
+                if(this.formData[i]==""||!this.paramCheck(this.formData[i],model_copy["inPara"][i].varType)) paramReady = false
+                else model_copy["inPara"][i].fromExpression=this.formData[i]
             }
 
             this.nodeModel.setProperties(model_copy)
