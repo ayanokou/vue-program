@@ -37,6 +37,7 @@ public class DemoApplication {
 		System.loadLibrary("getPosition");
 		System.loadLibrary("shadowcorrection");
 		System.loadLibrary("scratchDetection");
+		System.loadLibrary("myMorphology");
 		System.loadLibrary("uv");
 		System.loadLibrary("udpInFlow");
 		System.loadLibrary("udpCommunicate");

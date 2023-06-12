@@ -790,6 +790,146 @@
                 "varExplanation": ""
               }
             ]
+          },
+          {
+            "modelName": "顶帽运算",
+            "dllPath": "server/src/main/resources/myMorphology.dll",
+            "modelID": "myTophat",
+            "inPara": [
+              {
+                "varName": "src",
+                "varType": "Mat",
+                "fromExpression": "",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              },
+              {
+                "varName": "size",
+                "varType": "Size",
+                "fromExpression": "5,5",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              }
+            ],
+            "outPara": [
+              {
+                "varName": "dst",
+                "varType": "Mat",
+                "varExplanation": ""
+              }
+            ]
+          },
+          {
+            "modelName": "黑帽运算",
+            "dllPath": "server/src/main/resources/myMorphology.dll",
+            "modelID": "myBlackhat",
+            "inPara": [
+              {
+                "varName": "src",
+                "varType": "Mat",
+                "fromExpression": "",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              },
+              {
+                "varName": "size",
+                "varType": "Size",
+                "fromExpression": "5,5",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              }
+            ],
+            "outPara": [
+              {
+                "varName": "dst",
+                "varType": "Mat",
+                "varExplanation": ""
+              }
+            ]
+          },
+          {
+            "modelName": "腐蚀运算",
+            "dllPath": "server/src/main/resources/myMorphology.dll",
+            "modelID": "myErode",
+            "inPara": [
+              {
+                "varName": "src",
+                "varType": "Mat",
+                "fromExpression": "",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              },
+              {
+                "varName": "size",
+                "varType": "Size",
+                "fromExpression": "5,5",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              }
+            ],
+            "outPara": [
+              {
+                "varName": "dst",
+                "varType": "Mat",
+                "varExplanation": ""
+              }
+            ]
+          },
+          {
+            "modelName": "膨胀运算",
+            "dllPath": "server/src/main/resources/myMorphology.dll",
+            "modelID": "myDilate",
+            "inPara": [
+              {
+                "varName": "src",
+                "varType": "Mat",
+                "fromExpression": "",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              },
+              {
+                "varName": "size",
+                "varType": "Size",
+                "fromExpression": "5,5",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              }
+            ],
+            "outPara": [
+              {
+                "varName": "dst",
+                "varType": "Mat",
+                "varExplanation": ""
+              }
+            ]
+          },
+          {
+            "modelName": "梯度运算",
+            "dllPath": "server/src/main/resources/myMorphology.dll",
+            "modelID": "myGradient",
+            "inPara": [
+              {
+                "varName": "src",
+                "varType": "Mat",
+                "fromExpression": "",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              },
+              {
+                "varName": "size",
+                "varType": "Size",
+                "fromExpression": "5,5",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              }
+            ],
+            "outPara": [
+              {
+                "varName": "dst",
+                "varType": "Mat",
+                "varExplanation": ""
+              }
+            ]
           }
         ]
       }
