@@ -584,36 +584,45 @@
                 "varName": "src",
                 "varType": "object",
                 "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
                 "varExplanation": ""
               },
               {
                 "varName": "d",
                 "varType": "int",
-                "fromExpression": "",
+                "fromExpression": "1",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
               },
               {
                 "varName": "sigmaColor",
                 "varType": "double",
-                "fromExpression": "",
+                "fromExpression": "1",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
               },
               {
                 "varName": "sigmaSpace",
                 "varType": "double",
-                "fromExpression": "",
+                "fromExpression": "0",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
               },
               {
                 "varName": "borderType",
                 "varType": "int",
-                "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
-                "varExplanation": ""
+                "fromExpression": "4",
+                "defineVarInputWay": "selectedInputWay",
+                "comboList": {
+                  "BORDER_CONSTANT": "0",
+                  "BORDER_REPLICATE": "1",
+                  "BORDER_REFLECT": "2",
+                  "BORDER_WRAP": "3",
+                  "BORDER_REFLECT_101": "4",
+                  "BORDER_TRANSPARENT": "5",
+                  "BORDER_ISOLATED": "16"
+                },"varExplanation": ""
               }
             ],
             "outPara": [
@@ -1828,6 +1837,110 @@
           }
         ]
       }
+    },
+    {
+      "lfProperties": {
+        "name": "拟合直线",
+        "type": "operator",
+        "text": "拟合直线",
+        "label": "拟合直线"
+      },
+      "properties": {
+        "state": "init",
+        "name": "拟合直线",
+        "superName": "图像测量",
+        "models": [
+          {
+            "modelName": "拟合直线",
+            "helpMsg": "it is a help message of GlobalVariable",
+            "dllPath": "server\\src\\main\\resources\\fitLine.dll",
+            "modelID": "myFitLine",
+            "inPara": [
+              {
+                "varName": "_points",
+                "varType": "Mat",
+                "fromExpression": "",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
+                "varExplanation": ""
+              },
+              {
+                "varName": "distType",
+                "varType": "int",
+                "fromExpression": "40",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              },
+              {
+                "varName": "param",
+                "varType": "double",
+                "fromExpression": "200",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              },
+              {
+                "varName": "reps",
+                "varType": "double",
+                "fromExpression": "200",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              },
+              {
+                "varName": "aeps",
+                "varType": "double",
+                "fromExpression": "200",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              }
+            ],
+            "outPara": [
+              {
+                "varName": "_line",
+                "varType": "Mat",
+                "varExplanation": ""
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "lfProperties": {
+        "name": "拟合椭圆",
+        "type": "operator",
+        "text": "拟合椭圆",
+        "label": "拟合椭圆"
+      },
+      "properties": {
+        "state": "init",
+        "name": "拟合椭圆",
+        "superName": "图像测量",
+        "models": [
+          {
+            "modelName": "拟合椭圆",
+            "helpMsg": "it is a help message of GlobalVariable",
+            "dllPath": "server\\src\\main\\resources\\fitEllipse.dll",
+            "modelID": "myFitEllipse",
+            "inPara": [
+              {
+                "varName": "_points",
+                "varType": "Mat",
+                "fromExpression": "",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
+                "varExplanation": ""
+              }
+            ],
+            "outPara": [
+              {
+                "varName": "dst",
+                "varType": "RotatedRect",
+                "varExplanation": ""
+              }
+            ]
+          }
+        ]
+      }
     }
   ],
   "颜色处理": [
@@ -2180,14 +2293,14 @@
             "inPara": [
               {
                 "varName": "r1",
-                "varType": "object",
+                "varType": "vector<RotatedRect>",
                 "fromExpression": "",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
               },
               {
                 "varName": "r2",
-                "varType": "object",
+                "varType": "vector<RotatedRect>",
                 "fromExpression": "",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
@@ -2275,9 +2388,10 @@
             "inPara": [
               {
                 "varName": "src",
-                "varType": "object",
+                "varType": "Mat",
                 "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
                 "varExplanation": ""
               }
             ],
