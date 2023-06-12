@@ -79,6 +79,46 @@
           }
         ]
       }
+    },
+    {
+      "lfProperties": {
+        "type": "operator",
+        "text": "输入源",
+        "label": "输入源",
+        "name": "输入源"
+      },
+      "properties": {
+        "state": "init",
+        "superName": "输入输出",
+        "name": "输入源",
+        "models": [
+          {
+            "modelName": "本地图像",
+            "helpMsg": "it is a help message",
+            "dllPath": "",
+            "modelID": "localImg",
+            "inPara": [
+              {
+                "varName": "format",
+                "varType": "int",
+                "fromExpression": "",
+                "defineVarInputWay": "selectedInputWay",
+                "comboList": {
+                  "RGB": "0"
+                },
+                "varExplanation": ""
+              }
+            ],
+            "outPara": [
+              {
+                "varName": "dst",
+                "varType": "Mat",
+                "varExplanation": ""
+              }
+            ]
+          }
+        ]
+      }
     }
   ],
   "图像匹配": [
@@ -520,7 +560,7 @@
               },
               {
                 "varName": "ksize",
-                "varType": "int",
+                "varType": "Size",
                 "fromExpression": "5,5",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""

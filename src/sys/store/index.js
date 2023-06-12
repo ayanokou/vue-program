@@ -27,7 +27,8 @@ export default createStore({
             generalResult:"",
             runState:{trigger:false,content:null},
             runSolution:null,
-            dialogVisibleGlobalVar:false
+            dialogVisibleGlobalVar:false,
+            nodeModelName:""
         }
     },
     mutations:{
@@ -86,6 +87,9 @@ export default createStore({
         },
         setDialogVisibleGlobalVar(state,payload){
             state.dialogVisibleGlobalVar=payload
+        },
+        setNodeModelName(state,payload){
+            state.nodeModelName=payload
         }
     },
     modules:{
