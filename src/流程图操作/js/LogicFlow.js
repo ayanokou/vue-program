@@ -21,18 +21,8 @@ import { MiniMap } from './MiniMap.js'
 import { eventHandle, events } from "../../sys/eventResponseController";
 import { ElNotification } from 'element-plus'
 
-
-
 LogicFlow.use(SelectionSelect);
 LogicFlow.use(Menu);
-const handleOpen = (key, keyPath) => {
-    console.log(key, keyPath)
-}
-const handleClose = (key, keyPath) => {
-    console.log(key, keyPath)
-}
-
-
 class MyCircleModel extends CircleNodeModel {
     getNodeStyle() {
         const style = super.getNodeStyle();
@@ -53,24 +43,38 @@ class SuanziModel extends RectNodeModel {
         this.height = 80 * size
         this.limit_edge = 1;
         this.current_edge = 0;
+        this.node_stage = "init"
+        this.style.strokeWidth = 3
+    }
+    
+    getNodeStyle(){
+        const style = super.getNodeStyle();
+        style.stroke = color[this.properties.state];
+        return style;
     }
 
     createId() {
-        let max=0
-        for(let node of this.graphModel.nodes){
-            if(node.id>max)
-                max=node.id
+
+        const idSet = new Set()
+        // find the smallest unused id
+        this.graphModel.nodes.forEach(node => {
+            idSet.add(node.id)
+        })
+        let id = 0
+        while (idSet.has(id.toString())) {
+            id++
         }
-        return (++max) + "";
+        return id.toString()
     }
 
-    isAllowConnectedAsSource(target) { 
-        if(this.current_edge < this.limit_edge)
-            return true;
-        else 
-            return false;
-    }
+    // isAllowConnectedAsSource(target) {
+    //     if(this.current_edge < this.limit_edge)
+    //         return true;
+    //     else
+    //         return false;
+    // }
 }
+
 class noEdgeModel extends RectNodeModel {
     setAttributes() {
         const size = this.properties.scale || 1;
@@ -334,10 +338,11 @@ class MyGroup extends GroupNode.view {
 }
 
 
-import data from './operatorLib.json'
+import data from './newOperatorLib.json'
 import { mapState } from "vuex";
 const suanziItemList = data
-
+//节点状态颜色字典
+const color = {"init" : "orange", "ready" : "gray", "success" : "green", "error" : "red"}
 
 export default {
     name: 'FlowDemo',
@@ -349,7 +354,7 @@ export default {
             lf: null,
             initHeight: '',
             //点击事件的节点对象
-            nodeModel: '',
+            nodeModel: null,
             //当前选中的算子id
             selectedAlgorithm:0,
             //点击事件的边对象
@@ -358,15 +363,10 @@ export default {
             selectedMSG: null,
             //赋值变量 算子和图形
             suanzis: suanziItemList,
-            imgBase64: "",
-            //对话框UI
-            dialogUI: null,
-            //算子选中的方法名
-            modelID: "",
+
             dialogVisible: false,
             formData: [],
-            dialogControl: {}, // 左侧菜单栏对话跳窗控制
-            isDragging:false,
+            //dialogControl: {}, // 左侧菜单栏对话跳窗控制
             dialogVisibleGV:false,
             tableData :[],
             tableForm:[],
@@ -384,23 +384,68 @@ export default {
             algorithmRunTime: 0, //算法用时
             isRan: false,
             addNodePosition_x: 100,
+
+            //拖拽节点的初始
+            modelName:"",//模型名称
+            operatorData:{}//拖拽节点的原始properties数据
+
           }
     },
     computed: {
+        //某个模型的数据
+        modelData(){
+            let models=this.nodeModel.getProperties().models
+            return models.find(item=>{
+                item.modelName=this.modelName
+            })
+        },
+
+
         lfData() {
             return this.lf.getGraphData()
         },
         ...mapState([
             "timeConsume",
-        ]),
+            "runState"
+        ])
     },
     watch:{
+
+        //在对话框中监听修改模型,同时切换nodelModel也会触发
+        modelName(newValue){
+            console.log("in watch modelName")
+            if(this.operatorData.models){
+                //更新formData、outPara
+                let outPara
+                //如果这个结点有inPara,就是提交过的，那么就从里面读
+                if(this.nodeModel.getProperties().inPara)
+                    this.formData=this.nodeModel.getProperties().inPara.map(param=>param.fromExpression)
+
+                else
+                    console.log(this.operatorData)
+                    this.formData=(this.operatorData.models.find(item=>item.modelName==newValue)).inPara.map(param=>param.fromExpression)
+
+                //this.operatorData.models.find(item=>item.modelName==newValue)
+            }
+       },
+        runState(newValue){
+            if(newValue.trigger){
+                if(newValue.content && newValue.content.tab_index==this.tab.index){
+                    console.log("in tab_index:"+this.tab.index)
+                    console.log(newValue.content)
+                    ////节点状态颜色字典
+                    //  const color = {"init" : "blue", "running" : "green", "success" : "gray", "error" : "red"}
+                    this.changeNodeStage(newValue.content.node_id, newValue.content.state) //改变节点状态 再节点类中getnodestyle方法中会根据状态改变节点颜色
+                    this.$store.commit('setRunState',{trigger:false,content:null})
+                }
+
+            }
+        },
         timeConsume(newValue){
-            console.log("curNodeId: " + this.nodeModel)
+            //console.log("curNodeId: " + this.nodeModel)
             this.timeRunTimeJson = JSON.parse(newValue);
             this.flowRunTime = this.timeRunTimeJson.totalConsuming;
             for(let algorithm of this.timeRunTimeJson.eachConsuming){
-                console.log("JsonNodeId: " + algorithm.id)
                 if(algorithm.id === this.selectedAlgorithm){
                     this.algorithmRunTime = algorithm.consume;
                 }
@@ -420,48 +465,73 @@ export default {
                     let str="<div>变量:&nbsp;"+evt.data.properties.modelID +`.${evt.data.id}`+ `.${x.varName}`+"&nbsp;&nbsp;&nbsp;;类型:&nbsp;"+`${x.varType}`+"</div>"
                     res+=str
                 }
-                if (this.isDragging) {
+
                     ElNotification({
                         title: '输出变量:',
                         dangerouslyUseHTMLString: true,
                         message: res,
                         duration: 2000,
                     })
-                }
+
             }
         })
-        this.lf.on('node:dragstart', () => {
-            this.isDragging = false
-        })
-        this.lf.on('node:drop', () => {
-            this.isDragging = true
-        })
-        //设置节点点击事件监听, 修改帮助信息
-        this.lf.on('node:click', (evt) => {
-            this.dialogUI=evt.data.properties.inPara
-            this.modelID=evt.data.properties.modelID
-            
-            this.formData = this.dialogUI.map(param => param.fromExpression)
-
+        //单击选中节点
+        this.lf.on('node:click',(evt)=>{
             //刷新nodeModel
             this.nodeModel = this.lf.getNodeModelById(evt.data.id)
+            this.selectedAlgorithm = evt.data.id
+            this.$store.commit('setNodeModelName',this.nodeModel.getProperties().name)
+            // this.changeNodeStage(evt.data.id, "running") //改变节点状态 再节点类中getnodestyle方法中会根据状态改变节点颜色
+        })
+        //双击节点，弹出对话框
+        this.lf.on('node:dbclick', (evt) => {
+            this.nodeModel=this.lf.getNodeModelById(evt.data.id)
+            //console.log(evt.data)//运行的结点信息
+            let array=suanziItemList[evt.data.properties.superName]
+            this.operatorData=(array.find(item=>item.lfProperties.name==evt.data.properties.name)).properties
+            //找modelName和formData
+            //console.log(this.nodeModel.getProperties())
+            if(this.nodeModel.getProperties().inPara){
+                this.modelName=this.nodeModel.getProperties().modelName
+                this.formData=this.nodeModel.getProperties().inPara.map(param=>param.fromExpression)
+            }else{
+                this.modelName=this.operatorData.models[0].modelName
+                this.formData=this.operatorData.models[0].inPara.map(param=>param.fromExpression)
+            }
+
+            // //获得输入源
+            let inPara=this.findInPara(evt.data.id)
+            console.log(inPara)
+            // for(let i in this.nodeProperties.models){
+            //     if(this.model.modelName==this.nodeProperties.models[i].modelName){
+            //         this.nodeProperties.models[i].inPara=inPara
+            //     }
+            // }
+
             this.selectedAlgorithm = evt.data.id
             this.updateTimeConsuming();
             this.$store.commit('setVuexHelpInfo', this.nodeModel.getProperties().helpMsg)
 
-            if(this.modelID=="GlobalVariable"){
-                this.dialogVisibleGV=true
-            }
-            else if(this.modelID=="PersistVariable"){
-                this.dialogVisiblePersist=true
-            }else{
-                this.dialogVisible = true
-            }
+            this.dialogVisible = true
 
             let e = document.getElementsByClassName('el-overlay-dialog')[0].parentNode
             e.style.width = '0px';
 
         })
+
+
+
+        this.lf.on('node:dnd-add',(evt)=>{
+            this.nodeModel=this.lf.getNodeModelById(evt.data.id)
+            let array=suanziItemList[evt.data.properties.superName]
+            this.operatorData=(array.find(item=>item.lfProperties.name==evt.data.properties.name)).properties
+            //更改text加序号
+            this.nodeModel.updateText(evt.data.id+evt.data.text.value)
+            //初始化模型和outPara
+            this.modelName=evt.data.properties.models[0].modelName
+            this.nodeModel.setProperties({outPara:evt.data.properties.models[0].outPara})
+        })
+
 
         this.lf.on('edge:click', (evt) => {
 
@@ -482,16 +552,24 @@ export default {
         })
         //限制节点出边的数量 限制数目定义在每个节点的类里面 使用变量current_edge和limit_dege
         this.lf.on('edge:add', (evt) => {
-            //获取边
-            let sourceNodeId = evt.data.sourceNodeId
-            let sourceNode = this.lf.getNodeModelById(sourceNodeId)
-            sourceNode.current_edge += 1
+            // //获取边
+            // let sourceNodeId = evt.data.sourceNodeId
+            // let sourceNode = this.lf.getNodeModelById(sourceNodeId)
+            // sourceNode.current_edge += 1
+            // if(target_node_model.getProperties().name=="图像滤波"){
+            //     target_node_model.setProperties({
+            //         inPara:this.findInPara(1)
+            //     })
+            // }
+
+
+
         })
         this.lf.on('edge:delete', (evt) => {
-            //获取边
-            let sourceNodeId = evt.data.sourceNodeId
-            let sourceNode = this.lf.getNodeModelById(sourceNodeId)
-            sourceNode.current_edge -= 1
+            // //获取边
+            // let sourceNodeId = evt.data.sourceNodeId
+            // let sourceNode = this.lf.getNodeModelById(sourceNodeId)
+            // sourceNode.current_edge -= 1
         })
 
         // window.onresize = () => {
@@ -520,7 +598,8 @@ export default {
                     size: 20,
                     visible: true // 是否可见
                 },
-                stopMoveGraph: true
+                stopMoveGraph: true,
+                nodeTextEdit : false, // 使得节点文本不可选
             })
 
             lf.extension.menu.setMenuConfig({
@@ -651,48 +730,47 @@ export default {
                 }
 
             ])
-            // // 设置算子面板, 换成三级菜单后这段代码没用了, 初始化lf的时候设置stopMoveGraph为true就是默认框选
-            // var suanziItemListConcat = []
+            // 设置算子面板, 换成三级菜单后这段代码没用了, 初始化lf的时候设置stopMoveGraph为true就是默认框选
+            var suanziItemListConcat = []
 
-            // suanziItemList.models.forEach((i)=>{
-            //     i.models.forEach((j)=>{
-            //         this.dialogControl[j.lfProperties.name] = false
-            //         j.models.forEach((k) => {
-            //             var temp = {
-            //                 label : k.lfProperties.label,
-            //                 text : k.lfProperties.text,
-            //                 type : k.lfProperties.type,
-            //                 name : k.lfProperties.name,
-            //                 properties : k.properties,
-            //                 icon : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAEFVwZaAAAABGdBTUEAALGPC/xhBQAAAqlJREFUOBF9VM9rE0EUfrMJNUKLihGbpLGtaCOIR8VjQMGDePCgCCIiCNqzCAp2MyYUCXhUtF5E0D+g1t48qAd7CCLqQUQKEWkStcEfVGlLdp/fm3aW2QQdyLzf33zz5m2IsAZ9XhDpyaaIZkTS4ASzK41TFao88GuJ3hsr2pAbipHxuSYyKRugagICGANkfFnNh3HeE2N0b3nN2cgnpcictw5veJIzxmDamSlxxQZicq/mflxhbaH8BLRbuRwNtZp0JAhoplVRUdzmCe/vO27wFuuA3S5qXruGdboy5/PRGFsbFGKo/haRtQHIrM83bVeTrOgNhZReWaYGnE4aUQgTJNvijJFF4jQ8BxJE5xfKatZWmZcTQ+BVgh7s8SgPlCkcec4mGTmieTP4xd7PcpIEg1TX6gdeLW8rTVMVLVvb7ctXoH0Cydl2QOPJBG21STE5OsnbweVYzAnD3A7PVILuY0yiiyDwSm2g441r6rMSgp6iK42yqroI2QoXeJVeA+YeZSa47gZdXaZWQKTrG93rukk/l2Al6Kzh5AZEl7dDQy+JjgFahQjRopSxPbrbvK7GRe9ePWBo1wcU7sYrFZtavXALwGw/7Dnc50urrHJuTPSoO2IMV3gUQGNg87IbSOIY9BpiT9HV7FCZ94nPXb3MSnwHn/FFFE1vG6DTby+r31KAkUktB3Qf6ikUPWxW1BkXSPQeMHHiW0+HAd2GelJsZz1OJegCxqzl+CLVHa/IibuHeJ1HAKzhuDR+ymNaRFM+4jU6UWKXorRmbyqkq/D76FffevwdCp+jN3UAN/C9JRVTDuOxC/oh+EdMnqIOrlYteKSfadVRGLJFJPSB/ti/6K8f0CNymg/iH2gO/f0DwE0yjAFO6l8JaR5j0VPwPwfaYHqOqrCI319WzwhwzNW/aQAAAABJRU5ErkJggg=="
-            //             }
-            //             if(temp.label == "选区"){
-            //                 temp.callback = () => {
-            //                     //开启框选
-            //                     lf.openSelectionSelect()
-            //                     lf.once("selection:selected", (data) => {
-            //                         let result = { nodes: [], edges: [] }
-            //                         for (let x of data) {
-            //                             //通过id获得model
-            //                             let model = this.lf.getNodeModelById(x.id)
-            //                             //通过model获得data
-            //                             if (!model) {
-            //                                 model = this.lf.getEdgeModelById(x.id)
-            //                                 result.edges.push(model.getData())
-            //                             } else {
-            //                                 result.nodes.push(model.getData())
-            //                             }
-            //                         }
-            //                         this.selectedMSG = result
-            //                         console.log(this.selectedMSG)
-            //                     });
-            //                 }
-            //             }
-            //             suanziItemListConcat = suanziItemListConcat.concat(temp)
-            //         })
-            //     })
-            // })
-            // lf.extension.leftMenus.setPatternItems(suanziItemListConcat)
+
+            Object.entries(suanziItemList).forEach(([key_1, value_1])=>{
+                value_1.forEach((value_2)=>{
+                    var temp = {
+                        label : value_2.lfProperties.label,
+                        text : value_2.lfProperties.text,
+                        type : value_2.lfProperties.type,
+                        name : value_2.lfProperties.name,
+                        properties : value_2.properties,
+                        icon : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAEFVwZaAAAABGdBTUEAALGPC/xhBQAAAqlJREFUOBF9VM9rE0EUfrMJNUKLihGbpLGtaCOIR8VjQMGDePCgCCIiCNqzCAp2MyYUCXhUtF5E0D+g1t48qAd7CCLqQUQKEWkStcEfVGlLdp/fm3aW2QQdyLzf33zz5m2IsAZ9XhDpyaaIZkTS4ASzK41TFao88GuJ3hsr2pAbipHxuSYyKRugagICGANkfFnNh3HeE2N0b3nN2cgnpcictw5veJIzxmDamSlxxQZicq/mflxhbaH8BLRbuRwNtZp0JAhoplVRUdzmCe/vO27wFuuA3S5qXruGdboy5/PRGFsbFGKo/haRtQHIrM83bVeTrOgNhZReWaYGnE4aUQgTJNvijJFF4jQ8BxJE5xfKatZWmZcTQ+BVgh7s8SgPlCkcec4mGTmieTP4xd7PcpIEg1TX6gdeLW8rTVMVLVvb7ctXoH0Cydl2QOPJBG21STE5OsnbweVYzAnD3A7PVILuY0yiiyDwSm2g441r6rMSgp6iK42yqroI2QoXeJVeA+YeZSa47gZdXaZWQKTrG93rukk/l2Al6Kzh5AZEl7dDQy+JjgFahQjRopSxPbrbvK7GRe9ePWBo1wcU7sYrFZtavXALwGw/7Dnc50urrHJuTPSoO2IMV3gUQGNg87IbSOIY9BpiT9HV7FCZ94nPXb3MSnwHn/FFFE1vG6DTby+r31KAkUktB3Qf6ikUPWxW1BkXSPQeMHHiW0+HAd2GelJsZz1OJegCxqzl+CLVHa/IibuHeJ1HAKzhuDR+ymNaRFM+4jU6UWKXorRmbyqkq/D76FffevwdCp+jN3UAN/C9JRVTDuOxC/oh+EdMnqIOrlYteKSfadVRGLJFJPSB/ti/6K8f0CNymg/iH2gO/f0DwE0yjAFO6l8JaR5j0VPwPwfaYHqOqrCI319WzwhwzNW/aQAAAABJRU5ErkJggg=="
+                    }
+                    if(temp.label == "选区"){
+                        temp.callback = () => {
+                            //开启框选
+                            lf.openSelectionSelect()
+                            lf.once("selection:selected", (data) => {
+                                let result = { nodes: [], edges: [] }
+                                for (let x of data) {
+                                    //通过id获得model
+                                    let model = this.lf.getNodeModelById(x.id)
+                                    //通过model获得data
+                                    if (!model) {
+                                        model = this.lf.getEdgeModelById(x.id)
+                                        result.edges.push(model.getData())
+                                    } else {
+                                        result.nodes.push(model.getData())
+                                    }
+                                }
+                                this.selectedMSG = result
+                                console.log(this.selectedMSG)
+                            });
+                        }
+                    }
+                    suanziItemListConcat = suanziItemListConcat.concat(temp)
+                })
+            })
+
+            lf.extension.leftMenus.setPatternItems(suanziItemListConcat,this.tab.index)
             // // 设置节点面板, 设置框选回调
             // suanziItemList['控制模块'][0].callback = () => {
             //     //开启框选
@@ -714,12 +792,6 @@ export default {
             //         console.log(this.selectedMSG)
             //     });
             // }
-            lf.extension.control.addItem({
-                text: "运行",
-                onClick: () => {
-                    this.run()
-                }
-            })
             lf.extension.control.addItem({
                 text: "保存流程",
                 onClick: () => {
@@ -745,11 +817,15 @@ export default {
                 onClick: () => {
                     this.downloadXML()
                 }
-            })
+            });
             lf.extension.control.addItem({
                 text: "重命名流程",
                 onClick: () => {
                     this.renameLogic()
+            });
+            lf.extension.control.addItem({
+                text: "测试",
+                onClick: () => {
                 }
             })
             lf.render(this.tab.initLF)
@@ -758,18 +834,90 @@ export default {
             this.lf = lf
 
         },
-        run(){
-            let jsonObject = {
-                userName: 'Flow',
-                message: JSON.stringify(this.lf.getGraphData())
+        // run(){
+        //     let jsonObject = {
+        //         userName: 'Flow',
+        //         message: JSON.stringify(this.lf.getGraphData())
+        //     }
+        //     let payload={
+        //         trigger:true,
+        //         mode:"chatevent",
+        //         data:jsonObject
+        //     }
+        //     this.isRan = true;
+        //     this.$store.commit("setSocketEmit",payload)
+        // },
+        findInPara(id) {
+            console.log('in findInPara')
+            let set=new Set()
+            let comboList={}
+            let queue=[id]
+            while(queue.length>0){
+                let targetid=queue.shift()
+
+                for(let edge of this.lf.getGraphData().edges){
+                    if(edge.targetNodeId==targetid){
+                        queue.push(edge.sourceNodeId)
+                        set.add(edge.sourceNodeId)
+                    }
+                }
             }
-            let payload={
-                trigger:true,
-                mode:"chatevent",
-                data:jsonObject
+            console.log(set.size)
+
+            set.forEach(item=>{
+                let each_outPara=[]
+                if(this.lf.getNodeModelById(item).getProperties().outPara)
+                    each_outPara=this.lf.getNodeModelById(item).getProperties().outPara
+                let text=this.lf.getNodeModelById(item).getData().text.value
+                for(let para of each_outPara){
+                    comboList[text+"."+para.varExplanation+"."+para.varName]=item.toString()+"."+para.varName+"#"+para.varType
+                }
+
+            })
+
+            set.clear()
+            //bug：修改了this.operatorData,对话框用operatorData绘制。连接过之后，再删除连接，依然可以选择
+            //获得model
+            let model=this.operatorData.models.find(item=>item.modelName==this.modelName)
+            for(let model of this.operatorData.models){
+                for(let p of model.inPara){
+                    if(p.defineVarInputWay=="smartInputWay"){
+                        //修改bug，清除之前连接的记录
+                        p.comboList={}
+                        if(p.varType=="object"){
+                            for(let i in comboList)
+                                p.comboList[i]=comboList[i].split('#')[0]
+
+                        }else{
+                            for(let i in comboList){
+                                let type=comboList[i].split('#')[1]
+                                if(type==p.varType)
+                                    p.comboList[i]=comboList[i].split('#')[0]
+                            }
+                        }
+
+                    }
+                }
             }
-            this.isRan = true;
-            this.$store.commit("setSocketEmit",payload)
+            // //获得inPara
+            // for(let p of model.inPara){
+            //     if(p.defineVarInputWay=="smartInputWay"){
+            //         //修改bug，清除之前连接的记录
+            //         p.comboList={}
+            //         if(p.varType=="object"){
+            //             for(let i in comboList)
+            //                 p.comboList[i]=comboList[i].split('#')[0]
+            //
+            //         }else{
+            //             for(let i in comboList){
+            //                 let type=comboList[i].split('#')[1]
+            //                 if(type==p.varType)
+            //                     p.comboList[i]=comboList[i].split('#')[0]
+            //             }
+            //         }
+            //
+            //     }
+            // }
         },
         loadFlowChart() {
             let inputObj = document.createElement('input');
@@ -782,7 +930,7 @@ export default {
                 reader.readAsText(file);
                 reader.onload = () => {
                     solutionJson = JSON.parse(reader.result);
-                    console.log(solutionJson) // 读取json
+
                     this.lf.render(solutionJson)
                     //test tabName
                     this.$emit('changeTabName', {
@@ -822,56 +970,90 @@ export default {
             let name = prompt("请输入新名称", "lf");
             this.tab.tabName = name
         },
-        formDataSubmit() {
-            let inPara=this.dialogUI
-            for(let i in inPara){
-                inPara[i].fromExpression=this.formData[i]
+        paramCheck(data,type){
+            const int_regex=/^-?\d+$/
+            const double_regex=/^-?\d+(.\d+)?$/
+            const Size_regex=/^\d+,\d+$/
+            let flag=true;
+            switch(type){
+                case "int":
+                    flag=int_regex.test(data)
+                    break;
+                case "double":
+                    flag=double_regex.test(data)
+                    break;
+                case "Size":
+                    flag=Size_regex.test(data)
+                    break;
+                default:
+                    break;
             }
-            this.nodeModel.setProperties({
-                "inPara": inPara,
-            })
+            console.log(flag)
+            if(!flag){
+                alert("提交类型出错!")
+            }
+            return flag
+        },
+        formDataSubmit() {
+            this.nodeModel.deleteProperty("models")
+            let model=this.operatorData.models.find(item=>item.modelName==this.modelName)
+            let model_copy=JSON.parse(JSON.stringify(model))
+            
+            let paramReady = true
+            for(let i in model_copy["inPara"]){
+
+                if(this.formData[i]==""||!this.paramCheck(this.formData[i],model_copy["inPara"][i].varType)) paramReady = false
+                else model_copy["inPara"][i].fromExpression=this.formData[i]
+            }
+
+            this.nodeModel.setProperties(model_copy)
+
+            if(paramReady) { //参数配置完成 改变状态
+                this.nodeModel.properties.state = "ready"
+            }
+
         },
         clear() {
             this.formData = []
         },
-        // 三级菜单按下添加节点
-        clickToAddNode(node) {
-                if (node.lfProperties.text != "选区") {
-                    const idSet = new Set()
-                    // find the smallest unused id
-                    this.lf.graphModel.nodes.forEach(node => {
-                        idSet.add(node.id)
-                    })
-                    let id = 0
-                    while (idSet.has(id.toString())) {
-                        id++
-                    }
-                    this.lf.addNode({
-                        id: id.toString(),
-                        type: node.lfProperties.type,
-                        x: 100,
-                        y: this.addNodePosition_x,
-                        text: node.lfProperties.text,
-                        label: node.lfProperties.label,
-                        name: node.lfProperties.name,
-                        properties: node.properties
-                    })
-                    this.addNodePosition_x += 45
-                }
-        },
-        // 三级菜单拖拽添加节点
-        dragToAddNode(event, node) {
-             this.lf.addNode({
-                    type: node.lfProperties.type,
-                    x: event.clientX - 50,
-                    y: event.clientY - 100,
-                    text: node.lfProperties.text,
-                    label: node.lfProperties.label,
-                    name: node.lfProperties.name,
-                    properties: node.properties
-                })
-            this.currentNodeNum[node.lfProperties.text] += 1
-        },
+        // // 三级菜单按下添加节点
+        // clickToAddNode(node) {
+        //         if (node.lfProperties.text != "选区") {
+        //             const idSet = new Set()
+        //             // find the smallest unused id
+        //             this.lf.graphModel.nodes.forEach(node => {
+        //                 idSet.add(node.id)
+        //             })
+        //             let id = 0
+        //             while (idSet.has(id.toString())) {
+        //                 id++
+        //             }
+        //             this.lf.addNode({
+        //                 id: id.toString(),
+        //                 type: node.lfProperties.type,
+        //                 x: 100,
+        //                 y: this.addNodePosition_x,
+        //                 text: node.lfProperties.text,
+        //                 label: node.lfProperties.label,
+        //                 name: node.lfProperties.name,
+        //                 properties: node.properties
+        //             })
+        //             this.addNodePosition_x += 45
+        //         }
+        // },
+        // // 三级菜单拖拽添加节点
+        // dragToAddNode(event, node) {
+        //      this.lf.addNode({
+        //             type: node.lfProperties.type,
+        //             x: event.clientX - 50,
+        //             y: event.clientY - 100,
+        //             text: node.lfProperties.text,
+        //             label: node.lfProperties.label,
+        //             name: node.lfProperties.name,
+        //             properties: node.properties
+        //         })
+        //     this.currentNodeNum[node.lfProperties.text] += 1
+        // },
         clickLeftMenu() {
             let es = document.getElementsByClassName('el-overlay-dialog')
             for (let e of es) {
@@ -898,11 +1080,7 @@ export default {
             this.tableData.push(item)
             this.tableForm=[]
         },
-        submitGV(){
-            this.nodeModel.setProperties({
-                "content": this.tableData,
-            })
-        },
+
         onAddItemPersist(){
             //弹出一个对话框表单，输入参数
             this.innerVisiblePersist=true
@@ -920,11 +1098,7 @@ export default {
             this.tableDataPersist.push(item)
             this.tableFormPersist=[]
         },
-        submitPersist(){
-            this.nodeModel.setProperties({
-                "content":this.tableDataPersist
-            })
-        },
+
 
         edgeConditionalSubmit(){
             this.edgeModel.updateText(this.yorn)
@@ -940,6 +1114,12 @@ export default {
                     this.algorithmRunTime = algorithm.consume;
                 }
             }
+        },
+        //根据节点运行状态改变节点边的颜色 状态init running finished
+        //let color = {"init" : "blue", "running" : "green", "success" : "gray", "error" : "red"}
+        changeNodeStage(nodeId, stage){
+            let node = this.lf.getNodeModelById(nodeId)
+            node.properties.state = stage;
         }
 
     }

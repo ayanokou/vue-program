@@ -45,7 +45,6 @@ const statusBar = {
                 ctx.strokeStyle = 'red';  // 填充颜色为红色
                 ctx.strokeRect(this.revDoubles[i*4], this.revDoubles[i*4+1], this.revDoubles[i*4+2], this.revDoubles[i*4+3]);
             }
-
         }
     },
     methods: {

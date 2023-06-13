@@ -431,6 +431,12 @@
                             ></el-menu-item
                         >
                     </el-sub-menu>
+                    <el-sub-menu index="6">
+                        <template #title><span style="color:aliceblue;">{{ dialogVisibleGlobalVar }}</span></template>
+                        <el-menu-item id="about"><span style="color:aliceblue;">关于</span></el-menu-item>
+                        <el-menu-item id="help"><span style="color:aliceblue;">帮助</span></el-menu-item>
+                        <el-menu-item id="logs"><span style="color:aliceblue;">日志</span></el-menu-item>
+                    </el-sub-menu>
 
                     <!--                    <el-sub-menu index="5">-->
                     <!--                        <template #title><span style="color:aliceblue">布局</span></template>-->
@@ -456,8 +462,8 @@
                             <RefreshLeft />
                         </el-icon>
                     </el-menu-item>
-                    <el-menu-item title="单次运行" id="singleRun" index="3">
-                        <el-icon style="color: aliceblue">
+                    <el-menu-item title="单次运行" id="singleRun" index="3" @click="sendEvent('runSolutionEvent')">
+                        <el-icon style="color:aliceblue;">
                             <Right />
                         </el-icon>
                     </el-menu-item>
@@ -476,17 +482,13 @@
                             <CircleClose />
                         </el-icon>
                     </el-menu-item>
-                    <el-menu-item
-                        title="全局变量"
-                        id="globalVariable"
-                        index="7"
-                    >
-                        <el-icon style="color: aliceblue">
+                    <el-menu-item title="全局变量" id="globalVariable" index="7" @click="openDialogGV()">
+                        <el-icon style="color:aliceblue;">
                             <Notification />
                         </el-icon>
                     </el-menu-item>
                     <el-menu-item title="全局触发" id="globalTrigger" index="8">
-                        <el-icon style="color: aliceblue">
+                        <el-icon style="color:aliceblue;">
                             <ZoomOut />
                         </el-icon>
                     </el-menu-item>
@@ -516,10 +518,13 @@
             </el-main>
         </el-container>
     </div>
+    <GlobalVar ></GlobalVar>
 </template>
 
 
 <script src="./js/mainWindow.js">
+
+//import GlobalVar from "./components/GlobalVar";
 </script>
 
 <style>

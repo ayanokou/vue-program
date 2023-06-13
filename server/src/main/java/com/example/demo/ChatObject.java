@@ -7,14 +7,7 @@ public class ChatObject {
 
     public ChatObject() {
     }
-/*
-    public ChatObject(String Type, String message, MultipartFile file) {
-        super();
-        this.Type = Type;
-        this.message = message;
-        this.file = file;
-    }
-*/
+
     public ChatObject(String userName, String message) {
         super();
         this.userName = userName;

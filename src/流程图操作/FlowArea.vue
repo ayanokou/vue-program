@@ -99,6 +99,16 @@
         >
             <template #label>
                 {{ item.tabName }}
+                <el-button  class="tab-button run-button" @click="run(item.index)">
+                    <el-icon style="color:black;">
+                        <CaretRight />
+                    </el-icon>
+                </el-button>
+                <el-button class="tab-button">
+                    <el-icon style="color:black;">
+                        <Refresh />
+                    </el-icon>
+                </el-button>
             </template>
             <LogicFlow
                 ref="lfComponent"
@@ -107,6 +117,7 @@
             >
                 <div :id="item.title" style="height: 100%"></div>
             </LogicFlow>
+
         </el-tab-pane>
     </el-tabs>
 </template>
@@ -165,11 +176,50 @@ export default {
             "deleteCurrentSolution",
             "saveSolution",
             "saveSolutionAs",
-            "open",
+            //"open",
             "flowAdd",
+            "flowChartOK",
+            "runSolution"
         ]),
+        solution(){
+            let lfs = [];
+            //得到每个标签页的流程图内容
+            for (let index in this.$refs.lfComponent) {
+                lfs.push({
+                    tabIndex: parseInt(index),
+                    content: this.$refs.lfComponent[index].lfData,
+                });
+            }
+            return {content:lfs}
+        }
     },
     watch: {
+        runSolution(newValue){
+            if(newValue.trigger){
+                let jsonObject = {
+                    userName: 'Solution',
+                    message: JSON.stringify(this.solution)
+                }
+                let payload={
+                    trigger:true,
+                    mode:"chatevent",
+                    data:jsonObject
+                }
+                this.$store.commit("setSocketEmit",payload)
+
+                this.$store.commit('runSolutionEvent',{trigger:false})
+            }
+        },
+        flowChartOK(newValue){
+            if(newValue.trigger){
+                let index=newValue.index
+                let run_button=document.getElementsByClassName('run-button')[index]
+                run_button.classList.remove('running')
+                run_button.classList.add('runover')
+
+                this.$store.commit('setFlowChartOK',{trigger:false,index:-1})
+            }
+        },
         newSolution(newValue) {
             if (newValue.trigger) {
                 this.$confirm('是否保存当前方案?', '提示', {
@@ -458,8 +508,26 @@ export default {
     },
 
     methods: {
-        openSomeSolution(item) {
-            this.openSolutionVisible = false;
+        run(index){
+            let run_button=document.getElementsByClassName('run-button')[index]
+            run_button.classList.add('running');
+            let msg={
+                tabIndex:index,
+                content:this.$refs.lfComponent[index].lfData
+            }
+            let jsonObject = {
+                userName: 'Flow',
+                message: JSON.stringify(msg)
+            }
+            let payload={
+                trigger:true,
+                mode:"chatevent",
+                data:jsonObject
+            }
+            this.$store.commit("setSocketEmit",payload)
+        },
+        openSomeSolution(item){
+            this.openSolutionVisible = false
             //处理逻辑
             for (let tab of this.editableTabs) {
                 //关掉所有标签页
@@ -521,6 +589,7 @@ export default {
                     initLF: singleJSON,
                 });
                 this.editableTabsValue = newTabName;
+
             } else if (action === "remove") {
                 const tabs = this.editableTabs;
                 let activeName = this.editableTabsValue;
@@ -563,7 +632,17 @@ export default {
 };
 </script>
 <style scoped>
-.demo-tabs.el-tabs.el-tabs--top.el-tabs--card {
+.running{
+    /*background-color: rgb(121, 187, 255);*/
+    background-color: red;
+}
+.runover{
+    background-color: white;
+}
+.el-button{
+    --el-button-hover-bg-color:rgb(121, 187, 255);
+}
+.demo-tabs.el-tabs.el-tabs--top.el-tabs--card{
     display: flex;
     flex-direction: column;
 }
@@ -573,6 +652,12 @@ export default {
 
 .el-tabs.el-tabs--top.el-tabs--card.demo-tabs {
     height: 100%;
+}
+.tab-button:hover{
+    background-color:rgb(121, 187, 255)
+}
+.tab-button:active{
+    background-color:rgb(121, 187, 255)
 }
 
 .scroll-container {

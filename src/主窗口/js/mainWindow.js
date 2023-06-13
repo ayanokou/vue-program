@@ -1,10 +1,11 @@
-import { eventHandle, events } from "@/sys/eventResponseController"
+
 import ProcessDp from "@/流程图操作/FlowArea.vue";
 import ImageArea from "@/图像操作/ImageArea.vue";
 import ResultArea from "@/流程图操作/结果描述与帮助/ResultArea.vue";
 import LayoutOne from "@/主窗口/components/layout/LayoutOne.vue";
 import LayoutTwo from "@/主窗口/components/layout/LayoutTwo.vue";
 import LayoutThree from "@/主窗口/components/layout/LayoutThree.vue";
+import GlobalVar from "../components/GlobalVar.vue";
 import { computed } from "vue";
 import { mapState } from "vuex";
 import axiosInstance from "../../axios"
@@ -13,6 +14,9 @@ import axiosInstance from "../../axios"
 let socket = io.connect('http://localhost:9092')
 
 export default {
+    components:{
+        GlobalVar
+    },
     data() {
         return {
             selectedOption: '', // 用于存储选择的选项值
@@ -111,24 +115,40 @@ export default {
     mounted() {
         //动态调整右半部分尺寸
         window.addEventListener('resize', this.dynamicRightHeight)
+        socket.on('flowChartOK',(data)=>{
+            console.log('in flow chart ok'+data)
+            this.$store.commit('setFlowChartOK',{
+                trigger:true,
+                index:parseInt(data)
+            })
+        })
+        socket.on('run_state',(data)=>{
+            this.$store.commit('setRunState',{
+                trigger:true,
+                content:JSON.parse(data)
+            })
+        })
+        socket.on('revBase64',(data)=>{
 
-        socket.on('revBase64', (data) => {
+            this.$store.commit('setImgBase64',JSON.parse(data).content)
+        })
+        socket.on('revGeneral',(data)=>{
+            this.$store.commit('setGeneralResult',data)
+        })
+        socket.on('revRunResult', (data) => {
             //先传递给FlowArea组件
-            this.$store.commit('setImgBase64',data)
+            this.$store.commit('setRunResult',data)
         })
-        socket.on('revDoubles',(data)=>{
-            //先传递给FlowArea组件
-            this.$store.commit('setRevDoubles',data)
-        })
-        socket.on('revStr',(data)=>{
-            console.log("this is string result:"+data);
-        })
+
         socket.on('revTimeConsume',(data)=>{
             this.$store.commit('timeConsumeEvent', data);
         })
+        // socket.on('revRects',(data)=>{
+        //     this.$store.commit('setModuleResultData', data);
+        // })
     },
     computed:{
-        ...mapState(['socketEmit'])
+        ...mapState(['socketEmit','dialogVisibleGlobalVar'])
     },
     watch:{
         socketEmit(newValue){
@@ -146,6 +166,7 @@ export default {
     },
     methods: {
 
+<<<<<<< HEAD
         selectGroup(group) {
             this.selectedGroup = group;
             
@@ -190,6 +211,12 @@ export default {
             this.activeIcon = icon;
         },
 
+=======
+        openDialogGV(){
+            this.$store.commit('setDialogVisibleGlobalVar',true)
+        }
+        ,
+>>>>>>> bbcf387ef9f88151ca589c4789de90e7c2afbe14
         //动态布局
         layout(i) {
             switch (i) {

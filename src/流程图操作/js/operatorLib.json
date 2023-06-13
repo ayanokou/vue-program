@@ -447,6 +447,167 @@
               "models": []
             }
           ]
+        },
+        {
+          "lfProperties": {
+            "name": "模板匹配"
+          },
+          "properties": {},
+          "models": [
+            {
+              "lfProperties": {
+                "type": "operator",
+                "text": "灰度模版匹配",
+                "label": "灰度模版匹配",
+                "name": "灰度模版匹配",
+                "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAEFVwZaAAAABGdBTUEAALGPC/xhBQAAAqlJREFUOBF9VM9rE0EUfrMJNUKLihGbpLGtaCOIR8VjQMGDePCgCCIiCNqzCAp2MyYUCXhUtF5E0D+g1t48qAd7CCLqQUQKEWkStcEfVGlLdp/fm3aW2QQdyLzf33zz5m2IsAZ9XhDpyaaIZkTS4ASzK41TFao88GuJ3hsr2pAbipHxuSYyKRugagICGANkfFnNh3HeE2N0b3nN2cgnpcictw5veJIzxmDamSlxxQZicq/mflxhbaH8BLRbuRwNtZp0JAhoplVRUdzmCe/vO27wFuuA3S5qXruGdboy5/PRGFsbFGKo/haRtQHIrM83bVeTrOgNhZReWaYGnE4aUQgTJNvijJFF4jQ8BxJE5xfKatZWmZcTQ+BVgh7s8SgPlCkcec4mGTmieTP4xd7PcpIEg1TX6gdeLW8rTVMVLVvb7ctXoH0Cydl2QOPJBG21STE5OsnbweVYzAnD3A7PVILuY0yiiyDwSm2g441r6rMSgp6iK42yqroI2QoXeJVeA+YeZSa47gZdXaZWQKTrG93rukk/l2Al6Kzh5AZEl7dDQy+JjgFahQjRopSxPbrbvK7GRe9ePWBo1wcU7sYrFZtavXALwGw/7Dnc50urrHJuTPSoO2IMV3gUQGNg87IbSOIY9BpiT9HV7FCZ94nPXb3MSnwHn/FFFE1vG6DTby+r31KAkUktB3Qf6ikUPWxW1BkXSPQeMHHiW0+HAd2GelJsZz1OJegCxqzl+CLVHa/IibuHeJ1HAKzhuDR+ymNaRFM+4jU6UWKXorRmbyqkq/D76FffevwdCp+jN3UAN/C9JRVTDuOxC/oh+EdMnqIOrlYteKSfadVRGLJFJPSB/ti/6K8f0CNymg/iH2gO/f0DwE0yjAFO6l8JaR5j0VPwPwfaYHqOqrCI319WzwhwzNW/aQAAAABJRU5ErkJggg=="
+              },
+              "properties": {
+                "dllPath": "server/src/main/resources/general.dll",
+                "modelID": "match_template_grayscale",
+                "inPara": [
+                  {
+                    "varName": "src",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "template",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "method",
+                    "varType": "int",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "mask",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "result",
+                    "varType": "Mat",
+                    "varExplanation": ""
+                  }
+                ]
+              },
+              "models": []
+            },
+            {
+              "lfProperties": {
+                "type": "operator",
+                "text": "梯度模版匹配",
+                "label": "梯度模版匹配",
+                "name": "梯度模版匹配",
+                "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAEFVwZaAAAABGdBTUEAALGPC/xhBQAAAqlJREFUOBF9VM9rE0EUfrMJNUKLihGbpLGtaCOIR8VjQMGDePCgCCIiCNqzCAp2MyYUCXhUtF5E0D+g1t48qAd7CCLqQUQKEWkStcEfVGlLdp/fm3aW2QQdyLzf33zz5m2IsAZ9XhDpyaaIZkTS4ASzK41TFao88GuJ3hsr2pAbipHxuSYyKRugagICGANkfFnNh3HeE2N0b3nN2cgnpcictw5veJIzxmDamSlxxQZicq/mflxhbaH8BLRbuRwNtZp0JAhoplVRUdzmCe/vO27wFuuA3S5qXruGdboy5/PRGFsbFGKo/haRtQHIrM83bVeTrOgNhZReWaYGnE4aUQgTJNvijJFF4jQ8BxJE5xfKatZWmZcTQ+BVgh7s8SgPlCkcec4mGTmieTP4xd7PcpIEg1TX6gdeLW8rTVMVLVvb7ctXoH0Cydl2QOPJBG21STE5OsnbweVYzAnD3A7PVILuY0yiiyDwSm2g441r6rMSgp6iK42yqroI2QoXeJVeA+YeZSa47gZdXaZWQKTrG93rukk/l2Al6Kzh5AZEl7dDQy+JjgFahQjRopSxPbrbvK7GRe9ePWBo1wcU7sYrFZtavXALwGw/7Dnc50urrHJuTPSoO2IMV3gUQGNg87IbSOIY9BpiT9HV7FCZ94nPXb3MSnwHn/FFFE1vG6DTby+r31KAkUktB3Qf6ikUPWxW1BkXSPQeMHHiW0+HAd2GelJsZz1OJegCxqzl+CLVHa/IibuHeJ1HAKzhuDR+ymNaRFM+4jU6UWKXorRmbyqkq/D76FffevwdCp+jN3UAN/C9JRVTDuOxC/oh+EdMnqIOrlYteKSfadVRGLJFJPSB/ti/6K8f0CNymg/iH2gO/f0DwE0yjAFO6l8JaR5j0VPwPwfaYHqOqrCI319WzwhwzNW/aQAAAABJRU5ErkJggg=="
+              },
+              "properties": {
+                "dllPath": "server/src/main/resources/general.dll",
+                "modelID": "match_template_gradient",
+                "inPara": [
+                  {
+                    "varName": "src",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "template",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "method",
+                    "varType": "int",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "mask",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "result",
+                    "varType": "Mat",
+                    "varExplanation": ""
+                  }
+                ]
+              },
+              "models": []
+            },
+            {
+              "lfProperties": {
+                "type": "operator",
+                "text": "边缘模版匹配",
+                "label": "边缘模版匹配",
+                "name": "边缘模版匹配",
+                "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAEFVwZaAAAABGdBTUEAALGPC/xhBQAAAqlJREFUOBF9VM9rE0EUfrMJNUKLihGbpLGtaCOIR8VjQMGDePCgCCIiCNqzCAp2MyYUCXhUtF5E0D+g1t48qAd7CCLqQUQKEWkStcEfVGlLdp/fm3aW2QQdyLzf33zz5m2IsAZ9XhDpyaaIZkTS4ASzK41TFao88GuJ3hsr2pAbipHxuSYyKRugagICGANkfFnNh3HeE2N0b3nN2cgnpcictw5veJIzxmDamSlxxQZicq/mflxhbaH8BLRbuRwNtZp0JAhoplVRUdzmCe/vO27wFuuA3S5qXruGdboy5/PRGFsbFGKo/haRtQHIrM83bVeTrOgNhZReWaYGnE4aUQgTJNvijJFF4jQ8BxJE5xfKatZWmZcTQ+BVgh7s8SgPlCkcec4mGTmieTP4xd7PcpIEg1TX6gdeLW8rTVMVLVvb7ctXoH0Cydl2QOPJBG21STE5OsnbweVYzAnD3A7PVILuY0yiiyDwSm2g441r6rMSgp6iK42yqroI2QoXeJVeA+YeZSa47gZdXaZWQKTrG93rukk/l2Al6Kzh5AZEl7dDQy+JjgFahQjRopSxPbrbvK7GRe9ePWBo1wcU7sYrFZtavXALwGw/7Dnc50urrHJuTPSoO2IMV3gUQGNg87IbSOIY9BpiT9HV7FCZ94nPXb3MSnwHn/FFFE1vG6DTby+r31KAkUktB3Qf6ikUPWxW1BkXSPQeMHHiW0+HAd2GelJsZz1OJegCxqzl+CLVHa/IibuHeJ1HAKzhuDR+ymNaRFM+4jU6UWKXorRmbyqkq/D76FffevwdCp+jN3UAN/C9JRVTDuOxC/oh+EdMnqIOrlYteKSfadVRGLJFJPSB/ti/6K8f0CNymg/iH2gO/f0DwE0yjAFO6l8JaR5j0VPwPwfaYHqOqrCI319WzwhwzNW/aQAAAABJRU5ErkJggg=="
+              },
+              "properties": {
+                "dllPath": "server/src/main/resources/general.dll",
+                "modelID": "match_template_edge",
+                "inPara": [
+                  {
+                    "varName": "src",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "template",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "method",
+                    "varType": "int",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "mask",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "result",
+                    "varType": "Mat",
+                    "varExplanation": ""
+                  }
+                ]
+              },
+              "models": []
+            }
+          ]
         }
       ]
     },
@@ -484,28 +645,28 @@
                   {
                     "varName": "ksize",
                     "varType": "Size",
-                    "fromExpression": "",
+                    "fromExpression": "3,3",
                     "defineVarInputWay": "directInputWay",
                     "varExplanation": ""
                   },
                   {
                     "varName": "sigmaX",
                     "varType": "double",
-                    "fromExpression": "",
+                    "fromExpression": "1",
                     "defineVarInputWay": "directInputWay",
                     "varExplanation": ""
                   },
                   {
                     "varName": "sigmaY",
                     "varType": "double",
-                    "fromExpression": "",
+                    "fromExpression": "1",
                     "defineVarInputWay": "directInputWay",
                     "varExplanation": ""
                   },
                   {
                     "varName": "borderType",
                     "varType": "int",
-                    "fromExpression": "",
+                    "fromExpression": "4",
                     "defineVarInputWay": "directInputWay",
                     "varExplanation": ""
                   }
@@ -534,14 +695,14 @@
                   {
                     "varName": "src",
                     "varType": "object",
-                    "fromExpression": "",
+                    "fromExpression": "5,5",
                     "defineVarInputWay": "directInputWay",
                     "varExplanation": ""
                   },
                   {
                     "varName": "ksize",
                     "varType": "int",
-                    "fromExpression": "",
+                    "fromExpression": "3,3",
                     "defineVarInputWay": "directInputWay",
                     "varExplanation": ""
                   }
@@ -1612,35 +1773,43 @@
                     "varName": "num_pixels",
                     "varType": "int",
                     "varExplanation": ""
-                  },{
+                  },
+                  {
                     "varName": "mean_gray",
                     "varType": "Scalar",
                     "varExplanation": ""
-                  },{
+                  },
+                  {
                     "varName": "min_gray",
                     "varType": "double",
                     "varExplanation": ""
-                  },{
+                  },
+                  {
                     "varName": "max_gray",
                     "varType": "double",
                     "varExplanation": ""
-                  },{
+                  },
+                  {
                     "varName": "hist_max_val",
                     "varType": "double",
                     "varExplanation": ""
-                  },{
+                  },
+                  {
                     "varName": "hist_max_loc",
                     "varType": "Point",
                     "varExplanation": ""
-                  },{
+                  },
+                  {
                     "varName": "std_dev",
                     "varType": "Scalar",
                     "varExplanation": ""
-                  },{
+                  },
+                  {
                     "varName": "contrast",
                     "varType": "double",
                     "varExplanation": ""
-                  },{
+                  },
+                  {
                     "varName": "hist_image",
                     "varType": "Mat",
                     "varExplanation": ""
@@ -1694,6 +1863,110 @@
                   {
                     "varName": "dst",
                     "varType": "vector<int>",
+                    "varExplanation": ""
+                  }
+                ]
+              },
+              "models": []
+            }
+          ]
+        },
+        {
+          "lfProperties": {
+            "name": "直线拟合"
+          },
+          "properties": {},
+          "models": [
+            {
+              "lfProperties": {
+                "name": "fitLine",
+                "type": "operator",
+                "text": "直线拟合",
+                "label": "直线拟合"
+              },
+              "properties": {
+                "helpMsg": "it is a help message of GlobalVariable",
+                "dllPath": "server\\src\\main\\resources\\fitLine.dll",
+                "modelID": "myFitLine",
+                "inPara": [
+                  {
+                    "varName": "_points",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "distType",
+                    "varType": "int",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "param",
+                    "varType": "double",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "reps",
+                    "varType": "double",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "aeps",
+                    "varType": "double",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "_line",
+                    "varType": "OutputArray",
+                    "varExplanation": ""
+                  }
+                ]
+              },
+              "models": []
+            }
+          ]
+        },
+        {
+          "lfProperties": {
+            "name": "椭圆拟合"
+          },
+          "properties": {},
+          "models": [
+            {
+              "lfProperties": {
+                "name": "fitEllipse",
+                "type": "operator",
+                "text": "椭圆拟合",
+                "label": "椭圆拟合"
+              },
+              "properties": {
+                "helpMsg": "it is a help message of GlobalVariable",
+                "dllPath": "server\\src\\main\\resources\\fitEllipse.dll",
+                "modelID": "myFitEllipse",
+                "inPara": [
+                  {
+                    "varName": "_points",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "dst",
+                    "varType": "RotatedRect",
                     "varExplanation": ""
                   }
                 ]
