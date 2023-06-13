@@ -166,7 +166,6 @@ export default {
     },
     methods: {
 
-<<<<<<< HEAD
         selectGroup(group) {
             this.selectedGroup = group;
             
@@ -210,13 +209,9 @@ export default {
         setActiveIcon(icon){
             this.activeIcon = icon;
         },
-
-=======
         openDialogGV(){
             this.$store.commit('setDialogVisibleGlobalVar',true)
-        }
-        ,
->>>>>>> bbcf387ef9f88151ca589c4789de90e7c2afbe14
+        },
         //动态布局
         layout(i) {
             switch (i) {

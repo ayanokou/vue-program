@@ -822,6 +822,7 @@ export default {
                 text: "重命名流程",
                 onClick: () => {
                     this.renameLogic()
+                }
             });
             lf.extension.control.addItem({
                 text: "测试",
