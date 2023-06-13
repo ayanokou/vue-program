@@ -15,8 +15,30 @@ let socket = io.connect('http://localhost:9092')
 export default {
     data() {
         return {
+            selectedOption: '', // 用于存储选择的选项值
+            selectedOptionContent: '', // 用于存储选项对应的内容
+            options: [
+                { label: '选项一', value: 'option1', content: '选项一的内容' },
+                { label: '选项二', value: 'option2', content: '选项二的内容' },
+                { label: 'TCP客户端', value: 'TCP客户端', content: 'tcp' }
+            ],
+            deviceName: "device1",
+            ip: '127.0.0.1',
+            portNumber: 7920,
+            isIPValid: true,
+            updataValue: true,
+            autoReconnection: false,
+            receiveEndMark: false,
+            demoSelectedTCP: false,
+            //是否显示通信管理窗口
+            communicationManagementVisible: false,
+            subCommunicationManagementVisible: false,
+            activeIcon: 'deviceManagement',
+            selectedGroup: "接收数据",
+            group1Input: '', //通信管理-设备管理接收数据
+            group2Output: '', //通信管理-设备管理发送数据
             //是否显示最近打开方案子菜单栏
-           showLastOpenSolution: false, 
+            showLastOpenSolution: false, 
             //最近打开的方案名，存三个
             lastOpenSolutions: [],
             //存储示例方案
@@ -123,6 +145,50 @@ export default {
 
     },
     methods: {
+
+        selectGroup(group) {
+            this.selectedGroup = group;
+            
+        },
+
+        createAnDevice(){
+            if(this.selectedOption === "TCP客户端"){
+                this.demoSelectedTCP = true;
+            }
+            this.subCommunicationManagementVisible = false;
+        },
+
+        validateIP() {
+            const parts = this.ip.split('.');
+            this.isIPValid = parts.length === 4 && parts.every(part => {
+              const num = parseInt(part);
+              return num >= 0 && num <= 255;
+            });
+        },
+
+        filterInput() {
+            this.portNumber = this.portNumber.replace(/\D/g, ''); // 使用正则表达式替换非数字字符为空字符串
+        },
+
+        updateContent() {
+            // 根据选中的选项值更新下半部分的内容
+            const selectedOption = this.options.find(option => option.value === this.selectedOption);
+            if(selectedOption.label === "TCP客户端"){
+                this.deviceName = "1，TCP客户端"
+            }
+            this.selectedOptionContent = selectedOption ? selectedOption.content : '';
+          },
+
+        manageCommunication(){
+            this.communicationManagementVisible = true;
+        },
+        subManageCommunication(){
+            this.subCommunicationManagementVisible = true;
+        },
+
+        setActiveIcon(icon){
+            this.activeIcon = icon;
+        },
 
         //动态布局
         layout(i) {

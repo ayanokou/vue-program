@@ -723,14 +723,13 @@ export default {
             lf.extension.control.addItem({
                 text: "保存流程",
                 onClick: () => {
-                    let Name = prompt("请给要保存的流程图命名", "sln")
+                    let Name = this.tab.tabName
                     let currentTime = Date.now()
                     let text = {
                         name: Name,
                         type: "flow",
                         time: currentTime,
                         content: this.lf.getGraphData(),
-
                     }
                     localStorage.setItem(text.name, JSON.stringify(text))
                 }
@@ -747,8 +746,12 @@ export default {
                     this.downloadXML()
                 }
             })
-
-
+            lf.extension.control.addItem({
+                text: "重命名流程",
+                onClick: () => {
+                    this.renameLogic()
+                }
+            })
             lf.render(this.tab.initLF)
             const position = lf.getPointByClient(document.documentElement.clientWidth / 2 - 150, document.documentElement.clientHeight - 230)
             lf.extension.miniMap.show(position.domOverlayPosition.x, position.domOverlayPosition.y)
@@ -814,6 +817,10 @@ export default {
             //下载json
             this.download('flow.json', JSON.stringify(this.lf.getGraphData()))
 
+        },
+        renameLogic(){
+            let name = prompt("请输入新名称", "lf");
+            this.tab.tabName = name
         },
         formDataSubmit() {
             let inPara=this.dialogUI
