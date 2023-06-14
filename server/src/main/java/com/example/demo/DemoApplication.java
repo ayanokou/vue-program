@@ -33,8 +33,11 @@ public class DemoApplication {
 		System.loadLibrary("bilateralFilter");
 		System.loadLibrary("fitLine");
 		System.loadLibrary("fitEllipse");
+		System.loadLibrary("detectField");
+		System.loadLibrary("getPosition");
 		System.loadLibrary("shadowcorrection");
 		System.loadLibrary("scratchDetection");
+		System.loadLibrary("myMorphology");
 		System.loadLibrary("uv");
 		System.loadLibrary("udpInFlow");
 		System.loadLibrary("udpCommunicate");

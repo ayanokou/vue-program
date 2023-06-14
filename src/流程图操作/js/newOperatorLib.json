@@ -79,6 +79,46 @@
           }
         ]
       }
+    },
+    {
+      "lfProperties": {
+        "type": "operator",
+        "text": "输入源",
+        "label": "输入源",
+        "name": "输入源"
+      },
+      "properties": {
+        "state": "init",
+        "superName": "输入输出",
+        "name": "输入源",
+        "models": [
+          {
+            "modelName": "本地图像",
+            "helpMsg": "it is a help message",
+            "dllPath": "",
+            "modelID": "localImg",
+            "inPara": [
+              {
+                "varName": "format",
+                "varType": "int",
+                "fromExpression": "",
+                "defineVarInputWay": "selectedInputWay",
+                "comboList": {
+                  "RGB": "0"
+                },
+                "varExplanation": ""
+              }
+            ],
+            "outPara": [
+              {
+                "varName": "dst",
+                "varType": "Mat",
+                "varExplanation": ""
+              }
+            ]
+          }
+        ]
+      }
     }
   ],
   "图像匹配": [
@@ -520,7 +560,7 @@
               },
               {
                 "varName": "ksize",
-                "varType": "int",
+                "varType": "Size",
                 "fromExpression": "5,5",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
@@ -544,36 +584,45 @@
                 "varName": "src",
                 "varType": "object",
                 "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
                 "varExplanation": ""
               },
               {
                 "varName": "d",
                 "varType": "int",
-                "fromExpression": "",
+                "fromExpression": "1",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
               },
               {
                 "varName": "sigmaColor",
                 "varType": "double",
-                "fromExpression": "",
+                "fromExpression": "1",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
               },
               {
                 "varName": "sigmaSpace",
                 "varType": "double",
-                "fromExpression": "",
+                "fromExpression": "0",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
               },
               {
                 "varName": "borderType",
                 "varType": "int",
-                "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
-                "varExplanation": ""
+                "fromExpression": "4",
+                "defineVarInputWay": "selectedInputWay",
+                "comboList": {
+                  "BORDER_CONSTANT": "0",
+                  "BORDER_REPLICATE": "1",
+                  "BORDER_REFLECT": "2",
+                  "BORDER_WRAP": "3",
+                  "BORDER_REFLECT_101": "4",
+                  "BORDER_TRANSPARENT": "5",
+                  "BORDER_ISOLATED": "16"
+                },"varExplanation": ""
               }
             ],
             "outPara": [
@@ -787,6 +836,146 @@
               {
                 "varName": "dst",
                 "varType": "object",
+                "varExplanation": ""
+              }
+            ]
+          },
+          {
+            "modelName": "顶帽运算",
+            "dllPath": "server/src/main/resources/myMorphology.dll",
+            "modelID": "myTophat",
+            "inPara": [
+              {
+                "varName": "src",
+                "varType": "Mat",
+                "fromExpression": "",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              },
+              {
+                "varName": "size",
+                "varType": "Size",
+                "fromExpression": "5,5",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              }
+            ],
+            "outPara": [
+              {
+                "varName": "dst",
+                "varType": "Mat",
+                "varExplanation": ""
+              }
+            ]
+          },
+          {
+            "modelName": "黑帽运算",
+            "dllPath": "server/src/main/resources/myMorphology.dll",
+            "modelID": "myBlackhat",
+            "inPara": [
+              {
+                "varName": "src",
+                "varType": "Mat",
+                "fromExpression": "",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              },
+              {
+                "varName": "size",
+                "varType": "Size",
+                "fromExpression": "5,5",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              }
+            ],
+            "outPara": [
+              {
+                "varName": "dst",
+                "varType": "Mat",
+                "varExplanation": ""
+              }
+            ]
+          },
+          {
+            "modelName": "腐蚀运算",
+            "dllPath": "server/src/main/resources/myMorphology.dll",
+            "modelID": "myErode",
+            "inPara": [
+              {
+                "varName": "src",
+                "varType": "Mat",
+                "fromExpression": "",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              },
+              {
+                "varName": "size",
+                "varType": "Size",
+                "fromExpression": "5,5",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              }
+            ],
+            "outPara": [
+              {
+                "varName": "dst",
+                "varType": "Mat",
+                "varExplanation": ""
+              }
+            ]
+          },
+          {
+            "modelName": "膨胀运算",
+            "dllPath": "server/src/main/resources/myMorphology.dll",
+            "modelID": "myDilate",
+            "inPara": [
+              {
+                "varName": "src",
+                "varType": "Mat",
+                "fromExpression": "",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              },
+              {
+                "varName": "size",
+                "varType": "Size",
+                "fromExpression": "5,5",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              }
+            ],
+            "outPara": [
+              {
+                "varName": "dst",
+                "varType": "Mat",
+                "varExplanation": ""
+              }
+            ]
+          },
+          {
+            "modelName": "梯度运算",
+            "dllPath": "server/src/main/resources/myMorphology.dll",
+            "modelID": "myGradient",
+            "inPara": [
+              {
+                "varName": "src",
+                "varType": "Mat",
+                "fromExpression": "",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              },
+              {
+                "varName": "size",
+                "varType": "Size",
+                "fromExpression": "5,5",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              }
+            ],
+            "outPara": [
+              {
+                "varName": "dst",
+                "varType": "Mat",
                 "varExplanation": ""
               }
             ]
@@ -1648,6 +1837,110 @@
           }
         ]
       }
+    },
+    {
+      "lfProperties": {
+        "name": "拟合直线",
+        "type": "operator",
+        "text": "拟合直线",
+        "label": "拟合直线"
+      },
+      "properties": {
+        "state": "init",
+        "name": "拟合直线",
+        "superName": "图像测量",
+        "models": [
+          {
+            "modelName": "拟合直线",
+            "helpMsg": "it is a help message of GlobalVariable",
+            "dllPath": "server\\src\\main\\resources\\fitLine.dll",
+            "modelID": "myFitLine",
+            "inPara": [
+              {
+                "varName": "_points",
+                "varType": "Mat",
+                "fromExpression": "",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
+                "varExplanation": ""
+              },
+              {
+                "varName": "distType",
+                "varType": "int",
+                "fromExpression": "40",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              },
+              {
+                "varName": "param",
+                "varType": "double",
+                "fromExpression": "200",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              },
+              {
+                "varName": "reps",
+                "varType": "double",
+                "fromExpression": "200",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              },
+              {
+                "varName": "aeps",
+                "varType": "double",
+                "fromExpression": "200",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              }
+            ],
+            "outPara": [
+              {
+                "varName": "_line",
+                "varType": "Mat",
+                "varExplanation": ""
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "lfProperties": {
+        "name": "拟合椭圆",
+        "type": "operator",
+        "text": "拟合椭圆",
+        "label": "拟合椭圆"
+      },
+      "properties": {
+        "state": "init",
+        "name": "拟合椭圆",
+        "superName": "图像测量",
+        "models": [
+          {
+            "modelName": "拟合椭圆",
+            "helpMsg": "it is a help message of GlobalVariable",
+            "dllPath": "server\\src\\main\\resources\\fitEllipse.dll",
+            "modelID": "myFitEllipse",
+            "inPara": [
+              {
+                "varName": "_points",
+                "varType": "Mat",
+                "fromExpression": "",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
+                "varExplanation": ""
+              }
+            ],
+            "outPara": [
+              {
+                "varName": "dst",
+                "varType": "RotatedRect",
+                "varExplanation": ""
+              }
+            ]
+          }
+        ]
+      }
     }
   ],
   "颜色处理": [
@@ -2000,14 +2293,14 @@
             "inPara": [
               {
                 "varName": "r1",
-                "varType": "object",
+                "varType": "vector<RotatedRect>",
                 "fromExpression": "",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
               },
               {
                 "varName": "r2",
-                "varType": "object",
+                "varType": "vector<RotatedRect>",
                 "fromExpression": "",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
@@ -2095,9 +2388,10 @@
             "inPara": [
               {
                 "varName": "src",
-                "varType": "object",
+                "varType": "Mat",
                 "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
                 "varExplanation": ""
               }
             ],

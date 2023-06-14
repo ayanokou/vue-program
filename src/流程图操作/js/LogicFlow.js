@@ -410,6 +410,7 @@ export default {
         ])
     },
     watch:{
+
         //在对话框中监听修改模型,同时切换nodelModel也会触发
         modelName(newValue){
             console.log("in watch modelName")
@@ -479,6 +480,7 @@ export default {
             //刷新nodeModel
             this.nodeModel = this.lf.getNodeModelById(evt.data.id)
             this.selectedAlgorithm = evt.data.id
+            this.$store.commit('setNodeModelName',this.nodeModel.getProperties().name)
             // this.changeNodeStage(evt.data.id, "running") //改变节点状态 再节点类中getnodestyle方法中会根据状态改变节点颜色
         })
         //双击节点，弹出对话框
@@ -793,14 +795,13 @@ export default {
             lf.extension.control.addItem({
                 text: "保存流程",
                 onClick: () => {
-                    let Name = prompt("请给要保存的流程图命名", "sln")
+                    let Name = this.tab.tabName
                     let currentTime = Date.now()
                     let text = {
                         name: Name,
                         type: "flow",
                         time: currentTime,
                         content: this.lf.getGraphData(),
-
                     }
                     localStorage.setItem(text.name, JSON.stringify(text))
                 }
@@ -816,11 +817,16 @@ export default {
                 onClick: () => {
                     this.downloadXML()
                 }
-            })
+            });
+            lf.extension.control.addItem({
+                text: "重命名流程",
+                onClick: () => {
+                    this.renameLogic()
+                }
+            });
             lf.extension.control.addItem({
                 text: "测试",
                 onClick: () => {
-
                 }
             })
             lf.render(this.tab.initLF)
@@ -874,26 +880,45 @@ export default {
             //bug：修改了this.operatorData,对话框用operatorData绘制。连接过之后，再删除连接，依然可以选择
             //获得model
             let model=this.operatorData.models.find(item=>item.modelName==this.modelName)
-            //获得inPara
-
-            for(let p of model.inPara){
-                if(p.defineVarInputWay=="smartInputWay"){
-                    //修改bug，清除之前连接的记录
-                    p.comboList={}
-                    if(p.varType=="object"){
-                        for(let i in comboList)
-                            p.comboList[i]=comboList[i].split('#')[0]
-
-                    }else{
-                        for(let i in comboList){
-                            let type=comboList[i].split('#')[1]
-                            if(type==p.varType)
+            for(let model of this.operatorData.models){
+                for(let p of model.inPara){
+                    if(p.defineVarInputWay=="smartInputWay"){
+                        //修改bug，清除之前连接的记录
+                        p.comboList={}
+                        if(p.varType=="object"){
+                            for(let i in comboList)
                                 p.comboList[i]=comboList[i].split('#')[0]
-                        }
-                    }
 
+                        }else{
+                            for(let i in comboList){
+                                let type=comboList[i].split('#')[1]
+                                if(type==p.varType)
+                                    p.comboList[i]=comboList[i].split('#')[0]
+                            }
+                        }
+
+                    }
                 }
             }
+            // //获得inPara
+            // for(let p of model.inPara){
+            //     if(p.defineVarInputWay=="smartInputWay"){
+            //         //修改bug，清除之前连接的记录
+            //         p.comboList={}
+            //         if(p.varType=="object"){
+            //             for(let i in comboList)
+            //                 p.comboList[i]=comboList[i].split('#')[0]
+            //
+            //         }else{
+            //             for(let i in comboList){
+            //                 let type=comboList[i].split('#')[1]
+            //                 if(type==p.varType)
+            //                     p.comboList[i]=comboList[i].split('#')[0]
+            //             }
+            //         }
+            //
+            //     }
+            // }
         },
         loadFlowChart() {
             let inputObj = document.createElement('input');
@@ -942,6 +967,34 @@ export default {
             this.download('flow.json', JSON.stringify(this.lf.getGraphData()))
 
         },
+        renameLogic(){
+            let name = prompt("请输入新名称", "lf");
+            this.tab.tabName = name
+        },
+        paramCheck(data,type){
+            const int_regex=/^-?\d+$/
+            const double_regex=/^-?\d+(.\d+)?$/
+            const Size_regex=/^\d+,\d+$/
+            let flag=true;
+            switch(type){
+                case "int":
+                    flag=int_regex.test(data)
+                    break;
+                case "double":
+                    flag=double_regex.test(data)
+                    break;
+                case "Size":
+                    flag=Size_regex.test(data)
+                    break;
+                default:
+                    break;
+            }
+            console.log(flag)
+            if(!flag){
+                alert("提交类型出错!")
+            }
+            return flag
+        },
         formDataSubmit() {
             this.nodeModel.deleteProperty("models")
             let model=this.operatorData.models.find(item=>item.modelName==this.modelName)
@@ -949,8 +1002,9 @@ export default {
             
             let paramReady = true
             for(let i in model_copy["inPara"]){
-                model_copy["inPara"][i].fromExpression=this.formData[i]
-                if(this.formData[i]=="") paramReady = false
+
+                if(this.formData[i]==""||!this.paramCheck(this.formData[i],model_copy["inPara"][i].varType)) paramReady = false
+                else model_copy["inPara"][i].fromExpression=this.formData[i]
             }
 
             this.nodeModel.setProperties(model_copy)
