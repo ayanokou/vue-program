@@ -2406,6 +2406,49 @@
           "models": []
         }
       ]
+    },
+    {
+      "lfProperties": {
+        "name": "边缘检测",
+        "type": "operator",
+        "text": "边缘检测",
+        "label": "边缘检测"
+      },
+      "properties": {
+        "state": "init",
+        "superName": "高级功能",
+        "name": "边缘检测"
+      },
+      "models": [
+        {
+          "lfProperties": {
+            "name": "edgeDetection"
+          },
+          "properties": {
+            "helpMsg": "it is a help message of GlobalVariable",
+            "dllPath": "server/src/main/resources/myEdgeDetection.dll",
+            "modelID": "myEdgeDetection",
+            "inPara": [
+              {
+                "varName": "src",
+                "varType": "Mat",
+                "fromExpression": "",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
+                "varExplanation": ""
+              }
+            ],
+            "outPara": [
+              {
+                "varName": "flag",
+                "varType": "bool",
+                "varExplanation": ""
+              }
+            ]
+          },
+          "models": []
+        }
+      ]
     }
   ],
   "逻辑工具": [
