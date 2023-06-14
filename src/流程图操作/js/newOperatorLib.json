@@ -2177,6 +2177,36 @@
                 "varExplanation": "结果去噪图片"
               }
             ]
+          },
+          {
+            "modelName": "lowLightImgEnhance",
+            "helpMsg": "弱光条件下图片变亮",
+            "dllPath": "server/src/main/resources/lowLigt_imgEnhance.dll",
+            "modelID": "lowlightImgEnhance",
+            "inPara": [
+              {
+                "varName": "input_mat",
+                "varType": "Mat",
+                "fromExpression": "",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
+                "varExplanation": "输入图片矩阵"
+              },
+              {
+                "varName": "modelpath",
+                "varType": "string",
+                "fromExpression": "D:/Documents/projects/temp/lowLight_imgEnhance.onnx",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": "模型路径 从https://www.dropbox.com/s/zikbpwcru3ovhqy/lowLight_imgEnhance.onnx?dl=0下载放到某路径下"
+              }
+            ],
+            "outPara": [
+              {
+                "varName": "dst",
+                "varType": "Mat",
+                "varExplanation": "结果去噪图片"
+              }
+            ]
           }
         ]
       }
