@@ -387,7 +387,8 @@ export default {
 
             //拖拽节点的初始
             modelName:"",//模型名称
-            operatorData:{}//拖拽节点的原始properties数据
+            operatorData:{},//拖拽节点的原始properties数据
+
 
           }
     },
@@ -582,6 +583,9 @@ export default {
         // }
     },
     methods: {
+        f(){
+
+        },
         init() {
             const lf = new LogicFlow({
                 container: document.querySelector("#"+this.tab.title),
@@ -988,6 +992,7 @@ export default {
             return flag
         },
         formDataSubmit() {
+            console.log(this.formData)
             this.nodeModel.deleteProperty("models")
             let model=this.operatorData.models.find(item=>item.modelName==this.modelName)
             let model_copy=JSON.parse(JSON.stringify(model))
@@ -1113,8 +1118,25 @@ export default {
         changeNodeStage(nodeId, stage){
             let node = this.lf.getNodeModelById(nodeId)
             node.properties.state = stage;
-        }
+        },
+        readFile(idx){
+            let input=document.getElementById('imgUrl')
 
+            if (input.files[0]) {
+                let reader = new FileReader();
+
+                reader.onload = (event) => {
+                    // 转换为 base64 格式
+                    let base64 = event.target.result;
+
+                    this.formData[idx]=base64
+                    // 在这里可以将转换后的 base64 信息存储到组件的 data 属性中
+                    // this.data = base64;
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
     }
 }
 

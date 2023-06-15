@@ -1,57 +1,85 @@
 <template>
-    <el-upload action="#" list-type="picture-card" :auto-upload="false">
+    <el-upload  ref="test" action="#" list-type="picture-card" :auto-upload="false">
         <el-icon><Plus /></el-icon>
 
-<!--        <template #file="{ file }">-->
-<!--            <div>-->
-<!--                <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" />-->
-<!--                <span class="el-upload-list__item-actions">-->
-<!--          <span-->
-<!--              class="el-upload-list__item-preview"-->
-<!--              @click="handlePictureCardPreview(file)"-->
-<!--          >-->
-<!--            <el-icon><zoom-in /></el-icon>-->
-<!--          </span>-->
-<!--          <span-->
-<!--              v-if="!disabled"-->
-<!--              class="el-upload-list__item-delete"-->
-<!--              @click="handleDownload(file)"-->
-<!--          >-->
-<!--            <el-icon><Download /></el-icon>-->
-<!--          </span>-->
-<!--          <span-->
-<!--              v-if="!disabled"-->
-<!--              class="el-upload-list__item-delete"-->
-<!--              @click="handleRemove(file)"-->
-<!--          >-->
-<!--            <el-icon><Delete /></el-icon>-->
-<!--          </span>-->
-<!--        </span>-->
-<!--            </div>-->
-<!--        </template>-->
+        <template #file="{ file }">
+            <div>
+                <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" />
+                <span class="el-upload-list__item-actions">
+          <span
+              class="el-upload-list__item-preview"
+              @click="handlePictureCardPreview(file)"
+          >
+            <el-icon><zoom-in /></el-icon>
+          </span>
+          <span
+              v-if="!disabled"
+              class="el-upload-list__item-select"
+              @click="selectAndRun(file)"
+          >
+            <el-icon><CaretRight /></el-icon>
+          </span>
+          <span
+              v-if="!disabled"
+              class="el-upload-list__item-delete"
+              @click="handleRemove(file)"
+          >
+            <el-icon><Delete /></el-icon>
+          </span>
+        </span>
+            </div>
+        </template>
     </el-upload>
+    <el-dialog v-model="dialogVisible">
+        <img w-full :src="dialogImageUrl" alt="Preview Image" />
+    </el-dialog>
 </template>
 
-<script lang="ts" setup>
-import { ref } from 'vue'
-import { Delete, Download, Plus, ZoomIn } from '@element-plus/icons-vue'
 
-import type { UploadFile } from 'element-plus'
 
-const dialogImageUrl = ref('')
-const dialogVisible = ref(false)
-const disabled = ref(false)
+<script>
 
-const handleRemove = (file: UploadFile) => {
-    console.log(file)
-}
 
-const handlePictureCardPreview = (file: UploadFile) => {
-    dialogImageUrl.value = file.url!
-    dialogVisible.value = true
-}
 
-const handleDownload = (file: UploadFile) => {
-    console.log(file)
+import {mapState} from "vuex";
+
+export default {
+    data(){
+        return{
+            dialogImageUrl:'',
+            dialogVisible:false,
+            disabled:false
+        }
+    },
+    computed:{
+        ...mapState(['localImg'])
+    },
+    methods:{
+        handleRemove(file) {
+            this.$refs.test.handleRemove(file)
+            console.log(file)
+        },
+        handlePictureCardPreview(file){
+            this.dialogImageUrl = file.url
+            this.dialogVisible= true
+        },
+        selectAndRun(file){
+            //标识你选择的图像
+            //将图片数据传入json中并运行流程
+            const img=new Image()
+            img.src=file.url
+            img.onload=()=>{
+                let canvas=document.createElement('canvas')
+                canvas.width=img.width
+                canvas.height=img.height
+                let ctx=canvas.getContext('2d')
+                ctx.drawImage(img,0,0,img.width,img.height)
+                let base64Data=canvas.toDataURL('image/png')
+
+                this.$store.commit('setLocalImg',base64Data)
+            }
+        }
+    },
+
 }
 </script>

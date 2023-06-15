@@ -28,7 +28,8 @@ export default createStore({
             runState:{trigger:false,content:null},
             runSolution:null,
             dialogVisibleGlobalVar:false,
-            nodeModelName:""
+            //nodeModelName:"",
+            localImg:"init"
         }
     },
     mutations:{
@@ -90,7 +91,10 @@ export default createStore({
         },
         setNodeModelName(state,payload){
             state.nodeModelName=payload
-        }
+        },
+        // setLocalImg(state,payload){
+        //     state.localImg=payload
+        // }
     },
     modules:{
 

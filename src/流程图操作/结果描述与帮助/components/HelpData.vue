@@ -1,6 +1,5 @@
 <template>
     <pre>{{vuexHelpInfo}}</pre>
-    {{socketEmit}}
 </template>
 
 <!--<script setup>-->
@@ -17,6 +16,9 @@ export default{
             "vuexHelpInfo",
             "socketEmit"
         ])
+    },
+    watch:{
+
     }
 }
 </script>

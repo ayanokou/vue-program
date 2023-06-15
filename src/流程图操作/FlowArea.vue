@@ -132,7 +132,8 @@ export default {
             //"open",
             "flowAdd",
             "flowChartOK",
-            "runSolution"
+            "runSolution",
+            "localImg"
         ]),
         solution(){
             let lfs = [];
@@ -395,6 +396,9 @@ export default {
                 this.$store.commit("flowAddEvent", false);
             }     
         },
+        localImg(newValue){
+
+        }
     },
 
     methods: {

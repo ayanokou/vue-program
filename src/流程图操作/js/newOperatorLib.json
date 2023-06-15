@@ -95,17 +95,14 @@
           {
             "modelName": "本地图像",
             "helpMsg": "it is a help message",
-            "dllPath": "",
-            "modelID": "localImg",
+            "dllPath": "server/src/main/resources/LocalImg.dll",
+            "modelID": "LocalImg",
             "inPara": [
               {
-                "varName": "format",
-                "varType": "int",
+                "varName": "imgFile",
+                "varType": "string",
                 "fromExpression": "",
-                "defineVarInputWay": "selectedInputWay",
-                "comboList": {
-                  "RGB": "0"
-                },
+                "defineVarInputWay": "fileInputWay",
                 "varExplanation": ""
               }
             ],
@@ -113,7 +110,7 @@
               {
                 "varName": "dst",
                 "varType": "Mat",
-                "varExplanation": ""
+                "varExplanation": "123"
               }
             ]
           }
@@ -840,7 +837,8 @@
                 "varName": "src",
                 "varType": "Mat",
                 "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
                 "varExplanation": ""
               },
               {
@@ -1841,43 +1839,50 @@
       "properties": {
         "state": "init",
         "superName": "颜色处理",
-        "name": "转换颜色空间"
-      },
-      "models": [
-        {
-          "lfProperties": {
-            "name": "转换颜色空间"
-          },
-          "properties": {
-            "dllPath": "server/src/main/resources/general.dll",
-            "modelID": "convert_color",
-            "inPara": [
-              {
-                "varName": "src",
-                "varType": "object",
-                "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
-                "varExplanation": ""
-              },
-              {
-                "varName": "code",
-                "varType": "int",
-                "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
-                "varExplanation": ""
-              }
-            ],
-            "outPara": [
-              {
-                "varName": "dst",
-                "varType": "object",
-                "varExplanation": ""
-              }
-            ]
-          },
-          "models": []
-        }
-      ]
+        "name": "转换颜色空间",
+        "models": [
+          {
+              "name": "转换颜色空间",
+              "dllPath": "server/src/main/resources/general.dll",
+              "modelID": "convert_color",
+              "inPara": [
+                {
+                  "varName": "src",
+                  "varType": "Mat",
+                  "fromExpression": "",
+                  "defineVarInputWay": "smartInputWay",
+                  "varExplanation": ""
+                },
+                {
+                  "varName": "code",
+                  "varType": "int",
+                  "fromExpression": "",
+                  "defineVarInputWay": "selectedInputWay",
+                  "comboList": {
+                    "BGR2GRAY": "6",
+                    "BGR2HSV": "40",
+                    "BGR2YUV": "82",
+                    "BGR2RGB": "4",
+                    "GRAY2BGR": "8",
+                    "HSV2BGR": "54",
+                    "YUV2BGR": "84",
+                    "RGB2BGR":"4"
+                  },
+                  "varExplanation": ""
+                }
+              ],
+              "outPara": [
+                {
+                  "varName": "dst",
+                  "varType": "Mat",
+                  "varExplanation": ""
+                }
+              ]
+
+          }
+        ]
+      }
+
     }
   ],
   "图像识别": [],

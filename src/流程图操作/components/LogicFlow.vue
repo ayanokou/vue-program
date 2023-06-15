@@ -1,4 +1,5 @@
 <template>
+
     <el-container style="height:100%">
         <el-aside style="width:150px;">
             <el-scrollbar>
@@ -35,18 +36,19 @@
                     <el-sub-menu v-for="(value, key, index1) in suanzis" :index="index1">
                         <template #title>
                             <el-icon>
-                                <location />
+                                <location/>
                             </el-icon>
-                            {{key}}
+                            {{ key }}
                         </template>
                         <el-menu-item-group class="second_left_menus_container">
                             <!--vue 插入元素-->
-                            <el-menu-item v-for="(model_2, index2) in value" :index="'suanzi' + index1 + '-' + index2" :id="model_2.lfProperties.name+tab.index">
+                            <el-menu-item v-for="(model_2, index2) in value" :index="'suanzi' + index1 + '-' + index2"
+                                          :id="model_2.lfProperties.name+tab.index">
                             </el-menu-item>
                         </el-menu-item-group>
                     </el-sub-menu>
                 </el-menu>
-        </el-scrollbar>
+            </el-scrollbar>
         </el-aside>
         <!--流程图区域-->
         <el-main ref="lfMain" style="height: 100%; padding: 0; overflow:hidden">
@@ -58,17 +60,17 @@
             <slot></slot>
         </el-main>
 
-        <el-dialog v-model="dialogVisible" :modal="false" :close-on-click-modal="false" :title="operatorData.name" width="50%"
+        <el-dialog v-model="dialogVisible" :modal="false" :close-on-click-modal="false" :title="operatorData.name"
+                   width="50%"
                    draggable>
             <el-form label-width="120px">
                 <el-form-item v-if="operatorData.models.length>1" label="类型">
                     <el-select placeholder="选择类型" v-model="modelName">
-                        <el-option v-for="model in operatorData.models" :label="model.modelName" :key="model.modelName" :value="model.modelName">
+                        <el-option v-for="model in operatorData.models" :label="model.modelName" :key="model.modelName"
+                                   :value="model.modelName">
                         </el-option>
                     </el-select>
                 </el-form-item>
-
-
 
 
                 <template v-for="m in operatorData.models">
@@ -76,7 +78,8 @@
                         <div v-if="item.defineVarInputWay === 'directInputWay'">
                             <el-input v-model="formData[index]"/>
                         </div>
-                        <div v-if="item.defineVarInputWay === 'selectedInputWay'||item.defineVarInputWay === 'smartInputWay'">
+                        <div
+                            v-if="item.defineVarInputWay === 'selectedInputWay'||item.defineVarInputWay === 'smartInputWay'">
                             <el-select v-model="formData[index]" placeholder="Select">
                                 <el-option
                                     v-for="(value,key) in item.comboList"
@@ -86,9 +89,18 @@
                                 />
                             </el-select>
                         </div>
+
+
+
+
+                        <div v-if="item.defineVarInputWay === 'fileInputWay'">
+                            <input @change="readFile(index)" type="file"  accept="image/*" id="imgUrl">
+                        </div>
+
+
+
                     </el-form-item>
                 </template>
-
 
 
             </el-form>
@@ -161,7 +173,8 @@
                     </span>
             </template>
         </el-dialog>
-        <el-dialog v-model="dialogVisiblePersist" :modal="false" :close-on-click-modal="false" :title="modelID" width="25%"
+        <el-dialog v-model="dialogVisiblePersist" :modal="false" :close-on-click-modal="false" :title="modelID"
+                   width="25%"
                    draggable>
             <el-table :data="tableDataPersist" style="width: 100%" max-height="250">
                 <el-table-column prop="name" label="Name" width="120"/>
@@ -211,24 +224,27 @@
                 </el-form>
                 <template #footer>
                     <span class="dialog-footer">
-                        <el-button type="primary" @click="innerVisiblePersist = false;addItemPersist()">Submit</el-button>
+                        <el-button type="primary"
+                                   @click="innerVisiblePersist = false;addItemPersist()">Submit</el-button>
                         <el-button @click="innerVisiblePersist = false;">Cancel</el-button>
                     </span>
                 </template>
             </el-dialog>
             <template #footer>
                     <span class="dialog-footer">
-                        <el-button type="primary" @click="dialogVisiblePersist = false;submitPersist()">Submit</el-button>
+                        <el-button type="primary"
+                                   @click="dialogVisiblePersist = false;submitPersist()">Submit</el-button>
                         <el-button @click="dialogVisiblePersist = false;">Cancel</el-button>
                     </span>
             </template>
         </el-dialog>
 
-        <el-dialog v-model="dialogVisibleConditionalEdge" :modal="false" :close-on-click-modal="false" :title="modelID" width="50%"
+        <el-dialog v-model="dialogVisibleConditionalEdge" :modal="false" :close-on-click-modal="false" :title="modelID"
+                   width="50%"
                    draggable>
             <el-form label-width="120px">
 
-                <el-form-item  label="选择Y,N边">
+                <el-form-item label="选择Y,N边">
                     <div>
                         <el-select v-model="yorn" placeholder="Select">
                             <el-option
@@ -247,17 +263,19 @@
             </el-form>
             <template #footer>
           <span class="dialog-footer">
-            <el-button type="primary" @click="dialogVisibleConditionalEdge = false;edgeConditionalSubmit();">Submit</el-button>
+            <el-button type="primary"
+                       @click="dialogVisibleConditionalEdge = false;edgeConditionalSubmit();">Submit</el-button>
             <el-button @click="dialogVisibleConditionalEdge = false;">Cancel</el-button>
           </span>
             </template>
         </el-dialog>
 
-        <el-dialog v-model="dialogVisibleSwitchEdge" :modal="false" :close-on-click-modal="false" :title="modelID" width="50%"
+        <el-dialog v-model="dialogVisibleSwitchEdge" :modal="false" :close-on-click-modal="false" :title="modelID"
+                   width="50%"
                    draggable>
             <el-form label-width="120px">
 
-                <el-form-item  label="编辑switch文本">
+                <el-form-item label="编辑switch文本">
                     <div>
                         <el-input v-model="switchEdge"/>
                     </div>
@@ -291,10 +309,11 @@
 }
 
 /*设置样式 让按钮一行最多放三个*/
-.second_left_menus_container { 
-    width:288px;
-    user-select:none;
+.second_left_menus_container {
+    width: 288px;
+    user-select: none;
 }
+
 .second_left_menus {
     width: 80px;
 }
@@ -327,21 +346,21 @@
 }
 
 #runtime-container {
-  position: absolute;
-  top: 10px; /* 距离顶部的距离 */
-  left:15%; /* 距离左侧的距离 */
-  z-index: 999; /* 将其z-index设置为比流程图更高的值 */
+    position: absolute;
+    top: 10px; /* 距离顶部的距离 */
+    left: 15%; /* 距离左侧的距离 */
+    z-index: 999; /* 将其z-index设置为比流程图更高的值 */
 }
 
 #runtime {
-  display: inline-block;
-  width: 150px; /* 控制显示时间的小方块的宽度 */
-  height: 20px; /* 控制显示时间的小方块的高度 */
-  background-color: rgba(119, 76, 187, 0.452); /* 设置小方块的背景色，半透明 */
-  color: #fff; /* 设置小方块中文字的颜色 */
-  font-size: 14px; /* 控制小方块中文字的大小 */
-  text-align: center; /* 设置小方块中文字居中 */
-  line-height: 20px; /* 控制小方块中文字的行高，使其居中显示 */
-  border-radius: 4px; /* 设置小方块的圆角 */
+    display: inline-block;
+    width: 150px; /* 控制显示时间的小方块的宽度 */
+    height: 20px; /* 控制显示时间的小方块的高度 */
+    background-color: rgba(119, 76, 187, 0.452); /* 设置小方块的背景色，半透明 */
+    color: #fff; /* 设置小方块中文字的颜色 */
+    font-size: 14px; /* 控制小方块中文字的大小 */
+    text-align: center; /* 设置小方块中文字居中 */
+    line-height: 20px; /* 控制小方块中文字的行高，使其居中显示 */
+    border-radius: 4px; /* 设置小方块的圆角 */
 }
 </style>
