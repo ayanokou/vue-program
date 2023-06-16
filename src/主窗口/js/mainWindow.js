@@ -143,6 +143,10 @@ export default {
         socket.on('revTimeConsume',(data)=>{
             this.$store.commit('timeConsumeEvent', data);
         })
+
+        socket.on('ReceivedTcpData', data =>{
+            console.log(`ReceivedTcpData: ${data}`)
+        })
         // socket.on('revRects',(data)=>{
         //     this.$store.commit('setModuleResultData', data);
         // })

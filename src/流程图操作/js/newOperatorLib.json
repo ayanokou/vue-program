@@ -656,15 +656,16 @@
             "inPara": [
               {
                 "varName": "src",
-                "varType": "object",
+                "varType": "Mat",
                 "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
                 "varExplanation": ""
               },
               {
                 "varName": "light",
                 "varType": "int",
-                "fromExpression": "",
+                "fromExpression": "3",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
               }
@@ -1593,6 +1594,89 @@
           }
         ]
       }
+    },
+    {
+      "lfProperties": {
+        "name": "自适应亮度校正",
+        "type": "operator",
+        "text": "自适应亮度校正",
+        "label": "自适应亮度校正"
+      },
+      "properties": {
+        "state": "init",
+        "superName": "图像处理",
+        "name": "自适应亮度校正",
+        "models": [
+          {
+            "modelName": "自适应亮度校正",
+            "helpMsg": "it is a help message",
+            "dllPath": "server/src/main/resources/myBrightnessCorrection.dll",
+            "modelID": "myBrightnessCorrection",
+            "inPara": [
+              {
+                "varName": "src",
+                "varType": "Mat",
+                "fromExpression": "",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
+                "varExplanation": ""
+              }
+            ],
+            "outPara": [
+              {
+                "varName": "dst",
+                "varType": "Mat",
+                "varExplanation": ""
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "lfProperties": {
+        "name": "对比度增强",
+        "type": "operator",
+        "text": "对比度增强",
+        "label": "对比度增强"
+      },
+      "properties": {
+        "state": "init",
+        "superName": "图像处理",
+        "name": "对比度增强",
+        "models": [
+          {
+            "modelName": "对比度增强",
+            "helpMsg": "it is a help message",
+            "dllPath": "server/src/main/resources/myContrastEnhancement.dll",
+            "modelID": "myContrastEnhancement",
+            "inPara": [
+              {
+                "varName": "src",
+                "varType": "Mat",
+                "fromExpression": "",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
+                "varExplanation": ""
+              },
+              {
+                "varName": "alpha",
+                "varType": "double",
+                "fromExpression": "1.5",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              }
+            ],
+            "outPara": [
+              {
+                "varName": "dst",
+                "varType": "Mat",
+                "varExplanation": ""
+              }
+            ]
+          }
+        ]
+      }
     }
   ],
   "图像标定": [],
@@ -1991,6 +2075,44 @@
           "models": []
         }
       ]
+    },
+    {
+      "lfProperties": {
+        "name": "颜色识别",
+        "type": "operator",
+        "text": "颜色识别",
+        "label": "颜色识别"
+      },
+      "properties": {
+        "state": "init",
+        "superName": "颜色处理",
+        "name": "颜色识别",
+        "models": [
+          {
+            "modelName": "颜色识别",
+            "helpMsg": "it is a help message",
+            "dllPath": "server/src/main/resources/myColorIdentif.dll",
+            "modelID": "myColorIdentif",
+            "inPara": [
+              {
+                "varName": "src",
+                "varType": "Mat",
+                "fromExpression": "",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
+                "varExplanation": ""
+              }
+            ],
+            "outPara": [
+              {
+                "varName": "color",
+                "varType": "string",
+                "varExplanation": ""
+              }
+            ]
+          }
+        ]
+      }
     }
   ],
   "图像识别": [],
@@ -2177,6 +2299,36 @@
                 "varExplanation": "结果去噪图片"
               }
             ]
+          },
+          {
+            "modelName": "lowLightImgEnhance",
+            "helpMsg": "弱光条件下图片变亮",
+            "dllPath": "server/src/main/resources/lowLigt_imgEnhance.dll",
+            "modelID": "lowlightImgEnhance",
+            "inPara": [
+              {
+                "varName": "input_mat",
+                "varType": "Mat",
+                "fromExpression": "",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
+                "varExplanation": "输入图片矩阵"
+              },
+              {
+                "varName": "modelpath",
+                "varType": "string",
+                "fromExpression": "D:/Documents/projects/temp/lowLight_imgEnhance.onnx",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": "模型路径 从https://www.dropbox.com/s/zikbpwcru3ovhqy/lowLight_imgEnhance.onnx?dl=0下载放到某路径下"
+              }
+            ],
+            "outPara": [
+              {
+                "varName": "dst",
+                "varType": "Mat",
+                "varExplanation": "结果去噪图片"
+              }
+            ]
           }
         ]
       }
@@ -2212,11 +2364,11 @@
                 "varType": "int",
                 "fromExpression": "",
                 "defineVarInputWay": "selectedInputWay",
-                "comboList" : {
-                  "2倍" : "2",
-                  "3倍" : "3",
-                  "4倍" : "4",
-                  "8倍" : "8"
+                "comboList": {
+                  "2倍": "2",
+                  "3倍": "3",
+                  "4倍": "4",
+                  "8倍": "8"
                 },
                 "varExplanation": "放大倍数 支持2 3 4 8"
               }
@@ -2248,9 +2400,9 @@
                 "varType": "string",
                 "fromExpression": "server/src/main/resources/models/inceptionv3.onnx",
                 "defineVarInputWay": "selectedInputWay",
-                "comboList" : {
-                  "inceptionv3" : "server/src/main/resources/models/inceptionv3.onnx",
-                  "resnetv50" : "server/src/main/resources/models/resnet50-v1-12.onnx"
+                "comboList": {
+                  "inceptionv3": "server/src/main/resources/models/inceptionv3.onnx",
+                  "resnetv50": "server/src/main/resources/models/resnet50-v1-12.onnx"
                 },
                 "varExplanation": "模型路径"
               },
@@ -2406,6 +2558,88 @@
           "models": []
         }
       ]
+    },
+    {
+      "lfProperties": {
+        "name": "条码检测",
+        "type": "operator",
+        "text": "条码检测",
+        "label": "条码检测"
+      },
+      "properties": {
+        "state": "init",
+        "superName": "高级功能",
+        "name": "条码检测",
+        "models": [
+          {
+            "modelName": "CodeDetect",
+            "helpMsg": "it is a help message of GlobalVariable",
+            "dllPath": "server/src/main/resources/QrcodeDetect.dll",
+            "modelID": "codeDetect",
+            "inPara": [
+              {
+                "varName": "src",
+                "varType": "Mat",
+                "fromExpression": "",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
+                "varExplanation": ""
+              }
+            ],
+            "outPara": [
+              {
+                "varName": "dst",
+                "varType": "vector<string>",
+                "varExplanation": ""
+              }
+            ]
+          }
+        ]
+      }
+
+    },
+    {
+      "lfProperties": {
+        "name": " 边缘检测",
+        "type": "operator",
+        "text": " 边缘检测",
+        "label": " 边缘检测"
+      },
+      "properties": {
+        "state": "init",
+        "superName": "高级功能",
+        "name": " 边缘检测",
+        "models": [
+          {
+            "modelName": " 边缘检测",
+            "helpMsg": "it is a help message of GlobalVariable",
+            "dllPath": "server/src/main/resources/myEdgeDetection.dll",
+            "modelID": "myEdgeDetection",
+            "inPara": [
+              {
+                "varName": "src",
+                "varType": "Mat",
+                "fromExpression": "",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
+                "varExplanation": ""
+              }
+            ],
+            "outPara": [
+              {
+                "varName": "flag",
+                "varType": "bool",
+                "varExplanation": ""
+              },
+              {
+                "varName": "dst",
+                "varType": "Mat",
+                "varExplanation": ""
+              }
+            ]
+          }
+        ]
+      }
     }
   ],
   "逻辑工具": [
