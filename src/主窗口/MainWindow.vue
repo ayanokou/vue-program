@@ -681,4 +681,12 @@ ul.el-menu.el-menu--horizontal.el-menu-demo1 :hover {
 .input {
   width: 120px; /* 设置输入框的宽度 */
 }
+
+.el-tabs__content {
+    display: contents;
+}
+
+.el-tabs__header {
+    margin: 0px 0px 0px 0px;
+}
 </style>

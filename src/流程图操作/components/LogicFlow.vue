@@ -327,9 +327,7 @@
 }
 
 #runtime-container {
-  position: absolute;
-  top: 10px; /* 距离顶部的距离 */
-  left:15%; /* 距离左侧的距离 */
+  position: fixed;
   z-index: 999; /* 将其z-index设置为比流程图更高的值 */
 }
 
