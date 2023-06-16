@@ -2335,6 +2335,64 @@
           "models": []
         }
       ]
+    },
+    {
+      "lfProperties": {
+        "name": "条件检测",
+        "type": "operator",
+        "text": "条件检测",
+        "label": "条件检测"
+      },
+      "properties": {
+        "state": "init",
+        "superName": "逻辑工具",
+        "name": "条件检测",
+        "models": [
+          {
+            "modelName": "条件检测",
+            "helpMsg": "it is a help message",
+            "dllPath": "",
+            "modelID": "",
+            "inPara": [
+            ],
+            "outPara": [
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "lfProperties": {
+        "name": "分支模块",
+        "type": "operator",
+        "text": "分支模块",
+        "label": "分支模块"
+      },
+      "properties": {
+        "state": "init",
+        "superName": "逻辑工具",
+        "name": "分支模块",
+        "data": [],
+        "models": [
+          {
+            "modelName": "分支模块",
+            "helpMsg": "it is a help message",
+            "dllPath": "",
+            "modelID": "",
+            "inPara": [
+              {
+                "varName": "int",
+                "varType": "int",
+                "fromExpression": "",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              }
+            ],
+            "outPara": [
+            ]
+          }
+        ]
+      }
     }
   ]
 }

@@ -71,8 +71,6 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
-
-
                 <template v-for="m in operatorData.models">
                     <el-form-item v-if="m.modelName==modelName" v-for="(item,index) in m.inPara" :label="item.varName">
                         <div v-if="item.defineVarInputWay === 'directInputWay'">
@@ -89,21 +87,16 @@
                                 />
                             </el-select>
                         </div>
-
-
-
-
                         <div v-if="item.defineVarInputWay === 'fileInputWay'">
                             <input @change="readFile(index)" type="file"  accept="image/*" id="imgUrl">
                         </div>
-
-
-
                     </el-form-item>
                 </template>
-
-
             </el-form>
+
+<!--            <component :is="dialogComponent">-->
+
+            <Branch v-if="dialogBranch" :branchData="branchData"></Branch>
             <template #footer>
           <span class="dialog-footer">
             <el-button type="primary" @click="dialogVisible = false;formDataSubmit();clear()">Submit</el-button>
@@ -111,183 +104,20 @@
           </span>
             </template>
         </el-dialog>
-        <el-dialog v-model="dialogVisibleGV" :modal="false" :close-on-click-modal="false" :title="modelID" width="25%"
-                   draggable>
-            <el-table :data="tableData" style="width: 100%" max-height="250">
-                <el-table-column prop="name" label="Name" width="120"/>
-                <el-table-column prop="value" label="Value" width="120"/>
-                <el-table-column prop="type" label="type" width="120"/>
-                <el-table-column fixed="right" label="Remove" width="120">
-                    <template #default="scope">
-                        <el-button
-                            link
-                            type="primary"
-                            size="small"
-                            @click.prevent="deleteRow(scope.$index)"
-                        >
-                            Remove
-                        </el-button>
-                    </template>
-                </el-table-column>
-            </el-table>
-            <el-button class="mt-4" style="width: 100%" @click="onAddItem"
-            >Add Item
-            </el-button
-            >
-
-            <el-dialog
-                v-model="innerVisible"
-                width="30%"
-                title="增添全局变量"
-                append-to-body :modal="false" :close-on-click-modal="false" draggable
-            >
-                <el-form label-width="120px">
-                    <el-form-item label="变量名称">
-                        <el-input v-model="tableForm[0]"/>
-                    </el-form-item>
 
 
-                    <el-form-item label="变量来源">
-                        <el-input v-model="tableForm[1]"/>
-                    </el-form-item>
+<!--        <el-dialog v-model="dialogVisibleBranch" :modal="false" :close-on-click-modal="false" :title="operatorData.name"-->
+<!--                   width="50%"-->
+<!--                   draggable>-->
+<!--            <Branch :branchData="branchData"></Branch>-->
+<!--            <template #footer>-->
+<!--          <span class="dialog-footer">-->
+<!--            <el-button type="primary" @click="dialogVisibleBranch = false;formDataSubmit();">Submit</el-button>-->
+<!--            <el-button @click="dialogVisibleBranch = false;">Cancel</el-button>-->
+<!--          </span>-->
+<!--            </template>-->
+<!--        </el-dialog>-->
 
-                    <el-form-item label="变量类型">
-                        <el-select v-model="tableForm[2]" placeholder="字面值必选变量类型">
-                            <el-option key="整型" label="整型" value="int"/>
-                            <el-option key="浮点型" label="浮点型" value="double"/>
-                            <el-option key="字符串" label="字符串" value="string"/>
-                        </el-select>
-                    </el-form-item>
-                </el-form>
-                <template #footer>
-                    <span class="dialog-footer">
-                        <el-button type="primary" @click="innerVisible = false;addItem()">Submit</el-button>
-                        <el-button @click="innerVisible = false;">Cancel</el-button>
-                    </span>
-                </template>
-            </el-dialog>
-            <template #footer>
-                    <span class="dialog-footer">
-                        <el-button type="primary" @click="dialogVisibleGV = false;submitGV()">Submit</el-button>
-                        <el-button @click="dialogVisibleGV = false;">Cancel</el-button>
-                    </span>
-            </template>
-        </el-dialog>
-        <el-dialog v-model="dialogVisiblePersist" :modal="false" :close-on-click-modal="false" :title="modelID"
-                   width="25%"
-                   draggable>
-            <el-table :data="tableDataPersist" style="width: 100%" max-height="250">
-                <el-table-column prop="name" label="Name" width="120"/>
-                <el-table-column prop="value" label="Value" width="120"/>
-                <el-table-column prop="type" label="type" width="120"/>
-                <el-table-column fixed="right" label="Remove" width="120">
-                    <template #default="scope">
-                        <el-button
-                            link
-                            type="primary"
-                            size="small"
-                            @click.prevent="deleteRow(scope.$index)"
-                        >
-                            Remove
-                        </el-button>
-                    </template>
-                </el-table-column>
-            </el-table>
-            <el-button class="mt-4" style="width: 100%" @click="onAddItemPersist"
-            >Add Item
-            </el-button
-            >
-
-            <el-dialog
-                v-model="innerVisiblePersist"
-                width="30%"
-                title="增添持久变量"
-                append-to-body :modal="false" :close-on-click-modal="false" draggable
-            >
-                <el-form label-width="120px">
-                    <el-form-item label="变量名称">
-                        <el-input v-model="tableFormPersist[0]"/>
-                    </el-form-item>
-
-
-                    <el-form-item label="变量来源">
-                        <el-input v-model="tableFormPersist[1]"/>
-                    </el-form-item>
-
-                    <el-form-item label="变量类型">
-                        <el-select v-model="tableFormPersist[2]" placeholder="字面值必选变量类型">
-                            <el-option key="整型" label="整型" value="int"/>
-                            <el-option key="浮点型" label="浮点型" value="double"/>
-                            <el-option key="字符串" label="字符串" value="string"/>
-                        </el-select>
-                    </el-form-item>
-                </el-form>
-                <template #footer>
-                    <span class="dialog-footer">
-                        <el-button type="primary"
-                                   @click="innerVisiblePersist = false;addItemPersist()">Submit</el-button>
-                        <el-button @click="innerVisiblePersist = false;">Cancel</el-button>
-                    </span>
-                </template>
-            </el-dialog>
-            <template #footer>
-                    <span class="dialog-footer">
-                        <el-button type="primary"
-                                   @click="dialogVisiblePersist = false;submitPersist()">Submit</el-button>
-                        <el-button @click="dialogVisiblePersist = false;">Cancel</el-button>
-                    </span>
-            </template>
-        </el-dialog>
-
-        <el-dialog v-model="dialogVisibleConditionalEdge" :modal="false" :close-on-click-modal="false" :title="modelID"
-                   width="50%"
-                   draggable>
-            <el-form label-width="120px">
-
-                <el-form-item label="选择Y,N边">
-                    <div>
-                        <el-select v-model="yorn" placeholder="Select">
-                            <el-option
-                                key="Y"
-                                label="Y"
-                                value="Y"
-                            />
-                            <el-option
-                                key="N"
-                                label="N"
-                                value="N"
-                            />
-                        </el-select>
-                    </div>
-                </el-form-item>
-            </el-form>
-            <template #footer>
-          <span class="dialog-footer">
-            <el-button type="primary"
-                       @click="dialogVisibleConditionalEdge = false;edgeConditionalSubmit();">Submit</el-button>
-            <el-button @click="dialogVisibleConditionalEdge = false;">Cancel</el-button>
-          </span>
-            </template>
-        </el-dialog>
-
-        <el-dialog v-model="dialogVisibleSwitchEdge" :modal="false" :close-on-click-modal="false" :title="modelID"
-                   width="50%"
-                   draggable>
-            <el-form label-width="120px">
-
-                <el-form-item label="编辑switch文本">
-                    <div>
-                        <el-input v-model="switchEdge"/>
-                    </div>
-                </el-form-item>
-            </el-form>
-            <template #footer>
-          <span class="dialog-footer">
-            <el-button type="primary" @click="dialogVisibleSwitchEdge = false;edgeSwitchSubmit();">Submit</el-button>
-            <el-button @click="dialogVisibleSwitchEdge = false;">Cancel</el-button>
-          </span>
-            </template>
-        </el-dialog>
     </el-container>
 
 
@@ -296,6 +126,8 @@
 <script src="../js/LogicFlow.js">
 
 </script>
+
+
 
 <style scoped>
 

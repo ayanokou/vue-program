@@ -1,6 +1,9 @@
 import { Menu, BpmnElement, SelectionSelect, Control, Snapshot, Group, GroupNode } from '@logicflow/extension'
 import { lfJson2Xml } from '@logicflow/extension'
+import { observable } from 'mobx';
 //test 框选
+import data from './newOperatorLib.json'
+import { mapState } from "vuex";
 import '@logicflow/extension/lib/style/index.css'
 //test end
 import {
@@ -20,6 +23,7 @@ import { LeftMenus } from './LeftMenuItems.js'
 import { MiniMap } from './MiniMap.js'
 import { eventHandle, events } from "../../sys/eventResponseController";
 import { ElNotification } from 'element-plus'
+import Branch from "../components/dialog/Branch.vue";
 
 LogicFlow.use(SelectionSelect);
 LogicFlow.use(Menu);
@@ -336,10 +340,6 @@ class MyGroup extends GroupNode.view {
         return h("g", {}, [super.getResizeShape(), this.getDeleteIcon()]);
     }
 }
-
-
-import data from './newOperatorLib.json'
-import { mapState } from "vuex";
 const suanziItemList = data
 //节点状态颜色字典
 const color = {"init" : "orange", "ready" : "gray", "success" : "green", "error" : "red"}
@@ -348,6 +348,9 @@ export default {
     name: 'FlowDemo',
     props: ['tab'],
     expose: ['lfData'],
+    components: {
+        Branch
+    },
     data() {
         return {
             //logic-flow
@@ -363,32 +366,17 @@ export default {
             selectedMSG: null,
             //赋值变量 算子和图形
             suanzis: suanziItemList,
-
             dialogVisible: false,
             formData: [],
-            //dialogControl: {}, // 左侧菜单栏对话跳窗控制
-            dialogVisibleGV:false,
-            tableData :[],
-            tableForm:[],
-            innerVisible:false,
-            dialogVisiblePersist:false,
-            tableDataPersist:[],
-            tableFormPersist:[],
-            innerVisiblePersist:false,
-            dialogVisibleConditionalEdge:false,//ConditionalJudge出边对话框
-            dialogVisibleSwitchEdge:false,//switch出边对话框
-            yorn:"",
-            switchEdge:"",
             timeRunTimeJson:{eachConsuming:[]},//流程和所有算子的用时
             flowRunTime: 0, //流程用时
             algorithmRunTime: 0, //算法用时
             isRan: false,
             addNodePosition_x: 100,
-
             //拖拽节点的初始
             modelName:"",//模型名称
             operatorData:{},//拖拽节点的原始properties数据
-
+            dialogBranch:false
 
           }
     },
@@ -408,7 +396,15 @@ export default {
         ...mapState([
             "timeConsume",
             "runState"
-        ])
+        ]),
+        branchData(){    //分支模块的需要的状态
+            if(this.nodeModel.getProperties().name=="分支模块"){
+                return this.nodeModel.getProperties().data
+            }
+            else{
+                return []
+            }
+        }
     },
     watch:{
 
@@ -502,18 +498,24 @@ export default {
 
             // //获得输入源
             let inPara=this.findInPara(evt.data.id)
-            console.log(inPara)
             // for(let i in this.nodeProperties.models){
             //     if(this.model.modelName==this.nodeProperties.models[i].modelName){
             //         this.nodeProperties.models[i].inPara=inPara
             //     }
             // }
-
             this.selectedAlgorithm = evt.data.id
             this.updateTimeConsuming();
             this.$store.commit('setVuexHelpInfo', this.nodeModel.getProperties().helpMsg)
 
+            console.log(evt.data.properties.name)
+
+            this.dialogBranch=false
             this.dialogVisible = true
+            //是否补充其他组件
+            if(evt.data.properties.name=="分支模块")
+                this.dialogBranch=true
+
+
 
             let e = document.getElementsByClassName('el-overlay-dialog')[0].parentNode
             e.style.width = '0px';
@@ -542,14 +544,6 @@ export default {
             let edge_sourceNodeId=evt.data.sourceNodeId
             let sourceNode=this.lf.getNodeModelById(edge_sourceNodeId)
             let sourceNodeName=sourceNode.getProperties().modelID
-            if(sourceNodeName=="conditionJudge"){
-                this.dialogVisibleConditionalEdge=true
-            }
-            else if(sourceNodeName=="switch"){
-                this.dialogVisibleSwitchEdge=true
-            }
-
-
         })
         //限制节点出边的数量 限制数目定义在每个节点的类里面 使用变量current_edge和limit_dege
         this.lf.on('edge:add', (evt) => {
@@ -562,8 +556,19 @@ export default {
             //         inPara:this.findInPara(1)
             //     })
             // }
-
-
+            let sourceNodeId=evt.data.sourceNodeId
+            let sourceNodeModel=this.lf.getNodeModelById(sourceNodeId)
+            if(sourceNodeModel.getProperties().name=="分支模块"){
+                let targetNodeId=evt.data.targetNodeId
+                //const data=sourceNodeModel.getProperties().data
+                const test=[]
+                // data.push({
+                //     "model":"模块ID:"+targetNodeId,
+                //     "id":-1
+                // })
+                console.log(data)
+                sourceNodeModel.setProperties({test});
+            }
 
         })
         this.lf.on('edge:delete', (evt) => {
@@ -571,6 +576,18 @@ export default {
             // let sourceNodeId = evt.data.sourceNodeId
             // let sourceNode = this.lf.getNodeModelById(sourceNodeId)
             // sourceNode.current_edge -= 1
+            // let sourceNodeId=evt.properties.sourceNodeId
+            // let sourceNodeModel=this.lf.getNodeModelById(sourceNodeId)
+            // if(sourceNodeModel.getProperties().name=="分支模块"){
+            //     let targetNodeId=evt.properties.targetNodeId
+            //     let data=sourceNodeModel.getProperties().data
+            //     console.log('targetId'+targetNodeId)
+            //     data=data.filter(item=>item.model!="模块ID"+targetNodeId)
+            //     console.log(data)
+            //     sourceNodeModel.setProperties({
+            //         "data":data
+            //     })
+            // }
         })
 
         // window.onresize = () => {
@@ -1058,52 +1075,11 @@ export default {
                 e.parentNode.style.width = '0px'
             }
         },
-        deleteRow(index){
-            this.tableData.splice(index, 1)
-        },
-        onAddItem(){
-            //弹出一个对话框表单，输入参数
-            this.innerVisible=true
-            let es = document.getElementsByClassName('el-overlay-dialog')
-            for(let e of es){
-                e.parentNode.style.width='0px'
-            }
-        },
-        addItem(){
-            let item={
-                name:this.tableForm[0],
-                value:this.tableForm[1],
-                type:this.tableForm[2]
-            }
-            this.tableData.push(item)
-            this.tableForm=[]
-        },
-
-        onAddItemPersist(){
-            //弹出一个对话框表单，输入参数
-            this.innerVisiblePersist=true
-            let es = document.getElementsByClassName('el-overlay-dialog')
-            for(let e of es){
-                e.parentNode.style.width='0px'
-            }
-        },
-        addItemPersist(){
-            let item={
-                name:this.tableFormPersist[0],
-                value:this.tableFormPersist[1],
-                type:this.tableFormPersist[2]
-            }
-            this.tableDataPersist.push(item)
-            this.tableFormPersist=[]
-        },
 
 
-        edgeConditionalSubmit(){
-            this.edgeModel.updateText(this.yorn)
-        },
-        edgeSwitchSubmit(){
-            this.edgeModel.updateText(this.switchEdge)
-        },
+
+
+
         updateTimeConsuming(){
             if(this.isRan == false) return;
             for(let algorithm of this.timeRunTimeJson.eachConsuming){
