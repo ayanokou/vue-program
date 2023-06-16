@@ -163,6 +163,9 @@
 
                                                 <div v-if="selectedGroup === '发送数据'">
                                                     <textarea rows="6" v-model="group2Output" style="width: 100%;"></textarea>
+                                                    
+                                                    <el-button @click="sendTCPData">发送</el-button>
+                                                    
                                                 </div>
                                             </div>
                                         </el-col>

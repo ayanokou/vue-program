@@ -175,9 +175,33 @@ export default {
             
         },
 
+        sendTCPData(){
+            let jsonObject = {
+                userName: 'TCP',
+                message: JSON.stringify({ip:this.ip, port: this.portNumber, data:this.group2Output})
+            }
+            let payload={
+                trigger:true,
+                mode:"chatevent",
+                data:jsonObject
+            }
+            this.$store.commit("setSocketEmit",payload)
+        },
+
         createAnDevice(){
             if(this.selectedOption === "TCP客户端"){
                 this.demoSelectedTCP = true;
+                
+                let jsonObject = {
+                    userName: 'TCP',
+                    message: JSON.stringify({ip:this.ip, port: this.portNumber,data:""})
+                }
+                let payload={
+                    trigger:true,
+                    mode:"chatevent",
+                    data:jsonObject
+                }
+                this.$store.commit("setSocketEmit",payload)
             }
             this.subCommunicationManagementVisible = false;
         },

@@ -16,7 +16,7 @@ export default createStore({
             deleteSolution:false,
             deleteCurrentSolution:false,
             saveSolution:false,
-            socketEmit:null,
+            socketEmit:null,//请求
             saveSolutionAs:false,
             flowAdd:false,
             timeConsume: "",
