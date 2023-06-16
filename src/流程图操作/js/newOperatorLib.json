@@ -1991,6 +1991,44 @@
           "models": []
         }
       ]
+    },
+    {
+      "lfProperties": {
+        "name": "颜色识别",
+        "type": "operator",
+        "text": "颜色识别",
+        "label": "颜色识别"
+      },
+      "properties": {
+        "state": "init",
+        "superName": "颜色处理",
+        "name": "颜色识别",
+        "models": [
+          {
+            "modelName": "颜色识别",
+            "helpMsg": "it is a help message",
+            "dllPath": "server/src/main/resources/myColorIdentif.dll",
+            "modelID": "myColorIdentif",
+            "inPara": [
+              {
+                "varName": "src",
+                "varType": "Mat",
+                "fromExpression": "",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
+                "varExplanation": ""
+              }
+            ],
+            "outPara": [
+              {
+                "varName": "color",
+                "varType": "string",
+                "varExplanation": ""
+              }
+            ]
+          }
+        ]
+      }
     }
   ],
   "图像识别": [],
@@ -2478,18 +2516,18 @@
     },
     {
       "lfProperties": {
-        "name": "边缘检测",
+        "name": " 边缘检测",
         "type": "operator",
-        "text": "边缘检测",
-        "label": "边缘检测"
+        "text": " 边缘检测",
+        "label": " 边缘检测"
       },
       "properties": {
         "state": "init",
         "superName": "高级功能",
-        "name": "边缘检测",
+        "name": " 边缘检测",
         "models": [
           {
-            "modelName": "edgeDetection",
+            "modelName": " 边缘检测",
             "helpMsg": "it is a help message of GlobalVariable",
             "dllPath": "server/src/main/resources/myEdgeDetection.dll",
             "modelID": "myEdgeDetection",
@@ -2508,12 +2546,16 @@
                 "varName": "flag",
                 "varType": "bool",
                 "varExplanation": ""
+              },
+              {
+                "varName": "dst",
+                "varType": "Mat",
+                "varExplanation": ""
               }
             ]
           }
         ]
       }
-
     }
   ],
   "逻辑工具": [

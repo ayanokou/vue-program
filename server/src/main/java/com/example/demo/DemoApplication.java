@@ -39,6 +39,7 @@ public class DemoApplication {
 		System.loadLibrary("scratchDetection");
 		System.loadLibrary("myMorphology");
 		System.loadLibrary("myEdgeDetection");
+		System.loadLibrary("myColorIdentif");
 		System.loadLibrary("uv");
 		System.loadLibrary("udpInFlow");
 		System.loadLibrary("udpCommunicate");

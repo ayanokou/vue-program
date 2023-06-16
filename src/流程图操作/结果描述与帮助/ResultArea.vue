@@ -39,8 +39,8 @@ export default{
     data(){
         return{
             activeName:'first',
-            compnt:GeneralVars,
-            componentName:"常用参数"
+            compnt:CurrentData,
+            componentName:"当前结果"
         }
     },
     computed:{
