@@ -87,6 +87,15 @@ public class DemoApplication {
 					System.out.println(result);
 					clientForCpp.eventHandle(listenerForCpp,4,result);
 				}
+				else if(data.getUserName().equals("....")){
+					String result=data.getMessage();
+					System.out.println(result);
+					clientForCpp.eventHandle(listenerForCpp,4,result);
+				}else if(data.getUserName().equals("TCP")){
+					String result=data.getMessage();
+					System.out.println(result);
+					clientForCpp.eventHandle(listenerForCpp,2,result);
+				}
 
 				// test end
 //				else if (data.getUserName().equals("Pic")) {
