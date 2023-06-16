@@ -40,6 +40,8 @@ public class DemoApplication {
 		System.loadLibrary("myMorphology");
 		System.loadLibrary("myEdgeDetection");
 		System.loadLibrary("myColorIdentif");
+		System.loadLibrary("myBrightnessCorrection");
+		System.loadLibrary("myContrastEnhancement");
 		System.loadLibrary("uv");
 		System.loadLibrary("udpInFlow");
 		System.loadLibrary("udpCommunicate");

@@ -656,15 +656,16 @@
             "inPara": [
               {
                 "varName": "src",
-                "varType": "object",
+                "varType": "Mat",
                 "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
                 "varExplanation": ""
               },
               {
                 "varName": "light",
                 "varType": "int",
-                "fromExpression": "",
+                "fromExpression": "3",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
               }
@@ -1579,6 +1580,89 @@
                 "varName": "maxRadius",
                 "varType": "int",
                 "fromExpression": "20",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              }
+            ],
+            "outPara": [
+              {
+                "varName": "dst",
+                "varType": "Mat",
+                "varExplanation": ""
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "lfProperties": {
+        "name": "自适应亮度校正",
+        "type": "operator",
+        "text": "自适应亮度校正",
+        "label": "自适应亮度校正"
+      },
+      "properties": {
+        "state": "init",
+        "superName": "图像处理",
+        "name": "自适应亮度校正",
+        "models": [
+          {
+            "modelName": "自适应亮度校正",
+            "helpMsg": "it is a help message",
+            "dllPath": "server/src/main/resources/myBrightnessCorrection.dll",
+            "modelID": "myBrightnessCorrection",
+            "inPara": [
+              {
+                "varName": "src",
+                "varType": "Mat",
+                "fromExpression": "",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
+                "varExplanation": ""
+              }
+            ],
+            "outPara": [
+              {
+                "varName": "dst",
+                "varType": "Mat",
+                "varExplanation": ""
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "lfProperties": {
+        "name": "对比度增强",
+        "type": "operator",
+        "text": "对比度增强",
+        "label": "对比度增强"
+      },
+      "properties": {
+        "state": "init",
+        "superName": "图像处理",
+        "name": "对比度增强",
+        "models": [
+          {
+            "modelName": "对比度增强",
+            "helpMsg": "it is a help message",
+            "dllPath": "server/src/main/resources/myContrastEnhancement.dll",
+            "modelID": "myContrastEnhancement",
+            "inPara": [
+              {
+                "varName": "src",
+                "varType": "Mat",
+                "fromExpression": "",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
+                "varExplanation": ""
+              },
+              {
+                "varName": "alpha",
+                "varType": "double",
+                "fromExpression": "1.5",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": ""
               }
