@@ -1,6 +1,6 @@
 import { Menu, BpmnElement, SelectionSelect, Control, Snapshot, Group, GroupNode } from '@logicflow/extension'
 import { lfJson2Xml } from '@logicflow/extension'
-import { observable } from 'mobx';
+
 //test 框选
 import data from './newOperatorLib.json'
 import { mapState } from "vuex";
@@ -43,6 +43,7 @@ class MyCircleModel extends CircleNodeModel {
 class SuanziModel extends RectNodeModel {
     setAttributes() {
         const size = this.properties.scale || 1;
+        
         this.width = 100 * size
         this.height = 80 * size
         this.limit_edge = 1;
@@ -77,80 +78,6 @@ class SuanziModel extends RectNodeModel {
     //     else
     //         return false;
     // }
-}
-
-class noEdgeModel extends RectNodeModel {
-    setAttributes() {
-        const size = this.properties.scale || 1;
-        this.width = 100 * size
-        this.height = 80 * size
-    }
-
-    createId() {
-        let max=0
-        for(let node of this.graphModel.nodes){
-            if(node.id>max)
-                max=node.id
-        }
-        return (++max) + "";
-    }
-
-    //全局变量类型的节点不允许有出边和入边
-    isAllowConnectedAsSource(target) {
-        return false;
-    }
-
-    isAllowConnectedAsTarget(target) {
-        return false;
-    }
-}
-class SwitchModel extends RectNodeModel {
-    setAttributes() {
-        const size = this.properties.scale || 1;
-        this.width = 100 * size
-        this.height = 80 * size
-    }
-
-    createId() {
-        let max=0
-        for(let node of this.graphModel.nodes){
-            if(node.id>max)
-                max=node.id
-        }
-        return (++max) + "";
-    }
-}
-class ConditionJudgmentModel extends DiamondNodeModel {
-    getNodeStyle() {
-        const style = super.getNodeStyle();
-        style.stroke = 'blue';
-        return style;
-    }
-
-    setAttributes() {
-        const size = this.properties.scale || 1;
-        this.rx = 60 * size
-        this.ry = 40 * size
-        this.limit_edge = 2;
-        this.current_edge = 0;
-    }
-
-    createId() {
-        let max=0
-        for(let node of this.graphModel.nodes){
-            if(node.id>max)
-                max=node.id
-        }
-        return (++max) + "";
-    }
-
-    isAllowConnectedAsSource(target) { 
-        if(this.current_edge < this.limit_edge)
-            return true;
-        else 
-            return false;
-    }
-
 }
 
 //定义Group节点，重写了节点的一些属性和方法
@@ -376,8 +303,8 @@ export default {
             //拖拽节点的初始
             modelName:"",//模型名称
             operatorData:{},//拖拽节点的原始properties数据
-            dialogBranch:false
-
+            dialogBranch:false,
+            branchData:[]
           }
     },
     computed: {
@@ -397,20 +324,11 @@ export default {
             "timeConsume",
             "runState"
         ]),
-        branchData(){    //分支模块的需要的状态
-            if(this.nodeModel.getProperties().name=="分支模块"){
-                return this.nodeModel.getProperties().data
-            }
-            else{
-                return []
-            }
-        }
+
     },
     watch:{
-
-        //在对话框中监听修改模型,同时切换nodelModel也会触发
+        //在对话框中监听修改模型,同时切换nodeModel也会触发
         modelName(newValue){
-            console.log("in watch modelName")
             if(this.operatorData.models){
                 //更新formData、outPara
                 let outPara
@@ -419,9 +337,7 @@ export default {
                     this.formData=this.nodeModel.getProperties().inPara.map(param=>param.fromExpression)
 
                 else
-                    console.log(this.operatorData)
                     this.formData=(this.operatorData.models.find(item=>item.modelName==newValue)).inPara.map(param=>param.fromExpression)
-
                 //this.operatorData.models.find(item=>item.modelName==newValue)
             }
        },
@@ -462,7 +378,6 @@ export default {
                     let str="<div>变量:&nbsp;"+evt.data.properties.modelID +`.${evt.data.id}`+ `.${x.varName}`+"&nbsp;&nbsp;&nbsp;;类型:&nbsp;"+`${x.varType}`+"</div>"
                     res+=str
                 }
-
                     ElNotification({
                         title: '输出变量:',
                         dangerouslyUseHTMLString: true,
@@ -497,7 +412,7 @@ export default {
             }
 
             // //获得输入源
-            let inPara=this.findInPara(evt.data.id)
+            this.findInPara(evt.data.id)
             // for(let i in this.nodeProperties.models){
             //     if(this.model.modelName==this.nodeProperties.models[i].modelName){
             //         this.nodeProperties.models[i].inPara=inPara
@@ -507,16 +422,32 @@ export default {
             this.updateTimeConsuming();
             this.$store.commit('setVuexHelpInfo', this.nodeModel.getProperties().helpMsg)
 
-            console.log(evt.data.properties.name)
-
             this.dialogBranch=false
             this.dialogVisible = true
             //是否补充其他组件
-            if(evt.data.properties.name=="分支模块")
+            if(evt.data.properties.name=="分支模块"){
                 this.dialogBranch=true
 
+                let sonsModel=this.lf.getNodeOutgoingNode(evt.data.id)
+                let data=[]
+                let payload=[]
+                if(this.nodeModel.getProperties().payload)
+                    payload=this.nodeModel.getProperties().payload
 
+                for(let model of sonsModel){
+                    let node_id=model.id
+                    data.push({
+                        "nodeId":"模块ID:"+node_id,
+                        "valueId":-1
+                    })
+                }
 
+                for(let idx in payload){
+                    data[idx].valueId=payload[idx].valueId
+                }
+                this.branchData=data
+            }
+                
             let e = document.getElementsByClassName('el-overlay-dialog')[0].parentNode
             e.style.width = '0px';
 
@@ -533,6 +464,16 @@ export default {
             //初始化模型和outPara
             this.modelName=evt.data.properties.models[0].modelName
             this.nodeModel.setProperties({outPara:evt.data.properties.models[0].outPara})
+        })
+
+        this.lf.on('node:delete',(evt)=>{
+            console.log('node:delete')
+            //找父节点
+            let fatherNodes=this.lf.getNodeIncomingNode(evt.data.id)
+            console.log(fatherNodes.length)
+            for(let node of fatherNodes){
+                console.log(node)
+            }
         })
 
 
@@ -556,36 +497,41 @@ export default {
             //         inPara:this.findInPara(1)
             //     })
             // }
-            let sourceNodeId=evt.data.sourceNodeId
-            let sourceNodeModel=this.lf.getNodeModelById(sourceNodeId)
-            if(sourceNodeModel.getProperties().name=="分支模块"){
-                let targetNodeId=evt.data.targetNodeId
-                //const data=sourceNodeModel.getProperties().data
-                const test=[]
-                // data.push({
-                //     "model":"模块ID:"+targetNodeId,
-                //     "id":-1
-                // })
-                console.log(data)
-                sourceNodeModel.setProperties({test});
-            }
+            // let sourceNodeId=evt.data.sourceNodeId
+            // let sourceNodeModel=this.lf.getNodeModelById(sourceNodeId)
+            // if(sourceNodeModel instanceof SuanziModel){console.log('suanziModel')}
+            // if(sourceNodeModel.getProperties().name=="分支模块"){
+            //     let targetNodeId=evt.data.targetNodeId
+            //     let data=sourceNodeModel.getPayload()
+            //     data.push({
+            //         "model":"模块ID:"+targetNodeId,
+            //         "id":-1
+            //     })
+            //     //sourceNodeModel.setProperties({data:data});
+            // }
 
         })
         this.lf.on('edge:delete', (evt) => {
-            // //获取边
-            // let sourceNodeId = evt.data.sourceNodeId
-            // let sourceNode = this.lf.getNodeModelById(sourceNodeId)
-            // sourceNode.current_edge -= 1
-            // let sourceNodeId=evt.properties.sourceNodeId
-            // let sourceNodeModel=this.lf.getNodeModelById(sourceNodeId)
+            console.log('edge:delete')
+            //let sourceNodeId=evt.properties.sourceNodeId
+            //let sourceNodeModel=this.lf.getNodeModelById(sourceNodeId)
             // if(sourceNodeModel.getProperties().name=="分支模块"){
             //     let targetNodeId=evt.properties.targetNodeId
+            //     let data=sourceNodeModel.getPayload()
+            //     let data1=data.filter(item=>item.model!="模块ID"+targetNodeId)
+            //     console.log(data1.length)
+            // }
+            //let sourceNodeId=evt.properties.sourceNodeId
+            //let sourceNodeModel=this.lf.getNodeModelById(sourceNodeId)
+            //alert(sourceNodeId)
+            // if(sourceNodeModel.getProperties().name=="分支模块"){
+            //     alert(1)
+            //     let targetNodeId=evt.properties.targetNodeId
             //     let data=sourceNodeModel.getProperties().data
-            //     console.log('targetId'+targetNodeId)
             //     data=data.filter(item=>item.model!="模块ID"+targetNodeId)
             //     console.log(data)
             //     sourceNodeModel.setProperties({
-            //         "data":data
+            //         data:data
             //     })
             // }
         })
@@ -600,9 +546,6 @@ export default {
         // }
     },
     methods: {
-        f(){
-
-        },
         init() {
             const lf = new LogicFlow({
                 container: document.querySelector("#"+this.tab.title),
@@ -719,30 +662,10 @@ export default {
             })
 
             lf.batchRegister([
-                { // 圆形结点：标志循环开始循环结束
-                    type: 'circle',
-                    view: CircleNode,
-                    model: MyCircleModel
-                },
-                {
-                    type: 'diamond',
-                    view: DiamondNode,
-                    model: ConditionJudgmentModel
-                },
                 {
                     type: 'operator',
                     view: RectNode,
                     model: SuanziModel
-                },
-                {
-                    type: 'noEdgeModel',
-                    view: RectNode,
-                    model: noEdgeModel
-                },
-                {
-                    type: 'switchModel',
-                    view: RectNode,
-                    model: SwitchModel
                 },
                 {
                     type: 'mygroup',
@@ -1009,7 +932,8 @@ export default {
             return flag
         },
         formDataSubmit() {
-            console.log(this.formData)
+            console.log('formit')
+            console.log(this.branchData)
             this.nodeModel.deleteProperty("models")
             let model=this.operatorData.models.find(item=>item.modelName==this.modelName)
             let model_copy=JSON.parse(JSON.stringify(model))
@@ -1020,6 +944,8 @@ export default {
                 if(this.formData[i]==""||!this.paramCheck(this.formData[i],model_copy["inPara"][i].varType)) paramReady = false
                 else model_copy["inPara"][i].fromExpression=this.formData[i]
             }
+
+            model_copy['payload']=this.branchData
 
             this.nodeModel.setProperties(model_copy)
 

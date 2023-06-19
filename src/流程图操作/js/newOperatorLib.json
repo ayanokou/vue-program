@@ -2372,13 +2372,12 @@
         "state": "init",
         "superName": "逻辑工具",
         "name": "分支模块",
-        "data": [],
         "models": [
           {
             "modelName": "分支模块",
             "helpMsg": "it is a help message",
             "dllPath": "",
-            "modelID": "",
+            "modelID": "branchModel",
             "inPara": [
               {
                 "varName": "int",
