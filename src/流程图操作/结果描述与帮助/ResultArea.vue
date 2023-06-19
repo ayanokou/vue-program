@@ -43,23 +43,31 @@ export default{
             componentName:"当前结果"
         }
     },
+    components:{
+        HelpData,
+        HistoryData,
+        CurrentData
+    },
     computed:{
-        ...mapState(['nodeModelName']),
-
+        // ...mapState(['nodeModelName']),
     },
     watch:{
-        nodeModelName(newValue){
-            switch(newValue){
-                case "输入源":
-                {
-                    this.compnt=GeneralVars
-                    this.componentName="常用参数"
-                    break;
-                }
-                default:
-                    break;
-            }
-        }
+        // nodeModelName(newValue){
+        //     switch(newValue){
+        //         case "输入源":
+        //         {
+        //             this.compnt=GeneralVars
+        //             this.componentName="常用参数"
+        //             break;
+        //         }
+        //         default:
+        //         {
+        //             this.compnt=CurrentData
+        //             this.componentName="当前结果"
+        //             break;
+        //         }
+        //     }
+        // }
     },
 }
 </script>

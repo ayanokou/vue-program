@@ -95,17 +95,14 @@
           {
             "modelName": "本地图像",
             "helpMsg": "it is a help message",
-            "dllPath": "",
-            "modelID": "localImg",
+            "dllPath": "server/src/main/resources/LocalImg.dll",
+            "modelID": "LocalImg",
             "inPara": [
               {
-                "varName": "format",
-                "varType": "int",
+                "varName": "imgFile",
+                "varType": "string",
                 "fromExpression": "",
-                "defineVarInputWay": "selectedInputWay",
-                "comboList": {
-                  "RGB": "0"
-                },
+                "defineVarInputWay": "fileInputWay",
                 "varExplanation": ""
               }
             ],
@@ -113,7 +110,7 @@
               {
                 "varName": "dst",
                 "varType": "Mat",
-                "varExplanation": ""
+                "varExplanation": "123"
               }
             ]
           }
@@ -850,7 +847,8 @@
                 "varName": "src",
                 "varType": "Mat",
                 "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
                 "varExplanation": ""
               },
               {
@@ -2038,43 +2036,50 @@
       "properties": {
         "state": "init",
         "superName": "颜色处理",
-        "name": "转换颜色空间"
-      },
-      "models": [
-        {
-          "lfProperties": {
-            "name": "转换颜色空间"
-          },
-          "properties": {
+        "name": "转换颜色空间",
+        "models": [
+          {
+            "name": "转换颜色空间",
             "dllPath": "server/src/main/resources/general.dll",
             "modelID": "convert_color",
             "inPara": [
               {
                 "varName": "src",
-                "varType": "object",
+                "varType": "Mat",
                 "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
+                "defineVarInputWay": "smartInputWay",
                 "varExplanation": ""
               },
               {
                 "varName": "code",
                 "varType": "int",
                 "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
+                "defineVarInputWay": "selectedInputWay",
+                "comboList": {
+                  "BGR2GRAY": "6",
+                  "BGR2HSV": "40",
+                  "BGR2YUV": "82",
+                  "BGR2RGB": "4",
+                  "GRAY2BGR": "8",
+                  "HSV2BGR": "54",
+                  "YUV2BGR": "84",
+                  "RGB2BGR":"4"
+                },
                 "varExplanation": ""
               }
             ],
             "outPara": [
               {
                 "varName": "dst",
-                "varType": "object",
+                "varType": "Mat",
                 "varExplanation": ""
               }
             ]
-          },
-          "models": []
-        }
-      ]
+
+          }
+        ]
+      }
+
     },
     {
       "lfProperties": {
@@ -2113,6 +2118,7 @@
           }
         ]
       }
+
     }
   ],
   "图像识别": [],
@@ -2678,6 +2684,63 @@
           "models": []
         }
       ]
+    },
+    {
+      "lfProperties": {
+        "name": "条件检测",
+        "type": "operator",
+        "text": "条件检测",
+        "label": "条件检测"
+      },
+      "properties": {
+        "state": "init",
+        "superName": "逻辑工具",
+        "name": "条件检测",
+        "models": [
+          {
+            "modelName": "条件检测",
+            "helpMsg": "it is a help message",
+            "dllPath": "",
+            "modelID": "",
+            "inPara": [
+            ],
+            "outPara": [
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "lfProperties": {
+        "name": "分支模块",
+        "type": "operator",
+        "text": "分支模块",
+        "label": "分支模块"
+      },
+      "properties": {
+        "state": "init",
+        "superName": "逻辑工具",
+        "name": "分支模块",
+        "models": [
+          {
+            "modelName": "分支模块",
+            "helpMsg": "it is a help message",
+            "dllPath": "",
+            "modelID": "branchModel",
+            "inPara": [
+              {
+                "varName": "int",
+                "varType": "int",
+                "fromExpression": "",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              }
+            ],
+            "outPara": [
+            ]
+          }
+        ]
+      }
     }
   ]
 }
