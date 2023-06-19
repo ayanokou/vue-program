@@ -72,15 +72,15 @@ public class DemoApplication {
 			}
 
 			@Override
-			public void setClient(SocketIOClient client){
+			public void setClient(SocketIOClient client) {
 				this.client = client;
 			}
 
 			@Override
 			public void onMessage(String event, String data) {
 				if(client == null) {
-					System.out.println("client is null");
-					return;
+				System.out.println("client is null");
+				return;
 				}
 				client.sendEvent(event, data);
 			}
@@ -91,7 +91,7 @@ public class DemoApplication {
 		server.addEventListener("chatevent", ChatObject.class, new DataListener<ChatObject>() {
 			@Override
 			public void onData(SocketIOClient client, ChatObject data, AckRequest ackRequest) {
-				if(listenerForCpp.getClient() == null) {
+				if (listenerForCpp.getClient() == null) {
 					listenerForCpp.setClient(client);
 				}
 				if (data.getUserName().equals("Flow")) {
@@ -107,15 +107,14 @@ public class DemoApplication {
 					String result = data.getMessage();
 					System.out.println(result);
 					clientForCpp.eventHandle(listenerForCpp, 4, result);
-				}
-				else if(data.getUserName().equals("....")){
-					String result=data.getMessage();
+				} else if (data.getUserName().equals("....")) {
+					String result = data.getMessage();
 					System.out.println(result);
-					clientForCpp.eventHandle(listenerForCpp,4,result);
-				}else if(data.getUserName().equals("TCP")){
-					String result=data.getMessage();
+					clientForCpp.eventHandle(listenerForCpp, 4, result);
+				} else if (data.getUserName().equals("AddTcpServer")) {
+					String result = data.getMessage();
 					System.out.println(result);
-					clientForCpp.eventHandle(listenerForCpp,2,result);
+					clientForCpp.eventHandle(listenerForCpp, 2, result);
 				}
 
 				// test end

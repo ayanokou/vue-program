@@ -9,6 +9,7 @@ import GlobalVar from "../components/GlobalVar.vue";
 import { computed } from "vue";
 import { mapState } from "vuex";
 import axiosInstance from "../../axios"
+import net from 'net'
 
 //初始化socketio用于前后端传输
 let socket = io.connect('http://localhost:9092')
@@ -19,88 +20,91 @@ export default {
     },
     data() {
         return {
-            selectedOption: '', // 用于存储选择的选项值
-            selectedOptionContent: '', // 用于存储选项对应的内容
-            options: [
-                { label: '选项一', value: 'option1', content: '选项一的内容' },
-                { label: '选项二', value: 'option2', content: '选项二的内容' },
-                { label: 'TCP客户端', value: 'TCP客户端', content: 'tcp' }
-            ],
-            deviceName: "device1",
-            ip: '127.0.0.1',
-            portNumber: 7920,
-            isIPValid: true,
-            updataValue: true,
-            autoReconnection: false,
-            receiveEndMark: false,
-            demoSelectedTCP: false,
-            //是否显示通信管理窗口
-            communicationManagementVisible: false,
-            subCommunicationManagementVisible: false,
-            activeIcon: 'deviceManagement',
-            selectedGroup: "接收数据",
-            group1Input: '', //通信管理-设备管理接收数据
-            group2Output: '', //通信管理-设备管理发送数据
-            //是否显示最近打开方案子菜单栏
-            showLastOpenSolution: false, 
-            //最近打开的方案名，存三个
-            lastOpenSolutions: [],
-            //存储示例方案
-            exampleSolutions: [],
-            //右半部分的高度
-            height_right: window.innerHeight - 82,
-            mainLayout: LayoutOne,
-            compnts: [
-                ProcessDp,
-                ImageArea,
-                ResultArea
-            ],
-            moduleResultData: [
+          selectedOption: "", // 用于存储选择的选项值
+          selectedOptionContent: "", // 用于存储选项对应的内容
+          options: [
+            { label: "选项一", value: "option1", content: "选项一的内容" },
+            { label: "选项二", value: "option2", content: "选项二的内容" },
+            { label: "TCP客户端", value: "TCP客户端", content: "tcp" },
+          ],
+          deviceName: "device1",
+          ip: "127.0.0.1",
+          portNumber: 7920,
+          isIPValid: true,
+          updataValue: true,
+          autoReconnection: false,
+          receiveEndMark: false,
+          demoSelectedTCP: false,
+          //是否显示通信管理窗口
+          communicationManagementVisible: false,
+          subCommunicationManagementVisible: false,
+          activeIcon: "deviceManagement",
+          selectedGroup: "接收数据",
+          group1Input: "", //通信管理-设备管理接收数据
+          group2Output: "", //通信管理-设备管理发送数据
+          //是否显示最近打开方案子菜单栏
+          showLastOpenSolution: false,
+          //最近打开的方案名，存三个
+          lastOpenSolutions: [],
+          //存储示例方案
+          exampleSolutions: [],
+          //右半部分的高度
+          height_right: window.innerHeight - 82,
+          mainLayout: LayoutOne,
+          compnts: [ProcessDp, ImageArea, ResultArea],
+          moduleResultData: [
+            {
+              id: 1,
+              paramName: "参数名",
+              currentResult: "当前结果",
+              globalVariable: "全局变量",
+              children: [
                 {
-                    id: 1,
-                    paramName: '参数名',
-                    currentResult: '当前结果',
-                    globalVariable: '全局变量',
-                    children: [
-                        {
-                            id: 2,
-                            paramName: '参数名',
-                            currentResult: '当前结果',
-                            globalVariable: '全局变量',
-                        },
-                        {
-                            id: 3,
-                            paramName: '参数名',
-                            currentResult: '当前结果',
-                            globalVariable: '全局变量',
-                        },
-                        {
-                            id: 4,
-                            paramName: '参数名',
-                            currentResult: '当前结果',
-                            globalVariable: '全局变量',
-                            children: [
-                                {
-                                    id: 5,
-                                    paramName: '参数名',
-                                    currentResult: '当前结果',
-                                    globalVariable: '全局变量',
-                                },
-                            ]
-                        },
-                    ],
+                  id: 2,
+                  paramName: "参数名",
+                  currentResult: "当前结果",
+                  globalVariable: "全局变量",
                 },
                 {
-                    id: 6,
-                    paramName: '参数名',
-                    currentResult: '当前结果',
-                    globalVariable: '全局变量',
+                  id: 3,
+                  paramName: "参数名",
+                  currentResult: "当前结果",
+                  globalVariable: "全局变量",
                 },
-            ],
-            currentTableData: [],
-            historyTableData: [],
-            helpInfo: '',
-        }
+                {
+                  id: 4,
+                  paramName: "参数名",
+                  currentResult: "当前结果",
+                  globalVariable: "全局变量",
+                  children: [
+                    {
+                      id: 5,
+                      paramName: "参数名",
+                      currentResult: "当前结果",
+                      globalVariable: "全局变量",
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              id: 6,
+              paramName: "参数名",
+              currentResult: "当前结果",
+              globalVariable: "全局变量",
+            },
+          ],
+          currentTableData: [],
+          historyTableData: [],
+          helpInfo: "",
+          communicator: {
+            tcpClient: net.createConnection(
+              { port: 8180, host: "localhost" },
+              () => console.log("connected to communicator server!")
+            ),
+            buf: "",
+          },
+        };
     },
     //在顶端组件提供模块结果数据
     provide() {
@@ -150,6 +154,40 @@ export default {
         // socket.on('revRects',(data)=>{
         //     this.$store.commit('setModuleResultData', data);
         // })
+
+        // msg begin with <MSG> END with </MSG>
+        communicator.tcpClient.on("data", data => {
+          const START_TAG = "<MSG>";
+          const END_TAG = "</MSG>";
+
+          communicator.buf += data.toString();
+
+          while (true) {
+            const startIndex = communicator.buf.indexOf(START_TAG);
+            const endIndex = communicator.buf.indexOf(END_TAG);
+
+            if (startIndex !== -1 && endIndex !== -1 && startIndex < endIndex) {
+              const completeMessage = communicator.buf.substring(
+                startIndex + START_TAG.length,
+                endIndex
+              );
+
+              console.log(`completeMessage: ${completeMessage}`)
+
+              communicator.buf = communicator.buf.substring(
+                endIndex + END_TAG.length
+              );
+            } else {
+              break;
+            }
+          }
+        })
+        communicator.tcpClient.on("error", err => {
+          console.log(`communicator error: ${err}`);
+        });
+        communicator.tcpClient.on("end", () => {
+          console.log("communicator disconnected from server");
+        });
     },
     computed:{
         ...mapState(['socketEmit','dialogVisibleGlobalVar'])
@@ -190,18 +228,20 @@ export default {
 
         createAnDevice(){
             if(this.selectedOption === "TCP客户端"){
-                this.demoSelectedTCP = true;
-                
-                let jsonObject = {
-                    userName: 'TCP',
-                    message: JSON.stringify({ip:this.ip, port: this.portNumber,data:""})
-                }
-                let payload={
-                    trigger:true,
-                    mode:"chatevent",
-                    data:jsonObject
-                }
-                this.$store.commit("setSocketEmit",payload)
+                this.commnuicator.tcpClient.write('<MSG>hello</MSG>')
+                // this.demoSelectedTCP = true;
+                // let msg = JSON.stringify({IP:this.ip, port: parseInt(this.portNumber)})
+                // console.log(msg)
+                // let jsonObject = {
+                //     userName: 'AddTcpServer',
+                //     message: msg
+                // }
+                // let payload={
+                //     trigger:true,
+                //     mode:"chatevent",
+                //     data:jsonObject
+                // }
+                // this.$store.commit("setSocketEmit",payload)
             }
             this.subCommunicationManagementVisible = false;
         },
