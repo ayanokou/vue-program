@@ -9,7 +9,6 @@ import GlobalVar from "../components/GlobalVar.vue";
 import { computed } from "vue";
 import { mapState } from "vuex";
 import axiosInstance from "../../axios"
-import net from 'net'
 
 //初始化socketio用于前后端传输
 let socket = io.connect('http://localhost:9092')
@@ -97,13 +96,13 @@ export default {
           currentTableData: [],
           historyTableData: [],
           helpInfo: "",
-          communicator: {
-            tcpClient: net.createConnection(
-              { port: 8180, host: "localhost" },
-              () => console.log("connected to communicator server!")
-            ),
-            buf: "",
-          },
+        //   communicator: {
+        //     tcpClient: net.createConnection(
+        //       { port: 8180, host: "localhost" },
+        //       () => console.log("connected to communicator server!")
+        //     ),
+        //     buf: "",
+        //   },
         };
     },
     //在顶端组件提供模块结果数据
@@ -155,39 +154,7 @@ export default {
         //     this.$store.commit('setModuleResultData', data);
         // })
 
-        // msg begin with <MSG> END with </MSG>
-        communicator.tcpClient.on("data", data => {
-          const START_TAG = "<MSG>";
-          const END_TAG = "</MSG>";
-
-          communicator.buf += data.toString();
-
-          while (true) {
-            const startIndex = communicator.buf.indexOf(START_TAG);
-            const endIndex = communicator.buf.indexOf(END_TAG);
-
-            if (startIndex !== -1 && endIndex !== -1 && startIndex < endIndex) {
-              const completeMessage = communicator.buf.substring(
-                startIndex + START_TAG.length,
-                endIndex
-              );
-
-              console.log(`completeMessage: ${completeMessage}`)
-
-              communicator.buf = communicator.buf.substring(
-                endIndex + END_TAG.length
-              );
-            } else {
-              break;
-            }
-          }
-        })
-        communicator.tcpClient.on("error", err => {
-          console.log(`communicator error: ${err}`);
-        });
-        communicator.tcpClient.on("end", () => {
-          console.log("communicator disconnected from server");
-        });
+        
     },
     computed:{
         ...mapState(['socketEmit','dialogVisibleGlobalVar'])
@@ -228,20 +195,19 @@ export default {
 
         createAnDevice(){
             if(this.selectedOption === "TCP客户端"){
-                this.commnuicator.tcpClient.write('<MSG>hello</MSG>')
-                // this.demoSelectedTCP = true;
-                // let msg = JSON.stringify({IP:this.ip, port: parseInt(this.portNumber)})
-                // console.log(msg)
-                // let jsonObject = {
-                //     userName: 'AddTcpServer',
-                //     message: msg
-                // }
-                // let payload={
-                //     trigger:true,
-                //     mode:"chatevent",
-                //     data:jsonObject
-                // }
-                // this.$store.commit("setSocketEmit",payload)
+                this.demoSelectedTCP = true;
+                let msg = JSON.stringify({IP:this.ip, port: parseInt(this.portNumber)})
+                console.log(msg)
+                let jsonObject = {
+                    userName: 'AddTcpServer',
+                    message: msg
+                }
+                let payload={
+                    trigger:true,
+                    mode:"chatevent",
+                    data:jsonObject
+                }
+                this.$store.commit("setSocketEmit",payload)
             }
             this.subCommunicationManagementVisible = false;
         },
