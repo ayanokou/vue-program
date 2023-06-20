@@ -4,10 +4,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Base64;
 import java.util.HashMap;
 
 import com.corundumstudio.socketio.listener.*;
+
+import java.io.IOException;
+import java.net.UnknownHostException;
+
+import com.alibaba.fastjson.JSONObject;
 import com.corundumstudio.socketio.*;
 
 @SpringBootApplication
@@ -17,7 +21,8 @@ public class DemoApplication {
 
 	private static String imgFormat;
 	private HashMap<Integer, Boolean> flags;
-	private SocketIOClient client;
+	private static final String IP = "127.0.0.1";
+	private static final int PORT = 8180;
 
 	static {
 		String path1 = "server/src/main/resources";
@@ -54,7 +59,7 @@ public class DemoApplication {
 		return flags.get(port);
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws UnknownHostException, IOException {
 		com.corundumstudio.socketio.Configuration config = new Configuration();
 		config.setMaxFramePayloadLength(5 * 1024 * 1024);
 		config.setHostname("localhost");
@@ -78,19 +83,22 @@ public class DemoApplication {
 
 			@Override
 			public void onMessage(String event, String data) {
-				if(client == null) {
-				System.out.println("client is null");
-				return;
+				if (client == null) {
+					System.out.println("client is null");
+					return;
 				}
 				client.sendEvent(event, data);
 			}
 		};
 
-		clientForCpp.start_event_loop(listenerForCpp);
+		MessageHandlerSender sender = new MessageHandlerSender(IP, PORT);
+		sender.tryConnect();
+		MessageHandlerReceiver receiver = new MessageHandlerReceiver(sender.getSocket(), listenerForCpp);
+		receiver.start();
 
 		server.addEventListener("chatevent", ChatObject.class, new DataListener<ChatObject>() {
 			@Override
-			public void onData(SocketIOClient client, ChatObject data, AckRequest ackRequest) {
+			public void onData(SocketIOClient client, ChatObject data, AckRequest ackRequest) throws IOException {
 				if (listenerForCpp.getClient() == null) {
 					listenerForCpp.setClient(client);
 				}
@@ -111,10 +119,13 @@ public class DemoApplication {
 					String result = data.getMessage();
 					System.out.println(result);
 					clientForCpp.eventHandle(listenerForCpp, 4, result);
-				} else if (data.getUserName().equals("AddTcpServer")) {
+				} else if (data.getUserName().equals("AddTcpListener")) {
 					String result = data.getMessage();
+					JSONObject jsonObject = JSONObject.parseObject(result);
+					jsonObject.put("operation", 0);
+					result = jsonObject.toJSONString();
 					System.out.println(result);
-					clientForCpp.eventHandle(listenerForCpp, 2, result);
+					sender.sendToMessageHandler(result);
 				}
 
 				// test end
