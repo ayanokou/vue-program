@@ -199,7 +199,7 @@ export default {
                 let msg = JSON.stringify({IP:this.ip, port: parseInt(this.portNumber)})
                 console.log(msg)
                 let jsonObject = {
-                    userName: 'AddTcpServer',
+                    userName: 'AddTcpListener',
                     message: msg
                 }
                 let payload={
@@ -418,6 +418,8 @@ export default {
             
           
           },
+
+          
         
     }
 }
