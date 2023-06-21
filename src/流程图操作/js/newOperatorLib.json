@@ -727,7 +727,7 @@
             "outPara": [
               {
                 "varName": "dst",
-                "varType": "object",
+                "varType": "Mat",
                 "varExplanation": ""
               }
             ]
