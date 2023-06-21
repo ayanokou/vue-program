@@ -2524,22 +2524,18 @@
   "高级功能": [
     {
       "lfProperties": {
-        "name": "划痕检测",
+        "name": " 划痕检测",
         "type": "operator",
-        "text": "划痕检测",
-        "label": "划痕检测"
+        "text": " 划痕检测",
+        "label": " 划痕检测"
       },
       "properties": {
         "state": "init",
         "superName": "高级功能",
-        "name": "划痕检测"
-      },
-      "models": [
-        {
-          "lfProperties": {
-            "name": "scratchDetection"
-          },
-          "properties": {
+        "name": " 划痕检测",
+        "models": [
+          {
+            "modelName": " 划痕检测",
             "helpMsg": "it is a help message of GlobalVariable",
             "dllPath": "server/src/main/resources/scratchDetection.dll",
             "modelID": "myScratchDetection",
@@ -2560,10 +2556,9 @@
                 "varExplanation": ""
               }
             ]
-          },
-          "models": []
-        }
-      ]
+          }
+        ]
+      }
     },
     {
       "lfProperties": {
