@@ -347,8 +347,8 @@
                                 >权限设置</span
                             ></el-menu-item
                         >
-                        <el-menu-item id="setSoftware"
-                            ><span style="color: aliceblue"
+                        <el-menu-item id="setSoftware" @click="sendEvent('softwareSetEvent')"
+                            ><span style="color: aliceblue" 
                                 >软件设置</span
                             ></el-menu-item
                         >

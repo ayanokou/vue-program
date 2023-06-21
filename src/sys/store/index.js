@@ -9,6 +9,7 @@ export default createStore({
             imgBase64:"",
             newSolution:false,
             openSolution:false,
+            softwareSet:false,
             openSelectedSolutionCont:{
                 trigger:false,
                 key:"",
@@ -40,6 +41,9 @@ export default createStore({
         },
         newSolutionEvent(state,payload){
             state.newSolution=payload
+        },
+        softwareSetEvent(state,payload){
+            state.softwareSet=playload
         },
         openSolutionEvent(state,payload){
             state.openSolution=payload
