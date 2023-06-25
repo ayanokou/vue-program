@@ -8,7 +8,7 @@ const router = createRouter({
         {
             path: '/',
             name: 'login',
-            component: () => import('@/登录窗口/LoginWindow.vue')
+            component: () => import('../cloud/Login.vue')
             // component: () => import('../components/FlowArea.vue')
         },
 

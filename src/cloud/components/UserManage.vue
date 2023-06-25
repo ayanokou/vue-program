@@ -1,7 +1,6 @@
 <template>
     <div>
       <h1>User List</h1>
-      <el-link @click.native="gotoindex" target="_blank" class="login-link">返回主页</el-link>
       <table>
         <thead>
           <tr>
@@ -38,7 +37,7 @@
   </template>
 
 
-<script src="./js/userManage.js">
+<script src="../js/userManage">
 
 </script>
 

@@ -15,6 +15,8 @@ let socket = io.connect('http://localhost:9092')
 export default {
     data() {
         return {
+            dialogVisible:false,
+            userRole:'',
             //是否显示最近打开方案子菜单栏
            showLastOpenSolution: false, 
             //最近打开的方案名，存三个
@@ -76,6 +78,9 @@ export default {
             helpInfo: '',
         }
     },
+    created() {
+        this.userRole = JSON.parse(sessionStorage.getItem('userInfo')).role;
+      },
     //在顶端组件提供模块结果数据
     provide() {
         return {
@@ -120,6 +125,38 @@ export default {
 
     },
     methods: {
+        showFileOperationsDialog() {
+            // Show the file operations dialog
+            this.$dialog
+              .confirm({
+                title: '文件操作',
+                message: '选择要执行的文件操作',
+                confirmButtonText: '上传文件',
+                cancelButtonText: '下载文件',
+                closeOnClickModal: false,
+              })
+              .then(() => {
+                // Upload file logic here
+                this.uploadFile();
+              })
+              .catch(() => {
+                // Download file logic here
+                this.downloadFile();
+              });
+          },
+          uploadFile() {
+            // Logic for file upload goes here
+            // You can show a file upload dialog or perform any other necessary actions
+            // when the user chooses to upload a file.
+            console.log('Uploading file...');
+          },
+      
+          downloadFile() {
+            // Logic for file download goes here
+            // You can initiate a file download or perform any other necessary actions
+            // when the user chooses to download a file.
+            console.log('Downloading file...');
+          },
 
         //动态布局
         layout(i) {

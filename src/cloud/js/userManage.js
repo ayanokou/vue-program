@@ -32,6 +32,19 @@ export default {
       this.$router.push('/Index');
 
 
+    },
+    changeRole(user,role){
+      user.role = role;
+      axiosInstance.post('/changeRole',user)
+            .then(response => {
+              console.log("权限修改成功");
+              this.$router.go(0);
+
+            })
+            .catch(error => {
+            console.error(error);
+            });
+      
     }
 
   }

@@ -39,33 +39,125 @@
         </el-header>
         <el-main>
           <div class="btnDiv">
-            <input type="file" @change="handleFileChange" />
-            <el-select v-model="algorithmType" placeholder="选择算法类型">
-              <el-option label="滤波" value="filter"></el-option>
-              <el-option label="高斯" value="gauss"></el-option>
-              <el-option label="形态学" value="morphology"></el-option>
-              <el-option v-if="!customAlgorithm" label="自定义算法" value="__CUSTOM__"></el-option>
-              <el-option v-if="customAlgorithm" label="确定" value="__APPLY__"></el-option>
-            </el-select>
+            <el-dialog  v-model="showFileAttributesDialog" title="文件上传" >
+              <el-form label-position="top">
+                <el-form-item label="lfProperties">
+                  <el-input v-model="lfProperties.name" placeholder="名称"></el-input>
+                  <el-select v-model="algorithmType" placeholder="选择算法类型">
+                    <el-option label="滤波" value="filter"></el-option>
+                    <el-option label="高斯" value="gauss"></el-option>
+                    <el-option label="形态学" value="morphology"></el-option>
+                    <el-option v-if="!customAlgorithm" label="自定义算法" value="__CUSTOM__"></el-option>
+                    <el-option v-if="customAlgorithm" label="确定" value="__APPLY__"></el-option>
+                  </el-select>
+                  <el-input v-if="customAlgorithm" v-model="customAlgorithmType" placeholder="输入自定义算法类型"></el-input>
+                  <el-button v-if="customAlgorithm" type="primary" @click="applyCustomAlgorithm">确定</el-button>
+                  <el-input v-model="lfProperties.type" placeholder="类型"></el-input>
+                  <el-input v-model="lfProperties.text" placeholder="文本"></el-input>
+                  <el-input v-model="lfProperties.label" placeholder="标签"></el-input>
+                </el-form-item>
 
-            <el-input v-if="customAlgorithm" v-model="customAlgorithmType" placeholder="输入自定义算法类型"></el-input>
-            <el-button v-if="customAlgorithm" type="primary" @click="applyCustomAlgorithm">确定</el-button>
-            
-            <el-button v-if="userRole === 'admin'" type="primary" size="small" icon="el-icon-upload" @click="uploadFile" >上传文件</el-button>
-            <el-button type="primary" size="small" icon="el-icon-download" @click="downloadFile"  id="dirDilaog">下载文件</el-button>
-            <el-button type="primary" size="small" icon="el-icon-user" @click="showUserManageDialog"  id="userManage">用户管理</el-button>
+                <el-form-item label="properties">
+                  <el-input v-model="properties.dllPath" placeholder="DLL路径"></el-input>
+                  <el-input v-model="properties.modelID" placeholder="模型ID"></el-input>
+                  <el-form-item label="inPara">
+                  <div v-for="(parameter, index) in properties.inPara" :key="index">
+                    <el-input v-model="parameter.varName" placeholder="变量名称"></el-input>
+                    <el-input v-model="parameter.varType" placeholder="变量类型"></el-input>
+                  </div>
+                  <el-button @click="addInParaField">添加inPara</el-button>
+                </el-form-item>
+                  <el-form-item label="outPara">
+                    <div v-for="(parameter, index) in properties.outPara" :key="index">
+                      <el-input v-model="parameter.varName" placeholder="变量名称"></el-input>
+                      <el-input v-model="parameter.varType" placeholder="变量类型"></el-input>
+                      <!-- Add more input fields for other properties of outPara -->
+                    </div>
+                  </el-form-item>
+                </el-form-item>
+
+                <el-form-item>
+                  <el-button  type="primary" @click="uploadFile">{{ a }}</el-button>
+                  <input type="file" @change="handleFileChange" />
+                </el-form-item>
+    
+              </el-form>
+            </el-dialog>
+            <el-button v-permission="'上传'" type="primary" size="small" @click="showUpload">文件上传</el-button>
+            <el-button v-permission="'下载'" type="primary" size="small"  @click="showlicense"  >license管理</el-button>
+            <el-button v-permission="'下载'" type="primary" size="small"  @click="showDownload"  >下载文件</el-button>
+            <el-button v-permission="'删除'" type="primary" size="small"  @click="showUserManage"  >用户管理</el-button>
           </div>
           <hr>
-          <div class="file-list">
+
+        
+
+          <!-- <el-tree
+          ref="treeRef"
+          :data="options"
+          show-checkbox
+          default-expand-all
+          node-key="id"
+          highlight-current
+          :props="defaultProps"
+        /> -->
+
+        <component :is="component" :options="options" :openLicenseDialog="openLicenseDialog" :getCheckedNodes="getCheckedNodes" 
+        :getCheckedNodesJson="getCheckedNodesJson" :getCheckedNodesDelete="getCheckedNodesDelete" :resetChecked="resetChecked"></component>
+
+
+
+        <!--<div class="buttons">
+          <el-button v-permission="'下载'" type="primary" size="small" icon="el-icon-download" @click="openLicenseDialog"  id="dirDilaog">创建License</el-button>
+          <el-button v-permission="'下载'" type="primary" size="small" icon="el-icon-download" @click="getCheckedNodes"  id="dirDilaog">下载文件</el-button>
+          <el-button v-permission="'下载'" type="primary" size="small" icon="el-icon-download" @click="getCheckedNodesJson"  id="dirDilaog">下载json文件</el-button>
+          <el-button v-permission="'删除'" type="primary" size="small" icon="el-icon-download" @click="getCheckedNodesDelete"  id="dirDilaog">删除文件</el-button>
+          <el-button type="primary" size="small" icon="el-icon-download" @click="resetChecked">reset</el-button>
+        </div>-->
+
+
+        <!--<el-dialog v-model="showLicenseDialog" title="创建License" @close="resetLicenseForm">
+          <el-form ref="licenseForm" :model="licenseForm" label-width="100px">
+            <el-form-item >
+              <el-input v-model="licenseForm.num" placeholder="请输入License的num"></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="getCheckedLicense">创建License</el-button>
+            </el-form-item>
+          </el-form>
+        </el-dialog>-->
+          <!-- <div class="file-list">
             <ul>
             <li v-for="algorithm in algorithms" :key="algorithm.id">
-              <a href="#/Index" @click="downloadAlgorithm(algorithm.procedurename)">
-                {{ algorithm.procedurename }}
-              </a>
+              <el-dropdown>
+                <el-button type="primary">
+                  {{ algorithm.procedurename }}<el-icon class="el-icon--right"><arrow-down /></el-icon>
+                </el-button>
+                <template #dropdown>
+                  <el-dropdown-menu>
+                    <el-dropdown-item @click="downloadAlgorithm(algorithm.procedurename)">下载文件</el-dropdown-item>
+                    <el-dropdown-item @click="downloadjson(algorithm.procedurename)">下载json文件</el-dropdown-item>
+                    <el-dropdown-item @click="deleteFile(algorithm.id)">删除文件</el-dropdown-item>
+                  </el-dropdown-menu>
+                </template>
+              </el-dropdown>
             </li>
-          </ul>
-          </div>
+            </ul>
+            
+          </div>-->
+
         </el-main>
+        <!-- 这是一个注释 
+        <div class="m-4">
+          <el-cascader v-model="value" :options="options" @change="handleChange" :show-all-levels="false">
+            <template v-slot="{ node, data }">
+              <span v-if="node.level !== options.length">{{ node.label }}</span>
+              <el-button v-else @click="handleButtonClick(data)">{{ node.label }}</el-button>
+            </template>
+          </el-cascader>
+        </div>-->
+
+        
       </el-container>
 
       
@@ -214,6 +306,11 @@ body {
 
 .file-download button:hover {
   background-color: #117a8b;
+}
+
+.disabled {
+  opacity: 0.5; /* Adjust the opacity to visually indicate disabled state */
+  cursor: not-allowed; /* Change cursor to not-allowed when disabled */
 }
 
 

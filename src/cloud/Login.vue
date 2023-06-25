@@ -39,11 +39,11 @@
   </div>
 </template>
 
-<script>
+<script >
 import axiosInstance from '../axios';
 import ClipboardJS from 'clipboard';
 import router from '../sys/router';
-import {onLoginBtnClick } from './js/login';
+
 
 export default {
 data() {
@@ -72,6 +72,9 @@ methods: {
       .then(response => {
         sessionStorage.setItem('userInfo', JSON.stringify(response.data));
         console.log(JSON.parse(sessionStorage.getItem('userInfo')).username);
+        console.log(JSON.parse(sessionStorage.getItem('userInfo')).permissions);
+
+      
         
         this.$message({
           message: '登录成功',
@@ -118,7 +121,7 @@ mounted() {
   }
 
   .login-aside {
-      background-image: url(img/login_left.png);
+      background-image: url(../登录窗口/img/login_left.png);
       background-repeat: no-repeat;
 
       background-size: 50% 100%;

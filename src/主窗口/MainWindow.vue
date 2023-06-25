@@ -7,7 +7,7 @@
                 <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect" menu-trigger="hover">
                     <el-sub-menu index="1">
                         <template #title><span style="color:aliceblue;">文件</span></template>
-                        <el-menu-item value="1-1" @click="newSolution"><span style="color:aliceblue;">新建方案</span></el-menu-item>
+                        <el-menu-item v-if="userRole === 'admin'" value="1-1" @click="newSolution"><span style="color:aliceblue;">新建方案</span></el-menu-item>
                         <el-menu-item @click="deleteSolution"><span style="color:aliceblue;">删除方案</span></el-menu-item>
                         <el-menu-item @click="deleteCurrentSolution"><span style="color:aliceblue;">删除当前方案</span></el-menu-item>
                         <el-menu-item @click="openSolution"><span style="color:aliceblue;">打开方案</span></el-menu-item>
@@ -48,10 +48,18 @@
 
                     <el-sub-menu index="5">
                         <template #title><span style="color:aliceblue;">其他</span></template>
-                        <el-menu-item id="about"><span style="color:aliceblue;">关于</span></el-menu-item>
+                        <el-menu-item id="about" ><span style="color:aliceblue;">关于</span></el-menu-item>
                         <el-menu-item id="help"><span style="color:aliceblue;">帮助</span></el-menu-item>
                         <el-menu-item id="logs"><span style="color:aliceblue;">日志</span></el-menu-item>
                     </el-sub-menu>
+
+                    <el-sub-menu index="6">
+                        <template #title><span style="color:aliceblue;">云端</span></template>
+                        <el-menu-item id="help" @click="dialogVisible = true"><span style="color:aliceblue;">文件操作</span></el-menu-item>
+                        <el-menu-item id="logs"><span style="color:aliceblue;">日志</span></el-menu-item>
+                        
+                    </el-sub-menu>
+
 
 <!--                    <el-sub-menu index="5">-->
 <!--                        <template #title><span style="color:aliceblue">布局</span></template>-->
@@ -125,6 +133,22 @@
 
             </el-main>
         </el-container>
+        <el-dialog
+            v-model="dialogVisible"
+            title="Tips"
+            width="30%"
+            :before-close="handleClose"
+        >
+            <span>This is a message</span>
+            <template #footer>
+            <span class="dialog-footer">
+                <el-button @click="dialogVisible = false">Cancel</el-button>
+                <el-button type="primary" @click="dialogVisible = false">
+                Confirm
+                </el-button>
+            </span>
+            </template>
+        </el-dialog>
     </div>
 
 </template>
