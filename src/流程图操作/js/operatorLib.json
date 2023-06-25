@@ -60,6 +60,249 @@
     },
     {
       "lfProperties": {
+        "name": "网络通讯"
+      },
+      "properties": {},
+      "models": [
+        {
+          "lfProperties": {
+            "name": "udp通讯"
+          },
+          "properties": {},
+          "models": [
+            {
+              "lfProperties": {
+                "name": "udp通讯",
+                "type": "operator",
+                "text": "udp通讯",
+                "label": "udp通讯"
+              },
+              "properties": {
+                "helpMsg": "it is a help message",
+                "dllPath": "server/src/main/resources/udpCommunicate.dll",
+                "modelID": "outALLfuncpointer",
+                "inPara": [],
+                "outPara": [
+                  {
+                    "varName": "dst1",
+                    "varType": "function<void(char*, int)>*",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "dst2",
+                    "varType": "function<void(char*,int, char*)>*",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "dst3",
+                    "varType": "function<void()>*",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "dst4",
+                    "varType": "function<void()>*",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "dst5",
+                    "varType": "function<void(void(*server_receive_data)(char* ip, int port, char *data))>*",
+                    "varExplanation": ""
+                  }
+                ]
+              },
+              "models": []
+            }
+          ]
+        },
+        {
+          "lfProperties": {
+            "name": "tcp通讯"
+          },
+          "properties": {},
+          "models": [
+            {
+              "lfProperties": {
+                "name": "tcp通讯",
+                "type": "operator",
+                "text": "tcp通讯",
+                "label": "tcp通讯"
+              },
+              "properties": {
+                "helpMsg": "it is a help message",
+                "dllPath": "server/src/main/resources/tcpDll.dll",
+                "modelID": "outTcpALLfuncpointer",
+                "inPara": [],
+                "outPara": [
+                  {
+                    "varName": "dst1",
+                    "varType": "function<void(char* ip, int port)>*",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "dst2",
+                    "varType": "function<void(char * str)>*",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "dst3",
+                    "varType": "function<void()>*",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "dst4",
+                    "varType": "function<void()>*",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "dst5",
+                    "varType": "function<void()>*",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "dst6",
+                    "varType": "function<void(void(*)(char *data))>*",
+                    "varExplanation": ""
+                  }
+                ]
+              },
+              "models": []
+            }
+          ]
+        },
+        {
+          "lfProperties": {
+            "name": "udpTest"
+          },
+          "properties": {},
+          "models": [
+            {
+              "lfProperties": {
+                "name": "udpTest",
+                "type": "operator",
+                "text": "udpTest",
+                "label": "udpTest"
+              },
+              "properties": {
+                "helpMsg": "it is a help message",
+                "dllPath": "server/src/main/resources/udpInFlow.dll",
+                "modelID": "netTestInFlow",
+                "inPara": [
+                  {
+                    "varName": "in1",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "in2",
+                    "varType": "object",
+                    "varExplanation": "",
+                    "defineVarInputWay": "directInputWay"
+                  },
+                  {
+                    "varName": "in3",
+                    "varType": "object",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "in4",
+                    "varType": "object",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "in5",
+                    "varType": "object",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "dst",
+                    "varType": "string",
+                    "varExplanation": ""
+                  }
+                ]
+              },
+              "models": []
+            }
+          ]
+        },
+        {
+          "lfProperties": {
+            "name": "tcpTest"
+          },
+          "properties": {},
+          "models": [
+            {
+              "lfProperties": {
+                "name": "tcpTest",
+                "type": "operator",
+                "text": "tcpTest",
+                "label": "tcpTest"
+              },
+              "properties": {
+                "helpMsg": "it is a help message",
+                "dllPath": "server/src/main/resources/tcpInFlow.dll",
+                "modelID": "tcptTestInFlow",
+                "inPara": [
+                  {
+                    "varName": "in1",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "in2",
+                    "varType": "object",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "in3",
+                    "varType": "object",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "in4",
+                    "varType": "object",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "in5",
+                    "varType": "object",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "in6",
+                    "varType": "object",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "dst",
+                    "varType": "string",
+                    "varExplanation": ""
+                  }
+                ]
+              },
+              "models": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lfProperties": {
         "name": "输入输出"
       },
       "properties": {},
@@ -155,23 +398,212 @@
       "models": [
         {
           "lfProperties": {
-            "name": "全局变量"
+            "name": "轮廓比对"
           },
           "properties": {},
           "models": [
             {
               "lfProperties": {
-                "name": "GlobalVariable",
-                "type": "noEdgeModel",
-                "text": "全局变量",
-                "label": "全局变量"
+                "name": "轮廓比对",
+                "type": "operator",
+                "text": "轮廓缺陷检测",
+                "label": "轮廓缺陷检测"
               },
               "properties": {
                 "helpMsg": "it is a help message of GlobalVariable",
-                "dllPath": "",
-                "modelID": "GlobalVariable",
-                "inPara": [],
-                "outPara": []
+                "dllPath": "server/src/main/resources/General.dll/MatchContourShape.dll",
+                "modelID": "contourMatch",
+                "inPara": [
+                  {
+                    "varName": "standard image filename",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "detect image filename",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "threshold",
+                    "varType": "double",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "dst",
+                    "varType": "object",
+                    "varExplanation": ""
+                  }
+                ]
+              },
+              "models": []
+            }
+          ]
+        },
+        {
+          "lfProperties": {
+            "name": "模板匹配"
+          },
+          "properties": {},
+          "models": [
+            {
+              "lfProperties": {
+                "type": "operator",
+                "text": "灰度模版匹配",
+                "label": "灰度模版匹配",
+                "name": "灰度模版匹配",
+                "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAEFVwZaAAAABGdBTUEAALGPC/xhBQAAAqlJREFUOBF9VM9rE0EUfrMJNUKLihGbpLGtaCOIR8VjQMGDePCgCCIiCNqzCAp2MyYUCXhUtF5E0D+g1t48qAd7CCLqQUQKEWkStcEfVGlLdp/fm3aW2QQdyLzf33zz5m2IsAZ9XhDpyaaIZkTS4ASzK41TFao88GuJ3hsr2pAbipHxuSYyKRugagICGANkfFnNh3HeE2N0b3nN2cgnpcictw5veJIzxmDamSlxxQZicq/mflxhbaH8BLRbuRwNtZp0JAhoplVRUdzmCe/vO27wFuuA3S5qXruGdboy5/PRGFsbFGKo/haRtQHIrM83bVeTrOgNhZReWaYGnE4aUQgTJNvijJFF4jQ8BxJE5xfKatZWmZcTQ+BVgh7s8SgPlCkcec4mGTmieTP4xd7PcpIEg1TX6gdeLW8rTVMVLVvb7ctXoH0Cydl2QOPJBG21STE5OsnbweVYzAnD3A7PVILuY0yiiyDwSm2g441r6rMSgp6iK42yqroI2QoXeJVeA+YeZSa47gZdXaZWQKTrG93rukk/l2Al6Kzh5AZEl7dDQy+JjgFahQjRopSxPbrbvK7GRe9ePWBo1wcU7sYrFZtavXALwGw/7Dnc50urrHJuTPSoO2IMV3gUQGNg87IbSOIY9BpiT9HV7FCZ94nPXb3MSnwHn/FFFE1vG6DTby+r31KAkUktB3Qf6ikUPWxW1BkXSPQeMHHiW0+HAd2GelJsZz1OJegCxqzl+CLVHa/IibuHeJ1HAKzhuDR+ymNaRFM+4jU6UWKXorRmbyqkq/D76FffevwdCp+jN3UAN/C9JRVTDuOxC/oh+EdMnqIOrlYteKSfadVRGLJFJPSB/ti/6K8f0CNymg/iH2gO/f0DwE0yjAFO6l8JaR5j0VPwPwfaYHqOqrCI319WzwhwzNW/aQAAAABJRU5ErkJggg=="
+              },
+              "properties": {
+                "dllPath": "server/src/main/resources/general.dll",
+                "modelID": "match_template_grayscale",
+                "inPara": [
+                  {
+                    "varName": "src",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "template",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "method",
+                    "varType": "int",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "mask",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "result",
+                    "varType": "Mat",
+                    "varExplanation": ""
+                  }
+                ]
+              },
+              "models": []
+            },
+            {
+              "lfProperties": {
+                "type": "operator",
+                "text": "梯度模版匹配",
+                "label": "梯度模版匹配",
+                "name": "梯度模版匹配",
+                "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAEFVwZaAAAABGdBTUEAALGPC/xhBQAAAqlJREFUOBF9VM9rE0EUfrMJNUKLihGbpLGtaCOIR8VjQMGDePCgCCIiCNqzCAp2MyYUCXhUtF5E0D+g1t48qAd7CCLqQUQKEWkStcEfVGlLdp/fm3aW2QQdyLzf33zz5m2IsAZ9XhDpyaaIZkTS4ASzK41TFao88GuJ3hsr2pAbipHxuSYyKRugagICGANkfFnNh3HeE2N0b3nN2cgnpcictw5veJIzxmDamSlxxQZicq/mflxhbaH8BLRbuRwNtZp0JAhoplVRUdzmCe/vO27wFuuA3S5qXruGdboy5/PRGFsbFGKo/haRtQHIrM83bVeTrOgNhZReWaYGnE4aUQgTJNvijJFF4jQ8BxJE5xfKatZWmZcTQ+BVgh7s8SgPlCkcec4mGTmieTP4xd7PcpIEg1TX6gdeLW8rTVMVLVvb7ctXoH0Cydl2QOPJBG21STE5OsnbweVYzAnD3A7PVILuY0yiiyDwSm2g441r6rMSgp6iK42yqroI2QoXeJVeA+YeZSa47gZdXaZWQKTrG93rukk/l2Al6Kzh5AZEl7dDQy+JjgFahQjRopSxPbrbvK7GRe9ePWBo1wcU7sYrFZtavXALwGw/7Dnc50urrHJuTPSoO2IMV3gUQGNg87IbSOIY9BpiT9HV7FCZ94nPXb3MSnwHn/FFFE1vG6DTby+r31KAkUktB3Qf6ikUPWxW1BkXSPQeMHHiW0+HAd2GelJsZz1OJegCxqzl+CLVHa/IibuHeJ1HAKzhuDR+ymNaRFM+4jU6UWKXorRmbyqkq/D76FffevwdCp+jN3UAN/C9JRVTDuOxC/oh+EdMnqIOrlYteKSfadVRGLJFJPSB/ti/6K8f0CNymg/iH2gO/f0DwE0yjAFO6l8JaR5j0VPwPwfaYHqOqrCI319WzwhwzNW/aQAAAABJRU5ErkJggg=="
+              },
+              "properties": {
+                "dllPath": "server/src/main/resources/general.dll",
+                "modelID": "match_template_gradient",
+                "inPara": [
+                  {
+                    "varName": "src",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "template",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "method",
+                    "varType": "int",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "mask",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "result",
+                    "varType": "Mat",
+                    "varExplanation": ""
+                  }
+                ]
+              },
+              "models": []
+            },
+            {
+              "lfProperties": {
+                "type": "operator",
+                "text": "边缘模版匹配",
+                "label": "边缘模版匹配",
+                "name": "边缘模版匹配",
+                "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAEFVwZaAAAABGdBTUEAALGPC/xhBQAAAqlJREFUOBF9VM9rE0EUfrMJNUKLihGbpLGtaCOIR8VjQMGDePCgCCIiCNqzCAp2MyYUCXhUtF5E0D+g1t48qAd7CCLqQUQKEWkStcEfVGlLdp/fm3aW2QQdyLzf33zz5m2IsAZ9XhDpyaaIZkTS4ASzK41TFao88GuJ3hsr2pAbipHxuSYyKRugagICGANkfFnNh3HeE2N0b3nN2cgnpcictw5veJIzxmDamSlxxQZicq/mflxhbaH8BLRbuRwNtZp0JAhoplVRUdzmCe/vO27wFuuA3S5qXruGdboy5/PRGFsbFGKo/haRtQHIrM83bVeTrOgNhZReWaYGnE4aUQgTJNvijJFF4jQ8BxJE5xfKatZWmZcTQ+BVgh7s8SgPlCkcec4mGTmieTP4xd7PcpIEg1TX6gdeLW8rTVMVLVvb7ctXoH0Cydl2QOPJBG21STE5OsnbweVYzAnD3A7PVILuY0yiiyDwSm2g441r6rMSgp6iK42yqroI2QoXeJVeA+YeZSa47gZdXaZWQKTrG93rukk/l2Al6Kzh5AZEl7dDQy+JjgFahQjRopSxPbrbvK7GRe9ePWBo1wcU7sYrFZtavXALwGw/7Dnc50urrHJuTPSoO2IMV3gUQGNg87IbSOIY9BpiT9HV7FCZ94nPXb3MSnwHn/FFFE1vG6DTby+r31KAkUktB3Qf6ikUPWxW1BkXSPQeMHHiW0+HAd2GelJsZz1OJegCxqzl+CLVHa/IibuHeJ1HAKzhuDR+ymNaRFM+4jU6UWKXorRmbyqkq/D76FffevwdCp+jN3UAN/C9JRVTDuOxC/oh+EdMnqIOrlYteKSfadVRGLJFJPSB/ti/6K8f0CNymg/iH2gO/f0DwE0yjAFO6l8JaR5j0VPwPwfaYHqOqrCI319WzwhwzNW/aQAAAABJRU5ErkJggg=="
+              },
+              "properties": {
+                "dllPath": "server/src/main/resources/general.dll",
+                "modelID": "match_template_edge",
+                "inPara": [
+                  {
+                    "varName": "src",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "template",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "method",
+                    "varType": "int",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "mask",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "result",
+                    "varType": "Mat",
+                    "varExplanation": ""
+                  }
+                ]
               },
               "models": []
             }
@@ -200,7 +632,7 @@
               },
               "properties": {
                 "helpMsg": "it is a help message",
-                "dllPath": "server/src/main/resources/General.dll",
+                "dllPath": "server/src/main/resources/imgProc/imgFilter/GaussianBlur.dll",
                 "modelID": "gaussian_blur",
                 "inPara": [
                   {
@@ -213,28 +645,28 @@
                   {
                     "varName": "ksize",
                     "varType": "Size",
-                    "fromExpression": "",
+                    "fromExpression": "3,3",
                     "defineVarInputWay": "directInputWay",
                     "varExplanation": ""
                   },
                   {
                     "varName": "sigmaX",
                     "varType": "double",
-                    "fromExpression": "",
+                    "fromExpression": "1",
                     "defineVarInputWay": "directInputWay",
                     "varExplanation": ""
                   },
                   {
                     "varName": "sigmaY",
                     "varType": "double",
-                    "fromExpression": "",
+                    "fromExpression": "1",
                     "defineVarInputWay": "directInputWay",
                     "varExplanation": ""
                   },
                   {
                     "varName": "borderType",
                     "varType": "int",
-                    "fromExpression": "",
+                    "fromExpression": "4",
                     "defineVarInputWay": "directInputWay",
                     "varExplanation": ""
                   }
@@ -263,14 +695,14 @@
                   {
                     "varName": "src",
                     "varType": "object",
-                    "fromExpression": "",
+                    "fromExpression": "5,5",
                     "defineVarInputWay": "directInputWay",
                     "varExplanation": ""
                   },
                   {
                     "varName": "ksize",
                     "varType": "int",
-                    "fromExpression": "",
+                    "fromExpression": "3,3",
                     "defineVarInputWay": "directInputWay",
                     "varExplanation": ""
                   }
@@ -283,6 +715,109 @@
                   }
                 ]
               }
+            },
+            {
+              "lfProperties": {
+                "name": "双边滤波",
+                "type": "operator",
+                "text": "双边滤波",
+                "label": "双边滤波"
+              },
+              "properties": {
+                "helpMsg": "it is a help message",
+                "dllPath": "server/src/main/resources/bilateralFilter.dll",
+                "modelID": "myBilateralFilter",
+                "inPara": [
+                  {
+                    "varName": "src",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "d",
+                    "varType": "int",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "sigmaColor",
+                    "varType": "double",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "sigmaSpace",
+                    "varType": "double",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "borderType",
+                    "varType": "int",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "dst",
+                    "varType": "Mat",
+                    "varExplanation": ""
+                  }
+                ]
+              },
+              "models": []
+            }
+          ]
+        },
+        {
+          "lfProperties": {
+            "name": "图像增强"
+          },
+          "properties": {},
+          "models": [
+            {
+              "lfProperties": {
+                "name": "ShadowCorrection",
+                "type": "operator",
+                "text": "阴影校正",
+                "label": "阴影校正"
+              },
+              "properties": {
+                "helpMsg": "it is a help message",
+                "dllPath": "server/src/main/resources/shadowcorrection.dll",
+                "modelID": "myShadowCorrection",
+                "inPara": [
+                  {
+                    "varName": "src",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "light",
+                    "varType": "int",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "dst",
+                    "varType": "Mat",
+                    "varExplanation": ""
+                  }
+                ]
+              },
+              "models": []
             }
           ]
         },
@@ -301,7 +836,7 @@
                 "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAEFVwZaAAAABGdBTUEAALGPC/xhBQAAAqlJREFUOBF9VM9rE0EUfrMJNUKLihGbpLGtaCOIR8VjQMGDePCgCCIiCNqzCAp2MyYUCXhUtF5E0D+g1t48qAd7CCLqQUQKEWkStcEfVGlLdp/fm3aW2QQdyLzf33zz5m2IsAZ9XhDpyaaIZkTS4ASzK41TFao88GuJ3hsr2pAbipHxuSYyKRugagICGANkfFnNh3HeE2N0b3nN2cgnpcictw5veJIzxmDamSlxxQZicq/mflxhbaH8BLRbuRwNtZp0JAhoplVRUdzmCe/vO27wFuuA3S5qXruGdboy5/PRGFsbFGKo/haRtQHIrM83bVeTrOgNhZReWaYGnE4aUQgTJNvijJFF4jQ8BxJE5xfKatZWmZcTQ+BVgh7s8SgPlCkcec4mGTmieTP4xd7PcpIEg1TX6gdeLW8rTVMVLVvb7ctXoH0Cydl2QOPJBG21STE5OsnbweVYzAnD3A7PVILuY0yiiyDwSm2g441r6rMSgp6iK42yqroI2QoXeJVeA+YeZSa47gZdXaZWQKTrG93rukk/l2Al6Kzh5AZEl7dDQy+JjgFahQjRopSxPbrbvK7GRe9ePWBo1wcU7sYrFZtavXALwGw/7Dnc50urrHJuTPSoO2IMV3gUQGNg87IbSOIY9BpiT9HV7FCZ94nPXb3MSnwHn/FFFE1vG6DTby+r31KAkUktB3Qf6ikUPWxW1BkXSPQeMHHiW0+HAd2GelJsZz1OJegCxqzl+CLVHa/IibuHeJ1HAKzhuDR+ymNaRFM+4jU6UWKXorRmbyqkq/D76FffevwdCp+jN3UAN/C9JRVTDuOxC/oh+EdMnqIOrlYteKSfadVRGLJFJPSB/ti/6K8f0CNymg/iH2gO/f0DwE0yjAFO6l8JaR5j0VPwPwfaYHqOqrCI319WzwhwzNW/aQAAAABJRU5ErkJggg=="
               },
               "properties": {
-                "dllPath": "server/src/main/resources/general.dll",
+                "dllPath": "server/src/main/resources/imgProc/imgBinary/Threshold.dll",
                 "modelID": "threshold",
                 "inPara": [
                   {
@@ -337,6 +872,50 @@
                   {
                     "varName": "dst",
                     "varType": "object",
+                    "varExplanation": ""
+                  }
+                ]
+              },
+              "models": []
+            },
+            {
+              "lfProperties": {
+                "type": "operator",
+                "text": "基于区域二值化",
+                "label": "基于区域二值化",
+                "name": "基于区域二值化",
+                "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAEFVwZaAAAABGdBTUEAALGPC/xhBQAAAqlJREFUOBF9VM9rE0EUfrMJNUKLihGbpLGtaCOIR8VjQMGDePCgCCIiCNqzCAp2MyYUCXhUtF5E0D+g1t48qAd7CCLqQUQKEWkStcEfVGlLdp/fm3aW2QQdyLzf33zz5m2IsAZ9XhDpyaaIZkTS4ASzK41TFao88GuJ3hsr2pAbipHxuSYyKRugagICGANkfFnNh3HeE2N0b3nN2cgnpcictw5veJIzxmDamSlxxQZicq/mflxhbaH8BLRbuRwNtZp0JAhoplVRUdzmCe/vO27wFuuA3S5qXruGdboy5/PRGFsbFGKo/haRtQHIrM83bVeTrOgNhZReWaYGnE4aUQgTJNvijJFF4jQ8BxJE5xfKatZWmZcTQ+BVgh7s8SgPlCkcec4mGTmieTP4xd7PcpIEg1TX6gdeLW8rTVMVLVvb7ctXoH0Cydl2QOPJBG21STE5OsnbweVYzAnD3A7PVILuY0yiiyDwSm2g441r6rMSgp6iK42yqroI2QoXeJVeA+YeZSa47gZdXaZWQKTrG93rukk/l2Al6Kzh5AZEl7dDQy+JjgFahQjRopSxPbrbvK7GRe9ePWBo1wcU7sYrFZtavXALwGw/7Dnc50urrHJuTPSoO2IMV3gUQGNg87IbSOIY9BpiT9HV7FCZ94nPXb3MSnwHn/FFFE1vG6DTby+r31KAkUktB3Qf6ikUPWxW1BkXSPQeMHHiW0+HAd2GelJsZz1OJegCxqzl+CLVHa/IibuHeJ1HAKzhuDR+ymNaRFM+4jU6UWKXorRmbyqkq/D76FffevwdCp+jN3UAN/C9JRVTDuOxC/oh+EdMnqIOrlYteKSfadVRGLJFJPSB/ti/6K8f0CNymg/iH2gO/f0DwE0yjAFO6l8JaR5j0VPwPwfaYHqOqrCI319WzwhwzNW/aQAAAABJRU5ErkJggg=="
+              },
+              "properties": {
+                "dllPath": "server/src/main/resources/imgProc/imgBinary/RegionGrow.dll",
+                "modelID": "regionGrow_threshold",
+                "inPara": [
+                  {
+                    "varName": "src",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": "源图像"
+                  },
+                  {
+                    "varName": "point",
+                    "varType": "Point",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": "生长起始点"
+                  },
+                  {
+                    "varName": "threshold",
+                    "varType": "int",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": "生长阈值"
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "dst",
+                    "varType": "Mat",
                     "varExplanation": ""
                   }
                 ]
@@ -750,6 +1329,143 @@
               }
             }
           ]
+        },
+        {
+          "lfProperties": {
+            "name": "基本变换",
+            "type": "operator",
+            "text": "基本变换",
+            "label": "基本变换"
+          },
+          "properties": {},
+          "models": [
+            {
+              "lfProperties": {
+                "name": "翻转",
+                "type": "operator",
+                "text": "翻转",
+                "label": "翻转"
+              },
+              "properties": {
+                "dllPath": "server/src/main/resources/general.dll",
+                "modelID": "flip",
+                "inPara": [
+                  {
+                    "varName": "src",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "direction",
+                    "varType": "int",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "dst",
+                    "varType": "Mat",
+                    "varExplanation": ""
+                  }
+                ]
+              }
+            },
+            {
+              "lfProperties": {
+                "name": "缩放",
+                "type": "operator",
+                "text": "缩放",
+                "label": "缩放"
+              },
+              "properties": {
+                "dllPath": "server/src/main/resources/general.dll",
+                "modelID": "resize",
+                "inPara": [
+                  {
+                    "varName": "src",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "dsize",
+                    "varType": "Size",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "dst",
+                    "varType": "Mat",
+                    "varExplanation": ""
+                  }
+                ]
+              }
+            },
+            {
+              "lfProperties": {
+                "name": "裁切",
+                "type": "operator",
+                "text": "裁切",
+                "label": "裁切"
+              },
+              "properties": {
+                "dllPath": "server/src/main/resources/general.dll",
+                "modelID": "crop",
+                "inPara": [
+                  {
+                    "varName": "src",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "x",
+                    "varType": "int",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "y",
+                    "varType": "int",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "width",
+                    "varType": "int",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "height",
+                    "varType": "int",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "dst",
+                    "varType": "Mat",
+                    "varExplanation": ""
+                  }
+                ]
+              }
+            }
+          ]
         }
       ]
     },
@@ -761,29 +1477,149 @@
       "models": [
         {
           "lfProperties": {
-            "name": "全局变量"
+            "name": "基本变换",
+            "type": "operator",
+            "text": "基本变换",
+            "label": "基本变换"
           },
           "properties": {},
           "models": [
             {
               "lfProperties": {
-                "name": "GlobalVariable",
-                "type": "noEdgeModel",
-                "text": "全局变量",
-                "label": "全局变量"
+                "name": "翻转",
+                "type": "operator",
+                "text": "翻转",
+                "label": "翻转"
               },
               "properties": {
-                "helpMsg": "it is a help message of GlobalVariable",
-                "dllPath": "",
-                "modelID": "GlobalVariable",
-                "inPara": [],
-                "outPara": []
+                "dllPath": "server/src/main/resources/general.dll",
+                "modelID": "flip",
+                "inPara": [
+                  {
+                    "varName": "src",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "direction",
+                    "varType": "int",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "dst",
+                    "varType": "Mat",
+                    "varExplanation": ""
+                  }
+                ]
+              }
+            },
+            {
+              "lfProperties": {
+                "name": "缩放",
+                "type": "operator",
+                "text": "缩放",
+                "label": "缩放"
               },
-              "models": []
+              "properties": {
+                "dllPath": "server/src/main/resources/general.dll",
+                "modelID": "resize",
+                "inPara": [
+                  {
+                    "varName": "src",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "dsize",
+                    "varType": "Size",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "dst",
+                    "varType": "Mat",
+                    "varExplanation": ""
+                  }
+                ]
+              }
+            },
+            {
+              "lfProperties": {
+                "name": "裁切",
+                "type": "operator",
+                "text": "裁切",
+                "label": "裁切"
+              },
+              "properties": {
+                "dllPath": "server/src/main/resources/general.dll",
+                "modelID": "crop",
+                "inPara": [
+                  {
+                    "varName": "src",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "x",
+                    "varType": "int",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "y",
+                    "varType": "int",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "width",
+                    "varType": "int",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "height",
+                    "varType": "int",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "dst",
+                    "varType": "Mat",
+                    "varExplanation": ""
+                  }
+                ]
+              }
             }
           ]
         }
       ]
+    },
+    {
+      "lfProperties": {
+        "name": "图像标定"
+      },
+      "properties": {},
+      "models": []
     },
     {
       "lfProperties": {
@@ -793,28 +1629,92 @@
       "models": [
         {
           "lfProperties": {
-            "name": "全局变量"
+            "name": "面积测量"
           },
           "properties": {},
           "models": [
             {
               "lfProperties": {
-                "name": "GlobalVariable",
-                "type": "noEdgeModel",
-                "text": "全局变量",
-                "label": "全局变量"
+                "type": "operator",
+                "text": "面积测量",
+                "label": "面积测量",
+                "name": "面积测量",
+                "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAEFVwZaAAAABGdBTUEAALGPC/xhBQAAAqlJREFUOBF9VM9rE0EUfrMJNUKLihGbpLGtaCOIR8VjQMGDePCgCCIiCNqzCAp2MyYUCXhUtF5E0D+g1t48qAd7CCLqQUQKEWkStcEfVGlLdp/fm3aW2QQdyLzf33zz5m2IsAZ9XhDpyaaIZkTS4ASzK41TFao88GuJ3hsr2pAbipHxuSYyKRugagICGANkfFnNh3HeE2N0b3nN2cgnpcictw5veJIzxmDamSlxxQZicq/mflxhbaH8BLRbuRwNtZp0JAhoplVRUdzmCe/vO27wFuuA3S5qXruGdboy5/PRGFsbFGKo/haRtQHIrM83bVeTrOgNhZReWaYGnE4aUQgTJNvijJFF4jQ8BxJE5xfKatZWmZcTQ+BVgh7s8SgPlCkcec4mGTmieTP4xd7PcpIEg1TX6gdeLW8rTVMVLVvb7ctXoH0Cydl2QOPJBG21STE5OsnbweVYzAnD3A7PVILuY0yiiyDwSm2g441r6rMSgp6iK42yqroI2QoXeJVeA+YeZSa47gZdXaZWQKTrG93rukk/l2Al6Kzh5AZEl7dDQy+JjgFahQjRopSxPbrbvK7GRe9ePWBo1wcU7sYrFZtavXALwGw/7Dnc50urrHJuTPSoO2IMV3gUQGNg87IbSOIY9BpiT9HV7FCZ94nPXb3MSnwHn/FFFE1vG6DTby+r31KAkUktB3Qf6ikUPWxW1BkXSPQeMHHiW0+HAd2GelJsZz1OJegCxqzl+CLVHa/IibuHeJ1HAKzhuDR+ymNaRFM+4jU6UWKXorRmbyqkq/D76FffevwdCp+jN3UAN/C9JRVTDuOxC/oh+EdMnqIOrlYteKSfadVRGLJFJPSB/ti/6K8f0CNymg/iH2gO/f0DwE0yjAFO6l8JaR5j0VPwPwfaYHqOqrCI319WzwhwzNW/aQAAAABJRU5ErkJggg=="
               },
               "properties": {
-                "helpMsg": "it is a help message of GlobalVariable",
-                "dllPath": "",
-                "modelID": "GlobalVariable",
-                "inPara": [],
-                "outPara": []
+                "dllPath": "server/src/main/resources/imgMeasure/areaMeasure/ContourArea.dll",
+                "modelID": "contour_area",
+                "inPara": [
+                  {
+                    "varName": "contour",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": "点集"
+                  },
+                  {
+                    "varName": "oriented",
+                    "varType": "bool",
+                    "fromExpression": "",
+                    "defineVarInputWay": "selectedInputWay",
+                    "comboList": {
+                      "False": "0",
+                      "True": "1"
+                    },
+                    "varExplanation": "面积是否具有方向性"
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "area",
+                    "varType": "double",
+                    "varExplanation": "面积"
+                  }
+                ]
               },
               "models": []
             }
           ]
-        },        {
+        },
+        {
+          "lfProperties": {
+            "name": "亮度测量"
+          },
+          "properties": {},
+          "models": [
+            {
+              "lfProperties": {
+                "name": "亮度测量",
+                "type": "operator",
+                "text": "亮度测量",
+                "label": "亮度测量"
+              },
+              "properties": {
+                "helpMsg": "it is a help message of GlobalVariable",
+                "dllPath": "server/src/main/resources/General.dll/BrightnessMeasurement.dll",
+                "modelID": "brightnessMeasurement",
+                "inPara": [
+                  {
+                    "varName": "measured picture",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "dst",
+                    "varType": "object",
+                    "varExplanation": ""
+                  }
+                ]
+              },
+              "models": []
+            }
+          ]
+        },
+        {
           "lfProperties": {
             "name": "直方图统计"
           },
@@ -822,15 +1722,15 @@
           "models": [
             {
               "lfProperties": {
-                "name": "统计像素个数",
+                "name": "直方图统计",
                 "type": "noEdgeModel",
-                "text": "统计像素个数",
-                "label": "统计像素个数"
+                "text": "直方图统计",
+                "label": "直方图统计"
               },
               "properties": {
                 "helpMsg": "it is a help message of GlobalVariable",
                 "dllPath": "server/src/main/resources/general.dll",
-                "modelID": "total_pixels",
+                "modelID": "hist_stat",
                 "inPara": [
                   {
                     "varName": "src",
@@ -838,25 +1738,29 @@
                     "fromExpression": "",
                     "defineVarInputWay": "directInputWay",
                     "varExplanation": ""
-                  },{
+                  },
+                  {
                     "varName": "x",
                     "varType": "int",
                     "fromExpression": "",
                     "defineVarInputWay": "directInputWay",
                     "varExplanation": ""
-                  },{
+                  },
+                  {
                     "varName": "y",
                     "varType": "int",
                     "fromExpression": "",
                     "defineVarInputWay": "directInputWay",
                     "varExplanation": ""
-                  },{
+                  },
+                  {
                     "varName": "width",
                     "varType": "int",
                     "fromExpression": "",
                     "defineVarInputWay": "directInputWay",
                     "varExplanation": ""
-                  },{
+                  },
+                  {
                     "varName": "height",
                     "varType": "int",
                     "fromExpression": "",
@@ -866,50 +1770,89 @@
                 ],
                 "outPara": [
                   {
-                    "varName": "total",
+                    "varName": "num_pixels",
                     "varType": "int",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "mean_gray",
+                    "varType": "Scalar",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "min_gray",
+                    "varType": "double",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "max_gray",
+                    "varType": "double",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "hist_max_val",
+                    "varType": "double",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "hist_max_loc",
+                    "varType": "Point",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "std_dev",
+                    "varType": "Scalar",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "contrast",
+                    "varType": "double",
+                    "varExplanation": ""
+                  },
+                  {
+                    "varName": "hist_image",
+                    "varType": "Mat",
                     "varExplanation": ""
                   }
                 ]
               }
-            },{
+            }
+          ]
+        },
+        {
+          "lfProperties": {
+            "name": "灰度图像素统计"
+          },
+          "properties": {},
+          "models": [
+            {
               "lfProperties": {
-                "name": "统计灰度均值",
-                "type": "noEdgeModel",
-                "text": "统计灰度均值",
-                "label": "统计灰度均值"
+                "name": "pixesStatistics",
+                "type": "operator",
+                "text": "像素统计",
+                "label": "像素统计"
               },
               "properties": {
                 "helpMsg": "it is a help message of GlobalVariable",
-                "dllPath": "server/src/main/resources/general.dll",
-                "modelID": "mean",
+                "dllPath": "server\\src\\main\\resources\\PixesStatistic.dll",
+                "modelID": "pixesStatistic",
                 "inPara": [
                   {
-                    "varName": "src",
+                    "varName": "srcImage",
                     "varType": "object",
                     "fromExpression": "",
                     "defineVarInputWay": "directInputWay",
                     "varExplanation": ""
-                  },{
-                    "varName": "x",
+                  },
+                  {
+                    "varName": "lowthresHold",
                     "varType": "int",
                     "fromExpression": "",
                     "defineVarInputWay": "directInputWay",
                     "varExplanation": ""
-                  },{
-                    "varName": "y",
-                    "varType": "int",
-                    "fromExpression": "",
-                    "defineVarInputWay": "directInputWay",
-                    "varExplanation": ""
-                  },{
-                    "varName": "width",
-                    "varType": "int",
-                    "fromExpression": "",
-                    "defineVarInputWay": "directInputWay",
-                    "varExplanation": ""
-                  },{
-                    "varName": "height",
+                  },
+                  {
+                    "varName": "highthresHold",
                     "varType": "int",
                     "fromExpression": "",
                     "defineVarInputWay": "directInputWay",
@@ -918,51 +1861,65 @@
                 ],
                 "outPara": [
                   {
-                    "varName": "mean_value",
-                    "varType": "int",
+                    "varName": "dst",
+                    "varType": "vector<int>",
                     "varExplanation": ""
                   }
                 ]
-              }
-            },{
+              },
+              "models": []
+            }
+          ]
+        },
+        {
+          "lfProperties": {
+            "name": "直线拟合"
+          },
+          "properties": {},
+          "models": [
+            {
               "lfProperties": {
-                "name": "统计灰度最小值",
-                "type": "noEdgeModel",
-                "text": "统计灰度最小值",
-                "label": "统计灰度最小值"
+                "name": "fitLine",
+                "type": "operator",
+                "text": "直线拟合",
+                "label": "直线拟合"
               },
               "properties": {
                 "helpMsg": "it is a help message of GlobalVariable",
-                "dllPath": "server/src/main/resources/general.dll",
-                "modelID": "min_value",
+                "dllPath": "server\\src\\main\\resources\\fitLine.dll",
+                "modelID": "myFitLine",
                 "inPara": [
                   {
-                    "varName": "src",
+                    "varName": "_points",
                     "varType": "object",
                     "fromExpression": "",
                     "defineVarInputWay": "directInputWay",
                     "varExplanation": ""
-                  },{
-                    "varName": "x",
+                  },
+                  {
+                    "varName": "distType",
                     "varType": "int",
                     "fromExpression": "",
                     "defineVarInputWay": "directInputWay",
                     "varExplanation": ""
-                  },{
-                    "varName": "y",
-                    "varType": "int",
+                  },
+                  {
+                    "varName": "param",
+                    "varType": "double",
                     "fromExpression": "",
                     "defineVarInputWay": "directInputWay",
                     "varExplanation": ""
-                  },{
-                    "varName": "width",
-                    "varType": "int",
+                  },
+                  {
+                    "varName": "reps",
+                    "varType": "double",
                     "fromExpression": "",
                     "defineVarInputWay": "directInputWay",
                     "varExplanation": ""
-                  },{
-                    "varName": "height",
-                    "varType": "int",
+                  },
+                  {
+                    "varName": "aeps",
+                    "varType": "double",
                     "fromExpression": "",
                     "defineVarInputWay": "directInputWay",
                     "varExplanation": ""
@@ -970,51 +1927,37 @@
                 ],
                 "outPara": [
                   {
-                    "varName": "min_value",
-                    "varType": "int",
+                    "varName": "_line",
+                    "varType": "OutputArray",
                     "varExplanation": ""
                   }
                 ]
-              }
-            },{
+              },
+              "models": []
+            }
+          ]
+        },
+        {
+          "lfProperties": {
+            "name": "椭圆拟合"
+          },
+          "properties": {},
+          "models": [
+            {
               "lfProperties": {
-                "name": "统计灰度最大值",
-                "type": "noEdgeModel",
-                "text": "统计灰度最大值",
-                "label": "统计灰度最大值"
+                "name": "fitEllipse",
+                "type": "operator",
+                "text": "椭圆拟合",
+                "label": "椭圆拟合"
               },
               "properties": {
                 "helpMsg": "it is a help message of GlobalVariable",
-                "dllPath": "server/src/main/resources/general.dll",
-                "modelID": "max_value",
+                "dllPath": "server\\src\\main\\resources\\fitEllipse.dll",
+                "modelID": "myFitEllipse",
                 "inPara": [
                   {
-                    "varName": "src",
+                    "varName": "_points",
                     "varType": "object",
-                    "fromExpression": "",
-                    "defineVarInputWay": "directInputWay",
-                    "varExplanation": ""
-                  },{
-                    "varName": "x",
-                    "varType": "int",
-                    "fromExpression": "",
-                    "defineVarInputWay": "directInputWay",
-                    "varExplanation": ""
-                  },{
-                    "varName": "y",
-                    "varType": "int",
-                    "fromExpression": "",
-                    "defineVarInputWay": "directInputWay",
-                    "varExplanation": ""
-                  },{
-                    "varName": "width",
-                    "varType": "int",
-                    "fromExpression": "",
-                    "defineVarInputWay": "directInputWay",
-                    "varExplanation": ""
-                  },{
-                    "varName": "height",
-                    "varType": "int",
                     "fromExpression": "",
                     "defineVarInputWay": "directInputWay",
                     "varExplanation": ""
@@ -1022,12 +1965,13 @@
                 ],
                 "outPara": [
                   {
-                    "varName": "max_value",
-                    "varType": "int",
+                    "varName": "dst",
+                    "varType": "RotatedRect",
                     "varExplanation": ""
                   }
                 ]
-              }
+              },
+              "models": []
             }
           ]
         }
@@ -1038,97 +1982,21 @@
         "name": "颜色处理"
       },
       "properties": {},
-      "models": [
-        {
-          "lfProperties": {
-            "name": "全局变量"
-          },
-          "properties": {},
-          "models": [
-            {
-              "lfProperties": {
-                "name": "GlobalVariable",
-                "type": "noEdgeModel",
-                "text": "全局变量",
-                "label": "全局变量"
-              },
-              "properties": {
-                "helpMsg": "it is a help message of GlobalVariable",
-                "dllPath": "",
-                "modelID": "GlobalVariable",
-                "inPara": [],
-                "outPara": []
-              },
-              "models": []
-            }
-          ]
-        }
-
-      ]
+      "models": []
     },
     {
       "lfProperties": {
         "name": "字符处理"
       },
       "properties": {},
-      "models": [
-        {
-          "lfProperties": {
-            "name": "全局变量"
-          },
-          "properties": {},
-          "models": [
-            {
-              "lfProperties": {
-                "name": "GlobalVariable",
-                "type": "noEdgeModel",
-                "text": "全局变量",
-                "label": "全局变量"
-              },
-              "properties": {
-                "helpMsg": "it is a help message of GlobalVariable",
-                "dllPath": "",
-                "modelID": "GlobalVariable",
-                "inPara": [],
-                "outPara": []
-              },
-              "models": []
-            }
-          ]
-        }
-      ]
+      "models": []
     },
     {
       "lfProperties": {
         "name": "空间解算"
       },
       "properties": {},
-      "models": [
-        {
-          "lfProperties": {
-            "name": "全局变量"
-          },
-          "properties": {},
-          "models": [
-            {
-              "lfProperties": {
-                "name": "GlobalVariable",
-                "type": "noEdgeModel",
-                "text": "全局变量",
-                "label": "全局变量"
-              },
-              "properties": {
-                "helpMsg": "it is a help message of GlobalVariable",
-                "dllPath": "",
-                "modelID": "GlobalVariable",
-                "inPara": [],
-                "outPara": []
-              },
-              "models": []
-            }
-          ]
-        }
-      ]
+      "models": []
     },
     {
       "lfProperties": {
@@ -1376,6 +2244,50 @@
                 ]
               },
               "models": []
+            },
+            {
+              "lfProperties": {
+                "type": "operator",
+                "label": "图片分类",
+                "text": "图片分类",
+                "name": "image-classification"
+              },
+              "properties": {
+                "helpMsg": "分裂模型可以有两个inceptionv3.onnx和resnet50-v1-12.onnx，类别字典文件为imagenet_classes.txt",
+                "dllPath": "server/src/main/resources/image_classification.dll",
+                "modelID": "image_classification",
+                "inPara": [
+                  {
+                    "varName": "img_mat",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": "输入图片 类型Mat"
+                  },
+                  {
+                    "varName": "cls_model_path",
+                    "varType": "string",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": "模型路径"
+                  },
+                  {
+                    "varName": "image_net_classes",
+                    "varType": "string",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": "类别字典路径"
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "dst",
+                    "varType": "string",
+                    "varExplanation": ""
+                  }
+                ]
+              },
+              "models": []
             }
           ]
         }
@@ -1389,23 +2301,37 @@
       "models": [
         {
           "lfProperties": {
-            "name": "全局变量"
+            "name": "划痕检测"
           },
           "properties": {},
           "models": [
             {
               "lfProperties": {
-                "name": "GlobalVariable",
-                "type": "noEdgeModel",
-                "text": "全局变量",
-                "label": "全局变量"
+                "name": "scratchDetection",
+                "type": "operator",
+                "text": "划痕检测",
+                "label": "划痕检测"
               },
               "properties": {
                 "helpMsg": "it is a help message of GlobalVariable",
-                "dllPath": "",
-                "modelID": "GlobalVariable",
-                "inPara": [],
-                "outPara": []
+                "dllPath": "server/src/main/resources/scratchDetection.dll",
+                "modelID": "myScratchDetection",
+                "inPara": [
+                  {
+                    "varName": "src",
+                    "varType": "object",
+                    "fromExpression": "",
+                    "defineVarInputWay": "directInputWay",
+                    "varExplanation": ""
+                  }
+                ],
+                "outPara": [
+                  {
+                    "varName": "dst",
+                    "varType": "vector<Rect>",
+                    "varExplanation": ""
+                  }
+                ]
               },
               "models": []
             }
@@ -1425,6 +2351,22 @@
           },
           "properties": {},
           "models": [
+            {
+              "lfProperties": {
+                "type": "circle",
+                "label": "开始",
+                "text": "开始",
+                "name": "开始"
+              },
+              "properties": {
+                "helpMsg": "it is a help message",
+                "dllPath": "",
+                "modelID": "start",
+                "inPara": [],
+                "outPara": []
+              },
+              "models": []
+            },
             {
               "lfProperties": {
                 "type": "diamond",

@@ -1,10 +1,11 @@
-import { eventHandle, events } from "@/sys/eventResponseController"
+
 import ProcessDp from "@/流程图操作/FlowArea.vue";
 import ImageArea from "@/图像操作/ImageArea.vue";
 import ResultArea from "@/流程图操作/结果描述与帮助/ResultArea.vue";
 import LayoutOne from "@/主窗口/components/layout/LayoutOne.vue";
 import LayoutTwo from "@/主窗口/components/layout/LayoutTwo.vue";
 import LayoutThree from "@/主窗口/components/layout/LayoutThree.vue";
+import GlobalVar from "../components/GlobalVar.vue";
 import { computed } from "vue";
 import { mapState } from "vuex";
 import axiosInstance from "../../axios"
@@ -13,70 +14,96 @@ import axiosInstance from "../../axios"
 let socket = io.connect('http://localhost:9092')
 
 export default {
+    components:{
+        GlobalVar
+    },
     data() {
         return {
-            dialogVisible:false,
-            userRole:'',
-            //是否显示最近打开方案子菜单栏
-           showLastOpenSolution: false, 
-            //最近打开的方案名，存三个
-            lastOpenSolutions: [],
-            //存储示例方案
-            exampleSolutions: [],
-            //右半部分的高度
-            height_right: window.innerHeight - 82,
-            mainLayout: LayoutOne,
-            compnts: [
-                ProcessDp,
-                ImageArea,
-                ResultArea
-            ],
-            moduleResultData: [
+          selectedOption: "", // 用于存储选择的选项值
+          selectedOptionContent: "", // 用于存储选项对应的内容
+          options: [
+            { label: "选项一", value: "option1", content: "选项一的内容" },
+            { label: "选项二", value: "option2", content: "选项二的内容" },
+            { label: "TCP客户端", value: "TCP客户端", content: "tcp" },
+          ],
+          deviceName: "device1",
+          ip: "127.0.0.1",
+          portNumber: 7920,
+          isIPValid: true,
+          updataValue: true,
+          autoReconnection: false,
+          receiveEndMark: false,
+          demoSelectedTCP: false,
+          //是否显示通信管理窗口
+          communicationManagementVisible: false,
+          subCommunicationManagementVisible: false,
+          activeIcon: "deviceManagement",
+          selectedGroup: "接收数据",
+          group1Input: "", //通信管理-设备管理接收数据
+          group2Output: "", //通信管理-设备管理发送数据
+          //是否显示最近打开方案子菜单栏
+          showLastOpenSolution: false,
+          //最近打开的方案名，存三个
+          lastOpenSolutions: [],
+          //存储示例方案
+          exampleSolutions: [],
+          //右半部分的高度
+          height_right: window.innerHeight - 82,
+          mainLayout: LayoutOne,
+          compnts: [ProcessDp, ImageArea, ResultArea],
+          moduleResultData: [
+            {
+              id: 1,
+              paramName: "参数名",
+              currentResult: "当前结果",
+              globalVariable: "全局变量",
+              children: [
                 {
-                    id: 1,
-                    paramName: '参数名',
-                    currentResult: '当前结果',
-                    globalVariable: '全局变量',
-                    children: [
-                        {
-                            id: 2,
-                            paramName: '参数名',
-                            currentResult: '当前结果',
-                            globalVariable: '全局变量',
-                        },
-                        {
-                            id: 3,
-                            paramName: '参数名',
-                            currentResult: '当前结果',
-                            globalVariable: '全局变量',
-                        },
-                        {
-                            id: 4,
-                            paramName: '参数名',
-                            currentResult: '当前结果',
-                            globalVariable: '全局变量',
-                            children: [
-                                {
-                                    id: 5,
-                                    paramName: '参数名',
-                                    currentResult: '当前结果',
-                                    globalVariable: '全局变量',
-                                },
-                            ]
-                        },
-                    ],
+                  id: 2,
+                  paramName: "参数名",
+                  currentResult: "当前结果",
+                  globalVariable: "全局变量",
                 },
                 {
-                    id: 6,
-                    paramName: '参数名',
-                    currentResult: '当前结果',
-                    globalVariable: '全局变量',
+                  id: 3,
+                  paramName: "参数名",
+                  currentResult: "当前结果",
+                  globalVariable: "全局变量",
                 },
-            ],
-            currentTableData: [],
-            historyTableData: [],
-            helpInfo: '',
-        }
+                {
+                  id: 4,
+                  paramName: "参数名",
+                  currentResult: "当前结果",
+                  globalVariable: "全局变量",
+                  children: [
+                    {
+                      id: 5,
+                      paramName: "参数名",
+                      currentResult: "当前结果",
+                      globalVariable: "全局变量",
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              id: 6,
+              paramName: "参数名",
+              currentResult: "当前结果",
+              globalVariable: "全局变量",
+            },
+          ],
+          currentTableData: [],
+          historyTableData: [],
+          helpInfo: "",
+        //   communicator: {
+        //     tcpClient: net.createConnection(
+        //       { port: 8180, host: "localhost" },
+        //       () => console.log("connected to communicator server!")
+        //     ),
+        //     buf: "",
+        //   },
+        };
     },
     created() {
         this.userRole = JSON.parse(sessionStorage.getItem('userInfo')).role;
@@ -94,21 +121,46 @@ export default {
     mounted() {
         //动态调整右半部分尺寸
         window.addEventListener('resize', this.dynamicRightHeight)
+        socket.on('flowChartOK',(data)=>{
+            console.log('in flow chart ok'+data)
+            this.$store.commit('setFlowChartOK',{
+                trigger:true,
+                index:parseInt(data)
+            })
+        })
+        socket.on('run_state',(data)=>{
+            this.$store.commit('setRunState',{
+                trigger:true,
+                content:JSON.parse(data)
+            })
+        })
+        socket.on('revBase64',(data)=>{
 
-        socket.on('revBase64', (data) => {
+            this.$store.commit('setImgBase64',JSON.parse(data).content)
+        })
+        socket.on('revGeneral',(data)=>{
+            this.$store.commit('setGeneralResult',data)
+        })
+        socket.on('revRunResult', (data) => {
             //先传递给FlowArea组件
-            this.$store.commit('setImgBase64',data)
+            this.$store.commit('setRunResult',data)
         })
-        socket.on('revDoubles',(data)=>{
-            //先传递给FlowArea组件
-            this.$store.commit('setRevDoubles',data)
+
+        socket.on('revTimeConsume',(data)=>{
+            this.$store.commit('timeConsumeEvent', data);
         })
-        socket.on('revStr',(data)=>{
-            console.log("this is string result:"+data);
+
+        socket.on('ReceivedTcpData', data =>{
+            console.log(`ReceivedTcpData: ${data}`)
         })
+        // socket.on('revRects',(data)=>{
+        //     this.$store.commit('setModuleResultData', data);
+        // })
+
+        
     },
     computed:{
-        ...mapState(['socketEmit'])
+        ...mapState(['socketEmit','dialogVisibleGlobalVar'])
     },
     watch:{
         socketEmit(newValue){
@@ -158,6 +210,77 @@ export default {
             console.log('Downloading file...');
           },
 
+        selectGroup(group) {
+            this.selectedGroup = group;
+            
+        },
+
+        sendTCPData(){
+            let jsonObject = {
+                userName: 'TCP',
+                message: JSON.stringify({ip:this.ip, port: this.portNumber, data:this.group2Output})
+            }
+            let payload={
+                trigger:true,
+                mode:"chatevent",
+                data:jsonObject
+            }
+            this.$store.commit("setSocketEmit",payload)
+        },
+
+        createAnDevice(){
+            if(this.selectedOption === "TCP客户端"){
+                this.demoSelectedTCP = true;
+                let msg = JSON.stringify({IP:this.ip, port: parseInt(this.portNumber)})
+                console.log(msg)
+                let jsonObject = {
+                    userName: 'AddTcpListener',
+                    message: msg
+                }
+                let payload={
+                    trigger:true,
+                    mode:"chatevent",
+                    data:jsonObject
+                }
+                this.$store.commit("setSocketEmit",payload)
+            }
+            this.subCommunicationManagementVisible = false;
+        },
+
+        validateIP() {
+            const parts = this.ip.split('.');
+            this.isIPValid = parts.length === 4 && parts.every(part => {
+              const num = parseInt(part);
+              return num >= 0 && num <= 255;
+            });
+        },
+
+        filterInput() {
+            this.portNumber = this.portNumber.replace(/\D/g, ''); // 使用正则表达式替换非数字字符为空字符串
+        },
+
+        updateContent() {
+            // 根据选中的选项值更新下半部分的内容
+            const selectedOption = this.options.find(option => option.value === this.selectedOption);
+            if(selectedOption.label === "TCP客户端"){
+                this.deviceName = "1，TCP客户端"
+            }
+            this.selectedOptionContent = selectedOption ? selectedOption.content : '';
+          },
+
+        manageCommunication(){
+            this.communicationManagementVisible = true;
+        },
+        subManageCommunication(){
+            this.subCommunicationManagementVisible = true;
+        },
+
+        setActiveIcon(icon){
+            this.activeIcon = icon;
+        },
+        openDialogGV(){
+            this.$store.commit('setDialogVisibleGlobalVar',true)
+        },
         //动态布局
         layout(i) {
             switch (i) {
@@ -306,6 +429,9 @@ export default {
             this.dialogVisible = true;
             // localStorage.removeItem(name);
         },
+        sendEvent(event, cont = {trigger:true}){
+            this.$store.commit(event, cont)
+        },
         exitFunc(){
             this.$router.push('/')
         },
@@ -327,6 +453,8 @@ export default {
             
           
           },
+
+          
         
     }
 }

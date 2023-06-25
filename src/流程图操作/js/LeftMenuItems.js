@@ -1,4 +1,5 @@
 // 节点样式创建 以及拖动效果绑定
+let tabIndex=0
 const LeftMenus = (function () {
     function LeftMenus(_a) {
         var _this = this;
@@ -6,6 +7,7 @@ const LeftMenus = (function () {
         this.lf = lf;
         this.lf.setPatternItems = function (shapeList) {
             _this.setPatternItems(shapeList);
+
         };
     }
     LeftMenus.prototype.render = function (lf, domContainer) {
@@ -19,7 +21,7 @@ const LeftMenus = (function () {
         }
         //遍历列表，依次创建每个节点
         this.shapeList.forEach(function (shapeItem) {
-            document.getElementById(shapeItem.name).appendChild(_this.createDndItem(shapeItem));
+            document.getElementById(shapeItem.name+tabIndex).appendChild(_this.createDndItem(shapeItem));
         });
 
 
@@ -30,7 +32,8 @@ const LeftMenus = (function () {
             this.domContainer.removeChild(this.elmenu);
         }
     };
-    LeftMenus.prototype.setPatternItems = function (shapeList) {
+    LeftMenus.prototype.setPatternItems = function (shapeList,tab_index) {
+        tabIndex=tab_index
         this.shapeList = shapeList;
         // 支持渲染后重新设置拖拽面板
         if (this.domContainer) {
@@ -70,7 +73,7 @@ const LeftMenus = (function () {
                 shapeItem.callback(_this.lf, _this.domContainer);
             }
             //设置拖动开始时也显示帮助信息
-            window.parent.postMessage({nodeHelpMsg : shapeItem.properties.helpMsg});
+            //console.log(shapeItem.properties);
         };
         return el;
     };
