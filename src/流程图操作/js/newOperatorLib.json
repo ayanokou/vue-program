@@ -134,22 +134,22 @@
           {
             "modelName": "轮廓比对",
             "helpMsg": "it is a help message of GlobalVariable",
-            "dllPath": "server/src/main/resources/General.dll/MatchContourShape.dll",
+            "dllPath": "server/src/main/resources/MatchContourShape.dll",
             "modelID": "contourMatch",
             "inPara": [
               {
-                "varName": "standard image filename",
-                "varType": "object",
+                "varName": "standard image",
+                "varType": "Mat",
                 "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
-                "varExplanation": ""
+                "defineVarInputWay": "smartInputWay",
+                "varExplanation": "标准图片"
               },
               {
-                "varName": "detect image filename",
-                "varType": "object",
+                "varName": "detect image",
+                "varType": "Mat",
                 "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
-                "varExplanation": ""
+                "defineVarInputWay": "smartInputWay",
+                "varExplanation": "待检测图片"
               },
               {
                 "varName": "threshold",
@@ -162,7 +162,7 @@
             "outPara": [
               {
                 "varName": "dst",
-                "varType": "object",
+                "varType": "vector<RotatedRect>",
                 "varExplanation": ""
               }
             ]
@@ -1755,7 +1755,7 @@
             "outPara": [
               {
                 "varName": "dst",
-                "varType": "Mat",
+                "varType": "vector<double>",
                 "varExplanation": ""
               }
             ]
