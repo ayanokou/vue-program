@@ -11,7 +11,7 @@ import com.corundumstudio.socketio.listener.*;
 import java.io.IOException;
 import java.net.UnknownHostException;
 
-//import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSONObject;
 import com.corundumstudio.socketio.*;
 
 @SpringBootApplication
@@ -38,7 +38,7 @@ public class DemoApplication {
 		System.loadLibrary("bilateralFilter");
 		System.loadLibrary("fitLine");
 		System.loadLibrary("fitEllipse");
-		//System.loadLibrary("detectField");
+		// System.loadLibrary("detectField");
 		System.loadLibrary("getPosition");
 		System.loadLibrary("shadowcorrection");
 		System.loadLibrary("scratchDetection");
@@ -57,6 +57,12 @@ public class DemoApplication {
 
 	public boolean checkRunning(int port) {
 		return flags.get(port);
+	}
+
+	private interface HelperFn {
+		void redirect(ChatObject data) throws IOException;
+
+		int getOperationNumber(String op);
 	}
 
 	public static void main(String[] args) throws UnknownHostException, IOException {
@@ -91,10 +97,66 @@ public class DemoApplication {
 			}
 		};
 
-//		MessageHandlerSender sender = new MessageHandlerSender(IP, PORT);
-//		sender.tryConnect();
-//		MessageHandlerReceiver receiver = new MessageHandlerReceiver(sender.getSocket(), listenerForCpp);
-//		receiver.start();
+		MessageHandlerSender sender = new MessageHandlerSender(IP, PORT);
+		// sender.tryConnect();
+		MessageHandlerReceiver receiver = new MessageHandlerReceiver(sender.getSocket(), listenerForCpp);
+		// receiver.start();
+
+		HelperFn helperFn = new HelperFn() {
+			@Override
+			public void redirect(ChatObject data) throws IOException {
+				int op = getOperationNumber(data.getUserName());
+				if (op == -1) {
+					System.out.println("Invalid operation type");
+					return;
+				}
+				String result = data.getMessage();
+				JSONObject jsonObject = JSONObject.parseObject(result);
+				jsonObject.put("operation", op);
+				result = jsonObject.toJSONString();
+				System.out.println(result);
+				sender.sendToMessageHandler(result);
+			}
+
+			@Override
+			public int getOperationNumber(String op) {
+				/*
+				 * enum class OperationType {
+				 * AddTcpListener = 0,
+				 * RemoveTcpListener = 1,
+				 * SendTcpMessageFromListener = 2,
+				 * AddTcpConnector = 3,
+				 * RemoveTcpConnector = 4,
+				 * SendTcpMessageFromConnector = 5,
+				 * AddUdpListener = 6,
+				 * RemoveUdpListener = 7,
+				 * SendUdpMessage = 8,
+				 * };
+				 */
+				switch (op) {
+					case "AddTcpListener":
+						return 0;
+					case "RemoveTcpListener":
+						return 1;
+					case "SendTcpMessageFromListener":
+						return 2;
+					case "AddTcpConnector":
+						return 3;
+					case "RemoveTcpConnector":
+						return 4;
+					case "SendTcpMessageFromConnector":
+						return 5;
+					case "AddUdpListener":
+						return 6;
+					case "RemoveUdpListener":
+						return 7;
+					case "SendUdpMessage":
+						return 8;
+					default:
+						return -1;
+				}
+			}
+		};
 
 		server.addEventListener("chatevent", ChatObject.class, new DataListener<ChatObject>() {
 			@Override
@@ -119,17 +181,9 @@ public class DemoApplication {
 					String result = data.getMessage();
 					System.out.println(result);
 					clientForCpp.eventHandle(listenerForCpp, 4, result);
+				} else {
+					helperFn.redirect(data);
 				}
-//				else if (data.getUserName().equals("AddTcpListener")) {
-//					String result = data.getMessage();
-//					JSONObject jsonObject = JSONObject.parseObject(result);
-//					jsonObject.put("operation", 0);
-//					result = jsonObject.toJSONString();
-//					System.out.println(result);
-//					sender.sendToMessageHandler(result);
-//				}
-
-
 			}
 		});
 		server.start();
@@ -137,5 +191,3 @@ public class DemoApplication {
 	}
 
 }
-
-

@@ -194,21 +194,38 @@ export default {
         },
 
         createAnDevice(){
-            if(this.selectedOption === "TCP客户端"){
-                this.demoSelectedTCP = true;
-                let msg = JSON.stringify({IP:this.ip, port: parseInt(this.portNumber)})
-                console.log(msg)
-                let jsonObject = {
-                    userName: 'AddTcpListener',
-                    message: msg
+            const getOperationName = name => {
+                switch(name){
+                    case 'TCP客户端':
+                        return 'AddTcpConnector'
+                    case 'TCP服务端':
+                        return 'AddTcpListener'
+                    case 'UDP':
+                        return 'AddUdpListener'
+                    default:
+                        return undefined
                 }
-                let payload={
-                    trigger:true,
-                    mode:"chatevent",
-                    data:jsonObject
-                }
-                this.$store.commit("setSocketEmit",payload)
             }
+            const operationName = getOperationName(this.selectedOption)
+            if(operationName === undefined){
+                this.$message.error('请选择通信方式')
+                return
+            }
+            this.demoSelectedTCP = true;
+
+            let payload = {
+              trigger: true,
+              mode: "chatevent",
+              data: {
+                userName: operationName,
+                message: {
+                  data: { IP: this.ip, port: parseInt(this.portNumber) },
+                },
+              },
+            };
+
+            this.$store.commit("setSocketEmit", payload);
+
             this.subCommunicationManagementVisible = false;
         },
 
