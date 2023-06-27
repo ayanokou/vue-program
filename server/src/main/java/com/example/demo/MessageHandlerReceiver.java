@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import com.alibaba.fastjson.JSONObject;
 
 public class MessageHandlerReceiver implements Runnable {
     private Socket socket;
@@ -27,12 +28,15 @@ public class MessageHandlerReceiver implements Runnable {
                 int startIndex = msg.indexOf("<MSG>");
                 int endIndex = msg.indexOf("</MSG>");
 
-                // <MSG>{"protocol": /* protocol */, "IP": /* IP */, "port": /* port */, "data":
-                // /* data */}</MSG>
+                // <MSG>{"eventName": /* eventName */ "data":{} }</MSG>
                 while (startIndex != -1 && endIndex != -1 && startIndex < endIndex) {
                     String message = msg.substring(startIndex + 5, endIndex);
-
-                    listener.onMessage("ReceivedTcpData", message);
+                    JSONObject jsonObject = JSONObject.parseObject(message);
+                    String evtName=jsonObject.getString("eventName");
+                    String data=jsonObject.getJSONObject("data").toJSONString();
+                    System.out.println(evtName);
+                    System.out.println(data);
+                    listener.onMessage(evtName, "");
 
                     msg = msg.substring(endIndex + 6);
                     startIndex = msg.indexOf("<MSG>");

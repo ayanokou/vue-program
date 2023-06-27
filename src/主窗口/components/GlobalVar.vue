@@ -100,12 +100,11 @@ export default {
         },
         saveAllVars() {
             let jsonObject = {
-                userName: 'SaveGlobalVar',
                 message: JSON.stringify(this.tableData)
             }
             let payload={
                 trigger:true,
-                mode:"chatevent",
+                mode:"SaveGlobalVar",
                 data:jsonObject
             }
             this.$store.commit("setSocketEmit",payload)
