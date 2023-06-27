@@ -1741,21 +1741,21 @@
           {
             "modelNname": "亮度测量",
             "helpMsg": "it is a help message of GlobalVariable",
-            "dllPath": "server/src/main/resources/General.dll/BrightnessMeasurement.dll",
+            "dllPath": "server/src/main/resources/BrightnessMeasurement.dll",
             "modelID": "brightnessMeasurement",
             "inPara": [
               {
                 "varName": "measured picture",
-                "varType": "object",
+                "varType": "Mat",
                 "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
+                "defineVarInputWay": "smartInputWay",
                 "varExplanation": ""
               }
             ],
             "outPara": [
               {
                 "varName": "dst",
-                "varType": "object",
+                "varType": "Mat",
                 "varExplanation": ""
               }
             ]
@@ -1766,7 +1766,7 @@
     {
       "lfProperties": {
         "name": "直方图统计",
-        "type": "noEdgeModel",
+        "type": "operator",
         "text": "直方图统计",
         "label": "直方图统计"
       },
@@ -1779,13 +1779,13 @@
             "modelName": "直方图统计",
             "helpMsg": "it is a help message of GlobalVariable",
             "dllPath": "server/src/main/resources/general.dll",
-            "modelID": "hist_stat",
+            "modelID": "hist_statistics",
             "inPara": [
               {
                 "varName": "src",
-                "varType": "object",
+                "varType": "Mat",
                 "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
+                "defineVarInputWay": "smartInputWay",
                 "varExplanation": ""
               },
               {

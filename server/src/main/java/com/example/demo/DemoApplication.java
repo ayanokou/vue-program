@@ -11,7 +11,7 @@ import com.corundumstudio.socketio.listener.*;
 import java.io.IOException;
 import java.net.UnknownHostException;
 
-import com.alibaba.fastjson.JSONObject;
+//import com.alibaba.fastjson.JSONObject;
 import com.corundumstudio.socketio.*;
 
 @SpringBootApplication
@@ -59,26 +59,9 @@ public class DemoApplication {
 		return flags.get(port);
 	}
 
-	public static void addDataListener(String event, int operation,SocketIOServer server, FCListener listenerForCpp, MessageHandlerSender sender) {
-		server.addEventListener(event, ChatObject.class, new DataListener<ChatObject>() {
-			@Override
-			public void onData(SocketIOClient socketIOClient, ChatObject chatObject, AckRequest ackRequest) throws Exception {
-				if (listenerForCpp.getClient() == null) {
-					listenerForCpp.setClient(socketIOClient);
-				}
-
-				String result = chatObject.getMessage();
-				JSONObject jsonObject = JSONObject.parseObject(result);
-				jsonObject.put("operation", operation);
-				result = jsonObject.toJSONString();
-				System.out.println(result);
-				sender.sendToMessageHandler(result);
-			}
-		});
-	}
 	public static void main(String[] args) throws UnknownHostException, IOException {
 		com.corundumstudio.socketio.Configuration config = new Configuration();
-		config.setMaxFramePayloadLength(5 * 1024 * 1024 * 1024);
+		config.setMaxFramePayloadLength(5 * 1024 * 1024);
 		config.setHostname("localhost");
 		config.setPort(9092);
 
@@ -108,14 +91,47 @@ public class DemoApplication {
 			}
 		};
 
-		MessageHandlerSender sender = new MessageHandlerSender(IP, PORT);
-		sender.tryConnect();
-		MessageHandlerReceiver receiver = new MessageHandlerReceiver(sender.getSocket(), listenerForCpp);
-		receiver.start();
+//		MessageHandlerSender sender = new MessageHandlerSender(IP, PORT);
+//		sender.tryConnect();
+//		MessageHandlerReceiver receiver = new MessageHandlerReceiver(sender.getSocket(), listenerForCpp);
+//		receiver.start();
 
-		addDataListener("RunFlow", 9, server, listenerForCpp, sender);
-		addDataListener("RunSolution", 10, server, listenerForCpp, sender);
-		addDataListener("SaveGlobalVar", 11, server, listenerForCpp, sender);
+		server.addEventListener("chatevent", ChatObject.class, new DataListener<ChatObject>() {
+			@Override
+			public void onData(SocketIOClient client, ChatObject data, AckRequest ackRequest) throws IOException {
+				if (listenerForCpp.getClient() == null) {
+					listenerForCpp.setClient(client);
+				}
+				if (data.getUserName().equals("Flow")) {
+					// 创建与cpp通讯类
+					// 接听类
+					String result = data.getMessage();
+					// 发送dll数据
+					clientForCpp.eventHandle(listenerForCpp, 0, result);
+				} else if (data.getUserName().equals("Solution")) {
+					String result = data.getMessage();
+					clientForCpp.eventHandle(listenerForCpp, 1, result);
+				} else if (data.getUserName().equals("SaveGlobalVar")) {
+					String result = data.getMessage();
+					System.out.println(result);
+					clientForCpp.eventHandle(listenerForCpp, 4, result);
+				} else if (data.getUserName().equals("....")) {
+					String result = data.getMessage();
+					System.out.println(result);
+					clientForCpp.eventHandle(listenerForCpp, 4, result);
+				}
+//				else if (data.getUserName().equals("AddTcpListener")) {
+//					String result = data.getMessage();
+//					JSONObject jsonObject = JSONObject.parseObject(result);
+//					jsonObject.put("operation", 0);
+//					result = jsonObject.toJSONString();
+//					System.out.println(result);
+//					sender.sendToMessageHandler(result);
+//				}
+
+
+			}
+		});
 		server.start();
 		SpringApplication.run(DemoApplication.class, args);
 	}
