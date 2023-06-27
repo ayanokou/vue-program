@@ -147,9 +147,15 @@ export default {
             this.$store.commit('timeConsumeEvent', data);
         })
 
-        socket.on('ReceivedTcpData', data =>{
-            console.log(`ReceivedTcpData: ${data}`)
-        })
+        socket.on("TcpConnectorReceivedData", (data) =>
+          console.log(`TcpConnectorReceivedData: ${data}`)
+        );
+        socket.on("TcpListenerReceivedData", (data) =>
+          console.log(`TcpListenerReceivedData: ${data}`)
+        );
+        socket.on("UdpListenerReceivedData", (data) =>
+          console.log(`UdpListenerReceivedData: ${data}`)
+        );
         // socket.on('revRects',(data)=>{
         //     this.$store.commit('setModuleResultData', data);
         // })
