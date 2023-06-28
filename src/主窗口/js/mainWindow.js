@@ -6,6 +6,7 @@ import LayoutOne from "@/主窗口/components/layout/LayoutOne.vue";
 import LayoutTwo from "@/主窗口/components/layout/LayoutTwo.vue";
 import LayoutThree from "@/主窗口/components/layout/LayoutThree.vue";
 import GlobalVar from "../components/GlobalVar.vue";
+import NetworkManager from "../components/NetworkManager.vue";
 import { computed } from "vue";
 import { mapState } from "vuex";
 import axiosInstance from "../../axios"
@@ -15,7 +16,8 @@ let socket = io.connect('http://localhost:9092')
 
 export default {
     components:{
-        GlobalVar
+        GlobalVar,
+        NetworkManager
     },
     data() {
         return {
@@ -37,6 +39,7 @@ export default {
           //是否显示通信管理窗口
           communicationManagementVisible: false,
           subCommunicationManagementVisible: false,
+          testFlag: false,
           activeIcon: "deviceManagement",
           selectedGroup: "接收数据",
           group1Input: "", //通信管理-设备管理接收数据
@@ -180,7 +183,9 @@ export default {
 
     },
     methods: {
-
+        openTest(){
+            this.testFlag = true
+        },
         selectGroup(group) {
             this.selectedGroup = group;
             
