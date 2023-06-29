@@ -163,8 +163,9 @@ export default {
         socketEmit(newValue){
             if(newValue.trigger){
                 //
-                console.log('running...')
-                socket.emit(newValue.mode, newValue.data);
+                socket.emit(newValue.mode, {
+                    message:JSON.stringify({data:newValue.data})
+                });
                 //
                 this.$store.commit("setSocketEmit",{
                     trigger:false
@@ -181,14 +182,10 @@ export default {
         },
 
         sendTCPData(){
-            let jsonObject = {
-                userName: 'TCP',                
-                message: JSON.stringify({ip:this.ip, port: this.portNumber, data:this.group2Output})
-            }
             let payload={
                 trigger:true,
-                mode:"chatevent",
-                data:jsonObject
+                mode:"TCP",
+                data:{ip:this.ip, port: this.portNumber, data:this.group2Output}
             }
             this.$store.commit("setSocketEmit",payload)
         },
@@ -196,15 +193,11 @@ export default {
         createAnDevice(){
             if(this.selectedOption === "TCP客户端"){
                 this.demoSelectedTCP = true;
-                let msg = JSON.stringify({IP:this.ip, port: parseInt(this.portNumber)})
-                console.log(msg)
-                let jsonObject = {
-                    message: msg
-                }
+
                 let payload={
                     trigger:true,
                     mode:"AddTcpListener",
-                    data:jsonObject
+                    data:{IP:this.ip, port: parseInt(this.portNumber)}
                 }
                 this.$store.commit("setSocketEmit",payload)
             }
