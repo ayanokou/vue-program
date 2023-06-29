@@ -115,6 +115,7 @@ export default {
             currentTableData: computed(() => this.currentTableData),
             historyTableData: computed(() => this.historyTableData),
             helpInfo: computed(() => this.helpInfo),
+            socket: computed(() => socket),
         }
     },
 

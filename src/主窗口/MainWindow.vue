@@ -66,7 +66,7 @@
         <el-button @click="createAnDevice">创建</el-button>
     </template>
     </el-dialog>
-    <el-dialog
+    <div style="display: none"><el-dialog
         title="通信管理"
         v-model="communicationManagementVisible"
         :close-on-click-modal="false"
@@ -205,7 +205,7 @@
                     </div>
                 </el-col>
             </el-row>
-    </el-dialog>
+    </el-dialog></div>
     <NetworkManager v-model="testFlag" />
     <div class="common-layout">
         <img
@@ -370,16 +370,16 @@
                                 >日志</span
                             ></el-menu-item
                         >
-                        <el-menu-item
+                        <!-- <el-menu-item
                             id="manageCommunication"
                             @click="manageCommunication"
                             ><span style="color: aliceblue"
                                 >通信管理</span
                             ></el-menu-item
-                        >
+                        > -->
                         <el-menu-item id="test" @click="openTest"
                             ><span style="color: aliceblue"
-                                >测试</span
+                                >通信管理</span
                             ></el-menu-item>
                         <el-menu-item id="manageController"
                             ><span style="color: aliceblue"

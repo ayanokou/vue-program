@@ -54,7 +54,7 @@
                     </el-col>
                     <el-col :span="14">
                       <el-form-item label="协议类型">
-                        <el-select v-model="deviceToCreate.protocol">
+                        <el-select v-model="deviceToCreate.type">
                           <el-option
                             label="TCP服务端"
                             value="TcpListener"
@@ -74,9 +74,9 @@
 
                   <template
                     v-if="
-                      deviceToCreate.protocol === 'TcpListener' ||
-                      deviceToCreate.protocol === 'TcpConnector' ||
-                      deviceToCreate.protocol === 'UdpListener'
+                      deviceToCreate.type === 'TcpListener' ||
+                      deviceToCreate.type === 'TcpConnector' ||
+                      deviceToCreate.type === 'UdpListener'
                     "
                   >
                     <el-row :gutter="20">
@@ -116,7 +116,7 @@
                     </el-row>
                     <div style="display: flex; justify-content: end">
                       <el-form-item>
-                        <el-button type="primary" @click="onSubmit"
+                        <el-button type="primary" @click="onCreateDevice"
                           >创建</el-button
                         >
                       </el-form-item>
@@ -217,7 +217,7 @@
                             readonly
                             resize="none"
                             placeholder="..."
-                            v-model="devices[currentActiveItem].receiveData"
+                            v-model="devices[currentActiveItem].receivedData"
                             style="height: 100%"
                           ></el-input>
                         </el-form-item>
@@ -230,7 +230,7 @@
                             type="textarea"
                             :rows="5"
                             placeholder="请输入内容"
-                            v-model="devices[currentActiveItem].sendData"
+                            v-model="devices[currentActiveItem].dataToSend"
                             resize="none"
                             style="height: 100%"
                           ></el-input>
@@ -301,6 +301,7 @@ export default {
       devices: [],
     };
   },
+  inject: ['socket'],
   mounted() {
     for (let i = 0; i < 100; i++) {
       this.devices.push({
@@ -316,8 +317,14 @@ export default {
     console.log(this.devices);
   },
   methods: {
-    onSubmit() {
+    onCreateDevice() {
+      this.deviceToCreate.receivedData = "";
+      this.deviceToCreate.dataToSend = "";
       console.log(this.deviceToCreate);
+      this.devices.push(this.deviceToCreate);
+
+      const operation = `Add${this.deviceToCreate.type}`;
+      this.socket.emit(operation, this.deviceToCreate);
     },
   },
 };
