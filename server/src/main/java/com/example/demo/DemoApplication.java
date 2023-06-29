@@ -137,6 +137,7 @@ public class DemoApplication {
 		operationMap.put("RunFlow",9);
 		operationMap.put("RunSolution",10);
 		operationMap.put("SaveGlobalVar",11);
+		operationMap.put("CameraOperation",12);
 
 		for (String key : operationMap.keySet()) {
 			Integer value = operationMap.get(key);
