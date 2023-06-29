@@ -160,6 +160,10 @@ export default {
         socket.on("UdpListenerReceivedData", (data) =>
           console.log(`UdpListenerReceivedData: ${data}`)
         );
+
+        socket.on("revFlowResults",data=>{
+            console.log("revFlowResults")
+        })
         // socket.on('revRects',(data)=>{
         //     this.$store.commit('setModuleResultData', data);
         // })
@@ -174,7 +178,7 @@ export default {
             if(newValue.trigger){
                 
                 socket.emit(newValue.mode, {
-                    message:JSON.stringify({data:newValue.data})
+                    message:JSON.stringify(newValue.data)
                 });
                 
                 this.$store.commit("setSocketEmit",{

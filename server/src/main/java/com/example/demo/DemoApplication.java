@@ -96,9 +96,9 @@ public class DemoApplication {
 		};
 
 		MessageHandlerSender sender = new MessageHandlerSender(IP, PORT);
-		// sender.tryConnect();
+		sender.tryConnect();
 		MessageHandlerReceiver receiver = new MessageHandlerReceiver(sender.getSocket(), listenerForCpp);
-		// receiver.start();
+		receiver.start();
 		Register reg = (String event, int operation) -> {
 			server.addEventListener(event, ChatObject.class, new DataListener<ChatObject>() {
 				@Override
@@ -138,6 +138,7 @@ public class DemoApplication {
 			Integer value = operationMap.get(key);
 			reg.register(key, value);
 		}
+
 
 		server.start();
 		SpringApplication.run(DemoApplication.class, args);
