@@ -24,6 +24,8 @@ import { MiniMap } from './MiniMap.js'
 import { eventHandle, events } from "../../sys/eventResponseController";
 import { ElNotification } from 'element-plus'
 import Branch from "../components/dialog/Branch.vue";
+import Condition from "../components/dialog/Condition.vue";
+
 
 LogicFlow.use(SelectionSelect);
 LogicFlow.use(Menu);
@@ -276,7 +278,7 @@ export default {
     props: ['tab'],
     expose: ['lfData'],
     components: {
-        Branch
+        Branch,Condition
     },
     data() {
         return {
@@ -304,7 +306,11 @@ export default {
             modelName:"",//模型名称
             operatorData:{},//拖拽节点的原始properties数据
             dialogBranch:false,
-            branchData:[]
+            branchData:[],
+            dialogCondition:false,
+            conditionData:[],
+            conditionIntExpr:undefined,
+            conditionDoubleExpr:undefined
           }
     },
     computed: {
@@ -423,6 +429,7 @@ export default {
             this.$store.commit('setVuexHelpInfo', this.nodeModel.getProperties().helpMsg)
 
             this.dialogBranch=false
+            this.dialogCondition=false
             this.dialogVisible = true
             //是否补充其他组件
             if(evt.data.properties.name=="分支模块"){
@@ -446,6 +453,10 @@ export default {
                     data[idx].valueId=payload[idx].valueId
                 }
                 this.branchData=data
+            }else if(evt.data.properties.name=="条件检测"){
+                this.dialogCondition=true
+                
+                this.conditionIntExpr=this.getIncomingData(evt.data.id,'int')
             }
                 
             let e = document.getElementsByClassName('el-overlay-dialog')[0].parentNode
@@ -488,62 +499,14 @@ export default {
         })
         //限制节点出边的数量 限制数目定义在每个节点的类里面 使用变量current_edge和limit_dege
         this.lf.on('edge:add', (evt) => {
-            // //获取边
-            // let sourceNodeId = evt.data.sourceNodeId
-            // let sourceNode = this.lf.getNodeModelById(sourceNodeId)
-            // sourceNode.current_edge += 1
-            // if(target_node_model.getProperties().name=="图像滤波"){
-            //     target_node_model.setProperties({
-            //         inPara:this.findInPara(1)
-            //     })
-            // }
-            // let sourceNodeId=evt.data.sourceNodeId
-            // let sourceNodeModel=this.lf.getNodeModelById(sourceNodeId)
-            // if(sourceNodeModel instanceof SuanziModel){console.log('suanziModel')}
-            // if(sourceNodeModel.getProperties().name=="分支模块"){
-            //     let targetNodeId=evt.data.targetNodeId
-            //     let data=sourceNodeModel.getPayload()
-            //     data.push({
-            //         "model":"模块ID:"+targetNodeId,
-            //         "id":-1
-            //     })
-            //     //sourceNodeModel.setProperties({data:data});
-            // }
+
 
         })
         this.lf.on('edge:delete', (evt) => {
-            console.log('edge:delete')
-            //let sourceNodeId=evt.properties.sourceNodeId
-            //let sourceNodeModel=this.lf.getNodeModelById(sourceNodeId)
-            // if(sourceNodeModel.getProperties().name=="分支模块"){
-            //     let targetNodeId=evt.properties.targetNodeId
-            //     let data=sourceNodeModel.getPayload()
-            //     let data1=data.filter(item=>item.model!="模块ID"+targetNodeId)
-            //     console.log(data1.length)
-            // }
-            //let sourceNodeId=evt.properties.sourceNodeId
-            //let sourceNodeModel=this.lf.getNodeModelById(sourceNodeId)
-            //alert(sourceNodeId)
-            // if(sourceNodeModel.getProperties().name=="分支模块"){
-            //     alert(1)
-            //     let targetNodeId=evt.properties.targetNodeId
-            //     let data=sourceNodeModel.getProperties().data
-            //     data=data.filter(item=>item.model!="模块ID"+targetNodeId)
-            //     console.log(data)
-            //     sourceNodeModel.setProperties({
-            //         data:data
-            //     })
-            // }
+
         })
 
-        // window.onresize = () => {
-        //     this.initHeight = window.innerHeight-150
-        //     console.log(this.initHeight)
-        //     document.querySelector("#"+this.tab.title).firstElementChild.style.height=""+this.initHeight+"px"
-        //     this.lf.render(this.lf.getGraphData())
-        //     const position = this.lf.getPointByClient(document.documentElement.clientWidth - 150, document.documentElement.clientHeight - 230)
-        //     this.lf.extension.miniMap.show(position.domOverlayPosition.x, position.domOverlayPosition.y)
-        // }
+
     },
     methods: {
         init() {
@@ -779,19 +742,11 @@ export default {
             this.lf = lf
 
         },
-        // run(){
-        //     let jsonObject = {
-        //         userName: 'Flow',
-        //         message: JSON.stringify(this.lf.getGraphData())
-        //     }
-        //     let payload={
-        //         trigger:true,
-        //         mode:"chatevent",
-        //         data:jsonObject
-        //     }
-        //     this.isRan = true;
-        //     this.$store.commit("setSocketEmit",payload)
-        // },
+        getIncomingData(id,type){
+            let ans=[]
+            
+        },
+
         findInPara(id) {
             console.log('in findInPara')
             let set=new Set()

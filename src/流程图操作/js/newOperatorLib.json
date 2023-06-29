@@ -2698,6 +2698,17 @@
             "dllPath": "",
             "modelID": "",
             "inPara": [
+              {
+                "varName": "int",
+                "varType": "string",
+                "fromExpression": "",
+                "defineVarInputWay": "selectedInputWay",
+                "comboList":{
+                  "全部":"and",
+                  "任意":"or"
+                },
+                "varExplanation": ""
+              }
             ],
             "outPara": [
             ]

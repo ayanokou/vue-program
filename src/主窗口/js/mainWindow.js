@@ -182,7 +182,7 @@ export default {
 
         sendTCPData(){
             let jsonObject = {
-                userName: 'TCP',
+                userName: 'TCP',                
                 message: JSON.stringify({ip:this.ip, port: this.portNumber, data:this.group2Output})
             }
             let payload={
@@ -199,12 +199,11 @@ export default {
                 let msg = JSON.stringify({IP:this.ip, port: parseInt(this.portNumber)})
                 console.log(msg)
                 let jsonObject = {
-                    userName: 'AddTcpListener',
                     message: msg
                 }
                 let payload={
                     trigger:true,
-                    mode:"chatevent",
+                    mode:"AddTcpListener",
                     data:jsonObject
                 }
                 this.$store.commit("setSocketEmit",payload)
