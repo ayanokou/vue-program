@@ -38,7 +38,7 @@ public class DemoApplication {
 		System.loadLibrary("bilateralFilter");
 		System.loadLibrary("fitLine");
 		System.loadLibrary("fitEllipse");
-		//System.loadLibrary("detectField");
+		// System.loadLibrary("detectField");
 		System.loadLibrary("getPosition");
 		System.loadLibrary("shadowcorrection");
 		System.loadLibrary("scratchDetection");
@@ -58,12 +58,10 @@ public class DemoApplication {
 	public boolean checkRunning(int port) {
 		return flags.get(port);
 	}
-	private interface HelperFn {
-		void redirect(String event, int operation) throws IOException;
 
+	private interface Register {
+		void register(String event, int operation) throws IOException;
 	}
-
-
 
 	public static void main(String[] args) throws UnknownHostException, IOException {
 		com.corundumstudio.socketio.Configuration config = new Configuration();
@@ -98,49 +96,47 @@ public class DemoApplication {
 		};
 
 		MessageHandlerSender sender = new MessageHandlerSender(IP, PORT);
-		sender.tryConnect();
+		// sender.tryConnect();
 		MessageHandlerReceiver receiver = new MessageHandlerReceiver(sender.getSocket(), listenerForCpp);
-		receiver.start();
-		HelperFn helperFn = new HelperFn() {
-			@Override
-
-			public void redirect(String event, int operation) throws IOException {
-				server.addEventListener(event, ChatObject.class, new DataListener<ChatObject>() {
-					@Override
-					public void onData(SocketIOClient socketIOClient, ChatObject chatObject, AckRequest ackRequest) throws Exception {
-						if (listenerForCpp.getClient() == null) {
-							listenerForCpp.setClient(socketIOClient);
-						}
-
-						String result = chatObject.getMessage();
-						JSONObject jsonObject = JSONObject.parseObject(result);
-						jsonObject.put("operation", operation);
-						result = jsonObject.toJSONString();
-						System.out.println(result);
-						sender.sendToMessageHandler(result);
+		// receiver.start();
+		Register reg = (String event, int operation) -> {
+			server.addEventListener(event, ChatObject.class, new DataListener<ChatObject>() {
+				@Override
+				public void onData(SocketIOClient socketIOClient, ChatObject chatObject, AckRequest ackRequest)
+						throws Exception {
+					if (listenerForCpp.getClient() == null) {
+						listenerForCpp.setClient(socketIOClient);
 					}
-				});
-			}
 
-
+					String result = chatObject.getMessage();
+					JSONObject jsonObject = new JSONObject();
+					JSONObject data = JSONObject.parseObject(result);
+					jsonObject.put("operation", operation);
+					jsonObject.put("data", data);
+					result = jsonObject.toJSONString();
+					System.out.println(result);
+					sender.sendToMessageHandler(result);
+				}
+			});
 		};
-		HashMap<String,Integer> operationMap=new HashMap<String, Integer>();
-		operationMap.put("AddTcpListener",0);
-		operationMap.put("RemoveTcpListener",1);
-		operationMap.put("SendTcpMessageFromListener",2);
-		operationMap.put("AddTcpConnector",3);
-		operationMap.put("RemoveTcpConnector",4);
-		operationMap.put("SendTcpMessageFromConnector",5);
-		operationMap.put("AddUdpListener",6);
-		operationMap.put("RemoveUdpListener",7);
-		operationMap.put("SendUdpMessage",8);
-		operationMap.put("RunFlow",9);
-		operationMap.put("RunSolution",10);
-		operationMap.put("SaveGlobalVar",11);
+
+		HashMap<String, Integer> operationMap = new HashMap<String, Integer>();
+		operationMap.put("AddTcpListener", 0);
+		operationMap.put("RemoveTcpListener", 1);
+		operationMap.put("SendTcpMessageFromListener", 2);
+		operationMap.put("AddTcpConnector", 3);
+		operationMap.put("RemoveTcpConnector", 4);
+		operationMap.put("SendTcpMessageFromConnector", 5);
+		operationMap.put("AddUdpListener", 6);
+		operationMap.put("RemoveUdpListener", 7);
+		operationMap.put("SendUdpMessage", 8);
+		operationMap.put("RunFlow", 9);
+		operationMap.put("RunSolution", 10);
+		operationMap.put("SaveGlobalVar", 11);
 
 		for (String key : operationMap.keySet()) {
 			Integer value = operationMap.get(key);
-			helperFn.redirect(key,value);
+			reg.register(key, value);
 		}
 
 		server.start();
@@ -148,5 +144,3 @@ public class DemoApplication {
 	}
 
 }
-
-
