@@ -28,8 +28,10 @@ public class MessageHandlerSender {
     }
 
     public void sendToMessageHandler(String msg) throws IOException {
-        if (socket == null || socket.isClosed())
+        if (socket == null || socket.isClosed()) {
             System.out.println("Socket is null or closed");
+            return;
+        }
         msg = "<MSG>" + msg + "</MSG>";
         socket.getOutputStream().write(msg.getBytes());
     }

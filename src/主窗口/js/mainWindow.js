@@ -6,6 +6,7 @@ import LayoutOne from "@/主窗口/components/layout/LayoutOne.vue";
 import LayoutTwo from "@/主窗口/components/layout/LayoutTwo.vue";
 import LayoutThree from "@/主窗口/components/layout/LayoutThree.vue";
 import GlobalVar from "../components/GlobalVar.vue";
+import NetworkManager from "../components/NetworkManager.vue";
 import { computed } from "vue";
 import { mapState } from "vuex";
 import axiosInstance from "../../axios"
@@ -15,7 +16,8 @@ let socket = io.connect('http://localhost:9092')
 
 export default {
     components:{
-        GlobalVar
+        GlobalVar,
+        NetworkManager
     },
     data() {
         return {
@@ -37,6 +39,7 @@ export default {
           //是否显示通信管理窗口
           communicationManagementVisible: false,
           subCommunicationManagementVisible: false,
+          testFlag: false,
           activeIcon: "deviceManagement",
           selectedGroup: "接收数据",
           group1Input: "", //通信管理-设备管理接收数据
@@ -112,6 +115,7 @@ export default {
             currentTableData: computed(() => this.currentTableData),
             historyTableData: computed(() => this.historyTableData),
             helpInfo: computed(() => this.helpInfo),
+            socket: computed(() => socket),
         }
     },
 
@@ -147,9 +151,15 @@ export default {
             this.$store.commit('timeConsumeEvent', data);
         })
 
-        socket.on('ReceivedTcpData', data =>{
-            console.log(`ReceivedTcpData: ${data}`)
-        })
+        socket.on("TcpConnectorReceivedData", (data) =>
+          console.log(`TcpConnectorReceivedData: ${data}`)
+        );
+        socket.on("TcpListenerReceivedData", (data) =>
+          console.log(`TcpListenerReceivedData: ${data}`)
+        );
+        socket.on("UdpListenerReceivedData", (data) =>
+          console.log(`UdpListenerReceivedData: ${data}`)
+        );
         // socket.on('revRects',(data)=>{
         //     this.$store.commit('setModuleResultData', data);
         // })
@@ -162,11 +172,11 @@ export default {
     watch:{
         socketEmit(newValue){
             if(newValue.trigger){
-                //
+                
                 socket.emit(newValue.mode, {
                     message:JSON.stringify({data:newValue.data})
                 });
-                //
+                
                 this.$store.commit("setSocketEmit",{
                     trigger:false
                 })
@@ -175,7 +185,9 @@ export default {
 
     },
     methods: {
-
+        openTest(){
+            this.testFlag = true
+        },
         selectGroup(group) {
             this.selectedGroup = group;
             
@@ -191,16 +203,33 @@ export default {
         },
 
         createAnDevice(){
-            if(this.selectedOption === "TCP客户端"){
-                this.demoSelectedTCP = true;
-
-                let payload={
-                    trigger:true,
-                    mode:"AddTcpListener",
-                    data:{IP:this.ip, port: parseInt(this.portNumber)}
+            const getOperationName = name => {
+                switch(name){
+                    case 'TCP客户端':
+                        return 'AddTcpConnector'
+                    case 'TCP服务端':
+                        return 'AddTcpListener'
+                    case 'UDP':
+                        return 'AddUdpListener'
+                    default:
+                        return undefined
                 }
-                this.$store.commit("setSocketEmit",payload)
             }
+            const operationName = getOperationName(this.selectedOption)
+            if(operationName === undefined){
+                this.$message.error('请选择通信方式')
+                return
+            }
+            this.demoSelectedTCP = true;
+
+            let payload = {
+              trigger: true,
+              mode: operationName,
+              data: { IP: this.ip, port: parseInt(this.portNumber) }               
+            };
+
+            this.$store.commit("setSocketEmit", payload);
+
             this.subCommunicationManagementVisible = false;
         },
 
