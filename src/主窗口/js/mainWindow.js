@@ -10,6 +10,10 @@ import { computed } from "vue";
 import { mapState } from "vuex";
 import axiosInstance from "../../axios"
 
+import { ref } from 'vue'
+
+
+
 //初始化socketio用于前后端传输
 let socket = io.connect('http://localhost:9092')
 
@@ -19,6 +23,11 @@ export default {
     },
     data() {
         return {
+            value1:true,
+            value2:true,
+            value3:true,
+            value4:true,
+            radio1:'1',
           selectedOption: "", // 用于存储选择的选项值
           selectedOptionContent: "", // 用于存储选项对应的内容
           options: [
@@ -37,6 +46,8 @@ export default {
           //是否显示通信管理窗口
           communicationManagementVisible: false,
           subCommunicationManagementVisible: false,
+          //软件设置窗口
+          softwareSetVisible:false,
           activeIcon: "deviceManagement",
           selectedGroup: "接收数据",
           group1Input: "", //通信管理-设备管理接收数据
@@ -157,7 +168,7 @@ export default {
         
     },
     computed:{
-        ...mapState(['socketEmit','dialogVisibleGlobalVar'])
+        ...mapState(['socketEmit','dialogVisibleGlobalVar',"softwareSet"])
     },
     watch:{
         socketEmit(newValue){
@@ -239,6 +250,10 @@ export default {
         subManageCommunication(){
             this.subCommunicationManagementVisible = true;
         },
+
+        setSoftware() {
+            this.softwareSetVisible=true;
+         },
 
         setActiveIcon(icon){
             this.activeIcon = icon;
@@ -396,10 +411,12 @@ export default {
         },
         sendEvent(event, cont = {trigger:true}){
             this.$store.commit(event, cont)
+            
         },
         exitFunc(){
             this.$router.push('/')
         },
+         
 
         logout(){
             axiosInstance.get('/logout')

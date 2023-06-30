@@ -85,29 +85,7 @@
         </div>
     </el-dialog>
 
-    <el-dialog
-        v-model="softwareSetVisible"
-        :modal="false"
-        :close-on-click-modal="false"
-        :show-close="false"
-        :title="modelName"
-        width="20%"
-        height="30%"
-        draggable
-    >
-        <p>软件设置窗口</p>
-        <div class="scroll-container">
-            <el-radio-group class="dialog-radio">
-                <el-radio
-                    v-for="(item, index) in flowKeys"
-                    :key="index"
-                    :label="item"
-                    @change="importSomeFlow(item)"
-                >
-                </el-radio>
-            </el-radio-group>
-        </div>
-    </el-dialog>
+    
 
     <el-tabs
         v-model="editableTabsValue"
@@ -169,8 +147,6 @@ export default {
             showDeleteConfirmationDialog: false,
             //点击导入流程后弹窗
             importFlowVisible: false,
-            //软件设置窗口
-            softwareSetVisible:false,
             //保存多选框选中的要被删除的解决方案
             selectSolutionsToDelete: [],
             //现有的解决方案
@@ -205,8 +181,7 @@ export default {
             //"open",
             "flowAdd",
             "flowChartOK",
-            "runSolution",
-            "localImg"
+            "runSolution"
         ]),
         solution(){
             let lfs = [];
@@ -393,23 +368,6 @@ export default {
                 
             }
         },
-        softwareSet(newValue){
-            if (newValue.trigger) {
-                this.softwareSetVisible = false;
-                this.flowKeys = [];
-                for (let i = 0; i < localStorage.length; i++) {
-                    let key = localStorage.key(i);
-                    let value = localStorage.getItem(key);
-                    if (key === "debug") continue;
-                    let cont = JSON.parse(value);
-                    if (cont.type === "flow") {
-                        this.flowKeys.push(key);
-                    }
-                }
-                this.importFlowVisible = true;
-                this.$store.commit("softwareSetEvent", {trigger: false});
-            }
-        },
         deleteSolution(newValue) {
             if (newValue.trigger) {
                 this.solutionKeys = [];
@@ -549,9 +507,6 @@ export default {
                 this.$store.commit("flowAddEvent", {trigger: false});
             }
         },
-        localImg(newValue){
-
-        }
     },
 
     methods: {
