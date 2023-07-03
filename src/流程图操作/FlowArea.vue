@@ -199,12 +199,11 @@ export default {
         runSolution(newValue){
             if(newValue.trigger){
                 let jsonObject = {
-                    userName: 'Solution',
-                    message: JSON.stringify(this.solution)
+                    message: JSON.stringify({data:this.solution})
                 }
                 let payload={
                     trigger:true,
-                    mode:"chatevent",
+                    mode:"RunSolution",
                     data:jsonObject
                 }
                 this.$store.commit("setSocketEmit",payload)
@@ -518,12 +517,11 @@ export default {
                 content:this.$refs.lfComponent[index].lfData
             }
             let jsonObject = {
-                userName: 'Flow',
-                message: JSON.stringify(msg)
+                message: JSON.stringify({data:msg})
             }
             let payload={
                 trigger:true,
-                mode:"chatevent",
+                mode:"RunFlow",
                 data:jsonObject
             }
             this.$store.commit("setSocketEmit",payload)

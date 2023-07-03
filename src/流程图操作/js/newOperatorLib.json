@@ -134,22 +134,22 @@
           {
             "modelName": "轮廓比对",
             "helpMsg": "it is a help message of GlobalVariable",
-            "dllPath": "server/src/main/resources/General.dll/MatchContourShape.dll",
+            "dllPath": "server/src/main/resources/MatchContourShape.dll",
             "modelID": "contourMatch",
             "inPara": [
               {
-                "varName": "standard image filename",
-                "varType": "object",
+                "varName": "standard image",
+                "varType": "Mat",
                 "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
-                "varExplanation": ""
+                "defineVarInputWay": "smartInputWay",
+                "varExplanation": "标准图片"
               },
               {
-                "varName": "detect image filename",
-                "varType": "object",
+                "varName": "detect image",
+                "varType": "Mat",
                 "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
-                "varExplanation": ""
+                "defineVarInputWay": "smartInputWay",
+                "varExplanation": "待检测图片"
               },
               {
                 "varName": "threshold",
@@ -162,7 +162,7 @@
             "outPara": [
               {
                 "varName": "dst",
-                "varType": "object",
+                "varType": "vector<RotatedRect>",
                 "varExplanation": ""
               }
             ]
@@ -727,7 +727,7 @@
             "outPara": [
               {
                 "varName": "dst",
-                "varType": "object",
+                "varType": "Mat",
                 "varExplanation": ""
               }
             ]
@@ -1741,21 +1741,21 @@
           {
             "modelNname": "亮度测量",
             "helpMsg": "it is a help message of GlobalVariable",
-            "dllPath": "server/src/main/resources/General.dll/BrightnessMeasurement.dll",
+            "dllPath": "server/src/main/resources/BrightnessMeasurement.dll",
             "modelID": "brightnessMeasurement",
             "inPara": [
               {
                 "varName": "measured picture",
-                "varType": "object",
+                "varType": "Mat",
                 "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
+                "defineVarInputWay": "smartInputWay",
                 "varExplanation": ""
               }
             ],
             "outPara": [
               {
                 "varName": "dst",
-                "varType": "object",
+                "varType": "vector<double>",
                 "varExplanation": ""
               }
             ]
@@ -1766,7 +1766,7 @@
     {
       "lfProperties": {
         "name": "直方图统计",
-        "type": "noEdgeModel",
+        "type": "operator",
         "text": "直方图统计",
         "label": "直方图统计"
       },
@@ -1779,13 +1779,13 @@
             "modelName": "直方图统计",
             "helpMsg": "it is a help message of GlobalVariable",
             "dllPath": "server/src/main/resources/general.dll",
-            "modelID": "hist_stat",
+            "modelID": "hist_statistics",
             "inPara": [
               {
                 "varName": "src",
-                "varType": "object",
+                "varType": "Mat",
                 "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
+                "defineVarInputWay": "smartInputWay",
                 "varExplanation": ""
               },
               {
@@ -2698,6 +2698,17 @@
             "dllPath": "",
             "modelID": "",
             "inPara": [
+              {
+                "varName": "int",
+                "varType": "string",
+                "fromExpression": "",
+                "defineVarInputWay": "selectedInputWay",
+                "comboList":{
+                  "全部":"and",
+                  "任意":"or"
+                },
+                "varExplanation": ""
+              }
             ],
             "outPara": [
             ]
