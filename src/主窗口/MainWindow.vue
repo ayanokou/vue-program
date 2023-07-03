@@ -209,7 +209,7 @@
     </el-dialog></div>
 
     <NetworkManager v-model="networkManagerVisible"/>
-    <SoftwareSet :softwareSetVisible="softwareSetVisible" @closeSoftwareSet="closeSoftwareSet"></SoftwareSet>
+    <SoftwareSet v-model="softwareSetVisible"></SoftwareSet>
     
     <div class="common-layout">
         <img

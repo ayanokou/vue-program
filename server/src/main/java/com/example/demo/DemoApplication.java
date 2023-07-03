@@ -21,38 +21,39 @@ public class DemoApplication {
 
 	private static String imgFormat;
 	private HashMap<Integer, Boolean> flags;
+	private static final String messageHandlerPath = "mh/MessageHandler.exe";
 	private static final String IP = "127.0.0.1";
 	private static final int PORT = 8180;
 
 	static {
-		String path1 = "server/src/main/resources";
+		// String path1 = "server/src/main/resources";
 		// String path2 = "server/src/main/resources/Read.dll";
 		// String path3 = "server/src/main/resources/GaussianBlur.dll";
-		String libPath = path1 + ";";
-		System.setProperty("java.library.path", libPath);
-		System.out.println(System.getProperty("java.library.path"));
-		System.loadLibrary("opencv_world470");
-		System.loadLibrary("opencv_world470_contrib");
-		System.loadLibrary("opencv_core343");
-		System.loadLibrary("opencv_imgproc343");
-		System.loadLibrary("bilateralFilter");
-		System.loadLibrary("fitLine");
-		System.loadLibrary("fitEllipse");
+		// String libPath = path1 + ";";
+		// System.setProperty("java.library.path", libPath);
+		// System.out.println(System.getProperty("java.library.path"));
+		// System.loadLibrary("opencv_world470");
+		// System.loadLibrary("opencv_world470_contrib");
+		// System.loadLibrary("opencv_core343");
+		// System.loadLibrary("opencv_imgproc343");
+		// System.loadLibrary("bilateralFilter");
+		// System.loadLibrary("fitLine");
+		// System.loadLibrary("fitEllipse");
 		// System.loadLibrary("detectField");
-		System.loadLibrary("getPosition");
-		System.loadLibrary("shadowcorrection");
-		System.loadLibrary("scratchDetection");
-		System.loadLibrary("myMorphology");
-		System.loadLibrary("myEdgeDetection");
-		System.loadLibrary("myColorIdentif");
-		System.loadLibrary("myBrightnessCorrection");
-		System.loadLibrary("myContrastEnhancement");
-		System.loadLibrary("uv");
-		System.loadLibrary("udpInFlow");
-		System.loadLibrary("udpCommunicate");
-		System.loadLibrary("tcpInFlow");
-		System.loadLibrary("tcpDll");
-		System.loadLibrary("clientSDK");
+		// System.loadLibrary("getPosition");
+		// System.loadLibrary("shadowcorrection");
+		// System.loadLibrary("scratchDetection");
+		// System.loadLibrary("myMorphology");
+		// System.loadLibrary("myEdgeDetection");
+		// System.loadLibrary("myColorIdentif");
+		// System.loadLibrary("myBrightnessCorrection");
+		// System.loadLibrary("myContrastEnhancement");
+		// System.loadLibrary("uv");
+		// System.loadLibrary("udpInFlow");
+		// System.loadLibrary("udpCommunicate");
+		// System.loadLibrary("tcpInFlow");
+		// System.loadLibrary("tcpDll");
+		// System.loadLibrary("clientSDK");
 	}
 
 	public boolean checkRunning(int port) {
@@ -64,6 +65,9 @@ public class DemoApplication {
 	}
 
 	public static void main(String[] args) throws UnknownHostException, IOException {
+		MessageHandlerInitializer initializer = new MessageHandlerInitializer(messageHandlerPath);
+		initializer.start();
+
 		com.corundumstudio.socketio.Configuration config = new Configuration();
 		config.setMaxFramePayloadLength(5 * 1024 * 1024);
 		config.setHostname("localhost");
@@ -96,24 +100,23 @@ public class DemoApplication {
 		};
 
 		MessageHandlerSender sender = new MessageHandlerSender(IP, PORT);
-		// sender.tryConnect();
+		sender.tryConnect();
 		MessageHandlerReceiver receiver = new MessageHandlerReceiver(sender.getSocket(), listenerForCpp);
-		// receiver.start();
+		receiver.start();
 		Register reg = (String event, int operation) -> {
-			server.addEventListener(event, ChatObject.class, new DataListener<ChatObject>() {
+			server.addEventListener(event, String.class, new DataListener<String>() {
 				@Override
-				public void onData(SocketIOClient socketIOClient, ChatObject chatObject, AckRequest ackRequest)
+				public void onData(SocketIOClient socketIOClient, String msg, AckRequest ackRequest)
 						throws Exception {
 					if (listenerForCpp.getClient() == null) {
 						listenerForCpp.setClient(socketIOClient);
 					}
 
-					String result = chatObject.getMessage();
 					JSONObject jsonObject = new JSONObject();
-					JSONObject data = JSONObject.parseObject(result);
+					JSONObject data = JSONObject.parseObject(msg);
 					jsonObject.put("operation", operation);
 					jsonObject.put("data", data);
-					result = jsonObject.toJSONString();
+					String result = jsonObject.toJSONString();
 					System.out.println(result);
 					sender.sendToMessageHandler(result);
 				}

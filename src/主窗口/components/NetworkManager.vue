@@ -336,11 +336,15 @@ export default {
     onCreateDevice() {
       this.deviceToCreate.receivedData = "";
       this.deviceToCreate.dataToSend = "";
+      // if deviceToCreate has port field convert it to number
+      if (this.deviceToCreate.port) {
+        this.deviceToCreate.port = Number(this.deviceToCreate.port);
+      }
       console.log(this.deviceToCreate);
       this.devices.push(this.deviceToCreate);
 
       const operation = `Add${this.deviceToCreate.type}`;
-      this.socket.emit(operation, this.deviceToCreate);
+      this.socket.emit(operation, JSON.stringify(this.deviceToCreate));
     },
   },
 };

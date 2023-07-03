@@ -15,6 +15,7 @@ const app=createApp(App)
 app.provide('global',{
   store:"global store"
 })
+app.config.unwrapInjectedRef = true
 app.use(router)
 app.use(store)
 app.use(ElementPlus, { size: 'small', zIndex: 3000 })

@@ -184,7 +184,6 @@ export default {
 
     },
     methods: {
-        closeSoftwareSet(){this.softwareSetVisible=false},
         openNetworkManager(){
             this.networkManagerVisible = true
         },

@@ -34,6 +34,7 @@ public class MessageHandlerReceiver implements Runnable {
                 while (startIndex != -1 && endIndex != -1 && startIndex < endIndex) {
                     String message = msg.substring(startIndex + 5, endIndex);
 
+                    System.out.println("MessageHandlerReceiver: " + message);
                     JSONObject jsonObject = JSONObject.parseObject(message);
                     String event = jsonObject.getString("event");
                     String data = jsonObject.getJSONObject("data").toJSONString();
