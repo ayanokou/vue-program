@@ -208,10 +208,10 @@
 
     </el-dialog></div>
 
-    <NetworkManager v-model="testFlag" />
-    
+    <NetworkManager v-model="networkManagerVisible"/>
     <SoftwareSet :softwareSetVisible="softwareSetVisible" @closeSoftwareSet="closeSoftwareSet"></SoftwareSet>
-<div class="common-layout">
+    
+    <div class="common-layout">
         <img
             style="position: absolute; left: 0px; top: 0px"
             src="./img/logo_small.png"
@@ -382,7 +382,7 @@
                                 >通信管理</span
                             ></el-menu-item
                         > -->
-                        <el-menu-item id="test" @click="openTest"
+                        <el-menu-item @click="openNetworkManager"
                             ><span style="color: aliceblue"
                                 >通信管理</span
                             ></el-menu-item>

@@ -18,7 +18,13 @@
             style="height: 100%; border-right: solid 2px lightgray"
           >
             <div style="display: flex; flex-direction: column; height: 100%">
-              <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  margin-bottom: 5px;
+                "
+              >
                 <span>设备列表</span>
                 <el-button @click="currentActiveItem = 'AddDevice'">
                   <el-icon>
@@ -235,12 +241,7 @@
                             style="height: 100%"
                           ></el-input>
                         </el-form-item>
-                        <div
-                          style="
-                            display: flex;
-                            justify-content: end;
-                          "
-                        >
+                        <div style="display: flex; justify-content: end">
                           <el-form-item>
                             <el-button type="primary">发送</el-button>
                           </el-form-item>
@@ -301,7 +302,7 @@ export default {
       devices: [],
     };
   },
-  inject: ['socket'],
+  inject: ["socket"],
   mounted() {
     for (let i = 0; i < 100; i++) {
       this.devices.push({
@@ -315,6 +316,21 @@ export default {
       });
     }
     console.log(this.devices);
+
+    this.socket.on("TcpConnectorReceivedData", (data) =>
+      console.log(`TcpConnectorReceivedData: ${data}`)
+    );
+    this.socket.on("TcpListenerReceivedData", (data) =>
+      console.log(`TcpListenerReceivedData: ${data}`)
+    );
+    this.socket.on("UdpListenerReceivedData", (data) =>
+      console.log(`UdpListenerReceivedData: ${data}`)
+    );
+  },
+  unmounted() {
+    this.socket.off("TcpConnectorReceivedData");
+    this.socket.off("TcpListenerReceivedData");
+    this.socket.off("UdpListenerReceivedData");
   },
   methods: {
     onCreateDevice() {

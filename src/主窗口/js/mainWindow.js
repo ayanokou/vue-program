@@ -49,10 +49,8 @@ export default {
           subCommunicationManagementVisible: false,
           //软件设置窗口
           softwareSetVisible:false,
-
-          testFlag: false,
+          networkManagerVisible: false,
           activeIcon: "deviceManagement",
-          selectedGroup: "接收数据",
           group1Input: "", //通信管理-设备管理接收数据
           group2Output: "", //通信管理-设备管理发送数据
           //是否显示最近打开方案子菜单栏
@@ -162,15 +160,6 @@ export default {
             this.$store.commit('timeConsumeEvent', data);
         })
 
-        socket.on("TcpConnectorReceivedData", (data) =>
-          console.log(`TcpConnectorReceivedData: ${data}`)
-        );
-        socket.on("TcpListenerReceivedData", (data) =>
-          console.log(`TcpListenerReceivedData: ${data}`)
-        );
-        socket.on("UdpListenerReceivedData", (data) =>
-          console.log(`UdpListenerReceivedData: ${data}`)
-        );
         // socket.on('revRects',(data)=>{
         //     this.$store.commit('setModuleResultData', data);
         // })
@@ -196,8 +185,8 @@ export default {
     },
     methods: {
         closeSoftwareSet(){this.softwareSetVisible=false},
-        openTest(){
-            this.testFlag = true
+        openNetworkManager(){
+            this.networkManagerVisible = true
         },
         selectGroup(group) {
             this.selectedGroup = group;
