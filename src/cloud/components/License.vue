@@ -3,7 +3,6 @@
           ref="treeRef"
           :data="options"
           show-checkbox
-          default-expand-all
           node-key="id"
           highlight-current
           :props="defaultProps"
@@ -19,7 +18,7 @@
     <el-dialog v-model="showLicenseDialog" title="创建License" @close="resetLicenseForm">
       <el-form ref="licenseForm" :model="licenseForm" label-width="100px">
         <el-form-item>
-          <el-input v-model="licenseForm.num" placeholder="请输入License的num"></el-input>
+          <el-input v-model="licenseForm.name" placeholder="请输入License的名称"></el-input>
         </el-form-item>
         <el-form-item>
           <el-input v-model="licenseForm.description" placeholder="请输入License的描述"></el-input>
@@ -39,7 +38,7 @@ export default {
     return {
         showLicenseDialog: false,
         licenseForm: {
-        num: '',
+        name: '',
         description: '',
       },
 
@@ -76,7 +75,7 @@ export default {
         // 创建请求体对象，将标签数据作为其中的一个属性
         const requestBody = {
           labels: labels,
-          num: this.licenseForm.num,
+          name: this.licenseForm.name,
           description: this.licenseForm.description,
         };
 
@@ -96,7 +95,7 @@ export default {
 
     },
     resetLicenseForm() {
-      this.licenseForm.num = '';
+      this.licenseForm.name = '';
       this.licenseForm.description = '';
     },
     openLicenseDialog() {
@@ -180,53 +179,7 @@ export default {
 
     },
 
-    getCheckedLicense(){
-      if (this.$refs.treeRef !== null) {
-        const checkedNodes = this.$refs.treeRef.getCheckedNodes(false, false);
-        const lastLevelNodes = new Set();
     
-        const traverseTree = (nodes) => {
-          for (const node of nodes) {
-            if (!node.children || node.children.length === 0) {
-              lastLevelNodes.add(node);
-            } else {
-              traverseTree(node.children);
-            }
-          }
-        };
-
-      
-    
-        traverseTree(checkedNodes);
-        console.log(Array.from(lastLevelNodes));
-
-
-        
-        const labels = Array.from(lastLevelNodes).map(node => node.label);
-        console.log(labels);
-        
-
-        // 创建请求体对象，将标签数据作为其中的一个属性
-        const requestBody = {
-          labels: labels,
-          num:this.licenseForm.num
-        };
-
-        // 发送POST请求到Spring Boot后端
-        axiosInstance.post('/license', requestBody)
-          .then(response => {
-            // 处理成功响应
-            console.log(response.data);
-          })
-          .catch(error => {
-            // 处理错误
-            console.error(error);
-          });
-        
-      }
-
-
-    },
 
     resetChecked() {
       if (this.$refs.treeRef !== null) {

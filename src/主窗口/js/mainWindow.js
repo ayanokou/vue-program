@@ -9,6 +9,7 @@ import GlobalVar from "../components/GlobalVar.vue";
 import { computed } from "vue";
 import { mapState } from "vuex";
 import axiosInstance from "../../axios"
+import router from "../../sys/router"
 
 //初始化socketio用于前后端传输
 let socket = io.connect('http://localhost:9092')
@@ -177,6 +178,35 @@ export default {
 
     },
     methods: {
+        returnto(){
+            console.log(JSON.parse(sessionStorage.getItem('userInfo')).username)
+            console.log(JSON.parse(sessionStorage.getItem('userInfo')).password)
+           if(JSON.parse(sessionStorage.getItem('userInfo')).password!=null){
+             console.log('执行if');
+             axiosInstance.post('/login', {
+                 username: JSON.parse(sessionStorage.getItem('userInfo')).username,
+                 password: JSON.parse(sessionStorage.getItem('userInfo')).password,
+                 code: '123',
+                 rememberMe: true
+             })
+               .then(response => {
+                console.log(JSON.stringify(response.data));
+                 sessionStorage.setItem('userInfo', JSON.stringify(response.data));
+                 console.log(JSON.parse(sessionStorage.getItem('userInfo')).username);
+                 console.log(JSON.parse(sessionStorage.getItem('userInfo')).permissions);
+                 console.log(sessionStorage.getItem('userInfo'));
+        
+                 //window.location.href = 'http://10.13.3.245:5173/#/Index';
+                 router.push('/Index');
+               })
+               .catch(error => {
+                 console.error(error);
+               });}
+            else{
+                router.push('/Index');
+            }
+             
+        },
         showFileOperationsDialog() {
             // Show the file operations dialog
             this.$dialog

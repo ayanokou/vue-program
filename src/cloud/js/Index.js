@@ -1,12 +1,13 @@
 import axiosInstance from '../../axios';
 import { saveAs } from 'file-saver';
-import jsonData from '../data.json';
+import jsonData from '../newOperatorLib.json';
 import { ref } from 'vue'
 import { ElTree } from 'element-plus'
 import Download from '../components/Download.vue'
 import License from '../components/License.vue'
 import Upload from '../components/Upload.vue'
 import UserManage from '../components/UserManage.vue'
+import router from '../../sys/router';
 
 
 
@@ -117,6 +118,11 @@ export default {
  },
     
   methods: {
+    returnto(){
+      router.push('/main');
+
+
+    },
     showUpload(){
       this.component = Upload
     },
@@ -159,10 +165,11 @@ export default {
           };
 
           // 遍历每个参数
-          for (const parameter of model.models) {
+          for (const parameter of model.properties.models) {
+            console.log(parameter.modelName);
             modelData.children.push({
-              id: parameter.lfProperties.name,
-              label: parameter.lfProperties.name
+              id: parameter.modelName,
+              label: parameter.modelName
             });
           }
 

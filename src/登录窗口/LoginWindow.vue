@@ -22,7 +22,7 @@
                   <!-- 登录页面跳转到主页面 -->
                   <div>
                       <button data-v-659840cf="" type="submit" class="login-btn"
-                          @click="onLoginBtnClick('MSG_ENDLOGIN')"
+                          @click="login"
                           style="width: 50%; margin-top: 30px;height: 40px;background-color: rgb(53, 28, 177);">
                           <span style="color:aliceblue;">登 录</span>
                       </button>
@@ -34,8 +34,8 @@
   </div>
 </template>
 
-<script setup>
-  import {onLoginBtnClick } from './js/login'
+<script src="./js/login">
+
 
 </script>
 

@@ -81,7 +81,7 @@ methods: {
           type: 'success',
           duration: 1500,
           onClose: () => {
-            router.push('/Index');
+            router.push('/main');
           }
         });
       })

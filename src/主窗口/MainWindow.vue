@@ -437,6 +437,10 @@
                         >
                     </el-sub-menu>
 
+                    <el-menu-item index="6" @click="returnto">
+                        <span style="color: aliceblue">云端</span>
+                    </el-menu-item>
+
                     <!--                    <el-sub-menu index="5">-->
                     <!--                        <template #title><span style="color:aliceblue">布局</span></template>-->
                     <!--                        <el-menu-item @click="layout(0)"><span style="color:aliceblue;">布局一</span></el-menu-item>-->

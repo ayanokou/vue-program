@@ -1,17 +1,27 @@
 <template>
-    <div>
-      <h1>License List</h1>
-      <ul>
-        <li v-for="(license, licensenum) in licenses" :key="licensenum">
-          License Number {{ licensenum }} - {{ license.description }}
-          <ul>
-            <li v-for="filename in license.files" :key="filename">{{ filename }}</li>
-          </ul>
-          <el-button type="primary" size="small" icon="el-icon-download" @click="downloadLicense(license.files)">Download</el-button>
-        </li>
-      </ul>
-    </div>
-  </template>
+  <div>
+    
+    <el-input id="license-key" type="text" v-model="licenseKey" placeholder="LicenseKey" />
+    <el-button type="primary" @click="submitLicenseKey">Confirm</el-button>
+    <el-table :data="tableData" style="width: 100%">
+
+    <el-table-column prop="licenseName" label="license名称" width="180" />
+    <el-table-column prop="procedureName" label="文件名" width="180" />
+    <el-table-column prop="description" label="描述" />
+    <el-table-column fixed="right" label="Operations" width="120">
+      <template #default="{ row }">
+        <el-button link type="primary" size="small" @click="downloadLicense(row.procedureName)"
+          >下载</el-button
+        >
+
+      </template>
+    </el-table-column>
+    </el-table>
+
+
+    
+  </div>
+</template>
   
   <script>
   import axiosInstance from '../../axios';
@@ -19,38 +29,69 @@
   export default {
     data() {
       return {
-        licenses: {}, // 存储获取到的许可证信息
+        licenseKey: '', // 存储获取到的许可证信息
+        tableData:[],
       };
     },
-    mounted() {
-      // 从数据库获取许可证信息（你需要自己实现）
-      this.fetchLicenses();
+    props: ['username'],
+    created() {
+    // Fetch the table data when the component is created
+    this.fetchTableData();
     },
-    methods: {
-      fetchLicenses() {
-        // 模拟从数据库获取许可证信息的 API 调用
-        // 用实际的 API 调用替换这里的代码
-        const databaseData = [
-          [1, 1, 'sobel.txt', 'a'],
-          [2, 1, 'gauss.txt', 'a'],
-          [3, 2, 'sobel.txt', 'b'],
-          [4, 2, 'gauss.txt', 'b'],
-          [5, 3, 'sobel.txt', 'c'],
-          [6, 3, 'gauss.txt', 'c'],
-        ];
+
   
-        // 对数据进行处理，获取每个唯一许可证号对应的文件名列表和描述
-        databaseData.forEach(([id, licensenum, filename, description]) => {
-          if (this.licenses[licensenum]) {
-            this.licenses[licensenum].files.push(filename);
-          } else {
-            this.licenses[licensenum] = {
-              files: [filename],
-              description: description,
-            };
-          }
+    
+    methods: {
+      fetchTableData() {
+      // Make a request to the Spring Boot backend to fetch table data based on the current username
+      axiosInstance.get(`/tableData/${this.$props.username}`) // Replace '/tableData' with your actual API endpoint
+        .then(response => {
+          console.log(response.data);
+          const groupedData = {}; // 用于存储按照licensename分组的数据
+
+    response.data.forEach(item => {
+      const { licensename, procedurename, description } = item;
+      if (!groupedData[licensename]) {
+        // 如果该licensename不存在于groupedData中，则创建一个新的数组
+        groupedData[licensename] = [];
+      }
+
+      // 将数据添加到相应的licensename数组中
+      groupedData[licensename].push({ procedureName: procedurename ,Description : description});
+    });
+
+    this.tableData = Object.keys(groupedData).map(licensename => ({
+      licenseName: licensename,
+      procedureName: groupedData[licensename].map(data => data.procedureName),
+      description: groupedData[licensename][0].Description,
+    }));
+        })
+        .catch(error => {
+          console.error(error);
+          // Handle any errors that occur during the request
         });
-      },
+    },
+
+      submitLicenseKey() {
+      console.log(this.licenseKey);
+      const formData = {
+        licenseKey: this.licenseKey,
+        username: this.$props.username // Replace this with your logic to get the current username
+      };
+
+      // Send the data to the Spring Boot backend
+      axiosInstance .post('/licenseKey', formData)
+        .then(response => {
+          console.log(response.data);
+          this.$router.go(0);
+          // Handle the response from the backend
+        })
+        .catch(error => {
+          console.error(error);
+          // Handle any errors that occur during the request
+        });
+    },
+      
       downloadLicense(files) {
         // 处理下载许可证的逻辑
         console.log('Download license', files);

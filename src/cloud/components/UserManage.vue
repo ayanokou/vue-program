@@ -1,40 +1,30 @@
 <template>
-    <div>
-      <h1>User List</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Username</th>
-            <th>Role</th>
-            <th>修改权限</th>
-            <th>删除用户</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="user in users" :key="user.id">
-            <td>{{ user.id }}</td>
-            <td>{{ user.username }}</td>
-            <td>{{ user.role }}</td>
-            <td>
-              <el-dropdown>
-                <el-button type="primary">
-                  修改权限<el-icon class="el-icon--right"><arrow-down /></el-icon>
-                </el-button>
-                <template #dropdown>
-                  <el-dropdown-menu>
-                    <el-dropdown-item @click="changeRole(user, 'admin')">超级管理员</el-dropdown-item>
-                    <el-dropdown-item @click="changeRole(user, 'user')">普通用户</el-dropdown-item>
-                  </el-dropdown-menu>
-                </template>
-              </el-dropdown>
-          </td>
-          <td><el-button type="primary" size="small"  @click="deleteUser(user.id)"  id="delete">删除</el-button></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </template>
+  <el-table :data="users" style="width: 100%">
+    <el-table-column prop="id" label="ID" width="80" />
+    <el-table-column prop="username" label="用户名" width="180" />
+    <el-table-column prop="role" label="角色" width="120" />
+    <el-table-column label="修改权限">
+      <template #default>
+        <el-dropdown>
+          <el-button type="primary">
+            修改权限 <el-icon class="el-icon--right"><arrow-down /></el-icon>
+          </el-button>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item @click="changeRole(scope.row, 'admin')">超级管理员</el-dropdown-item>
+              <el-dropdown-item @click="changeRole(scope.row, 'user')">普通用户</el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
+      </template>
+    </el-table-column>
+    <el-table-column label="删除用户">
+      <template #default>
+        <el-button type="primary" size="small" @click="deleteUser(scope.row.id)" id="delete">删除</el-button>
+      </template>
+    </el-table-column>
+  </el-table>
+</template>
 
 
 <script src="../js/userManage">
