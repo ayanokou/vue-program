@@ -506,6 +506,9 @@ export default {
     },
 
     methods: {
+        //两数相加
+        
+        
         run(index){
             let run_button=document.getElementsByClassName('run-button')[index]
             run_button.classList.add('running');
@@ -516,7 +519,7 @@ export default {
             let payload={
                 trigger:true,
                 mode:"RunFlow",
-                data:JSON.stringify(msg)
+                data:msg
             }
             this.$store.commit("setSocketEmit",payload)
         },

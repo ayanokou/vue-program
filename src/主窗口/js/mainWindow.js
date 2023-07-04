@@ -20,6 +20,7 @@ import { ref } from 'vue'
 //初始化socketio用于前后端传输
 let socket = io.connect('http://localhost:9092')
 
+
 export default {
     components:{
         GlobalVar,
@@ -160,10 +161,19 @@ export default {
             this.$store.commit('timeConsumeEvent', data);
         })
 
-        // socket.on('revRects',(data)=>{
-        //     this.$store.commit('setModuleResultData', data);
-        // })
+        socket.on("TcpConnectorReceivedData", (data) =>
+          console.log(`TcpConnectorReceivedData: ${data}`)
+        );
+        socket.on("TcpListenerReceivedData", (data) =>
+          console.log(`TcpListenerReceivedData: ${data}`)
+        );
+        socket.on("UdpListenerReceivedData", (data) =>
+          console.log(`UdpListenerReceivedData: ${data}`)
+        );
 
+        socket.on("revFlowResults",data=>{
+            console.log("revFlowResults")
+        })
         
     },
     computed:{
@@ -172,10 +182,11 @@ export default {
     watch:{
         socketEmit(newValue){
             if(newValue.trigger){
-                //
-                console.log('running...')
-                socket.emit(newValue.mode, newValue.data);
-                //
+                
+                socket.emit(newValue.mode, {
+                    message:JSON.stringify(newValue.data)
+                });
+                
                 this.$store.commit("setSocketEmit",{
                     trigger:false
                 })
@@ -183,9 +194,25 @@ export default {
         }
 
     },
+    created() {
+
+    },
     methods: {
         openNetworkManager(){
             this.networkManagerVisible = true
+        },
+        runSolutionLoop(){
+            socket.emit("RunSolutionLoop",{message:JSON.stringify({})})
+        },
+        async stopSolutionLoop(){
+            //socket.emit("StopSolutionLoop",{message:JSON.stringify({})})
+            const handle =await window.showSaveFilePicker()
+            const writer = await handle.createWritable()
+            await writer.write('hello world')
+            await writer.close()
+        },
+        openTest(){
+            this.testFlag = true
         },
         selectGroup(group) {
             this.selectedGroup = group;
@@ -193,14 +220,10 @@ export default {
         },
 
         sendTCPData(){
-            let jsonObject = {
-                userName: 'TCP',                
-                message: JSON.stringify({ip:this.ip, port: this.portNumber, data:this.group2Output})
-            }
             let payload={
                 trigger:true,
-                mode:"chatevent",
-                data:jsonObject
+                mode:"TCP",
+                data:{ip:this.ip, port: this.portNumber, data:this.group2Output}
             }
             this.$store.commit("setSocketEmit",payload)
         },
@@ -227,13 +250,8 @@ export default {
 
             let payload = {
               trigger: true,
-              mode: "chatevent",
-              data: {
-                userName: operationName,
-                message: {
-                  data: { IP: this.ip, port: parseInt(this.portNumber) },
-                },
-              },
+              mode: operationName,
+              data: { IP: this.ip, port: parseInt(this.portNumber) }               
             };
 
             this.$store.commit("setSocketEmit", payload);

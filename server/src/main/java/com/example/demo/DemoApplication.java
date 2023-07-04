@@ -63,7 +63,7 @@ public class DemoApplication {
 	private interface Register {
 		void register(String event, int operation) throws IOException;
 	}
-
+	
 	public static void main(String[] args) throws UnknownHostException, IOException {
 		MessageHandlerInitializer initializer = new MessageHandlerInitializer(messageHandlerPath);
 		initializer.start();
@@ -111,7 +111,7 @@ public class DemoApplication {
 					if (listenerForCpp.getClient() == null) {
 						listenerForCpp.setClient(socketIOClient);
 					}
-
+					System.out.println(msg);
 					JSONObject jsonObject = new JSONObject();
 					JSONObject data = JSONObject.parseObject(msg);
 					jsonObject.put("operation", operation);
@@ -136,11 +136,14 @@ public class DemoApplication {
 		operationMap.put("RunFlow", 9);
 		operationMap.put("RunSolution", 10);
 		operationMap.put("SaveGlobalVar", 11);
+		operationMap.put("RunSolutionLoop",12);
+		operationMap.put("StopSolutionLoop",13);
 
 		for (String key : operationMap.keySet()) {
 			Integer value = operationMap.get(key);
 			reg.register(key, value);
 		}
+
 
 		server.start();
 		SpringApplication.run(DemoApplication.class, args);

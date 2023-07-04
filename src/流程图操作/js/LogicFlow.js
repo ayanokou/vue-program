@@ -456,7 +456,14 @@ export default {
             }else if(evt.data.properties.name=="条件检测"){
                 this.dialogCondition=true
                 
+                if(this.nodeModel.getProperties().payload){
+                    this.conditionData=this.nodeModel.getProperties().payload
+                }else{
+                    this.conditionData=[]
+                }
+
                 this.conditionIntExpr=this.getIncomingData(evt.data.id,'int')
+                this.conditionDoubleExpr=this.getIncomingData(evt.data.id,'double')
             }
                 
             let e = document.getElementsByClassName('el-overlay-dialog')[0].parentNode
@@ -744,8 +751,27 @@ export default {
         },
         getIncomingData(id,type){
             let ans=[]
-            
+            let queue=[id]
+            while(queue.length>0){
+                let targetid=queue.shift()
+                this.lf.getNodeIncomingNode(targetid).forEach(item=>{
+                    queue.push(item.id)
+
+                    if(item.getProperties().outPara){
+                        item.getProperties().outPara.forEach(outp=>{
+                            if(true||outp.varType==type){
+                                ans.push({
+                                    lable:item.text.value+"."+outp.varExplanation+"."+outp.varName,
+                                    value:item.id.toString()+"."+outp.varName
+                                })
+                            }
+                        })
+                    }
+                })
+            }
+            return ans
         },
+
 
         findInPara(id) {
             console.log('in findInPara')
@@ -908,7 +934,12 @@ export default {
                 else model_copy["inPara"][i].fromExpression=this.formData[i]
             }
 
-            model_copy['payload']=this.branchData
+            
+            if(this.nodeModel.properties.name=="分支模块"){
+                model_copy['payload']=this.branchData
+            }else if(this.nodeModel.properties.name=="条件检测"){
+                model_copy['payload']=this.conditionData
+            }
 
             this.nodeModel.setProperties(model_copy)
 

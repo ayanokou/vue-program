@@ -74,11 +74,11 @@
                 <template v-for="m in operatorData.models">
                     <el-form-item v-if="m.modelName==modelName" v-for="(item,index) in m.inPara" :label="item.varName">
                         <div v-if="item.defineVarInputWay === 'directInputWay'">
-                            <el-input v-model="formData[index]"/>
+                            <el-input v-model="formData[index]" :placeholder="item.varExplanation"/>
                         </div>
                         <div
                             v-if="item.defineVarInputWay === 'selectedInputWay'||item.defineVarInputWay === 'smartInputWay'">
-                            <el-select v-model="formData[index]" placeholder="Select">
+                            <el-select v-model="formData[index]" :placeholder="item.varExplanation">
                                 <el-option
                                     v-for="(value,key) in item.comboList"
                                     :key="key"
