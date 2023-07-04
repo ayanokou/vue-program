@@ -1,0 +1,238 @@
+{
+    "content": [
+        {
+            "tabIndex": 0,
+            "content": {
+                "nodes": [
+                    {
+                        "id": "0",
+                        "type": "operator",
+                        "x": 220,
+                        "y": 200,
+                        "properties": {
+                            "superName": "输入输出",
+                            "name": "文件输入",
+                            "modelName": "文件输入",
+                            "helpMsg": "it is a help message",
+                            "dllPath": "server/src/main/resources/general.dll",
+                            "modelID": "read",
+                            "inPara": [
+                                {
+                                    "varName": "filename",
+                                    "varType": "string",
+                                    "fromExpression": "C:/Users/zwq/Pictures/Camera Roll/a.jpg",
+                                    "defineVarInputWay": "directInputWay",
+                                    "varExplanation": ""
+                                },
+                                {
+                                    "varName": "flags",
+                                    "varType": "int",
+                                    "fromExpression": "1",
+                                    "defineVarInputWay": "selectedInputWay",
+                                    "comboList": {
+                                        "BGR": "1",
+                                        "GRAY": "0"
+                                    },
+                                    "varExplanation": ""
+                                }
+                            ],
+                            "outPara": [
+                                {
+                                    "varName": "dst",
+                                    "varType": "Mat",
+                                    "varExplanation": ""
+                                }
+                            ]
+                        },
+                        "text": {
+                            "x": 220,
+                            "y": 200,
+                            "value": "0文件输入"
+                        }
+                    },
+                    {
+                        "id": "1",
+                        "type": "operator",
+                        "x": 200,
+                        "y": 340,
+                        "properties": {
+                            "superName": "输入输出",
+                            "name": "输出",
+                            "modelName": "输出模块",
+                            "helpMsg": "it is a help message",
+                            "dllPath": "server/src/main/resources/show.dll",
+                            "modelID": "show",
+                            "inPara": [
+                                {
+                                    "varName": "object",
+                                    "varType": "object",
+                                    "fromExpression": "0.dst",
+                                    "defineVarInputWay": "directInputWay",
+                                    "varExplanation": ""
+                                }
+                            ],
+                            "outPara": []
+                        },
+                        "text": {
+                            "x": 200,
+                            "y": 340,
+                            "value": "1输出模块"
+                        }
+                    }
+                ],
+                "edges": [
+                    {
+                        "id": "Flow_1tpbft2",
+                        "type": "bpmn:sequenceFlow",
+                        "sourceNodeId": "0",
+                        "targetNodeId": "1",
+                        "startPoint": {
+                            "x": 220,
+                            "y": 240
+                        },
+                        "endPoint": {
+                            "x": 200,
+                            "y": 300
+                        },
+                        "properties": {},
+                        "pointsList": [
+                            {
+                                "x": 220,
+                                "y": 240
+                            },
+                            {
+                                "x": 220,
+                                "y": 270
+                            },
+                            {
+                                "x": 200,
+                                "y": 270
+                            },
+                            {
+                                "x": 200,
+                                "y": 300
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "tabIndex": 1,
+            "content": {
+                "nodes": [
+                    {
+                        "id": "0",
+                        "type": "operator",
+                        "x": 220,
+                        "y": 200,
+                        "properties": {
+                            "superName": "输入输出",
+                            "name": "文件输入",
+                            "modelName": "文件输入",
+                            "helpMsg": "it is a help message",
+                            "dllPath": "server/src/main/resources/general.dll",
+                            "modelID": "read",
+                            "inPara": [
+                                {
+                                    "varName": "filename",
+                                    "varType": "string",
+                                    "fromExpression": "C:/Users/zwq/Pictures/Camera Roll/a.jpg",
+                                    "defineVarInputWay": "directInputWay",
+                                    "varExplanation": ""
+                                },
+                                {
+                                    "varName": "flags",
+                                    "varType": "int",
+                                    "fromExpression": "1",
+                                    "defineVarInputWay": "selectedInputWay",
+                                    "comboList": {
+                                        "BGR": "1",
+                                        "GRAY": "0"
+                                    },
+                                    "varExplanation": ""
+                                }
+                            ],
+                            "outPara": [
+                                {
+                                    "varName": "dst",
+                                    "varType": "Mat",
+                                    "varExplanation": ""
+                                }
+                            ]
+                        },
+                        "text": {
+                            "x": 220,
+                            "y": 200,
+                            "value": "0文件输入"
+                        }
+                    },
+                    {
+                        "id": "1",
+                        "type": "operator",
+                        "x": 200,
+                        "y": 340,
+                        "properties": {
+                            "superName": "输入输出",
+                            "name": "输出",
+                            "modelName": "输出模块",
+                            "helpMsg": "it is a help message",
+                            "dllPath": "server/src/main/resources/show.dll",
+                            "modelID": "show",
+                            "inPara": [
+                                {
+                                    "varName": "object",
+                                    "varType": "object",
+                                    "fromExpression": "0.dst",
+                                    "defineVarInputWay": "directInputWay",
+                                    "varExplanation": ""
+                                }
+                            ],
+                            "outPara": []
+                        },
+                        "text": {
+                            "x": 200,
+                            "y": 340,
+                            "value": "1输出模块"
+                        }
+                    }
+                ],
+                "edges": [
+                    {
+                        "id": "Flow_1tpbft2",
+                        "type": "bpmn:sequenceFlow",
+                        "sourceNodeId": "0",
+                        "targetNodeId": "1",
+                        "startPoint": {
+                            "x": 220,
+                            "y": 240
+                        },
+                        "endPoint": {
+                            "x": 200,
+                            "y": 300
+                        },
+                        "properties": {},
+                        "pointsList": [
+                            {
+                                "x": 220,
+                                "y": 240
+                            },
+                            {
+                                "x": 220,
+                                "y": 270
+                            },
+                            {
+                                "x": 200,
+                                "y": 270
+                            },
+                            {
+                                "x": 200,
+                                "y": 300
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    ]
+}

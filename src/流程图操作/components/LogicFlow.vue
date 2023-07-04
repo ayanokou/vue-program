@@ -97,6 +97,7 @@
 <!--            <component :is="dialogComponent">-->
 
             <Branch v-if="dialogBranch" :branchData="branchData"></Branch>
+            <Condition v-if="dialogCondition" :conditionData="conditionData" :conditionIntExpr="conditionIntExpr" :conditionDoubleExpr="conditionDoubleExpr"></Condition>
             <template #footer>
           <span class="dialog-footer">
             <el-button type="primary" @click="dialogVisible = false;formDataSubmit();clear()">Submit</el-button>

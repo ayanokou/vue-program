@@ -1,5 +1,5 @@
 <template>
-    <el-dialog title="设备管理" v-model="subCommunicationManagementVisible" :modal="false"
+    <el-dialog title="设备管理" v-model="subCommunicationManagementVisible"
         :close-on-click-modal="false"
         custom-class="custom-dialog-little"
         draggable>
@@ -66,19 +66,15 @@
         <el-button @click="createAnDevice">创建</el-button>
     </template>
     </el-dialog>
-    <el-dialog
+    <div style="display: none"><el-dialog
         title="通信管理"
         v-model="communicationManagementVisible"
-        :modal="false"
         :close-on-click-modal="false"
-        custom-class="custom-dialog"
         draggable
     >
-        <div class="container">
             <el-row :gutter="20" class="row-container">
                 <el-col :span="4" class="left-column">
                     <!-- 左侧区域 -->
-                    <div class="sidebar-content">
                         <div class="sidebar-item" :class="{ active: activeIcon === 'deviceManagement' }" @click="setActiveIcon('deviceManagement')" >
                             <el-icon><Monitor /></el-icon>
                             <span>设备管理</span>
@@ -99,7 +95,6 @@
                             <el-icon><Setting /></el-icon>
                             <span>响应配置</span>
                         </div>
-                    </div>
                 </el-col>
                 <el-col :span="20" class="right-column">
                     <!-- 右侧区域 -->
@@ -210,8 +205,12 @@
                     </div>
                 </el-col>
             </el-row>
-        </div>
-    </el-dialog>
+
+    </el-dialog></div>
+
+    <NetworkManager v-model="networkManagerVisible"/>
+    <SoftwareSet v-model="softwareSetVisible"></SoftwareSet>
+    
     <div class="common-layout">
         <img
             style="position: absolute; left: 0px; top: 0px"
@@ -349,11 +348,12 @@
                                 >权限设置</span
                             ></el-menu-item
                         >
-                        <el-menu-item id="setSoftware" @click="sendEvent('softwareSetEvent')"
+                        <el-menu-item id="setSoftware" @click="setSoftware"
                             ><span style="color: aliceblue" 
                                 >软件设置</span
                             ></el-menu-item
                         >
+                    
                         <el-menu-item id="setSolution"
                             ><span style="color: aliceblue"
                                 >方案设置</span
@@ -377,13 +377,17 @@
                                 >日志</span
                             ></el-menu-item
                         >
-                        <el-menu-item
+                        <!-- <el-menu-item
                             id="manageCommunication"
                             @click="manageCommunication"
                             ><span style="color: aliceblue"
                                 >通信管理</span
                             ></el-menu-item
-                        >
+                        > -->
+                        <el-menu-item @click="openNetworkManager"
+                            ><span style="color: aliceblue"
+                                >通信管理</span
+                            ></el-menu-item>
                         <el-menu-item id="manageController"
                             ><span style="color: aliceblue"
                                 >控制器管理</span
@@ -699,10 +703,6 @@ ul.el-menu.el-menu--horizontal.el-menu-demo1 :hover {
 
 .input {
   width: 120px; /* 设置输入框的宽度 */
-}
-
-.el-tabs__content {
-    display: contents;
 }
 
 .el-tabs__header {

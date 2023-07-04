@@ -6,20 +6,30 @@ import LayoutOne from "@/主窗口/components/layout/LayoutOne.vue";
 import LayoutTwo from "@/主窗口/components/layout/LayoutTwo.vue";
 import LayoutThree from "@/主窗口/components/layout/LayoutThree.vue";
 import GlobalVar from "../components/GlobalVar.vue";
+import NetworkManager from "../components/NetworkManager.vue";
+import SoftwareSet from "../components/SoftwareSet.vue";
+
 import { computed } from "vue";
 import { mapState } from "vuex";
 import axiosInstance from "../../axios"
 import router from "../../sys/router"
+
+import { ref } from 'vue'
+
+
 
 //初始化socketio用于前后端传输
 let socket = io.connect('http://localhost:9092')
 
 export default {
     components:{
-        GlobalVar
+        GlobalVar,
+        NetworkManager,
+        SoftwareSet
     },
     data() {
         return {
+           
           selectedOption: "", // 用于存储选择的选项值
           selectedOptionContent: "", // 用于存储选项对应的内容
           options: [
@@ -38,8 +48,10 @@ export default {
           //是否显示通信管理窗口
           communicationManagementVisible: false,
           subCommunicationManagementVisible: false,
+          //软件设置窗口
+          softwareSetVisible:false,
+          networkManagerVisible: false,
           activeIcon: "deviceManagement",
-          selectedGroup: "接收数据",
           group1Input: "", //通信管理-设备管理接收数据
           group2Output: "", //通信管理-设备管理发送数据
           //是否显示最近打开方案子菜单栏
@@ -116,6 +128,7 @@ export default {
             currentTableData: computed(() => this.currentTableData),
             historyTableData: computed(() => this.historyTableData),
             helpInfo: computed(() => this.helpInfo),
+            socket: computed(() => socket),
         }
     },
 
@@ -151,9 +164,6 @@ export default {
             this.$store.commit('timeConsumeEvent', data);
         })
 
-        socket.on('ReceivedTcpData', data =>{
-            console.log(`ReceivedTcpData: ${data}`)
-        })
         // socket.on('revRects',(data)=>{
         //     this.$store.commit('setModuleResultData', data);
         // })
@@ -161,7 +171,7 @@ export default {
         
     },
     computed:{
-        ...mapState(['socketEmit','dialogVisibleGlobalVar'])
+        ...mapState(['socketEmit','dialogVisibleGlobalVar',"softwareSet"])
     },
     watch:{
         socketEmit(newValue){
@@ -240,6 +250,9 @@ export default {
             console.log('Downloading file...');
           },
 
+        openNetworkManager(){
+            this.networkManagerVisible = true
+        },
         selectGroup(group) {
             this.selectedGroup = group;
             
@@ -247,7 +260,7 @@ export default {
 
         sendTCPData(){
             let jsonObject = {
-                userName: 'TCP',
+                userName: 'TCP',                
                 message: JSON.stringify({ip:this.ip, port: this.portNumber, data:this.group2Output})
             }
             let payload={
@@ -259,21 +272,38 @@ export default {
         },
 
         createAnDevice(){
-            if(this.selectedOption === "TCP客户端"){
-                this.demoSelectedTCP = true;
-                let msg = JSON.stringify({IP:this.ip, port: parseInt(this.portNumber)})
-                console.log(msg)
-                let jsonObject = {
-                    userName: 'AddTcpListener',
-                    message: msg
+            const getOperationName = name => {
+                switch(name){
+                    case 'TCP客户端':
+                        return 'AddTcpConnector'
+                    case 'TCP服务端':
+                        return 'AddTcpListener'
+                    case 'UDP':
+                        return 'AddUdpListener'
+                    default:
+                        return undefined
                 }
-                let payload={
-                    trigger:true,
-                    mode:"chatevent",
-                    data:jsonObject
-                }
-                this.$store.commit("setSocketEmit",payload)
             }
+            const operationName = getOperationName(this.selectedOption)
+            if(operationName === undefined){
+                this.$message.error('请选择通信方式')
+                return
+            }
+            this.demoSelectedTCP = true;
+
+            let payload = {
+              trigger: true,
+              mode: "chatevent",
+              data: {
+                userName: operationName,
+                message: {
+                  data: { IP: this.ip, port: parseInt(this.portNumber) },
+                },
+              },
+            };
+
+            this.$store.commit("setSocketEmit", payload);
+
             this.subCommunicationManagementVisible = false;
         },
 
@@ -304,6 +334,10 @@ export default {
         subManageCommunication(){
             this.subCommunicationManagementVisible = true;
         },
+
+        setSoftware() {
+            this.softwareSetVisible=true;
+         },
 
         setActiveIcon(icon){
             this.activeIcon = icon;
@@ -461,10 +495,12 @@ export default {
         },
         sendEvent(event, cont = {trigger:true}){
             this.$store.commit(event, cont)
+            
         },
         exitFunc(){
             this.$router.push('/')
         },
+         
 
         logout(){
             axiosInstance.get('/logout')

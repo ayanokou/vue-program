@@ -15,7 +15,7 @@
           {
             "modelName": "文件输入",
             "helpMsg": "it is a help message",
-            "dllPath": "server/src/main/resources/general.dll",
+            "dllPath": "resources/general.dll",
             "modelID": "read",
             "inPara": [
               {
@@ -63,7 +63,7 @@
           {
             "modelName": "输出模块",
             "helpMsg": "it is a help message",
-            "dllPath": "server/src/main/resources/show.dll",
+            "dllPath": "resources/show.dll",
             "modelID": "show",
             "inPara": [
               {
@@ -95,7 +95,7 @@
           {
             "modelName": "本地图像",
             "helpMsg": "it is a help message",
-            "dllPath": "server/src/main/resources/LocalImg.dll",
+            "dllPath": "resources/LocalImg.dll",
             "modelID": "LocalImg",
             "inPara": [
               {
@@ -134,22 +134,22 @@
           {
             "modelName": "轮廓比对",
             "helpMsg": "it is a help message of GlobalVariable",
-            "dllPath": "server/src/main/resources/General.dll/MatchContourShape.dll",
+            "dllPath": "resources/MatchContourShape.dll",
             "modelID": "contourMatch",
             "inPara": [
               {
-                "varName": "standard image filename",
-                "varType": "object",
+                "varName": "standard image",
+                "varType": "Mat",
                 "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
-                "varExplanation": ""
+                "defineVarInputWay": "smartInputWay",
+                "varExplanation": "标准图片"
               },
               {
-                "varName": "detect image filename",
-                "varType": "object",
+                "varName": "detect image",
+                "varType": "Mat",
                 "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
-                "varExplanation": ""
+                "defineVarInputWay": "smartInputWay",
+                "varExplanation": "待检测图片"
               },
               {
                 "varName": "threshold",
@@ -162,7 +162,7 @@
             "outPara": [
               {
                 "varName": "dst",
-                "varType": "object",
+                "varType": "vector<RotatedRect>",
                 "varExplanation": ""
               }
             ]
@@ -185,7 +185,7 @@
           {
             "modelName": "最小二乘法拟合直线",
             "helpMsg": "it is a help message of GlobalVariable",
-            "dllPath": "server/src/main/resources/LeastSquares.dll",
+            "dllPath": "resources/LeastSquares.dll",
             "modelID": "fitLine_leastSquare",
             "inPara": [
               {
@@ -229,7 +229,7 @@
           {
             "modelName": "最小二乘法找直线",
             "helpMsg": "it is a help message of GlobalVariable",
-            "dllPath": "server/src/main/resources/LeastSquares.dll",
+            "dllPath": "resources/LeastSquares.dll",
             "modelID": "find_line_leastSquare",
             "inPara": [
               {
@@ -257,7 +257,7 @@
           {
             "modelName": "最小二乘法拟合圆",
             "helpMsg": "it is a help message of GlobalVariable",
-            "dllPath": "server/src/main/resources/LeastSquares.dll",
+            "dllPath": "resources/LeastSquares.dll",
             "modelID": "fitLine_leastSquare",
             "inPara": [
               {
@@ -280,7 +280,7 @@
           {
             "modelName": "最小二乘法找圆",
             "helpMsg": "it is a help message of GlobalVariable",
-            "dllPath": "server/src/main/resources/LeastSquares.dll",
+            "dllPath": "resources/LeastSquares.dll",
             "modelID": "find_circle_leastSquare",
             "inPara": [
               {
@@ -323,7 +323,7 @@
           {
             "modelName": "Ransac拟合直线",
             "helpMsg": "it is a help message of GlobalVariable",
-            "dllPath": "server/src/main/resources/Ransac.dll",
+            "dllPath": "resources/Ransac.dll",
             "modelID": "fitLine_Ransac",
             "inPara": [
               {
@@ -374,7 +374,7 @@
           {
             "modelName": "Ransac拟合圆",
             "helpMsg": "it is a help message of GlobalVariable",
-            "dllPath": "server/src/main/resources/Ransac.dll",
+            "dllPath": "resources/Ransac.dll",
             "modelID": "fitCircle_Ransac",
             "inPara": [
               {
@@ -432,7 +432,7 @@
           {
             "modelName": "多边形查找",
             "helpMsg": "it is a help message of GlobalVariable",
-            "dllPath": "server/src/main/resources/PolygonDetect.dll",
+            "dllPath": "resources/PolygonDetect.dll",
             "modelID": "polygonDetect",
             "inPara": [
               {
@@ -486,7 +486,7 @@
           {
             "modelName": "高斯",
             "helpMsg": "it is a help msg",
-            "dllPath": "server/src/main/resources/imgProc/imgFilter/GaussianBlur.dll",
+            "dllPath": "resources/imgProc/imgFilter/GaussianBlur.dll",
             "modelID": "gaussian_blur",
             "inPara": [
               {
@@ -545,7 +545,7 @@
           },
           {
             "modelName": "中值",
-            "dllPath": "server/src/main/resources/general.dll",
+            "dllPath": "resources/general.dll",
             "modelID": "median_blur",
             "inPara": [
               {
@@ -574,7 +574,7 @@
           {
             "modelName": "双边滤波",
             "helpMsg": "it is a help message",
-            "dllPath": "server/src/main/resources/bilateralFilter.dll",
+            "dllPath": "resources/bilateralFilter.dll",
             "modelID": "myBilateralFilter",
             "inPara": [
               {
@@ -648,7 +648,7 @@
           {
             "modelName": "阴影校正",
             "helpMsg": "it is a help message",
-            "dllPath": "server/src/main/resources/shadowcorrection.dll",
+            "dllPath": "resources/shadowcorrection.dll",
             "modelID": "myShadowCorrection",
             "inPara": [
               {
@@ -692,7 +692,7 @@
         "models": [
           {
             "modelName": "threshold",
-            "dllPath": "server/src/main/resources/imgProc/imgBinary/Threshold.dll",
+            "dllPath": "resources/imgProc/imgBinary/Threshold.dll",
             "modelID": "threshold",
             "inPara": [
               {
@@ -734,7 +734,7 @@
           },
           {
             "modelName": "基于区域二值化",
-            "dllPath": "server/src/main/resources/imgProc/imgBinary/RegionGrow.dll",
+            "dllPath": "resources/imgProc/imgBinary/RegionGrow.dll",
             "modelID": "regionGrow_threshold",
             "inPara": [
               {
@@ -784,7 +784,7 @@
         "models": [
           {
             "modelName": "开运算",
-            "dllPath": "server/src/main/resources/general.dll",
+            "dllPath": "resources/general.dll",
             "modelID": "morph_open",
             "inPara": [
               {
@@ -812,7 +812,7 @@
           },
           {
             "modelName": "闭运算",
-            "dllPath": "server/src/main/resources/general.dll",
+            "dllPath": "resources/general.dll",
             "modelID": "morph_close",
             "inPara": [
               {
@@ -840,7 +840,7 @@
           },
           {
             "modelName": "顶帽运算",
-            "dllPath": "server/src/main/resources/myMorphology.dll",
+            "dllPath": "resources/myMorphology.dll",
             "modelID": "myTophat",
             "inPara": [
               {
@@ -869,7 +869,7 @@
           },
           {
             "modelName": "黑帽运算",
-            "dllPath": "server/src/main/resources/myMorphology.dll",
+            "dllPath": "resources/myMorphology.dll",
             "modelID": "myBlackhat",
             "inPara": [
               {
@@ -897,7 +897,7 @@
           },
           {
             "modelName": "腐蚀运算",
-            "dllPath": "server/src/main/resources/myMorphology.dll",
+            "dllPath": "resources/myMorphology.dll",
             "modelID": "myErode",
             "inPara": [
               {
@@ -925,7 +925,7 @@
           },
           {
             "modelName": "膨胀运算",
-            "dllPath": "server/src/main/resources/myMorphology.dll",
+            "dllPath": "resources/myMorphology.dll",
             "modelID": "myDilate",
             "inPara": [
               {
@@ -953,7 +953,7 @@
           },
           {
             "modelName": "梯度运算",
-            "dllPath": "server/src/main/resources/myMorphology.dll",
+            "dllPath": "resources/myMorphology.dll",
             "modelID": "myGradient",
             "inPara": [
               {
@@ -997,7 +997,7 @@
           {
             "modelName": "canny边缘检测",
             "helpMsg": "it is a help message",
-            "dllPath": "server/src/main/resources/EdgeDetect.dll",
+            "dllPath": "resources/EdgeDetect.dll",
             "modelID": "edgeDetectCanny",
             "inPara": [
               {
@@ -1033,7 +1033,7 @@
           },
           {
             "modelName": "找轮廓",
-            "dllPath": "server/src/main/resources/general.dll",
+            "dllPath": "resources/general.dll",
             "modelID": "find_contours",
             "inPara": [
               {
@@ -1054,7 +1054,7 @@
           },
           {
             "modelName": "画轮廓",
-            "dllPath": "server/src/main/resources/general.dll",
+            "dllPath": "resources/general.dll",
             "modelID": "draw_contours",
             "inPara": [
               {
@@ -1082,7 +1082,7 @@
           },
           {
             "modelName": "选轮廓",
-            "dllPath": "server/src/main/resources/general.dll",
+            "dllPath": "resources/general.dll",
             "modelID": "select_contour",
             "inPara": [
               {
@@ -1110,7 +1110,7 @@
           },
           {
             "modelName": "找最小面积外接矩形",
-            "dllPath": "server/src/main/resources/general.dll",
+            "dllPath": "resources/general.dll",
             "modelID": "min_area_rect",
             "inPara": [
               {
@@ -1131,7 +1131,7 @@
           },
           {
             "modelName": "找矩形角点",
-            "dllPath": "server/src/main/resources/general.dll",
+            "dllPath": "resources/general.dll",
             "modelID": "box_points",
             "inPara": [
               {
@@ -1152,7 +1152,7 @@
           },
           {
             "modelName": "轮廓转轮廓数组",
-            "dllPath": "server/src/main/resources/general.dll",
+            "dllPath": "resources/general.dll",
             "modelID": "contour_to_contours",
             "inPara": [
               {
@@ -1188,7 +1188,7 @@
         "models": [
           {
             "modelName": "仿射变换",
-            "dllPath": "server/src/main/resources/general.dll",
+            "dllPath": "resources/general.dll",
             "modelID": "warp_affine",
             "inPara": [
               {
@@ -1223,7 +1223,7 @@
           },
           {
             "modelName": "获得2D旋转矩阵",
-            "dllPath": "server/src/main/resources/general.dll",
+            "dllPath": "resources/general.dll",
             "modelID": "get_rotation_matrix_2d",
             "inPara": [
               {
@@ -1273,7 +1273,7 @@
         "models": [
           {
             "modelName": "翻转",
-            "dllPath": "server/src/main/resources/general.dll",
+            "dllPath": "resources/general.dll",
             "modelID": "flip",
             "inPara": [
               {
@@ -1301,7 +1301,7 @@
           },
           {
             "modelName": "缩放",
-            "dllPath": "server/src/main/resources/general.dll",
+            "dllPath": "resources/general.dll",
             "modelID": "resize",
             "inPara": [
               {
@@ -1329,7 +1329,7 @@
           },
           {
             "modelName": "裁切",
-            "dllPath": "server/src/main/resources/general.dll",
+            "dllPath": "resources/general.dll",
             "modelID": "crop",
             "inPara": [
               {
@@ -1393,7 +1393,7 @@
         "models": [
           {
             "modelName": "基本霍夫变换检测直线",
-            "dllPath": "server/src/main/resources/DetectHough.dll",
+            "dllPath": "resources/DetectHough.dll",
             "modelID": "lines_detect_Hough",
             "inPara": [
               {
@@ -1464,7 +1464,7 @@
           },
           {
             "modelName": "概率式霍夫检测直线",
-            "dllPath": "server/src/main/resources/DetectHough.dll",
+            "dllPath": "resources/DetectHough.dll",
             "modelID": "linesP_detect_Hough",
             "inPara": [
               {
@@ -1521,7 +1521,7 @@
           },
           {
             "modelName": "霍夫检测圆",
-            "dllPath": "server/src/main/resources/DetectHough.dll",
+            "dllPath": "resources/DetectHough.dll",
             "modelID": "circles_detect_Hough",
             "inPara": [
               {
@@ -1608,7 +1608,7 @@
           {
             "modelName": "自适应亮度校正",
             "helpMsg": "it is a help message",
-            "dllPath": "server/src/main/resources/myBrightnessCorrection.dll",
+            "dllPath": "resources/myBrightnessCorrection.dll",
             "modelID": "myBrightnessCorrection",
             "inPara": [
               {
@@ -1646,7 +1646,7 @@
           {
             "modelName": "对比度增强",
             "helpMsg": "it is a help message",
-            "dllPath": "server/src/main/resources/myContrastEnhancement.dll",
+            "dllPath": "resources/myContrastEnhancement.dll",
             "modelID": "myContrastEnhancement",
             "inPara": [
               {
@@ -1693,7 +1693,7 @@
         "models": [
           {
             "modelName": "面积测量",
-            "dllPath": "server/src/main/resources/imgMeasure/areaMeasure/ContourArea.dll",
+            "dllPath": "resources/imgMeasure/areaMeasure/ContourArea.dll",
             "modelID": "contour_area",
             "inPara": [
               {
@@ -1741,21 +1741,21 @@
           {
             "modelNname": "亮度测量",
             "helpMsg": "it is a help message of GlobalVariable",
-            "dllPath": "server/src/main/resources/General.dll/BrightnessMeasurement.dll",
+            "dllPath": "resources/BrightnessMeasurement.dll",
             "modelID": "brightnessMeasurement",
             "inPara": [
               {
                 "varName": "measured picture",
-                "varType": "object",
+                "varType": "Mat",
                 "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
+                "defineVarInputWay": "smartInputWay",
                 "varExplanation": ""
               }
             ],
             "outPara": [
               {
                 "varName": "dst",
-                "varType": "object",
+                "varType": "vector<double>",
                 "varExplanation": ""
               }
             ]
@@ -1766,7 +1766,7 @@
     {
       "lfProperties": {
         "name": "直方图统计",
-        "type": "noEdgeModel",
+        "type": "operator",
         "text": "直方图统计",
         "label": "直方图统计"
       },
@@ -1778,14 +1778,14 @@
           {
             "modelName": "直方图统计",
             "helpMsg": "it is a help message of GlobalVariable",
-            "dllPath": "server/src/main/resources/general.dll",
-            "modelID": "hist_stat",
+            "dllPath": "resources/general.dll",
+            "modelID": "hist_statistics",
             "inPara": [
               {
                 "varName": "src",
-                "varType": "object",
+                "varType": "Mat",
                 "fromExpression": "",
-                "defineVarInputWay": "directInputWay",
+                "defineVarInputWay": "smartInputWay",
                 "varExplanation": ""
               },
               {
@@ -2040,7 +2040,7 @@
         "models": [
           {
             "name": "转换颜色空间",
-            "dllPath": "server/src/main/resources/general.dll",
+            "dllPath": "resources/general.dll",
             "modelID": "convert_color",
             "inPara": [
               {
@@ -2096,7 +2096,7 @@
           {
             "modelName": "颜色识别",
             "helpMsg": "it is a help message",
-            "dllPath": "server/src/main/resources/myColorIdentif.dll",
+            "dllPath": "resources/myColorIdentif.dll",
             "modelID": "myColorIdentif",
             "inPara": [
               {
@@ -2139,7 +2139,7 @@
           {
             "modelName": "ocr-detection",
             "helpMsg": "it is a help message",
-            "dllPath": "server/src/main/resources/ppocr.dll",
+            "dllPath": "resources/ppocr.dll",
             "modelID": "detectBoxes_",
             "inPara": [
               {
@@ -2153,7 +2153,7 @@
               {
                 "varName": "det_model",
                 "varType": "string",
-                "fromExpression": "server/src/main/resources/models/ch_PP-OCRv3_det_infer",
+                "fromExpression": "resources/models/ch_PP-OCRv3_det_infer",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": "字符检测模型路径"
               }
@@ -2169,7 +2169,7 @@
           {
             "modelName": "ocr-recognition",
             "helpMsg": "it is a help message",
-            "dllPath": "server/src/main/resources/ppocr.dll",
+            "dllPath": "resources/ppocr.dll",
             "modelID": "detectText_",
             "inPara": [
               {
@@ -2183,14 +2183,14 @@
               {
                 "varName": "rec model",
                 "varType": "string",
-                "fromExpression": "server/src/main/resources/models/ch_PP-OCRv3_rec_infer",
+                "fromExpression": "resources/models/ch_PP-OCRv3_rec_infer",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": "字符识别模型路径"
               },
               {
                 "varName": "rec dict model",
                 "varType": "string",
-                "fromExpression": "server/src/main/resources/models/ppocr_keys_v1.txt",
+                "fromExpression": "resources/models/ppocr_keys_v1.txt",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": "字符识别字典路径"
               }
@@ -2221,7 +2221,7 @@
           {
             "modelName": "object-detection",
             "helpMsg": "it is a help message",
-            "dllPath": "server/src/main/resources/ObjectDetect.dll",
+            "dllPath": "resources/ObjectDetect.dll",
             "modelID": "object_detect",
             "inPara": [
               {
@@ -2256,14 +2256,14 @@
               {
                 "varName": "modelpath",
                 "varType": "string",
-                "fromExpression": "server/src/main/resources/models/yolov5s.onnx",
+                "fromExpression": "resources/models/yolov5s.onnx",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": "模型路径"
               },
               {
                 "varName": "cocodictPath",
                 "varType": "string",
-                "fromExpression": "server/src/main/resources/models/coco.names",
+                "fromExpression": "resources/models/coco.names",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": "coco字典路径"
               }
@@ -2279,7 +2279,7 @@
           {
             "modelName": "imageDenoising",
             "helpMsg": "it is a help message",
-            "dllPath": "server/src/main/resources/image_denoising.dll",
+            "dllPath": "resources/image_denoising.dll",
             "modelID": "imgenDenosing",
             "inPara": [
               {
@@ -2293,7 +2293,7 @@
               {
                 "varName": "modelpath",
                 "varType": "string",
-                "fromExpression": "server/src/main/resources/models/mode_denosing.onnx",
+                "fromExpression": "resources/models/mode_denosing.onnx",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": "模型路径"
               }
@@ -2309,7 +2309,7 @@
           {
             "modelName": "lowLightImgEnhance",
             "helpMsg": "弱光条件下图片变亮",
-            "dllPath": "server/src/main/resources/lowLigt_imgEnhance.dll",
+            "dllPath": "resources/lowLigt_imgEnhance.dll",
             "modelID": "lowlightImgEnhance",
             "inPara": [
               {
@@ -2354,7 +2354,7 @@
           {
             "modelName": "imageRescale",
             "helpMsg": "it is a help message",
-            "dllPath": "server/src/main/resources/image_rescale.dll",
+            "dllPath": "resources/image_rescale.dll",
             "modelID": "imageRescale",
             "inPara": [
               {
@@ -2390,7 +2390,7 @@
           {
             "modelName": "image-classification",
             "helpMsg": "分裂模型可以有两个inceptionv3.onnx和resnet50-v1-12.onnx，类别字典文件为imagenet_classes.txt",
-            "dllPath": "server/src/main/resources/image_classification.dll",
+            "dllPath": "resources/image_classification.dll",
             "modelID": "image_classification",
             "inPara": [
               {
@@ -2404,18 +2404,18 @@
               {
                 "varName": "cls_model_path",
                 "varType": "string",
-                "fromExpression": "server/src/main/resources/models/inceptionv3.onnx",
+                "fromExpression": "resources/models/inceptionv3.onnx",
                 "defineVarInputWay": "selectedInputWay",
                 "comboList": {
-                  "inceptionv3": "server/src/main/resources/models/inceptionv3.onnx",
-                  "resnetv50": "server/src/main/resources/models/resnet50-v1-12.onnx"
+                  "inceptionv3": "resources/models/inceptionv3.onnx",
+                  "resnetv50": "resources/models/resnet50-v1-12.onnx"
                 },
                 "varExplanation": "模型路径"
               },
               {
                 "varName": "image_net_classes",
                 "varType": "string",
-                "fromExpression": "server/src/main/resources/models/imagenet_classes.txt",
+                "fromExpression": "resources/models/imagenet_classes.txt",
                 "defineVarInputWay": "directInputWay",
                 "varExplanation": "类别字典路径"
               }
@@ -2446,7 +2446,7 @@
           {
             "modelNname": "position-detect",
             "helpMsg": "it is a help message of GlobalVariable",
-            "dllPath": "server/src/main/resources/getPosition.dll",
+            "dllPath": "resources/getPosition.dll",
             "modelID": "getPosition",
             "inPara": [
               {
@@ -2490,7 +2490,7 @@
           {
             "modelName": "new_field_detect",
             "helpMsg": "it is a help message of GlobalVariable",
-            "dllPath": "server/src/main/resources/detectField.dll",
+            "dllPath": "resources/detectField.dll",
             "modelID": "detectField",
             "inPara": [
               {
@@ -2537,7 +2537,7 @@
           {
             "modelName": " 划痕检测",
             "helpMsg": "it is a help message of GlobalVariable",
-            "dllPath": "server/src/main/resources/scratchDetection.dll",
+            "dllPath": "resources/scratchDetection.dll",
             "modelID": "myScratchDetection",
             "inPara": [
               {
@@ -2575,7 +2575,7 @@
           {
             "modelName": "CodeDetect",
             "helpMsg": "it is a help message of GlobalVariable",
-            "dllPath": "server/src/main/resources/QrcodeDetect.dll",
+            "dllPath": "resources/QrcodeDetect.dll",
             "modelID": "codeDetect",
             "inPara": [
               {
@@ -2614,7 +2614,7 @@
           {
             "modelName": " 边缘检测",
             "helpMsg": "it is a help message of GlobalVariable",
-            "dllPath": "server/src/main/resources/myEdgeDetection.dll",
+            "dllPath": "resources/myEdgeDetection.dll",
             "modelID": "myEdgeDetection",
             "inPara": [
               {
@@ -2698,6 +2698,17 @@
             "dllPath": "",
             "modelID": "",
             "inPara": [
+              {
+                "varName": "int",
+                "varType": "string",
+                "fromExpression": "",
+                "defineVarInputWay": "selectedInputWay",
+                "comboList":{
+                  "全部":"and",
+                  "任意":"or"
+                },
+                "varExplanation": ""
+              }
             ],
             "outPara": [
             ]
