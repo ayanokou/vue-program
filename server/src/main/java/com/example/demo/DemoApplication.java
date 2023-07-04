@@ -62,7 +62,7 @@ public class DemoApplication {
 	private interface Register {
 		void register(String event, int operation) throws IOException;
 	}
-
+	
 	public static void main(String[] args) throws UnknownHostException, IOException {
 		com.corundumstudio.socketio.Configuration config = new Configuration();
 		config.setMaxFramePayloadLength(5 * 1024 * 1024);
@@ -133,6 +133,8 @@ public class DemoApplication {
 		operationMap.put("RunFlow", 9);
 		operationMap.put("RunSolution", 10);
 		operationMap.put("SaveGlobalVar", 11);
+		operationMap.put("RunSolutionLoop",12);
+		operationMap.put("StopSolutionLoop",13);
 
 		for (String key : operationMap.keySet()) {
 			Integer value = operationMap.get(key);

@@ -23,7 +23,7 @@
                 "varType": "string",
                 "fromExpression": "",
                 "defineVarInputWay": "directInputWay",
-                "varExplanation": ""
+                "varExplanation": "文件本地路径"
               },
               {
                 "varName": "flags",

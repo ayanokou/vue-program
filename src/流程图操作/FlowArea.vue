@@ -551,6 +551,9 @@ export default {
     },
 
     methods: {
+        //两数相加
+        
+        
         run(index){
             let run_button=document.getElementsByClassName('run-button')[index]
             run_button.classList.add('running');

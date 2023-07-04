@@ -14,6 +14,7 @@ import axiosInstance from "../../axios"
 //初始化socketio用于前后端传输
 let socket = io.connect('http://localhost:9092')
 
+
 export default {
     components:{
         GlobalVar,
@@ -164,10 +165,6 @@ export default {
         socket.on("revFlowResults",data=>{
             console.log("revFlowResults")
         })
-        // socket.on('revRects',(data)=>{
-        //     this.$store.commit('setModuleResultData', data);
-        // })
-
         
     },
     computed:{
@@ -188,7 +185,20 @@ export default {
         }
 
     },
+    created() {
+
+    },
     methods: {
+        runSolutionLoop(){
+            socket.emit("RunSolutionLoop",{message:JSON.stringify({})})
+        },
+        async stopSolutionLoop(){
+            //socket.emit("StopSolutionLoop",{message:JSON.stringify({})})
+            const handle =await window.showSaveFilePicker()
+            const writer = await handle.createWritable()
+            await writer.write('hello world')
+            await writer.close()
+        },
         openTest(){
             this.testFlag = true
         },
