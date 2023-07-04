@@ -1,8 +1,10 @@
 package com.example.demo;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+// import org.springframework.boot.SpringApplication;
+// import org.springframework.boot.autoconfigure.SpringBootApplication;
+// import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 
@@ -14,18 +16,18 @@ import java.net.UnknownHostException;
 import com.alibaba.fastjson.JSONObject;
 import com.corundumstudio.socketio.*;
 
-@SpringBootApplication
-@RestController
-@CrossOrigin
+// @SpringBootApplication
+// @RestController
+// @CrossOrigin
 public class DemoApplication {
 
 	private static String imgFormat;
 	private HashMap<Integer, Boolean> flags;
-	private static final String messageHandlerPath = "mh/MessageHandler.exe";
+	private static final String MESSAGE_HANDLER_PATH = "mh/MessageHandler.exe";
 	private static final String IP = "127.0.0.1";
 	private static final int PORT = 8180;
 
-	static {
+	// static {
 		// String path1 = "server/src/main/resources";
 		// String path2 = "server/src/main/resources/Read.dll";
 		// String path3 = "server/src/main/resources/GaussianBlur.dll";
@@ -54,7 +56,7 @@ public class DemoApplication {
 		// System.loadLibrary("tcpInFlow");
 		// System.loadLibrary("tcpDll");
 		// System.loadLibrary("clientSDK");
-	}
+	// }
 
 	public boolean checkRunning(int port) {
 		return flags.get(port);
@@ -65,7 +67,9 @@ public class DemoApplication {
 	}
 	
 	public static void main(String[] args) throws UnknownHostException, IOException {
-		MessageHandlerInitializer initializer = new MessageHandlerInitializer(messageHandlerPath);
+		Logger logger = LoggerFactory.getLogger(DemoApplication.class);
+
+		MessageHandlerInitializer initializer = new MessageHandlerInitializer(MESSAGE_HANDLER_PATH, logger);
 		initializer.start();
 
 		com.corundumstudio.socketio.Configuration config = new Configuration();
@@ -75,7 +79,6 @@ public class DemoApplication {
 
 		final SocketIOServer server = new SocketIOServer(config);
 
-		FCClient clientForCpp = new FCClient();
 		FCListener listenerForCpp = new FCListener() {
 			private SocketIOClient client;
 
@@ -92,16 +95,16 @@ public class DemoApplication {
 			@Override
 			public void onMessage(String event, String data) {
 				if (client == null) {
-					System.out.println("client is null");
+					logger.warn("client is null");
 					return;
 				}
 				client.sendEvent(event, data);
 			}
 		};
 
-		MessageHandlerSender sender = new MessageHandlerSender(IP, PORT);
+		MessageHandlerSender sender = new MessageHandlerSender(IP, PORT, logger);
 		sender.tryConnect();
-		MessageHandlerReceiver receiver = new MessageHandlerReceiver(sender.getSocket(), listenerForCpp);
+		MessageHandlerReceiver receiver = new MessageHandlerReceiver(sender.getSocket(), listenerForCpp, logger);
 		receiver.start();
 		Register reg = (String event, int operation) -> {
 			server.addEventListener(event, String.class, new DataListener<String>() {
@@ -117,7 +120,7 @@ public class DemoApplication {
 					jsonObject.put("operation", operation);
 					jsonObject.put("data", data);
 					String result = jsonObject.toJSONString();
-					System.out.println(result);
+					logger.info("receive event: {}, data: {}", event, result);
 					sender.sendToMessageHandler(result);
 				}
 			});
@@ -146,7 +149,7 @@ public class DemoApplication {
 
 
 		server.start();
-		SpringApplication.run(DemoApplication.class, args);
+		// SpringApplication.run(DemoApplication.class, args);
 	}
 
 }

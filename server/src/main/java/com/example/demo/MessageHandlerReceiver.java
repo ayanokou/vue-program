@@ -4,7 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
-import com.alibaba.fastjson.JSONObject;
+
+import org.slf4j.Logger;
 
 import com.alibaba.fastjson.JSONObject;
 
@@ -12,10 +13,12 @@ public class MessageHandlerReceiver implements Runnable {
     private Socket socket;
     private Thread t;
     private FCListener listener;
+    private Logger logger;
 
-    public MessageHandlerReceiver(Socket socket, FCListener listener) {
+    public MessageHandlerReceiver(Socket socket, FCListener listener, Logger logger) {
         this.socket = socket;
         this.listener = listener;
+        this.logger = logger;
     }
 
     @Override
@@ -33,8 +36,8 @@ public class MessageHandlerReceiver implements Runnable {
                 // <MSG>{"event": /* event */, "data": /* data */ }</MSG>
                 while (startIndex != -1 && endIndex != -1 && startIndex < endIndex) {
                     String message = msg.substring(startIndex + 5, endIndex);
-
-                    System.out.println("MessageHandlerReceiver: " + message);
+                    
+                    logger.info("MessageHandlerReceiver: {}", message);
                     JSONObject jsonObject = JSONObject.parseObject(message);
                     String event = jsonObject.getString("event");
                     String data = jsonObject.getJSONObject("data").toJSONString();
@@ -47,7 +50,7 @@ public class MessageHandlerReceiver implements Runnable {
             }
         } catch (IOException e) {
             e.printStackTrace();
-            System.err.println("MessageHandlerReceiver exited");
+            logger.error("MessageHandlerReceiver exited");
         }
     }
 
