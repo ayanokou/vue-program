@@ -212,6 +212,85 @@
             </el-row>
         </div>
     </el-dialog>
+
+    <el-dialog
+        title="相机管理"
+        v-model="cameraManagementVisible"
+        :modal="false"
+        :close-on-click-modal="false"
+        custom-class="custom-dialog"
+        draggable
+    >
+        <div>
+            <el-row class="row-container">
+                <el-col :span="4" class="left-column">
+                    <!-- 左侧区域 -->
+                    <div class="sidebar-content">
+                        <el-button @click="takeOneImg()">测试拍照</el-button>
+                        <div class="sidebar-item" :class="{ active: activeIcon === 'cameraManage' }" @click="getAccessCameras(); setActiveIcon('cameraManage')">
+                            <el-icon><Monitor /></el-icon>
+                            <span>相机管理</span>
+                        </div>   
+                        <div class="sidebar-item" :class="{ active: activeIcon === 'addCamera' }" @click="setActiveIcon('addCamera')">
+                            <el-icon><Monitor /></el-icon>
+                            <span>添加相机</span>
+                        </div>
+                    </div>
+                </el-col>
+                <el-col :span="20" class="right-column">
+                    <!-- 右侧区域 -->
+                    <div class="right-content">
+                    <!-- 这里根据点击不同的图标显示不同的内容 -->
+                        <div class="mainfield-setting" v-if="activeIcon === 'cameraManage'">
+                            <el-row style="height: 100%;">
+                                <el-col :span="8" class="content-head" style="border-right: 1px solid #ccc;">
+                                <!--vue for循环从某个变量里把可用的设备信息输出出来，这个变量应该在页面初始化时请求后端而得到-->
+                                    <template v-for="camera in availableCameras">
+                                        <el-card class="box-card" style="width:max-content">
+                                            <div class="text item">
+                                                {{ 'deviceId:' + camera["deviceId"] }}<br>
+                                                
+                                                {{ 'UserDefinedName:' + camera["userDefinedName"] }}<br>
+                                                
+                                                {{ 'accessable:' + camera["accessable"] }}<br></div>
+                                                <a v-if="camera['IP']">{{ 'IP:' + camera["IP"] }}</a>
+                                                <el-button @click="setCameraID(camera)">选择</el-button>
+                                        </el-card>
+                                    </template>
+                                </el-col>
+                                <el-col :span="12">
+                                <!--一些相机常用参数设置 这个应该设好了后存到相机参数变量里 点击确定后传给后端给相机设置参数-->
+                                    <el-form-item v-for="(value, key, index) in cameraParams" :label="key">
+                                            <el-input v-model="cameraParams[key]" v-if="key == 'widthMax' || key == 'heightMax'" disabled="true"/>
+                                            <el-input v-model="cameraParams[key]" v-else/>
+                                    </el-form-item>
+
+                                    <!-- <el-button @click="setCameraParams()" style="color:grey; float:right;">设置</el-button> -->
+
+                                </el-col>
+                            </el-row>
+                        </div>
+
+                        <div class="mainfield-setting" v-if="activeIcon === 'addCamera'">
+                            <el-row style="height: 100%;">
+                                <el-col :span="20">
+                                    <el-form-item>
+                                        名称:<el-input v-model="cameraItem['name']"/>
+                                        类型:<el-input v-model="cameraItem['type']"/>
+                                        驱动:<el-input v-model="cameraItem['dll']" type="text"/>
+                                    </el-form-item>
+
+                                    <el-button @click="addCamera()" style="color:grey; float:right;">添加</el-button>
+
+                                </el-col>
+                            </el-row>
+                        </div>
+                    </div>
+                </el-col>
+            </el-row>
+        </div>
+    </el-dialog>
+    
     <div class="common-layout">
         <img
             style="position: absolute; left: 0px; top: 0px"
@@ -388,6 +467,7 @@
                             ></el-menu-item
                         >
                         <el-menu-item id="manageCamera"
+                            @click="manageCamera"
                             ><span style="color: aliceblue"
                                 >相机管理</span
                             ></el-menu-item
@@ -685,5 +765,17 @@ ul.el-menu.el-menu--horizontal.el-menu-demo1 :hover {
 
 .el-tabs__header {
     margin: 0px 0px 0px 0px;
+}
+/*camera card style*/
+.text {
+  font-size: 14px;
+}
+
+.item {
+  padding: 18px 0;
+}
+
+.box-card {
+  width: 480px;
 }
 </style>

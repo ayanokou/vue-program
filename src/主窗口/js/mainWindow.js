@@ -41,6 +41,24 @@ export default {
           selectedGroup: "接收数据",
           group1Input: "", //通信管理-设备管理接收数据
           group2Output: "", //通信管理-设备管理发送数据
+          //是否显示相机管理窗口
+          cameraManagementVisible: false,
+          //使用相机ID
+          activeCamera: 0,
+          //相机默认参数设置 在拍图片时会被传到后端给相机做设置
+          cameraParams : { 
+            "widthMax" : 640,
+            "heightMax" : 480,
+            "exposureTime" : 2313.0000, //微秒
+            "width" : 640,
+            "height" : 480,
+            //其他
+          },
+          //可用相机列表
+          availableCameras : {},
+          //added cameras
+          cameras : [],
+          cameraItem : {name : "", type : "", dll : ""},
           //是否显示最近打开方案子菜单栏
           showLastOpenSolution: false,
           //最近打开的方案名，存三个
@@ -150,12 +168,16 @@ export default {
         socket.on('ReceivedTcpData', data =>{
             console.log(`ReceivedTcpData: ${data}`)
         })
+        socket.on('revAvaCameras', data =>{
+            // console.log("revAvaCameras")
+            this.availableCameras = JSON.parse(data).AvailableCameras
+        })
         // socket.on('revRects',(data)=>{
         //     this.$store.commit('setModuleResultData', data);
         // })
-
         
     },
+
     computed:{
         ...mapState(['socketEmit','dialogVisibleGlobalVar'])
     },
@@ -163,7 +185,7 @@ export default {
         socketEmit(newValue){
             if(newValue.trigger){
                 //
-                console.log('running...')
+                console.log('running...' + newValue.mode)
                 socket.emit(newValue.mode, newValue.data);
                 //
                 this.$store.commit("setSocketEmit",{
@@ -237,6 +259,9 @@ export default {
         },
         subManageCommunication(){
             this.subCommunicationManagementVisible = true;
+        },
+        manageCamera(){
+            this.cameraManagementVisible = true;
         },
 
         setActiveIcon(icon){
@@ -417,8 +442,66 @@ export default {
             
           
           },
-
+          //列出可用相机
+          getAccessCameras(){
+            let msg = JSON.stringify({data : {camera_op_type : 0}})
+            let jsonObject = {
+                message: msg
+            }
+            let payload={
+                trigger:true,
+                mode:"CameraOperation",
+                data:jsonObject
+            }
+            this.$store.commit("setSocketEmit",payload)
+          },
+          //获取一张图片
+          takeOneImg(){
+            let msg = JSON.stringify({data : {
+                camera_op_type : 1, 
+                cameraID : Number(this.activeCamera),
+                width : Number(this.cameraParams["width"]),
+                height : Number(this.cameraParams["height"]),
+                exposureTime : Number(this.cameraParams["exposureTime"])
+            }})
+            let jsonObject = {
+                message: msg
+            }
+            let payload={
+                trigger:true,
+                mode:"CameraOperation",
+                data:jsonObject
+            }
+            this.$store.commit("setSocketEmit",payload)
+          },
+        
+          //选择使用相机
+          setCameraID(camera){
+            this.activeCamera = camera["deviceId"];
+            this.cameraParams["width"] = camera["width"]
+            this.cameraParams["height"] = camera["height"]
+            this.cameraParams["widthMax"] = camera["widthMax"]
+            this.cameraParams["heightMax"] = camera["heightMax"]
+            this.cameraParams["exposureTime"] = camera["exposureTime"];
+            // console.log('setCameraID: ', this.activeCamera);
+          },
           
+          addCamera(){
+            console.log(this.cameras)
+            for(let i = 0; i < this.cameras.length; ++i){
+                if(this.cameraItem["name"] == "" || this.cameras[i]["name"] === this.cameraItem["name"]){
+                    this.$message({
+                        message: '添加相机失败，相机名重复或为空',
+                        type: 'error',
+                        duration: 1500,
+                    });
+                    return;
+                }
+            }
+            this.cameras.push({name : this.cameraItem["name"], type : this.cameraItem["type"], dll : this.cameraItem["dll"]})
+            console.log(this.cameraItem)
+          }
+
         
     }
 }

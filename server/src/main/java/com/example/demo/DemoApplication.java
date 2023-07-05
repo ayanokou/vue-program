@@ -73,6 +73,7 @@ public class DemoApplication {
 
 		final SocketIOServer server = new SocketIOServer(config);
 
+
 		FCClient clientForCpp = new FCClient();
 		FCListener listenerForCpp = new FCListener() {
 			private SocketIOClient client;
@@ -93,9 +94,11 @@ public class DemoApplication {
 					System.out.println("client is null");
 					return;
 				}
+
 				client.sendEvent(event, data);
 			}
 		};
+
 
 		MessageHandlerSender sender = new MessageHandlerSender(IP, PORT);
 		sender.tryConnect();
@@ -108,9 +111,8 @@ public class DemoApplication {
 				server.addEventListener(event, ChatObject.class, new DataListener<ChatObject>() {
 					@Override
 					public void onData(SocketIOClient socketIOClient, ChatObject chatObject, AckRequest ackRequest) throws Exception {
-						if (listenerForCpp.getClient() == null) {
-							listenerForCpp.setClient(socketIOClient);
-						}
+						//每次前端刷新 后面会新建一个socket 有不同的sessionid 因此每次重连设置一下client 防止发送的事件vue接收不到
+						listenerForCpp.setClient(socketIOClient);
 
 						String result = chatObject.getMessage();
 						JSONObject jsonObject = JSONObject.parseObject(result);
