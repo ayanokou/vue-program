@@ -519,7 +519,7 @@ export default {
             let payload={
                 trigger:true,
                 mode:"RunFlow",
-                data:msg
+                data:JSON.stringify(msg)
             }
             this.$store.commit("setSocketEmit",payload)
         },

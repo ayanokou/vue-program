@@ -171,8 +171,8 @@ export default {
           console.log(`UdpListenerReceivedData: ${data}`)
         );
 
-        socket.on("revFlowResults",data=>{
-            console.log("revFlowResults")
+        socket.on("revResults",data=>{
+            console.log("revResults")
         })
         
     },
@@ -182,11 +182,10 @@ export default {
     watch:{
         socketEmit(newValue){
             if(newValue.trigger){
-                
-                socket.emit(newValue.mode, {
-                    message:JSON.stringify(newValue.data)
-                });
-                
+                //
+                console.log('running...')
+                socket.emit(newValue.mode, newValue.data);
+                //
                 this.$store.commit("setSocketEmit",{
                     trigger:false
                 })
@@ -223,7 +222,7 @@ export default {
             let payload={
                 trigger:true,
                 mode:"TCP",
-                data:{ip:this.ip, port: this.portNumber, data:this.group2Output}
+                data:JSON.stringify({ip:this.ip, port: this.portNumber, data:this.group2Output})
             }
             this.$store.commit("setSocketEmit",payload)
         },
@@ -251,7 +250,7 @@ export default {
             let payload = {
               trigger: true,
               mode: operationName,
-              data: { IP: this.ip, port: parseInt(this.portNumber) }               
+              data: JSON.stringify({ IP: this.ip, port: parseInt(this.portNumber) } )              
             };
 
             this.$store.commit("setSocketEmit", payload);

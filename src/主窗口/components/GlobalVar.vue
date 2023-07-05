@@ -102,7 +102,7 @@ export default {
             let payload={
                 trigger:true,
                 mode:"SaveGlobalVar",
-                data:this.tableData
+                data:JSON.stringify(this.tableData)
             }
             this.$store.commit("setSocketEmit",payload)
         },

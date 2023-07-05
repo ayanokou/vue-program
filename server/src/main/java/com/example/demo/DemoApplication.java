@@ -106,6 +106,7 @@ public class DemoApplication {
 		sender.tryConnect();
 		MessageHandlerReceiver receiver = new MessageHandlerReceiver(sender.getSocket(), listenerForCpp, logger);
 		receiver.start();
+
 		Register reg = (String event, int operation) -> {
 			server.addEventListener(event, String.class, new DataListener<String>() {
 				@Override

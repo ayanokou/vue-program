@@ -15,7 +15,7 @@
           {
             "modelName": "文件输入",
             "helpMsg": "it is a help message",
-            "dllPath": "resources/general.dll",
+            "dllPath": "resources/General.dll",
             "modelID": "read",
             "inPara": [
               {
