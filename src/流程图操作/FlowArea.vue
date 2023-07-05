@@ -198,13 +198,10 @@ export default {
     watch: {
         runSolution(newValue){
             if(newValue.trigger){
-                let jsonObject = {
-                    message: JSON.stringify({data:this.solution})
-                }
                 let payload={
                     trigger:true,
                     mode:"RunSolution",
-                    data:jsonObject
+                    data:JSON.stringify(this.solution)
                 }
                 this.$store.commit("setSocketEmit",payload)
 
@@ -516,13 +513,10 @@ export default {
                 tabIndex:index,
                 content:this.$refs.lfComponent[index].lfData
             }
-            let jsonObject = {
-                message: JSON.stringify({data:msg})
-            }
             let payload={
                 trigger:true,
                 mode:"RunFlow",
-                data:jsonObject
+                data:JSON.stringify(msg)
             }
             this.$store.commit("setSocketEmit",payload)
         },
