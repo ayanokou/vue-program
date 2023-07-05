@@ -40,7 +40,7 @@ export default{
         return{
             activeName:'first',
             compnt:CurrentData,
-            componentName:"当前结果"
+            componentName:"当前结果",
         }
     },
     components:{
@@ -68,6 +68,6 @@ export default{
         //         }
         //     }
         // }
-    },
+    }
 }
 </script>
