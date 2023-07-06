@@ -181,6 +181,62 @@ export default {
 
     },
     methods: {
+        test(){
+            this.$store.commit('setRunResults',[
+                {
+                  "tab_index": 0,
+                  "results": [
+                    {
+                      "id": "0",
+                      "outResults": [
+                        {
+                          "name":"dst",
+                          "type":"Mat",
+                          "content":""
+                        },
+                        {
+                          "name":"dst1",
+                          "type":"int",
+                          "content":0
+                        },
+                        {
+                          "name":"point",
+                          "type":"Point",
+                          "content":{
+                            "x":0,
+                            "y":0
+                          }
+                        }
+                      ],
+                      "timeConsume": 5688
+                    },
+                    {}
+                  ],
+                  "totalTimeConsume": 6275
+                },
+                {
+                  "tab_index": 1,
+                  "results": [
+                    {
+                      "id": "0",
+                      "outResults": [
+                        {
+                          "type":"Mat",
+                          "content":""
+                        },
+                        {
+                          "type":"int",
+                          "content":0
+                        }
+                      ],
+                      "timeConsume": 5688
+                    },
+                    {}
+                  ],
+                  "totalTimeConsume": 6275
+                }
+              ])
+        },
         openNetworkManager(){
             this.networkManagerVisible = true
         },

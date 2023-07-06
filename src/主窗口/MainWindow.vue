@@ -229,8 +229,7 @@
                             ></el-menu-item
                         >
                     </el-sub-menu>
-                    <el-button @click="runSolutionLoop">loop</el-button>
-                    <el-button @click="stopSolutionLoop">stop</el-button>
+                    <el-button  @click="test">test</el-button>
 
 
                     <!--                    <el-sub-menu index="5">-->

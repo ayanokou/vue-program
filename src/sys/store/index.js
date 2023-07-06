@@ -31,12 +31,16 @@ export default createStore({
             dialogVisibleGlobalVar:false,
             //nodeModelName:"",
             localImg:"init",
-            runResults:undefined,
+            runResults:[],
             runSolutionLoop:undefined,
             currentNode:undefined,
+            showCurrentResult:false
         }
     },
     mutations:{
+        showCurrentResultEvent(state,payload){
+            state.showCurrentResult=payload
+        },
         setVuexHelpInfo(state,payload){
             state.vuexHelpInfo=payload
         },
