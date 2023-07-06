@@ -34,7 +34,8 @@ export default createStore({
             runResults:[],
             runSolutionLoop:undefined,
             currentNode:undefined,
-            showCurrentResult:false
+            showCurrentResult:false,
+            historyResults:[],
         }
     },
     mutations:{
@@ -115,6 +116,9 @@ export default createStore({
         setCurrentNode(state,payload){
             state.currentNode=payload
             console.log(payload)
+        },
+        setHistoryResults(state,payload){
+            state.historyResults=payload
         }
     },
     modules:{
