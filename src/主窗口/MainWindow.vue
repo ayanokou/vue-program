@@ -456,7 +456,7 @@
                     mode="horizontal"
                     @select="handleSelect"
                 >
-                    <el-menu-item title="撤销" id="revocation" index="1">
+                    <!-- <el-menu-item title="撤销" id="revocation" index="1">
                         <el-icon style="color: aliceblue">
                             <Back />
                         </el-icon>
@@ -465,23 +465,23 @@
                         <el-icon style="color: aliceblue">
                             <RefreshLeft />
                         </el-icon>
-                    </el-menu-item>
+                    </el-menu-item> -->
                     <el-menu-item title="单次运行" id="singleRun" index="3" @click="sendEvent('runSolutionEvent')">
                         <el-icon style="color:aliceblue;">
                             <Right />
                         </el-icon>
                     </el-menu-item>
-                    <el-menu-item title="局部运行" id="localRun" index="4">
+                    <!-- <el-menu-item title="局部运行" id="localRun" index="4">
                         <el-icon style="color: aliceblue">
                             <CaretRight />
                         </el-icon>
-                    </el-menu-item>
-                    <el-menu-item title="循环运行" id="circleRun" index="5">
+                    </el-menu-item> -->
+                    <el-menu-item title="循环运行" id="circleRun" index="5" @click="runSolutionLoop">
                         <el-icon style="color: aliceblue">
                             <Refresh />
                         </el-icon>
                     </el-menu-item>
-                    <el-menu-item title="停止" id="stop" index="6">
+                    <el-menu-item title="停止" id="stop" index="6" @click="stopSolutionLoop">
                         <el-icon style="color: aliceblue">
                             <CircleClose />
                         </el-icon>

@@ -171,8 +171,8 @@ export default {
           console.log(`UdpListenerReceivedData: ${data}`)
         );
 
-        socket.on("revResults",data=>{
-            console.log("revResults")
+        socket.on("runResults",data=>{
+            this.commit('setRunResult',data)
         })
         
     },
@@ -201,14 +201,17 @@ export default {
             this.networkManagerVisible = true
         },
         runSolutionLoop(){
-            socket.emit("RunSolutionLoop",{message:JSON.stringify({})})
+            socket.emit("RunSolutionLoop",{trigger:true})
         },
-        async stopSolutionLoop(){
-            //socket.emit("StopSolutionLoop",{message:JSON.stringify({})})
-            const handle =await window.showSaveFilePicker()
-            const writer = await handle.createWritable()
-            await writer.write('hello world')
-            await writer.close()
+        // async stopSolutionLoop(){
+        //     //socket.emit("StopSolutionLoop",{message:JSON.stringify({})})
+        //     const handle =await window.showSaveFilePicker()
+        //     const writer = await handle.createWritable()
+        //     await writer.write('hello world')
+        //     await writer.close()
+        // },
+        stopSolutionLoop(){
+            socket.emit("StopSolutionLoop",{trigger:true})
         },
         openTest(){
             this.testFlag = true

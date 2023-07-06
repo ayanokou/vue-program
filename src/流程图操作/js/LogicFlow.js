@@ -395,6 +395,7 @@ export default {
         })
         //单击选中节点
         this.lf.on('node:click',(evt)=>{
+            this.$store.commit('setCurrentNode',{tabIndex:this.tab.index,nodeId:evt.data.id})
             //刷新nodeModel
             this.nodeModel = this.lf.getNodeModelById(evt.data.id)
             this.selectedAlgorithm = evt.data.id
@@ -406,7 +407,7 @@ export default {
             this.nodeModel=this.lf.getNodeModelById(evt.data.id)
             //console.log(evt.data)//运行的结点信息
             let array=suanziItemList[evt.data.properties.superName]
-            this.operatorData=(array.find(item=>item.lfProperties.name==evt.data.properties.name)).properties
+            this.operatorData=array.find(item=>item.name==evt.data.properties.name)
             //找modelName和formData
             //console.log(this.nodeModel.getProperties())
             if(this.nodeModel.getProperties().inPara){
@@ -476,7 +477,7 @@ export default {
         this.lf.on('node:dnd-add',(evt)=>{
             this.nodeModel=this.lf.getNodeModelById(evt.data.id)
             let array=suanziItemList[evt.data.properties.superName]
-            this.operatorData=(array.find(item=>item.lfProperties.name==evt.data.properties.name)).properties
+            this.operatorData=array.find(item=>item.name==evt.data.properties.name)
             //更改text加序号
             this.nodeModel.updateText(evt.data.id+evt.data.text.value)
             //初始化模型和outPara
@@ -651,11 +652,16 @@ export default {
             Object.entries(suanziItemList).forEach(([key_1, value_1])=>{
                 value_1.forEach((value_2)=>{
                     var temp = {
-                        label : value_2.lfProperties.label,
-                        text : value_2.lfProperties.text,
-                        type : value_2.lfProperties.type,
-                        name : value_2.lfProperties.name,
-                        properties : value_2.properties,
+                        // label : value_2.lfProperties.label,
+                        // text : value_2.lfProperties.text,
+                        // type : value_2.lfProperties.type,
+                        // name : value_2.lfProperties.name,
+                        // properties : value_2.properties,
+                        label: value_2.name,
+                        text:value_2.name,
+                        type:"operator",
+                        name:value_2.name,
+                        properties:value_2,
                         icon : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAEFVwZaAAAABGdBTUEAALGPC/xhBQAAAqlJREFUOBF9VM9rE0EUfrMJNUKLihGbpLGtaCOIR8VjQMGDePCgCCIiCNqzCAp2MyYUCXhUtF5E0D+g1t48qAd7CCLqQUQKEWkStcEfVGlLdp/fm3aW2QQdyLzf33zz5m2IsAZ9XhDpyaaIZkTS4ASzK41TFao88GuJ3hsr2pAbipHxuSYyKRugagICGANkfFnNh3HeE2N0b3nN2cgnpcictw5veJIzxmDamSlxxQZicq/mflxhbaH8BLRbuRwNtZp0JAhoplVRUdzmCe/vO27wFuuA3S5qXruGdboy5/PRGFsbFGKo/haRtQHIrM83bVeTrOgNhZReWaYGnE4aUQgTJNvijJFF4jQ8BxJE5xfKatZWmZcTQ+BVgh7s8SgPlCkcec4mGTmieTP4xd7PcpIEg1TX6gdeLW8rTVMVLVvb7ctXoH0Cydl2QOPJBG21STE5OsnbweVYzAnD3A7PVILuY0yiiyDwSm2g441r6rMSgp6iK42yqroI2QoXeJVeA+YeZSa47gZdXaZWQKTrG93rukk/l2Al6Kzh5AZEl7dDQy+JjgFahQjRopSxPbrbvK7GRe9ePWBo1wcU7sYrFZtavXALwGw/7Dnc50urrHJuTPSoO2IMV3gUQGNg87IbSOIY9BpiT9HV7FCZ94nPXb3MSnwHn/FFFE1vG6DTby+r31KAkUktB3Qf6ikUPWxW1BkXSPQeMHHiW0+HAd2GelJsZz1OJegCxqzl+CLVHa/IibuHeJ1HAKzhuDR+ymNaRFM+4jU6UWKXorRmbyqkq/D76FffevwdCp+jN3UAN/C9JRVTDuOxC/oh+EdMnqIOrlYteKSfadVRGLJFJPSB/ti/6K8f0CNymg/iH2gO/f0DwE0yjAFO6l8JaR5j0VPwPwfaYHqOqrCI319WzwhwzNW/aQAAAABJRU5ErkJggg=="
                     }
                     if(temp.label == "选区"){

@@ -25,12 +25,15 @@ export default createStore({
             moduleResultData:"[]",
             //流程运行结束信号
             flowChartOK:{trigger:false,index:-1},
-            generalResult:"",
+            //generalResult:"",
             runState:{trigger:false,content:null},
             runSolution:null,
             dialogVisibleGlobalVar:false,
             //nodeModelName:"",
-            localImg:"init"
+            localImg:"init",
+            runResults:undefined,
+            runSolutionLoop:undefined,
+            currentNode:undefined,
         }
     },
     mutations:{
@@ -64,6 +67,9 @@ export default createStore({
         runSolutionEvent(state,payload){
             state.runSolution=payload
         },
+        runSolutionLoopEvent(state,payload){
+            sata.runSolutionLoop=payload
+        },
 
         setSocketEmit(state,payload){
             state.socketEmit=payload
@@ -84,9 +90,9 @@ export default createStore({
         setFlowChartOK(state,payload){
             state.flowChartOK=payload
         },
-        setGeneralResult(state,payload){
-            state.generalResult=payload
-        },
+        // setGeneralResult(state,payload){
+        //     state.generalResult=payload
+        // },
         setRunState(state,payload){
             state.runState=payload
         },
@@ -99,6 +105,13 @@ export default createStore({
         // setLocalImg(state,payload){
         //     state.localImg=payload
         // }
+        setRunResults(state,payload){
+            state.runResults=payload
+        },
+        setCurrentNode(state,payload){
+            state.currentNode=payload
+            console.log(payload)
+        }
     },
     modules:{
 

@@ -43,7 +43,7 @@
                         <el-menu-item-group class="second_left_menus_container">
                             <!--vue 插入元素-->
                             <el-menu-item v-for="(model_2, index2) in value" :index="'suanzi' + index1 + '-' + index2"
-                                          :id="model_2.lfProperties.name+tab.index">
+                                          :id="model_2.name+tab.index">
                             </el-menu-item>
                         </el-menu-item-group>
                     </el-sub-menu>

@@ -67,6 +67,7 @@ const LeftMenus = (function () {
                     type: shapeItem.type,
                     properties: shapeItem.properties,
                     text: shapeItem.text,
+
                 });
             }
             if (shapeItem.callback) {

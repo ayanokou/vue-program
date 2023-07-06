@@ -27,14 +27,14 @@ public class DemoApplication {
 	private static final String IP = "127.0.0.1";
 	private static final int PORT = 8180;
 
-	// static {
+	static {
 		// String path1 = "server/src/main/resources";
 		// String path2 = "server/src/main/resources/Read.dll";
 		// String path3 = "server/src/main/resources/GaussianBlur.dll";
 		// String libPath = path1 + ";";
 		// System.setProperty("java.library.path", libPath);
 		// System.out.println(System.getProperty("java.library.path"));
-		// System.loadLibrary("opencv_world470");
+		//System.loadLibrary("../mh/resources/opencv_world470");
 		// System.loadLibrary("opencv_world470_contrib");
 		// System.loadLibrary("opencv_core343");
 		// System.loadLibrary("opencv_imgproc343");
@@ -56,7 +56,7 @@ public class DemoApplication {
 		// System.loadLibrary("tcpInFlow");
 		// System.loadLibrary("tcpDll");
 		// System.loadLibrary("clientSDK");
-	// }
+	}
 
 	public boolean checkRunning(int port) {
 		return flags.get(port);
@@ -69,8 +69,8 @@ public class DemoApplication {
 	public static void main(String[] args) throws UnknownHostException, IOException {
 		Logger logger = LoggerFactory.getLogger(DemoApplication.class);
 
-		MessageHandlerInitializer initializer = new MessageHandlerInitializer(MESSAGE_HANDLER_PATH, logger);
-		initializer.start();
+		// MessageHandlerInitializer initializer = new MessageHandlerInitializer(MESSAGE_HANDLER_PATH, logger);
+		// initializer.start();
 
 		com.corundumstudio.socketio.Configuration config = new Configuration();
 		config.setMaxFramePayloadLength(5 * 1024 * 1024);
@@ -150,6 +150,8 @@ public class DemoApplication {
 
 
 		server.start();
+
+		
 		// SpringApplication.run(DemoApplication.class, args);
 	}
 
