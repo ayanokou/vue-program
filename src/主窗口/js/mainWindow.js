@@ -8,6 +8,8 @@ import LayoutThree from "@/主窗口/components/layout/LayoutThree.vue";
 import GlobalVar from "../components/GlobalVar.vue";
 import NetworkManager from "../components/NetworkManager.vue";
 import SoftwareSet from "../components/SoftwareSet.vue";
+import About from "../components/About.vue"
+import HelpDoc from "../components/HelpDoc.vue"
 
 import { computed } from "vue";
 import { mapState } from "vuex";
@@ -24,7 +26,9 @@ export default {
     components:{
         GlobalVar,
         NetworkManager,
-        SoftwareSet
+        SoftwareSet,
+        About,
+        HelpDoc
     },
     data() {
         return {
@@ -34,6 +38,8 @@ export default {
           //软件设置窗口
           softwareSetVisible:false,
           networkManagerVisible: false,
+          aboutVisible: false,
+          helpDocVisible: false,
           activeIcon: "deviceManagement",
           group1Input: "", //通信管理-设备管理接收数据
           group2Output: "", //通信管理-设备管理发送数据
@@ -168,6 +174,12 @@ export default {
 
     },
     methods: {
+        openHelpDoc(){
+            this.helpDocVisible = true
+        },
+        openAbout(){
+            this.aboutVisible = true
+        },
         openNetworkManager(){
             this.networkManagerVisible = true
         },

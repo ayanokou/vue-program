@@ -468,6 +468,181 @@
           }
         ]
       }
+    },    {
+      "lfProperties": {
+        "name": "特征点检测",
+        "type": "operator",
+        "text": "特征点检测",
+        "label": "特征点检测"
+      },
+      "properties": {
+        "state": "init",
+        "superName": "图像匹配",
+        "name": "特征点检测",
+        "models": [
+          {
+            "modelName": "fast",
+            "helpMsg": "it is a help message of GlobalVariable",
+            "dllPath": "resources/general.dll",
+            "modelID": "fast",
+            "inPara": [
+              {
+                "varName": "src",
+                "varType": "Mat",
+                "fromExpression": "",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
+                "varExplanation": "源图"
+              },
+              {
+                "varName": "threshold",
+                "varType": "int",
+                "fromExpression": "",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": "阈值"
+              },
+              {
+                "varName": "nonmaxSuppression",
+                "varType": "bool",
+                "fromExpression": "",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              }
+            ],
+            "outPara": [
+              {
+                "varName": "dst",
+                "varType": "Mat",
+                "varExplanation": ""
+              }
+            ]
+          },{
+            "modelName": "surf",
+            "helpMsg": "it is a help message of GlobalVariable",
+            "dllPath": "resources/general.dll",
+            "modelID": " surf",
+            "inPara": [
+              {
+                "varName": "src",
+                "varType": "Mat",
+                "fromExpression": "",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
+                "varExplanation": "源图"
+              },
+              {
+                "varName": "minHessian",
+                "varType": "int",
+                "fromExpression": "",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": "阈值"
+              }
+            ],
+            "outPara": [
+              {
+                "varName": "dst",
+                "varType": "Mat",
+                "varExplanation": ""
+              }
+            ]
+          },{
+            "modelName": "freak",
+            "helpMsg": "it is a help message of GlobalVariable",
+            "dllPath": "resources/general.dll",
+            "modelID": " freak",
+            "inPara": [
+              {
+                "varName": "src",
+                "varType": "Mat",
+                "fromExpression": "",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
+                "varExplanation": "源图"
+              },
+              {
+                "varName": "minHessian",
+                "varType": "int",
+                "fromExpression": "",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": "阈值"
+              }
+            ],
+            "outPara": [
+              {
+                "varName": "dst",
+                "varType": "Mat",
+                "varExplanation": ""
+              }
+            ]
+          },{
+            "modelName": "sift",
+            "helpMsg": "it is a help message of GlobalVariable",
+            "dllPath": "resources/general.dll",
+            "modelID": " sift",
+            "inPara": [
+              {
+                "varName": "src",
+                "varType": "Mat",
+                "fromExpression": "",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
+                "varExplanation": "源图"
+              }
+            ],
+            "outPara": [
+              {
+                "varName": "dst",
+                "varType": "Mat",
+                "varExplanation": ""
+              }
+            ]
+          },{
+            "modelName": "brisk",
+            "helpMsg": "it is a help message of GlobalVariable",
+            "dllPath": "resources/general.dll",
+            "modelID": " brisk",
+            "inPara": [
+              {
+                "varName": "src",
+                "varType": "Mat",
+                "fromExpression": "",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
+                "varExplanation": "源图"
+              }
+            ],
+            "outPara": [
+              {
+                "varName": "dst",
+                "varType": "Mat",
+                "varExplanation": ""
+              }
+            ]
+          },{
+            "modelName": "orb",
+            "helpMsg": "it is a help message of GlobalVariable",
+            "dllPath": "resources/general.dll",
+            "modelID": " orb",
+            "inPara": [
+              {
+                "varName": "src",
+                "varType": "Mat",
+                "fromExpression": "",
+                "defineVarInputWay": "smartInputWay",
+                "comboList": {},
+                "varExplanation": "源图"
+              }
+            ],
+            "outPara": [
+              {
+                "varName": "dst",
+                "varType": "Mat",
+                "varExplanation": ""
+              }
+            ]
+          }
+        ]
+      }
     }
   ],
   "图像处理": [
