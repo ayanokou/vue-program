@@ -29,25 +29,9 @@ export default {
     },
     data() {
         return {
-           
-          selectedOption: "", // 用于存储选择的选项值
-          selectedOptionContent: "", // 用于存储选项对应的内容
-          options: [
-            { label: "选项一", value: "option1", content: "选项一的内容" },
-            { label: "选项二", value: "option2", content: "选项二的内容" },
-            { label: "TCP客户端", value: "TCP客户端", content: "tcp" },
-          ],
-          deviceName: "device1",
-          ip: "127.0.0.1",
-          portNumber: 7920,
-          isIPValid: true,
-          updataValue: true,
           autoReconnection: false,
           receiveEndMark: false,
           demoSelectedTCP: false,
-          //是否显示通信管理窗口
-          communicationManagementVisible: false,
-          subCommunicationManagementVisible: false,
           //软件设置窗口
           softwareSetVisible:false,
           networkManagerVisible: false,
