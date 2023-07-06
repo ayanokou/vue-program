@@ -677,6 +677,9 @@ export default {
 };
 </script>
 <style scoped>
+.demo-tabs :deep(.el-tabs__content){
+    flex-grow: 1;
+}
 .running{
     /*background-color: rgb(121, 187, 255);*/
     background-color: red;

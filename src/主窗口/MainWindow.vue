@@ -1,6 +1,8 @@
 <template>
     <NetworkManager v-model="networkManagerVisible"/>
     <SoftwareSet v-model="softwareSetVisible"></SoftwareSet>
+    <About v-model="aboutVisible"></About>
+    <HelpDoc v-model="helpDocVisible"></HelpDoc>
     
     <div class="common-layout">
         <img
@@ -218,12 +220,12 @@
                                 >其他</span
                             ></template
                         >
-                        <el-menu-item id="about"
+                        <el-menu-item id="about" @click="openAbout"
                             ><span style="color: aliceblue"
                                 >关于</span
                             ></el-menu-item
                         >
-                        <el-menu-item id="help"
+                        <el-menu-item id="help" @click="openHelpDoc"
                             ><span style="color: aliceblue"
                                 >帮助文档</span
                             ></el-menu-item
