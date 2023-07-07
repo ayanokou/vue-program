@@ -36,6 +36,7 @@ export default createStore({
             currentNode:undefined,
             showCurrentResult:false,
             historyResults:[],
+            dialogVisibleGlobalScript:false,
         }
     },
     mutations:{
@@ -119,7 +120,10 @@ export default createStore({
         },
         setHistoryResults(state,payload){
             state.historyResults=payload
-        }
+        },
+        setDialogVisibleGlobalScript(state,payload){
+            state.dialogVisibleGlobalScript=payload
+        },
     },
     modules:{
 

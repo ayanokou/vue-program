@@ -288,7 +288,7 @@
                             <ZoomOut />
                         </el-icon>
                     </el-menu-item>
-                    <el-menu-item title="全局脚本" id="globalScript" index="9">
+                    <el-menu-item title="全局脚本" id="globalScript" index="9" @click="openDialogGS()">
                         <el-icon style="color: aliceblue">
                             <Remove />
                         </el-icon>
@@ -315,6 +315,7 @@
         </el-container>
     </div>
     <GlobalVar ></GlobalVar>
+    <GlobalScript ></GlobalScript>
 </template>
 
 
