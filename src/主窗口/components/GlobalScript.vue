@@ -1,5 +1,5 @@
 
-<template>
+<!-- <template>
     <el-dialog v-model="dialogVisibleGlobalScript" title="Tips" width="70%" @close="close()">
         <template #header>
             全局脚本
@@ -79,4 +79,60 @@ export default {
     height: 200px;
     border: 1px solid #dcdee2;
 }
+</style> -->
+<template>
+    <el-dialog v-model="dialogVisibleGlobalScript" title="Tips" width="70%" @close="close()">
+        <template #header>
+            全局脚本
+        </template>
+        <div class="codeEditBox">
+            <VAceEditor v-model:value="content" lang="html" theme="github" style="height: 300px" />
+        </div>
+
+
+
+    </el-dialog>
+</template>
+
+<script>
+import { mapState } from "vuex";
+import { ref } from "vue";
+import { VAceEditor } from "vue3-ace-editor"
+import '../js/ace.config'
+
+const content = ref("<div>Hello World</div>")
+
+
+export default {
+    components: {
+        VAceEditor
+    },
+    data() {
+        return {
+           
+
+        }
+    },
+    computed: {
+        ...mapState(['dialogVisibleGlobalScript']),
+
+    },
+    mounted() {
+    },
+    methods: {
+        close() {
+            this.$store.commit('setDialogVisibleGlobalScript', false)
+        },
+        
+
+
+    }
+}
+
+
+</script>
+
+
+<style scoped>
+
 </style>
