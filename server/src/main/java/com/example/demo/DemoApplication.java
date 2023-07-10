@@ -2,9 +2,6 @@ package com.example.demo;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-// import org.springframework.boot.SpringApplication;
-// import org.springframework.boot.autoconfigure.SpringBootApplication;
-// import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 
@@ -16,47 +13,13 @@ import java.net.UnknownHostException;
 import com.alibaba.fastjson.JSONObject;
 import com.corundumstudio.socketio.*;
 
-// @SpringBootApplication
-// @RestController
-// @CrossOrigin
-public class DemoApplication {
+import org.apache.commons.cli.*;
 
-	private static String imgFormat;
+public class DemoApplication {
 	private HashMap<Integer, Boolean> flags;
 	private static final String MESSAGE_HANDLER_PATH = "mh/MessageHandler.exe";
 	private static final String IP = "127.0.0.1";
 	private static final int PORT = 8180;
-
-	static {
-		// String path1 = "server/src/main/resources";
-		// String path2 = "server/src/main/resources/Read.dll";
-		// String path3 = "server/src/main/resources/GaussianBlur.dll";
-		// String libPath = path1 + ";";
-		// System.setProperty("java.library.path", libPath);
-		// System.out.println(System.getProperty("java.library.path"));
-		//System.loadLibrary("../mh/resources/opencv_world470");
-		// System.loadLibrary("opencv_world470_contrib");
-		// System.loadLibrary("opencv_core343");
-		// System.loadLibrary("opencv_imgproc343");
-		// System.loadLibrary("bilateralFilter");
-		// System.loadLibrary("fitLine");
-		// System.loadLibrary("fitEllipse");
-		// System.loadLibrary("detectField");
-		// System.loadLibrary("getPosition");
-		// System.loadLibrary("shadowcorrection");
-		// System.loadLibrary("scratchDetection");
-		// System.loadLibrary("myMorphology");
-		// System.loadLibrary("myEdgeDetection");
-		// System.loadLibrary("myColorIdentif");
-		// System.loadLibrary("myBrightnessCorrection");
-		// System.loadLibrary("myContrastEnhancement");
-		// System.loadLibrary("uv");
-		// System.loadLibrary("udpInFlow");
-		// System.loadLibrary("udpCommunicate");
-		// System.loadLibrary("tcpInFlow");
-		// System.loadLibrary("tcpDll");
-		// System.loadLibrary("clientSDK");
-	}
 
 	public boolean checkRunning(int port) {
 		return flags.get(port);
@@ -69,8 +32,28 @@ public class DemoApplication {
 	public static void main(String[] args) throws UnknownHostException, IOException {
 		Logger logger = LoggerFactory.getLogger(DemoApplication.class);
 
-		// MessageHandlerInitializer initializer = new MessageHandlerInitializer(MESSAGE_HANDLER_PATH, logger);
-		// initializer.start();
+		Options options = new Options();
+		Option detached = new Option("d", "detached", false, "run in detached mode");
+		options.addOption(detached);
+
+		CommandLine cmd = null;
+		CommandLineParser parser = new DefaultParser();
+		HelpFormatter formatter = new HelpFormatter();
+		try {
+			cmd = parser.parse(options, args);
+		} catch (ParseException e) {
+			logger.error("Parsing failed.  Reason: " + e.getMessage());
+			formatter.printHelp("Usage: ", options);
+			System.exit(1);
+		}
+		
+		if (cmd.hasOption("detached")) {
+			logger.info("run in detached mode");
+		} else {
+			logger.info("run in attached mode");
+			MessageHandlerInitializer initializer = new MessageHandlerInitializer(MESSAGE_HANDLER_PATH, logger);
+			initializer.start();
+		}
 
 		com.corundumstudio.socketio.Configuration config = new Configuration();
 		config.setMaxFramePayloadLength(5 * 1024 * 1024 * 1024);
@@ -112,9 +95,7 @@ public class DemoApplication {
 				@Override
 				public void onData(SocketIOClient socketIOClient, String msg, AckRequest ackRequest)
 						throws Exception {
-					//解决刷新断开连接问题
 					listenerForCpp.setClient(socketIOClient);
-					System.out.println(msg);
 					JSONObject jsonObject = new JSONObject();
 					JSONObject data = JSONObject.parseObject(msg);
 					jsonObject.put("operation", operation);
@@ -149,9 +130,5 @@ public class DemoApplication {
 
 
 		server.start();
-
-		
-		// SpringApplication.run(DemoApplication.class, args);
 	}
-
 }

@@ -6,6 +6,7 @@ import LayoutOne from "@/主窗口/components/layout/LayoutOne.vue";
 import LayoutTwo from "@/主窗口/components/layout/LayoutTwo.vue";
 import LayoutThree from "@/主窗口/components/layout/LayoutThree.vue";
 import GlobalVar from "../components/GlobalVar.vue";
+import GlobalScript from "../components/GlobalScript.vue"
 import NetworkManager from "../components/NetworkManager.vue";
 import SoftwareSet from "../components/SoftwareSet.vue";
 import About from "../components/About.vue"
@@ -19,8 +20,12 @@ import { ref } from 'vue'
 
 
 
+
+
+
 //初始化socketio用于前后端传输
 let socket = io.connect('http://localhost:9092')
+
 
 
 export default {
@@ -29,7 +34,8 @@ export default {
         NetworkManager,
         SoftwareSet,
         About,
-        HelpDoc
+        HelpDoc,
+        GlobalScript,
     },
     data() {
         return {
@@ -167,7 +173,7 @@ export default {
         
     },
     computed:{
-        ...mapState(['socketEmit','dialogVisibleGlobalVar',"softwareSet"])
+        ...mapState(['socketEmit','dialogVisibleGlobalVar',"softwareSet","dialogVisibleGlobalScript"])
     },
     watch:{
         socketEmit(newValue){
@@ -383,6 +389,9 @@ export default {
         },
         openDialogGV(){
             this.$store.commit('setDialogVisibleGlobalVar',true)
+        },
+        openDialogGS(){
+            this.$store.commit('setDialogVisibleGlobalScript',true)
         },
         //动态布局
         layout(i) {

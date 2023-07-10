@@ -35,7 +35,9 @@ export default createStore({
             runSolutionLoop:undefined,
             currentNode:undefined,
             showCurrentResult:false,
-            showImg:false
+            showImg:false,
+            historyResults:[],
+            dialogVisibleGlobalScript:false,
         }
     },
     mutations:{
@@ -118,7 +120,13 @@ export default createStore({
         },
         setCurrentNode(state,payload){
             state.currentNode=payload
-        }
+        },
+        setHistoryResults(state,payload){
+            state.historyResults=payload
+        },
+        setDialogVisibleGlobalScript(state,payload){
+            state.dialogVisibleGlobalScript=payload
+        },
     },
     modules:{
 
