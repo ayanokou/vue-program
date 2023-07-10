@@ -162,7 +162,7 @@ export default {
         );
 
         socket.on("runResults",data=>{
-            this.commit('setRunResult',data)
+            this.$store.commit('setRunResults',JSON.parse(data))
         })
         
     },
@@ -212,6 +212,39 @@ export default {
                             "x":0,
                             "y":0
                           }
+                        },
+                        {
+                            "name":"points1",
+                            type:"vector<Point>",
+                            content:[
+                                {
+                                    type:"Point",
+                                    content:{
+                                        x:1,
+                                        y:2
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "name":"points2",
+                            type:"vector<Point>",
+                            content:[
+                                {
+                                    type:"Point",
+                                    content:{
+                                        x:1,
+                                        y:2
+                                    }
+                                },
+                                {
+                                    type:"Point",
+                                    content:{
+                                        x:1,
+                                        y:2
+                                    }
+                                }
+                            ]
                         }
                       ],
                       "timeConsume": 5688

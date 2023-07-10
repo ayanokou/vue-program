@@ -46,8 +46,7 @@
       </el-dialog>
 
     </div>
-    <canvas id="cvs" width="1024" height="768"
-            style="border:1px solid #ccc;margin:20px auto;display: block;">
+    <canvas id="cvs" width="1024" height="768" style="border:1px solid #ccc;margin:20px auto;display: block;">
       当前浏览器不支持canvas
       <!-- 如果浏览器支持canvas，则canvas标签里的内容不会显示出来 -->
     </canvas>
@@ -61,7 +60,7 @@
 <!--<script src="../js/picWindow.js">-->
 
 <script>
-import {mapState} from "vuex";
+import { mapState } from "vuex";
 
 export default {
   data() {
@@ -111,15 +110,51 @@ export default {
       isDragRoiRecEdge: false,
       isDragRoiRecPoint: false,
       changeRoiRectCode: 0,
+      imgBase64: ''
 
 
 
     }
   },
   computed: {
-    ...mapState(['imgBase64'])
+    ...mapState(['currentNode', 'runResults', 'showImg'])
   },
   watch: {
+    showImg(newVal) {
+      if (newVal) {
+        //find img
+        let tab_result = this.runResults.find(item => item.tab_index === this.currentNode.tabIndex)
+        if (!tab_result) {
+          this.imgBase64 = ''
+          console.log('tab_result is null')
+          return
+        }
+        let node_result = tab_result.results.find(item => item.id === this.currentNode.nodeId)
+        if (!node_result) {
+          this.imgBase64 = ''
+          console.log('node_result is null')
+          return
+        }
+
+        let results = node_result.outResults
+
+        if (!results) {
+          this.imgBase64 = ''
+          return
+        }
+
+        const ans = results.filter(item => item.type === "Mat")
+        if (typeof ans === 'object') {
+          this.imgBase64 = ans[0].content
+
+        } else {
+          this.imgBase64 = ''
+          return
+        }
+        //close
+        this.$store.commit('showImgEvent', false)
+      }
+    },
     imgBase64(newVal) {
 
       //canvas标签插入图片
@@ -822,10 +857,10 @@ export default {
         case 5:
           this.drawEllipse(startX, startY, endX, endY);
           break;
-          // case 6:
-          //   // this.drawCircle(startX, startY, endX, endY);
-          //   this.drawConcentricCircles(startX, startY, endX, endY);
-          //   break;
+        // case 6:
+        //   // this.drawCircle(startX, startY, endX, endY);
+        //   this.drawConcentricCircles(startX, startY, endX, endY);
+        //   break;
         case 7:
           // this.drawCircle(startX, startY, endX, endY);
           this.imageDrag(startX, startY, endX, endY);
@@ -1067,49 +1102,49 @@ export default {
           break;
         case 1:
           this.updateRecPoints(this.roiRecPoints[0] + dx, this.roiRecPoints[1] + dy,
-              this.roiRecPoints[2], this.roiRecPoints[3]);
+            this.roiRecPoints[2], this.roiRecPoints[3]);
 
           break;
         case 2:
           this.updateRecPoints(this.roiRecPoints[0] + dx, this.roiRecPoints[1],
-              this.roiRecPoints[2], this.roiRecPoints[3]);
+            this.roiRecPoints[2], this.roiRecPoints[3]);
 
           break;
         case 3:
           this.updateRecPoints(this.roiRecPoints[0] + dx, this.roiRecPoints[1],
-              this.roiRecPoints[2], this.roiRecPoints[3] + dy);
+            this.roiRecPoints[2], this.roiRecPoints[3] + dy);
 
           break;
         case 4:
           this.updateRecPoints(this.roiRecPoints[0], this.roiRecPoints[1] + dy,
-              this.roiRecPoints[2], this.roiRecPoints[3]);
+            this.roiRecPoints[2], this.roiRecPoints[3]);
 
 
           break;
         case 5:
 
           this.updateRecPoints(this.roiRecPoints[0] + dx, this.roiRecPoints[1] + dy,
-              this.roiRecPoints[2] + dx, this.roiRecPoints[3] + dy);
+            this.roiRecPoints[2] + dx, this.roiRecPoints[3] + dy);
           break;
         case 6:
           this.updateRecPoints(this.roiRecPoints[0], this.roiRecPoints[1],
-              this.roiRecPoints[2], this.roiRecPoints[3] + dy);
+            this.roiRecPoints[2], this.roiRecPoints[3] + dy);
 
           break;
         case 7:
           this.updateRecPoints(this.roiRecPoints[0], this.roiRecPoints[1] + dy,
-              this.roiRecPoints[2] + dx, this.roiRecPoints[3]);
+            this.roiRecPoints[2] + dx, this.roiRecPoints[3]);
 
           break;
         case 8:
           this.updateRecPoints(this.roiRecPoints[0], this.roiRecPoints[1],
-              this.roiRecPoints[2] + dx, this.roiRecPoints[3]);
+            this.roiRecPoints[2] + dx, this.roiRecPoints[3]);
 
 
           break;
         case 9:
           this.updateRecPoints(this.roiRecPoints[0], this.roiRecPoints[1],
-              this.roiRecPoints[2] + dx, this.roiRecPoints[3] + dy);
+            this.roiRecPoints[2] + dx, this.roiRecPoints[3] + dy);
 
           break;
 
@@ -1147,56 +1182,56 @@ export default {
     },
 
 
-//     //下载图片
-//     async downloadImage() {
-//       this.closeContextMenu();
-//
-//       const savePath = await window.showSaveFilePicker({
-//         types: [
-//           {
-//             description: 'PNG 图像',
-//             accept: {
-//               'image/png': ['.png'],
-//             },
-//           },
-//         ],
-//       });
-//
-//       if (savePath) {
-//         // 将 Canvas 内容转换为 Blob 对象
-//         this.canvas.toBlob(async (blob) => {
-//           // 保存 Blob 对象为文件
-//           await this.saveBlobToFile(blob, savePath);
-//         }, 'image/png');
-//       }
-//
-//     },
-//
-//     // 将 Data URL 转换为 Blob 对象
-//     dataURLToBlob(dataURL) {
-//       const arr = dataURL.split(',');
-//       const mime = arr[0].match(/:(.*?);/)[1];
-//       const bstr = atob(arr[1]);
-//       let n = bstr.length;
-//       const u8arr = new Uint8Array(n);
-//
-//       while (n--) {
-//         u8arr[n] = bstr.charCodeAt(n);
-//       }
-//
-//       return new Blob([u8arr], { type: mime });
-//     },
-//
-// // 将 Blob 对象保存为文件
-//     async saveBlobToFile(blob, savePath) {
-//       const fileHandle = await window.showSaveFilePicker();
-//
-//       if (fileHandle) {
-//         const writable = await fileHandle.createWritable();
-//         await writable.write(blob);
-//         await writable.close();
-//       }
-//     },
+    //     //下载图片
+    //     async downloadImage() {
+    //       this.closeContextMenu();
+    //
+    //       const savePath = await window.showSaveFilePicker({
+    //         types: [
+    //           {
+    //             description: 'PNG 图像',
+    //             accept: {
+    //               'image/png': ['.png'],
+    //             },
+    //           },
+    //         ],
+    //       });
+    //
+    //       if (savePath) {
+    //         // 将 Canvas 内容转换为 Blob 对象
+    //         this.canvas.toBlob(async (blob) => {
+    //           // 保存 Blob 对象为文件
+    //           await this.saveBlobToFile(blob, savePath);
+    //         }, 'image/png');
+    //       }
+    //
+    //     },
+    //
+    //     // 将 Data URL 转换为 Blob 对象
+    //     dataURLToBlob(dataURL) {
+    //       const arr = dataURL.split(',');
+    //       const mime = arr[0].match(/:(.*?);/)[1];
+    //       const bstr = atob(arr[1]);
+    //       let n = bstr.length;
+    //       const u8arr = new Uint8Array(n);
+    //
+    //       while (n--) {
+    //         u8arr[n] = bstr.charCodeAt(n);
+    //       }
+    //
+    //       return new Blob([u8arr], { type: mime });
+    //     },
+    //
+    // // 将 Blob 对象保存为文件
+    //     async saveBlobToFile(blob, savePath) {
+    //       const fileHandle = await window.showSaveFilePicker();
+    //
+    //       if (fileHandle) {
+    //         const writable = await fileHandle.createWritable();
+    //         await writable.write(blob);
+    //         await writable.close();
+    //       }
+    //     },
 
     //点击右键保存图片
     downloadImage() {
@@ -1235,12 +1270,12 @@ export default {
         document.removeEventListener('click', this.closeContextMenu);
       }
     },
-    handleOptionMouseEnter(event){
+    handleOptionMouseEnter(event) {
       // 添加选项的选择效果样式
       event.target.style.backgroundColor = 'lightgray';
       event.target.style.cursor = 'pointer';
     },
-    handleOptionMouseLeave(event){
+    handleOptionMouseLeave(event) {
       // 移除选项的选择效果样式
       event.target.style.backgroundColor = '';
       event.target.style.cursor = '';
@@ -1260,10 +1295,6 @@ export default {
 .img {
   width: 200px;
 }
-
-
-
-
 </style>
 
 

@@ -73,7 +73,7 @@ public class DemoApplication {
 		// initializer.start();
 
 		com.corundumstudio.socketio.Configuration config = new Configuration();
-		config.setMaxFramePayloadLength(5 * 1024 * 1024);
+		config.setMaxFramePayloadLength(5 * 1024 * 1024 * 1024);
 		config.setHostname("localhost");
 		config.setPort(9092);
 
@@ -112,9 +112,8 @@ public class DemoApplication {
 				@Override
 				public void onData(SocketIOClient socketIOClient, String msg, AckRequest ackRequest)
 						throws Exception {
-					if (listenerForCpp.getClient() == null) {
-						listenerForCpp.setClient(socketIOClient);
-					}
+					//解决刷新断开连接问题
+					listenerForCpp.setClient(socketIOClient);
 					System.out.println(msg);
 					JSONObject jsonObject = new JSONObject();
 					JSONObject data = JSONObject.parseObject(msg);

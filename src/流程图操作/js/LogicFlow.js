@@ -399,6 +399,8 @@ export default {
             this.$store.commit('setCurrentNode',{tabIndex:this.tab.index,nodeId:evt.data.id})
             //触发显示当前结果命令
             this.$store.commit('showCurrentResultEvent',true)
+            //触发显示图片命令
+            this.$store.commit('showImgEvent',true)
             //刷新nodeModel
             this.nodeModel = this.lf.getNodeModelById(evt.data.id)
             this.selectedAlgorithm = evt.data.id

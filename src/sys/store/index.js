@@ -34,10 +34,14 @@ export default createStore({
             runResults:[],
             runSolutionLoop:undefined,
             currentNode:undefined,
-            showCurrentResult:false
+            showCurrentResult:false,
+            showImg:false
         }
     },
     mutations:{
+        showImgEvent(state,payload){
+            state.showImg=payload
+        },
         showCurrentResultEvent(state,payload){
             state.showCurrentResult=payload
         },
@@ -114,7 +118,6 @@ export default createStore({
         },
         setCurrentNode(state,payload){
             state.currentNode=payload
-            console.log(payload)
         }
     },
     modules:{
