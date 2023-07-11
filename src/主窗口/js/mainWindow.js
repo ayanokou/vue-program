@@ -48,6 +48,8 @@ export default {
           aboutVisible: false,
           helpDocVisible: false,
           activeIcon: "deviceManagement",
+          softwareIcon:"icon1",
+          test:{softwareIcon:"icon1"},
           group1Input: "", //通信管理-设备管理接收数据
           group2Output: "", //通信管理-设备管理发送数据
           //是否显示最近打开方案子菜单栏
@@ -382,6 +384,14 @@ export default {
 
         setSoftware() {
             this.softwareSetVisible=true;
+            //this.softwareIcon="icon2";
+            this.test.softwareIcon="icon2"
+         },
+         setScheme(){
+            this.softwareSetVisible=true;
+            //this.softwareIcon="icon3";
+            this.test.softwareIcon="icon3"
+
          },
 
         setActiveIcon(icon){

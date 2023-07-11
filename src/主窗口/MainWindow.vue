@@ -1,6 +1,6 @@
 <template>
     <NetworkManager v-model="networkManagerVisible"/>
-    <SoftwareSet v-model="softwareSetVisible"></SoftwareSet>
+    <SoftwareSet v-model="softwareSetVisible" :test="test"></SoftwareSet>
     <About v-model="aboutVisible"></About>
     <HelpDoc v-model="helpDocVisible"></HelpDoc>
     
@@ -145,7 +145,7 @@
                             ></el-menu-item
                         >
                     
-                        <el-menu-item id="setSolution"
+                        <el-menu-item id="setSolution" @click="setScheme"
                             ><span style="color: aliceblue"
                                 >方案设置</span
                             ></el-menu-item

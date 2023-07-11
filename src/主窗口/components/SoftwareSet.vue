@@ -6,20 +6,20 @@
         <el-col :span="4" class="left-column">
           <!-- 左侧区域 -->
           <div class="sidebar-content">
-            <div class="sidebar-item" :class="{ active: activeIcon === 'deviceManagement' }"
+            <div class="sidebar-item" :class="{ active: softwareIcon === 'icon1' }"
               @click="setActiveIcon('deviceManagement')">
               <!-- <el-icon><Monitor /></el-icon> -->
               <span>权限设置</span>
             </div>
-            <div class="sidebar-item" :class="{ active: activeIcon === 'receive' }" @click="setActiveIcon('receive')">
+            <div class="sidebar-item" :class="{ active: softwareIcon === 'icon2' }" @click="setActiveIcon('icon2')">
               <!-- <el-icon><SortDown /></el-icon> -->
               <span>软件设置</span>
             </div>
-            <div class="sidebar-item" :class="{ active: activeIcon === 'send' }" @click="setActiveIcon('send')">
+            <div class="sidebar-item" :class="{ active: softwareIcon === 'icon3' }" @click="setActiveIcon('icon3')">
               <!-- <el-icon><SortUp /></el-icon> -->
               <span>方案设置</span>
             </div>
-            <div class="sidebar-item" :class="{ active: activeIcon === 'heartbeat' }" @click="setActiveIcon('heartbeat')">
+            <div class="sidebar-item" :class="{ active: softwareIcon === 'icon4' }" @click="setActiveIcon('icon4')">
               <!-- <el-icon><Refresh /></el-icon> -->
               <span>运行策略</span>
             </div>
@@ -29,7 +29,7 @@
           <!-- 右侧区域 -->
           <div class="right-content">
             <!-- 这里根据点击不同的图标显示不同的内容 -->
-            <div v-if="activeIcon === 'deviceManagement'" class="mainfield-setting">
+            <div v-if="test.softwareIcon === 'icon1'" class="mainfield-setting">
               <el-row style="height: 100%">
                 <el-col :span="6" class="content-head" style="border-right: 1px solid #ccc">
                   设备列表
@@ -89,7 +89,7 @@
                 </el-col>
               </el-row>
             </div>
-            <div v-if="activeIcon === 'receive'" class="mainfield-setting">
+            <div v-if="test.softwareIcon === 'icon2'" class="mainfield-setting">
               <!-- <el-row style="height: 100%;">
                                 <el-col :span="6" class="content-head" style="border-right: 1px solid #ccc;">接收事件列表</el-col>
                                 <el-col :span="18">
@@ -151,7 +151,7 @@
               </el-row>
               <el-button class="btn" @click="confirm1">确认</el-button>
             </div>
-            <div v-if="activeIcon === 'send'" class="mainfield-setting">
+            <div v-if="test.softwareIcon === 'icon3'" class="mainfield-setting">
               <el-row class="content-head" style="">
                 <el-col>方案管理</el-col>
               </el-row>
@@ -191,11 +191,7 @@
               </div>
               <el-button class="btn" @click="confirm2">确认</el-button>
             </div>
-            <div v-if="activeIcon === 'heartbeat'" class="mainfield-setting">
-              显示删除内容
-            </div>
-            <div v-if="activeIcon === 'setting'" class="mainfield-setting">
-              显示设置内容
+            <div v-if="test.softwareIcon === 'icon4'" class="mainfield-setting">
             </div>
           </div>
         </el-col>
@@ -207,10 +203,10 @@
 
 <script>
 export default {
-  props: ["isVisible"],
+  props: ["test"],
   data() {
     return {
-      activeIcon: "deviceManagement",
+      // activeIcon: "deviceManagement",
 
       softwareParam: {
         selfStartOfStartupSoftware: true,
@@ -234,7 +230,7 @@ export default {
   },
   methods: {
     setActiveIcon(icon) {
-      this.activeIcon = icon;
+      this.test.softwareIcon = icon;
     },
     confirm1() {
       localStorage.setItem("softwareParam", JSON.stringify(softwareParam));
