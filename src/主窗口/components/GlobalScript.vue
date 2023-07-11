@@ -88,7 +88,9 @@ export default {
         <div class="codeEditBox">
             <VAceEditor v-model:value="content" lang="html" theme="github" style="height: 300px" />
         </div>
-
+        <div class="container">
+        <el-button class="el-button" @click="run()">运行</el-button>
+        </div>
 
 
     </el-dialog>
@@ -123,7 +125,9 @@ export default {
         close() {
             this.$store.commit('setDialogVisibleGlobalScript', false)
         },
-        
+        run(){
+            console.log("run")
+        }
 
 
     }
@@ -134,5 +138,15 @@ export default {
 
 
 <style scoped>
+.container {
+    display: flex;
+  justify-content: flex-end;
+  height: 30px; /* 设置容器宽度 */
+}
 
+.el-button {
+    display: flex;
+  justify-content: flex-end;
+  margin-right: 30px;
+}
 </style>

@@ -162,17 +162,30 @@
                 <el-table :data="schemeParam.rows">
                   <el-table-column prop="index" label="序号"></el-table-column>
                   <el-table-column label="方案路径">
-                    <el-input v-model="schemeParam.rows.input1"></el-input>
+                    <template #default="scope">
+                    <el-input v-model="scope.row.input1"/>
+                </template>
+                    <!-- <el-input v-model="schemeParam.rows.input1"></el-input> -->
                   </el-table-column>
                   <el-table-column label="方案密码">
-                    <el-input v-model="schemeParam.rows.input2"></el-input>
+                    <template #default="scope">
+                    <el-input v-model="scope.row.input2"/>
+                </template>
+                    <!-- <el-input v-model="schemeParam.rows.input2"></el-input> -->
                   </el-table-column>
                   <el-table-column label="通信字符串">
-                    <el-input v-model="schemeParam.rows.input3"></el-input>
+                    <template #default="scope">
+                    <el-input v-model="scope.row.input3"/>
+                </template>
+                    <!-- <el-input v-model="schemeParam.rows.input3"></el-input> -->
                   </el-table-column>
                   <el-table-column label="通信切换">
-                    <el-switch v-model="schemeParam.rows.switch" active-color="#13ce66" inactive-color="#ff4949">
+                    <template #default="scope">
+                      <el-switch v-model="schemeParam.rows.switch" active-color="#13ce66" inactive-color="#ff4949">
                     </el-switch>
+                </template>
+                    <!-- <el-switch v-model="schemeParam.rows.switch" active-color="#13ce66" inactive-color="#ff4949">
+                    </el-switch> -->
                   </el-table-column>
                 </el-table>
               </div>
@@ -212,7 +225,8 @@ export default {
       },
       schemeParam: {
         rows: [
-          { index: 1, input1: '', input2: '', input3: '', switch: 1 }
+          { index: 1, input1: '', input2: '', input3: '', switch: 1 },
+        
         ]
       }
 
@@ -239,7 +253,8 @@ export default {
         index: maxIndex + 1,
         input1: '',
         input2: '',
-        input3: ''
+        input3: '',
+        switch:1, 
       });
     }
   },
