@@ -30,7 +30,7 @@ export default createStore({
             runSolution:null,
             dialogVisibleGlobalVar:false,
             //nodeModelName:"",
-            localImg:"init"
+            localImg:"init",
         }
     },
     mutations:{

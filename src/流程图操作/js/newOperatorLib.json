@@ -116,6 +116,72 @@
           }
         ]
       }
+    },
+    {
+      "lfProperties": {
+        "type": "operator",
+        "text": "相机输入",
+        "label": "相机输入",
+        "name": "相机输入"
+      },
+      "properties": {
+        "state": "init",
+        "superName": "输入输出",
+        "name": "相机输入",
+        "models": [
+          {
+            "modelName": "单帧相机输入",
+            "helpMsg": "it is a help message",
+            "dllPath": "",
+            "modelID": "getImg",
+            "inPara": [
+              {
+                "varName": "cameraID",
+                "varType": "int",
+                "fromExpression": "0",
+                "defineVarInputWay": "selectedInputWay",
+                "varExplanation": ""
+              }
+            ],
+            "outPara": [
+              {
+                "varName": "dst",
+                "varType": "Mat",
+                "varExplanation": "获得到的相机图片"
+              }
+            ]
+          },
+          {
+            "modelName": "多帧帧相机输入",
+            "helpMsg": "it is a help message",
+            "dllPath": "",
+            "modelID": "getImgs",
+            "inPara": [
+              {
+                "varName": "cameraID",
+                "varType": "int",
+                "fromExpression": "0",
+                "defineVarInputWay": "selectedInputWay",
+                "varExplanation": ""
+              },
+              {
+                "varName": "帧数",
+                "varType": "int",
+                "fromExpression": "3",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": "返回图片张数"
+              }
+            ],
+            "outPara": [
+              {
+                "varName": "dst",
+                "varType": "vector<Mat>",
+                "varExplanation": "获得到的相机图片s"
+              }
+            ]
+          }
+        ]
+      }
     }
   ],
   "图像匹配": [

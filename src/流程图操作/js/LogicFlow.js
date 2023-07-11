@@ -25,6 +25,7 @@ import { eventHandle, events } from "../../sys/eventResponseController";
 import { ElNotification } from 'element-plus'
 import Branch from "../components/dialog/Branch.vue";
 import Condition from "../components/dialog/Condition.vue";
+import cameras from "../../主窗口/js/cameras.js";
 
 
 LogicFlow.use(SelectionSelect);
@@ -310,7 +311,12 @@ export default {
             dialogCondition:false,
             conditionData:[],
             conditionIntExpr:undefined,
-            conditionDoubleExpr:undefined
+            conditionDoubleExpr:undefined,
+
+            availableCameras : {},
+            dllPaths : {
+                "Hikrobot" : "D:\\Documents\\opencv_splitFunction_test\\camera_demo\\x64\\Release\\HKCamera.dll",
+                "Basler" : "xxx",},
           }
     },
     computed: {
@@ -328,7 +334,7 @@ export default {
         },
         ...mapState([
             "timeConsume",
-            "runState"
+            "runState",
         ]),
 
     },
@@ -371,6 +377,7 @@ export default {
             }
         }
     },
+
     mounted() {
         // this.initHeight = 800
         // this.initHeight = window.innerHeight-150
@@ -1001,7 +1008,10 @@ export default {
 
                 reader.readAsDataURL(input.files[0]);
             }
-        }
+        },
+        t(){
+            this.availableCameras = cameras.foreEndCameras
+        },
     }
 }
 
