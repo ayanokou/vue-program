@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="软件设置" :model-value="isVisible" :modal="false" :close-on-click-modal="false"
+  <el-dialog title="设置" :model-value="isVisible" :modal="false" :close-on-click-modal="false"
     custom-class="custom-dialog" draggable @close="$emit('update:isVisible', false)">
     <div class="container">
       <el-row :gutter="20" class="row-container">
@@ -181,7 +181,7 @@
                   </el-table-column>
                   <el-table-column label="通信切换">
                     <template #default="scope">
-                      <el-switch v-model="schemeParam.rows.switch" active-color="#13ce66" inactive-color="#ff4949">
+                      <el-switch v-model="scope.row.switch" active-color="#13ce66" inactive-color="#ff4949">
                     </el-switch>
                 </template>
                     <!-- <el-switch v-model="schemeParam.rows.switch" active-color="#13ce66" inactive-color="#ff4949">
