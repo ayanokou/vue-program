@@ -1,8 +1,8 @@
 <template>
   <div>
-    
-    <el-input id="license-key" type="text" v-model="licenseKey" placeholder="LicenseKey" />
-    <el-button type="primary" @click="submitLicenseKey">Confirm</el-button>
+
+    <el-input id="license-key" type="text" v-model="licenseKey" placeholder="请输入license注册码" />
+    <el-button type="primary" @click="submitLicenseKey">激活</el-button>
     <el-table :data="tableData" style="width: 100%">
 
     <el-table-column prop="licenseName" label="license名称" width="180" />

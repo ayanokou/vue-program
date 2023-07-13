@@ -7,6 +7,7 @@ import Download from '../components/Download.vue'
 import License from '../components/License.vue'
 import Upload from '../components/Upload.vue'
 import UserManage from '../components/UserManage.vue'
+import LicenseManage from '../components/LicenseManage.vue'
 import router from '../../sys/router';
 
 
@@ -33,6 +34,7 @@ export default {
     Download,
     Upload,
     License,
+    LicenseManage,
     UserManage,
   },
 
@@ -118,10 +120,14 @@ export default {
  },
     
   methods: {
+    
     returnto(){
       router.push('/main');
 
 
+    },
+    showlicenseManage(){
+      this.component = LicenseManage
     },
     showUpload(){
       this.component = Upload

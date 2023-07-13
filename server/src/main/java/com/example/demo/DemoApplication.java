@@ -56,7 +56,7 @@ public class DemoApplication {
 		// System.loadLibrary("tcpInFlow");
 		// System.loadLibrary("tcpDll");
 		// System.loadLibrary("clientSDK");
-	}
+	//}
 
 	public boolean checkRunning(int port) {
 		return flags.get(port);
@@ -69,8 +69,8 @@ public class DemoApplication {
 	public static void main(String[] args) throws UnknownHostException, IOException {
 		Logger logger = LoggerFactory.getLogger(DemoApplication.class);
 
-		MessageHandlerInitializer initializer = new MessageHandlerInitializer(MESSAGE_HANDLER_PATH, logger);
-		initializer.start();
+		//MessageHandlerInitializer initializer = new MessageHandlerInitializer(MESSAGE_HANDLER_PATH, logger);
+		//initializer.start();
 
 		com.corundumstudio.socketio.Configuration config = new Configuration();
 		config.setMaxFramePayloadLength(5 * 1024 * 1024);
@@ -86,6 +86,7 @@ public class DemoApplication {
 			public SocketIOClient getClient() {
 				return client;
 			}
+
 
 			@Override
 			public void setClient(SocketIOClient client) {

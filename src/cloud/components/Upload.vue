@@ -50,9 +50,15 @@
       <el-form-item label="选择文件">
       <input type="file" ref="fileInput" @change="handleFileChange">
        </el-form-item>
+
+       <el-form-item label="选择json文件">
+      <input type="file" ref="jsonfileInput" @change="handlejsonFileChange">
+       </el-form-item>
     </el-form>
 
     <el-button type="primary" @click="submit">提交</el-button>
+
+    <el-button type="primary" @click="submitjson">更新json文件</el-button>
     
   </div>
 </template>
@@ -65,6 +71,7 @@ export default {
   data() {
     return {
       file:'',
+      jsonFile:'',
       jsonData : JsonData,
       selectedCategory: '',
       selectedSubcategory: '',
@@ -100,10 +107,33 @@ export default {
     this.loadJSON();
   },
   methods: {
+    handlejsonFileChange(event){
+      this.jsonFile = event.target.files[0];
+
+    },
     handleFileChange(event) {
     this.file = event.target.files[0]; // 获取选择的文件对象
     
-  },
+    },
+    submitjson(){
+      const formData = new FormData();
+      const jsonfileInput = this.$refs.jsonfileInput;
+      const file = jsonfileInput.files[0];
+      formData.append('file', file);
+      axiosInstance.post('/changejson', formData)
+        .then(response => {
+        // 请求成功处理
+          console.log('成功修改json文件');
+          this.clearForm();
+        })
+        .catch(error => {
+        // 请求错误处理
+          console.error(error);
+        });
+
+
+    },
+
 
     submit() {
 

@@ -37,7 +37,8 @@
         <el-header>
           <div class="btnDiv">
             <el-button v-permission="'上传'" type="primary" size="small" @click="showUpload">文件上传</el-button>
-            <el-button v-permission="'下载'" type="primary" size="small"  @click="showlicense"  >license管理</el-button>
+            <el-button v-permission="'下载'" type="primary" size="small"  @click="showlicense"  >创建license</el-button>
+            <el-button v-permission="'下载'" type="primary" size="small"  @click="showlicenseManage" >license管理</el-button>
             <el-button v-permission="'下载'" type="primary" size="small"  @click="showDownload"  >下载文件</el-button>
             <el-button v-permission="'删除'" type="primary" size="small"  @click="showUserManage"  >用户管理</el-button>
           </div>

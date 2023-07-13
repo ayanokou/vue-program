@@ -7,27 +7,35 @@
           highlight-current
           :props="defaultProps"
         />
+    <el-form ref="licenseForm" :model="licenseForm" label-width="100px">
+      <el-form-item>
+        <el-input v-model="licenseForm.name" placeholder="请输入License的名称"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-input v-model="licenseForm.description" placeholder="请输入License的描述"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <div class="block">
+          <el-date-picker
+            v-model="licenseForm.validity"
+            type="datetime"
+            placeholder="选择license的截至日期"
+          />
+        </div>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="getCheckedLicense">创建License</el-button>
+      </el-form-item>
+    </el-form>
     <div class="buttons">
-        <el-button v-permission="'下载'" type="primary" size="small" icon="el-icon-download" @click="openLicenseDialog"  id="dirDilaog">创建License</el-button>
         <el-button v-permission="'下载'" type="primary" size="small" icon="el-icon-download" @click="getCheckedNodes"  id="dirDilaog">下载文件</el-button>
         <el-button v-permission="'下载'" type="primary" size="small" icon="el-icon-download" @click="getCheckedNodesJson"  id="dirDilaog">下载json文件</el-button>
         <el-button v-permission="'删除'" type="primary" size="small" icon="el-icon-download" @click="getCheckedNodesDelete"  id="dirDilaog">删除文件</el-button>
         <el-button type="primary" size="small" icon="el-icon-download" @click="resetChecked">reset</el-button>
     </div>
+    
 
-    <el-dialog v-model="showLicenseDialog" title="创建License" @close="resetLicenseForm">
-      <el-form ref="licenseForm" :model="licenseForm" label-width="100px">
-        <el-form-item>
-          <el-input v-model="licenseForm.name" placeholder="请输入License的名称"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-input v-model="licenseForm.description" placeholder="请输入License的描述"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="getCheckedLicense">创建License</el-button>
-        </el-form-item>
-      </el-form>
-    </el-dialog>
+    
 </template>
 
 <script >
@@ -40,6 +48,7 @@ export default {
         licenseForm: {
         name: '',
         description: '',
+        validity:'',
       },
 
     }
@@ -71,12 +80,14 @@ export default {
         const labels = Array.from(lastLevelNodes).map(node => node.label);
         console.log(labels);
         
-
+        
         // 创建请求体对象，将标签数据作为其中的一个属性
         const requestBody = {
           labels: labels,
           name: this.licenseForm.name,
           description: this.licenseForm.description,
+          
+          validity:this.licenseForm.validity
         };
 
         // 发送POST请求到Spring Boot后端
@@ -84,6 +95,13 @@ export default {
           .then(response => {
             // 处理成功响应
             console.log(response.data);
+            this.$message({
+            message: '创建成功',
+            type: 'success',
+            duration: 1500,
+            onClose: () => {
+            }
+          })
           })
           .catch(error => {
             // 处理错误

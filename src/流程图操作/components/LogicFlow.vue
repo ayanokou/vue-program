@@ -52,11 +52,18 @@
         </el-aside>
         <!--流程图区域-->
         <el-main ref="lfMain" style="height: 100%; padding: 0; overflow:hidden">
-            <div id="runtime-container">
-                <span id="runtime">流程用时：{{ flowRunTime }}us</span><!-- {{ flowRunTime }} {{ algorithmRunTime }}-->
+            <div id="runtime-container"  style="position: absolute; bottom: 20px; left: 0; width: 100%; text-align: center;">
+                <span id="runtime" style="display: inline-block;width: 200px">{{ state }}</span>
+                <span id="runtime" style="display: inline-block; margin-right: 20px;">流程用时：{{ flowRunTime }}us</span><!-- {{ flowRunTime }} {{ algorithmRunTime }}-->
+                <span id="runtime" style="display: inline-block;">算法用时：{{ algorithmRunTime }}us</span>
                 <span style="margin-right: 20px"></span>
-                <span id="runtime">算法用时：{{ algorithmRunTime }}us</span>
+                <span style="display: inline-block;width: 200px">
+                    <el-slider v-model="sliderValue"  @change="handleSliderChange" />
+                </span>
+          
+                
             </div>
+            
             <slot></slot>
         </el-main>
 

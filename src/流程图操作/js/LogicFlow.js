@@ -282,6 +282,9 @@ export default {
     },
     data() {
         return {
+            state:'等待添加组件',
+            previousSliderValue:50,
+            sliderValue: 50,
             //logic-flow
             lf: null,
             initHeight: '',
@@ -509,6 +512,27 @@ export default {
 
     },
     methods: {
+        handleSliderChange(){
+            console.log("调用了");
+            const difference = this.sliderValue - this.previousSliderValue; // 计算滑块值的变化差值
+
+            if (difference > 0) {
+            // 滑块向右滑动，调用放大函数
+            for (let i = 0; i < difference; i++) {
+                console.log("放大");
+                this.lf.zoom(true); // 调用放大函数
+            }
+            } else if (difference < 0) {
+            // 滑块向左滑动，调用缩小函数
+            for (let i = 0; i < Math.abs(difference); i++) {
+                console.log("缩小");
+                this.lf.zoom(false); // 调用缩小函数
+            }
+            }
+
+            this.previousSliderValue = this.sliderValue; // 更新前一个滑块值
+            
+        },
         init() {
             const lf = new LogicFlow({
                 container: document.querySelector("#"+this.tab.title),
