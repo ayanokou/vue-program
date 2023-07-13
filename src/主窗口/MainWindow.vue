@@ -1,6 +1,6 @@
 <template>
     <NetworkManager v-model="networkManagerVisible"/>
-    <SoftwareSet v-model="softwareSetVisible"></SoftwareSet>
+    <SoftwareSet v-model="softwareSetVisible" :test="test"></SoftwareSet>
     <About v-model="aboutVisible"></About>
     <HelpDoc v-model="helpDocVisible"></HelpDoc>
     
@@ -25,6 +25,7 @@
                     menu-trigger="hover"
                 >
                     <el-sub-menu index="1">
+
                         <template #title
                             ><span style="color: aliceblue"
                                 >文件</span
@@ -59,6 +60,7 @@
                                     item.name
                                 }}</span></el-menu-item
                             >
+
                         </el-sub-menu>
                         <el-sub-menu
                             index="2-1"
@@ -145,7 +147,7 @@
                             ></el-menu-item
                         >
                     
-                        <el-menu-item id="setSolution"
+                        <el-menu-item id="setSolution" @click="setScheme"
                             ><span style="color: aliceblue"
                                 >方案设置</span
                             ></el-menu-item
@@ -234,6 +236,10 @@
                     <el-button  @click="test">test</el-button>
 
 
+                    <el-menu-item index="6" @click="returnto">
+                        <span style="color: aliceblue">云端</span>
+                    </el-menu-item>
+
                     <!--                    <el-sub-menu index="5">-->
                     <!--                        <template #title><span style="color:aliceblue">布局</span></template>-->
                     <!--                        <el-menu-item @click="layout(0)"><span style="color:aliceblue;">布局一</span></el-menu-item>-->
@@ -313,6 +319,22 @@
                 ></component>
             </el-main>
         </el-container>
+        <el-dialog
+            v-model="dialogVisible"
+            title="Tips"
+            width="30%"
+            :before-close="handleClose"
+        >
+            <span>This is a message</span>
+            <template #footer>
+            <span class="dialog-footer">
+                <el-button @click="dialogVisible = false">Cancel</el-button>
+                <el-button type="primary" @click="dialogVisible = false">
+                Confirm
+                </el-button>
+            </span>
+            </template>
+        </el-dialog>
     </div>
     <GlobalVar ></GlobalVar>
     <GlobalScript ></GlobalScript>

@@ -8,7 +8,8 @@
             <th>ID</th>
             <th>Username</th>
             <th>Role</th>
-            <th>操作</th>
+            <th>修改权限</th>
+            <th>删除用户</th>
           </tr>
         </thead>
         <tbody>
@@ -16,7 +17,20 @@
             <td>{{ user.id }}</td>
             <td>{{ user.username }}</td>
             <td>{{ user.role }}</td>
-            <td><el-button type="primary" size="small"  @click="deleteUser(user.id)"  id="delete">删除</el-button></td>
+            <td>
+              <el-dropdown>
+                <el-button type="primary">
+                  修改权限<el-icon class="el-icon--right"><arrow-down /></el-icon>
+                </el-button>
+                <template #dropdown>
+                  <el-dropdown-menu>
+                    <el-dropdown-item @click="changeRole(user, 'admin')">超级管理员</el-dropdown-item>
+                    <el-dropdown-item @click="changeRole(user, 'user')">普通用户</el-dropdown-item>
+                  </el-dropdown-menu>
+                </template>
+              </el-dropdown>
+          </td>
+          <td><el-button type="primary" size="small"  @click="deleteUser(user.id)"  id="delete">删除</el-button></td>
           </tr>
         </tbody>
       </table>

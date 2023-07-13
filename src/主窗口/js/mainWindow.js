@@ -15,6 +15,7 @@ import HelpDoc from "../components/HelpDoc.vue"
 import { computed } from "vue";
 import { mapState } from "vuex";
 import axiosInstance from "../../axios"
+import router from "../../sys/router"
 
 import { ref } from 'vue'
 
@@ -48,6 +49,8 @@ export default {
           aboutVisible: false,
           helpDocVisible: false,
           activeIcon: "deviceManagement",
+          softwareIcon:"icon1",
+          test:{softwareIcon:"icon1"},
           group1Input: "", //通信管理-设备管理接收数据
           group2Output: "", //通信管理-设备管理发送数据
           //是否显示最近打开方案子菜单栏
@@ -114,6 +117,9 @@ export default {
         //   },
         };
     },
+    created() {
+        this.userRole = JSON.parse(sessionStorage.getItem('userInfo')).role;
+      },
     //在顶端组件提供模块结果数据
     provide() {
         return {
@@ -193,6 +199,68 @@ export default {
 
     },
     methods: {
+        returnto(){
+            console.log(JSON.parse(sessionStorage.getItem('userInfo')).username)
+            console.log(JSON.parse(sessionStorage.getItem('userInfo')).password)
+           if(JSON.parse(sessionStorage.getItem('userInfo')).password!=null){
+             console.log('执行if');
+             axiosInstance.post('/login', {
+                 username: JSON.parse(sessionStorage.getItem('userInfo')).username,
+                 password: JSON.parse(sessionStorage.getItem('userInfo')).password,
+                 code: '123',
+                 rememberMe: true
+             })
+               .then(response => {
+                console.log(JSON.stringify(response.data));
+                 sessionStorage.setItem('userInfo', JSON.stringify(response.data));
+                 console.log(JSON.parse(sessionStorage.getItem('userInfo')).username);
+                 console.log(JSON.parse(sessionStorage.getItem('userInfo')).permissions);
+                 console.log(sessionStorage.getItem('userInfo'));
+        
+                 //window.location.href = 'http://10.13.3.245:5173/#/Index';
+                 router.push('/Index');
+               })
+               .catch(error => {
+                 console.error(error);
+               });}
+            else{
+                router.push('/Index');
+            }
+             
+        },
+        showFileOperationsDialog() {
+            // Show the file operations dialog
+            this.$dialog
+              .confirm({
+                title: '文件操作',
+                message: '选择要执行的文件操作',
+                confirmButtonText: '上传文件',
+                cancelButtonText: '下载文件',
+                closeOnClickModal: false,
+              })
+              .then(() => {
+                // Upload file logic here
+                this.uploadFile();
+              })
+              .catch(() => {
+                // Download file logic here
+                this.downloadFile();
+              });
+          },
+          uploadFile() {
+            // Logic for file upload goes here
+            // You can show a file upload dialog or perform any other necessary actions
+            // when the user chooses to upload a file.
+            console.log('Uploading file...');
+          },
+      
+          downloadFile() {
+            // Logic for file download goes here
+            // You can initiate a file download or perform any other necessary actions
+            // when the user chooses to download a file.
+            console.log('Downloading file...');
+          },
+
         test(){
             this.$store.commit('setRunResults',[
                 {
@@ -382,6 +450,14 @@ export default {
 
         setSoftware() {
             this.softwareSetVisible=true;
+            //this.softwareIcon="icon2";
+            this.test.softwareIcon="icon2"
+         },
+         setScheme(){
+            this.softwareSetVisible=true;
+            //this.softwareIcon="icon3";
+            this.test.softwareIcon="icon3"
+
          },
 
         setActiveIcon(icon){

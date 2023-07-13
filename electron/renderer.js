@@ -13,7 +13,25 @@ import store from '@/sys/store'
 
 
 const app=createApp(App)
-// 配置全局变量 页面中使用 inject 接收A
+
+app.directive('permission', (el, binding,)=> {
+    // 获取当前用户的权限列表（从sessionStorage中获取）
+    const userPermissions = JSON.parse(sessionStorage.getItem('userInfo')).permissions;
+
+    // 获取指令传入的权限标识
+    const requiredPermission = binding.value;
+
+    // 判断用户是否具有该权限
+    if (!userPermissions || !userPermissions.includes(requiredPermission)) {
+      // 如果用户没有该权限，则从DOM中移除该元素
+      el.disabled = true;
+      el.classList.add('disabled');
+      
+    }
+    console.log("成功了");
+  }
+);
+// 配置全局变量 页面中使用 inject 接收
 app.provide('global',{
   store:"global store"
 })

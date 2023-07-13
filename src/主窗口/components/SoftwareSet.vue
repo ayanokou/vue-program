@@ -1,25 +1,25 @@
 <template>
-  <el-dialog title="软件设置" :model-value="isVisible" :modal="false" :close-on-click-modal="false"
+  <el-dialog title="设置" :model-value="isVisible" :modal="false" :close-on-click-modal="false"
     custom-class="custom-dialog" draggable @close="$emit('update:isVisible', false)">
     <div class="container">
       <el-row :gutter="20" class="row-container">
         <el-col :span="4" class="left-column">
           <!-- 左侧区域 -->
           <div class="sidebar-content">
-            <div class="sidebar-item" :class="{ active: activeIcon === 'deviceManagement' }"
+            <div class="sidebar-item" :class="{ active: softwareIcon === 'icon1' }"
               @click="setActiveIcon('deviceManagement')">
               <!-- <el-icon><Monitor /></el-icon> -->
               <span>权限设置</span>
             </div>
-            <div class="sidebar-item" :class="{ active: activeIcon === 'receive' }" @click="setActiveIcon('receive')">
+            <div class="sidebar-item" :class="{ active: softwareIcon === 'icon2' }" @click="setActiveIcon('icon2')">
               <!-- <el-icon><SortDown /></el-icon> -->
               <span>软件设置</span>
             </div>
-            <div class="sidebar-item" :class="{ active: activeIcon === 'send' }" @click="setActiveIcon('send')">
+            <div class="sidebar-item" :class="{ active: softwareIcon === 'icon3' }" @click="setActiveIcon('icon3')">
               <!-- <el-icon><SortUp /></el-icon> -->
               <span>方案设置</span>
             </div>
-            <div class="sidebar-item" :class="{ active: activeIcon === 'heartbeat' }" @click="setActiveIcon('heartbeat')">
+            <div class="sidebar-item" :class="{ active: softwareIcon === 'icon4' }" @click="setActiveIcon('icon4')">
               <!-- <el-icon><Refresh /></el-icon> -->
               <span>运行策略</span>
             </div>
@@ -29,7 +29,7 @@
           <!-- 右侧区域 -->
           <div class="right-content">
             <!-- 这里根据点击不同的图标显示不同的内容 -->
-            <div v-if="activeIcon === 'deviceManagement'" class="mainfield-setting">
+            <div v-if="test.softwareIcon === 'icon1'" class="mainfield-setting">
               <el-row style="height: 100%">
                 <el-col :span="6" class="content-head" style="border-right: 1px solid #ccc">
                   设备列表
@@ -89,7 +89,7 @@
                 </el-col>
               </el-row>
             </div>
-            <div v-if="activeIcon === 'receive'" class="mainfield-setting">
+            <div v-if="test.softwareIcon === 'icon2'" class="mainfield-setting">
               <!-- <el-row style="height: 100%;">
                                 <el-col :span="6" class="content-head" style="border-right: 1px solid #ccc;">接收事件列表</el-col>
                                 <el-col :span="18">
@@ -151,7 +151,7 @@
               </el-row>
               <el-button class="btn" @click="confirm1">确认</el-button>
             </div>
-            <div v-if="activeIcon === 'send'" class="mainfield-setting">
+            <div v-if="test.softwareIcon === 'icon3'" class="mainfield-setting">
               <el-row class="content-head" style="">
                 <el-col>方案管理</el-col>
               </el-row>
@@ -162,27 +162,36 @@
                 <el-table :data="schemeParam.rows">
                   <el-table-column prop="index" label="序号"></el-table-column>
                   <el-table-column label="方案路径">
-                    <el-input v-model="schemeParam.rows.input1"></el-input>
+                    <template #default="scope">
+                    <el-input v-model="scope.row.input1"/>
+                </template>
+                    <!-- <el-input v-model="schemeParam.rows.input1"></el-input> -->
                   </el-table-column>
                   <el-table-column label="方案密码">
-                    <el-input v-model="schemeParam.rows.input2"></el-input>
+                    <template #default="scope">
+                    <el-input v-model="scope.row.input2"/>
+                </template>
+                    <!-- <el-input v-model="schemeParam.rows.input2"></el-input> -->
                   </el-table-column>
                   <el-table-column label="通信字符串">
-                    <el-input v-model="schemeParam.rows.input3"></el-input>
+                    <template #default="scope">
+                    <el-input v-model="scope.row.input3"/>
+                </template>
+                    <!-- <el-input v-model="schemeParam.rows.input3"></el-input> -->
                   </el-table-column>
                   <el-table-column label="通信切换">
-                    <el-switch v-model="schemeParam.rows.switch" active-color="#13ce66" inactive-color="#ff4949">
+                    <template #default="scope">
+                      <el-switch v-model="scope.row.switch" active-color="#13ce66" inactive-color="#ff4949">
                     </el-switch>
+                </template>
+                    <!-- <el-switch v-model="schemeParam.rows.switch" active-color="#13ce66" inactive-color="#ff4949">
+                    </el-switch> -->
                   </el-table-column>
                 </el-table>
               </div>
               <el-button class="btn" @click="confirm2">确认</el-button>
             </div>
-            <div v-if="activeIcon === 'heartbeat'" class="mainfield-setting">
-              显示删除内容
-            </div>
-            <div v-if="activeIcon === 'setting'" class="mainfield-setting">
-              显示设置内容
+            <div v-if="test.softwareIcon === 'icon4'" class="mainfield-setting">
             </div>
           </div>
         </el-col>
@@ -194,10 +203,10 @@
 
 <script>
 export default {
-  props: ["isVisible"],
+  props: ["test"],
   data() {
     return {
-      activeIcon: "deviceManagement",
+      // activeIcon: "deviceManagement",
 
       softwareParam: {
         selfStartOfStartupSoftware: true,
@@ -212,7 +221,8 @@ export default {
       },
       schemeParam: {
         rows: [
-          { index: 1, input1: '', input2: '', input3: '', switch: 1 }
+          { index: 1, input1: '', input2: '', input3: '', switch: 1 },
+        
         ]
       }
 
@@ -220,7 +230,7 @@ export default {
   },
   methods: {
     setActiveIcon(icon) {
-      this.activeIcon = icon;
+      this.test.softwareIcon = icon;
     },
     confirm1() {
       localStorage.setItem("softwareParam", JSON.stringify(softwareParam));
@@ -239,7 +249,8 @@ export default {
         index: maxIndex + 1,
         input1: '',
         input2: '',
-        input3: ''
+        input3: '',
+        switch:1, 
       });
     }
   },

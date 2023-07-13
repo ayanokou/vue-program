@@ -88,7 +88,9 @@ export default {
         <div class="codeEditBox">
             <VAceEditor v-model:value="content" lang="html" theme="github" style="height: 300px" />
         </div>
-
+        <div class="container">
+            <el-button class="el-button" @click="run()">运行</el-button>
+        </div>
 
 
     </el-dialog>
@@ -109,7 +111,7 @@ export default {
     },
     data() {
         return {
-           
+
 
         }
     },
@@ -123,10 +125,21 @@ export default {
         close() {
             this.$store.commit('setDialogVisibleGlobalScript', false)
         },
-        
+        run() {
+            try {
+                // 使用eval()函数解析和执行代码
+                eval(this.content);
+            } catch (error) {
+                console.error('Error running code:', error);
+            }
+        }
 
 
-    }
+    },
+    mounted() {
+    // 在组件挂载后，初始化代码
+    this.code = "console.log('Hello, World!');";
+  }
 }
 
 
@@ -134,5 +147,16 @@ export default {
 
 
 <style scoped>
+.container {
+    display: flex;
+    justify-content: flex-end;
+    height: 30px;
+    /* 设置容器宽度 */
+}
 
+.el-button {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 30px;
+}
 </style>

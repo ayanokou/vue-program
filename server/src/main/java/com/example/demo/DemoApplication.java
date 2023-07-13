@@ -88,6 +88,7 @@ public class DemoApplication {
 				return client;
 			}
 
+
 			@Override
 			public void setClient(SocketIOClient client) {
 				this.client = client;

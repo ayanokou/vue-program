@@ -20,7 +20,7 @@
     "electron": "^20.3.4",
     "electron-build": "0.0.3",
     "electron-builder": "^23.3.3",
-    "element-plus": "^2.2.16",
+    "element-plus": "^2.3.7",
     "file-saver": "^2.0.5",
     "mitt": "^3.0.0",
     "mobx": "^6.9.0",

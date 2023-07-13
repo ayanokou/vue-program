@@ -16,6 +16,7 @@ const router = createRouter({
             path: '/main',
             name: 'main',
             component: () => import('@/主窗口/MainWindow.vue'),
+            meta: { requireAuth: true }
             
             // children: [
             //     {
@@ -43,19 +44,14 @@ const router = createRouter({
             meta: { requireAuth: true }
         },
         
-        {
-            path: '/userManage',
-            name: 'userManage',
-            component: () => import(/* webpackChunkName: "about" */ '../cloud/userManage.vue'),
-            meta: { requireAuth: true }
-        },
-        
 
     ]
 })
 
 
 const isAuthenticated = () => {
+    console.log(sessionStorage.getItem('userInfo'));
+
     return sessionStorage.getItem('userInfo') !== null;
   };
   

@@ -37,7 +37,7 @@ export default {
             type: 'success',
             duration: 1500,
             onClose: () => {
-              router.push('/index');
+              router.push('/Index');
             }
           });
         })
