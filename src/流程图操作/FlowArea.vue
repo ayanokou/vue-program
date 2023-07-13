@@ -106,8 +106,13 @@
                         <CaretRight />
                     </el-icon>
                 </el-button>
-                <el-button class="tab-button">
+                <el-button v-if="!loopRunning" class="tab-button" @click="runOrStopFLowLoop(item.index)">
                     <el-icon style="color:black;">
+                        <Refresh />
+                    </el-icon>
+                </el-button>
+                <el-button v-if="loopRunning" style="background-color: red;" class="tab-button"  @click="runOrStopFLowLoop(item.index)">
+                    <el-icon style="color:black;" >
                         <Refresh />
                     </el-icon>
                 </el-button>
@@ -167,6 +172,7 @@ export default {
             ],
             //confirmationDialog确认后，哪些窗口要弹出
             confirmationDialogFlag: "",
+            loopRunning:false
         };
     },
     computed: {
@@ -181,7 +187,8 @@ export default {
             //"open",
             "flowAdd",
             "flowChartOK",
-            "runSolution"
+            "runSolution",
+            "runSolutionLoop",
         ]),
         solution(){
             let lfs = [];
@@ -196,6 +203,7 @@ export default {
         }
     },
     watch: {
+        
         runSolution(newValue){
             if(newValue.trigger){
                 let payload={
@@ -208,6 +216,19 @@ export default {
                 this.$store.commit('runSolutionEvent',{trigger:false})
             }
         },
+        runSolutionLoop(newValue){
+            if(newValue.trigger){
+                let payload={
+                    trigger:true,
+                    mode:"RunSolutionLoop",
+                    data:JSON.stringify(this.solution)
+                }
+                this.$store.commit("setSocketEmit",payload)
+
+                this.$store.commit('runSolutionLoopEvent',{trigger:false})
+            }
+        },
+        
         flowChartOK(newValue){
             if(newValue.trigger){
                 let index=newValue.index
@@ -506,6 +527,36 @@ export default {
     },
 
     methods: {
+        runLoop(index){
+            let msg={
+                tabIndex:index,
+                content:this.$refs.lfComponent[index].lfData
+            }
+            let payload={
+                trigger:true,
+                mode:"RunFlowLoop",
+                data:JSON.stringify(msg)
+            }
+            this.$store.commit("setSocketEmit",payload)
+        },
+        stopLoop(index){
+            let payload={
+                trigger:true,
+                mode:"StopFlowLoop",
+                data:""
+            }
+            this.$store.commit("setSocketEmit",payload)
+        },
+        runOrStopFLowLoop(index){
+            if(this.loopRunning){
+                this.loopRunning=false
+                this.stopLoop(index)
+
+            }else{
+                this.loopRunning=true
+                this.runLoop(index)
+            }
+        },
         run(index){
             let run_button=document.getElementsByClassName('run-button')[index]
             run_button.classList.add('running');
@@ -626,6 +677,9 @@ export default {
 };
 </script>
 <style scoped>
+.demo-tabs :deep(.el-tabs__content){
+    flex-grow: 1;
+}
 .running{
     /*background-color: rgb(121, 187, 255);*/
     background-color: red;

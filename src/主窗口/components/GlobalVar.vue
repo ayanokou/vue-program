@@ -99,13 +99,10 @@ export default {
 
         },
         saveAllVars() {
-            let jsonObject = {
-                message: JSON.stringify({data:this.tableData})
-            }
             let payload={
                 trigger:true,
                 mode:"SaveGlobalVar",
-                data:jsonObject
+                data:JSON.stringify(this.tableData)
             }
             this.$store.commit("setSocketEmit",payload)
         },

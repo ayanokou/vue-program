@@ -40,7 +40,14 @@ public class MessageHandlerReceiver implements Runnable {
                     logger.info("MessageHandlerReceiver: {}", message);
                     JSONObject jsonObject = JSONObject.parseObject(message);
                     String event = jsonObject.getString("event");
-                    String data = jsonObject.getJSONObject("data").toJSONString();
+                    String data;
+                    if(jsonObject.getJSONObject("data") != null) {
+                    	data = jsonObject.getJSONObject("data").toJSONString();
+                    }else if(jsonObject.getJSONArray("data") != null) {
+                        data=jsonObject.getJSONArray("data").toJSONString();
+                    }else{
+                        data="";
+                    }
                     listener.onMessage(event, data);
 
                     msg = msg.substring(endIndex + 6);

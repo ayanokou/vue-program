@@ -43,7 +43,7 @@
                         <el-menu-item-group class="second_left_menus_container">
                             <!--vue 插入元素-->
                             <el-menu-item v-for="(model_2, index2) in value" :index="'suanzi' + index1 + '-' + index2"
-                                          :id="model_2.lfProperties.name+tab.index">
+                                          :id="model_2.name+tab.index">
                             </el-menu-item>
                         </el-menu-item-group>
                     </el-sub-menu>
@@ -81,11 +81,11 @@
                 <template v-for="m in operatorData.models">
                     <el-form-item v-if="m.modelName==modelName" v-for="(item,index) in m.inPara" :label="item.varName">
                         <div v-if="item.defineVarInputWay === 'directInputWay'">
-                            <el-input v-model="formData[index]"/>
+                            <el-input v-model="formData[index]" :placeholder="item.varExplanation"/>
                         </div>
                         <div
                             v-if="item.defineVarInputWay === 'selectedInputWay'||item.defineVarInputWay === 'smartInputWay'">
-                            <el-select v-model="formData[index]" placeholder="Select">
+                            <el-select v-model="formData[index]" :placeholder="item.varExplanation">
                                 <el-option
                                     v-for="(value,key) in item.comboList"
                                     :key="key"

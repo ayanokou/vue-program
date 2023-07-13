@@ -25,15 +25,28 @@ export default createStore({
             moduleResultData:"[]",
             //流程运行结束信号
             flowChartOK:{trigger:false,index:-1},
-            generalResult:"",
+            //generalResult:"",
             runState:{trigger:false,content:null},
             runSolution:null,
             dialogVisibleGlobalVar:false,
             //nodeModelName:"",
-            localImg:"init"
+            localImg:"init",
+            runResults:[],
+            runSolutionLoop:undefined,
+            currentNode:undefined,
+            showCurrentResult:false,
+            showImg:false,
+            historyResults:[],
+            dialogVisibleGlobalScript:false,
         }
     },
     mutations:{
+        showImgEvent(state,payload){
+            state.showImg=payload
+        },
+        showCurrentResultEvent(state,payload){
+            state.showCurrentResult=payload
+        },
         setVuexHelpInfo(state,payload){
             state.vuexHelpInfo=payload
         },
@@ -64,6 +77,9 @@ export default createStore({
         runSolutionEvent(state,payload){
             state.runSolution=payload
         },
+        runSolutionLoopEvent(state,payload){
+            sata.runSolutionLoop=payload
+        },
 
         setSocketEmit(state,payload){
             state.socketEmit=payload
@@ -84,9 +100,9 @@ export default createStore({
         setFlowChartOK(state,payload){
             state.flowChartOK=payload
         },
-        setGeneralResult(state,payload){
-            state.generalResult=payload
-        },
+        // setGeneralResult(state,payload){
+        //     state.generalResult=payload
+        // },
         setRunState(state,payload){
             state.runState=payload
         },
@@ -99,6 +115,18 @@ export default createStore({
         // setLocalImg(state,payload){
         //     state.localImg=payload
         // }
+        setRunResults(state,payload){
+            state.runResults=payload
+        },
+        setCurrentNode(state,payload){
+            state.currentNode=payload
+        },
+        setHistoryResults(state,payload){
+            state.historyResults=payload
+        },
+        setDialogVisibleGlobalScript(state,payload){
+            state.dialogVisibleGlobalScript=payload
+        },
     },
     modules:{
 

@@ -6,8 +6,11 @@ import LayoutOne from "@/主窗口/components/layout/LayoutOne.vue";
 import LayoutTwo from "@/主窗口/components/layout/LayoutTwo.vue";
 import LayoutThree from "@/主窗口/components/layout/LayoutThree.vue";
 import GlobalVar from "../components/GlobalVar.vue";
+import GlobalScript from "../components/GlobalScript.vue"
 import NetworkManager from "../components/NetworkManager.vue";
 import SoftwareSet from "../components/SoftwareSet.vue";
+import About from "../components/About.vue"
+import HelpDoc from "../components/HelpDoc.vue"
 
 import { computed } from "vue";
 import { mapState } from "vuex";
@@ -18,40 +21,36 @@ import { ref } from 'vue'
 
 
 
+
+
+
 //初始化socketio用于前后端传输
 let socket = io.connect('http://localhost:9092')
+
+
 
 export default {
     components:{
         GlobalVar,
         NetworkManager,
-        SoftwareSet
+        SoftwareSet,
+        About,
+        HelpDoc,
+        GlobalScript,
     },
     data() {
         return {
-           
-          selectedOption: "", // 用于存储选择的选项值
-          selectedOptionContent: "", // 用于存储选项对应的内容
-          options: [
-            { label: "选项一", value: "option1", content: "选项一的内容" },
-            { label: "选项二", value: "option2", content: "选项二的内容" },
-            { label: "TCP客户端", value: "TCP客户端", content: "tcp" },
-          ],
-          deviceName: "device1",
-          ip: "127.0.0.1",
-          portNumber: 7920,
-          isIPValid: true,
-          updataValue: true,
           autoReconnection: false,
           receiveEndMark: false,
           demoSelectedTCP: false,
-          //是否显示通信管理窗口
-          communicationManagementVisible: false,
-          subCommunicationManagementVisible: false,
           //软件设置窗口
           softwareSetVisible:false,
           networkManagerVisible: false,
+          aboutVisible: false,
+          helpDocVisible: false,
           activeIcon: "deviceManagement",
+          softwareIcon:"icon1",
+          test:{softwareIcon:"icon1"},
           group1Input: "", //通信管理-设备管理接收数据
           group2Output: "", //通信管理-设备管理发送数据
           //是否显示最近打开方案子菜单栏
@@ -164,14 +163,23 @@ export default {
             this.$store.commit('timeConsumeEvent', data);
         })
 
-        // socket.on('revRects',(data)=>{
-        //     this.$store.commit('setModuleResultData', data);
-        // })
+        socket.on("TcpConnectorReceivedData", (data) =>
+          console.log(`TcpConnectorReceivedData: ${data}`)
+        );
+        socket.on("TcpListenerReceivedData", (data) =>
+          console.log(`TcpListenerReceivedData: ${data}`)
+        );
+        socket.on("UdpListenerReceivedData", (data) =>
+          console.log(`UdpListenerReceivedData: ${data}`)
+        );
 
+        socket.on("runResults",data=>{
+            this.$store.commit('setRunResults',JSON.parse(data))
+        })
         
     },
     computed:{
-        ...mapState(['socketEmit','dialogVisibleGlobalVar',"softwareSet"])
+        ...mapState(['socketEmit','dialogVisibleGlobalVar',"softwareSet","dialogVisibleGlobalScript"])
     },
     watch:{
         socketEmit(newValue){
@@ -185,6 +193,9 @@ export default {
                 })
             }
         }
+
+    },
+    created() {
 
     },
     methods: {
@@ -250,8 +261,119 @@ export default {
             console.log('Downloading file...');
           },
 
+        test(){
+            this.$store.commit('setRunResults',[
+                {
+                  "tab_index": 0,
+                  "results": [
+                    {
+                      "id": "0",
+                      "outResults": [
+                        {
+                          "name":"dst",
+                          "type":"Mat",
+                          "content":""
+                        },
+                        {
+                          "name":"dst1",
+                          "type":"int",
+                          "content":0
+                        },
+                        {
+                          "name":"point",
+                          "type":"Point",
+                          "content":{
+                            "x":0,
+                            "y":0
+                          }
+                        },
+                        {
+                            "name":"points1",
+                            type:"vector<Point>",
+                            content:[
+                                {
+                                    type:"Point",
+                                    content:{
+                                        x:1,
+                                        y:2
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "name":"points2",
+                            type:"vector<Point>",
+                            content:[
+                                {
+                                    type:"Point",
+                                    content:{
+                                        x:1,
+                                        y:2
+                                    }
+                                },
+                                {
+                                    type:"Point",
+                                    content:{
+                                        x:1,
+                                        y:2
+                                    }
+                                }
+                            ]
+                        }
+                      ],
+                      "timeConsume": 5688
+                    },
+                    {}
+                  ],
+                  "totalTimeConsume": 6275
+                },
+                {
+                  "tab_index": 1,
+                  "results": [
+                    {
+                      "id": "0",
+                      "outResults": [
+                        {
+                          "type":"Mat",
+                          "content":""
+                        },
+                        {
+                          "type":"int",
+                          "content":0
+                        }
+                      ],
+                      "timeConsume": 5688
+                    },
+                    {}
+                  ],
+                  "totalTimeConsume": 6275
+                }
+              ])
+            },
+        openHelpDoc(){
+            this.helpDocVisible = true
+        },
+        openAbout(){
+            this.aboutVisible = true
+        },
         openNetworkManager(){
             this.networkManagerVisible = true
+        },
+        runSolutionLoop(){
+            socket.emit("RunSolutionLoop",{trigger:true})
+        },
+        // async stopSolutionLoop(){
+        //     //socket.emit("StopSolutionLoop",{message:JSON.stringify({})})
+        //     const handle =await window.showSaveFilePicker()
+        //     const writer = await handle.createWritable()
+        //     await writer.write('hello world')
+        //     await writer.close()
+        // },
+        stopSolutionLoop(){
+            socket.emit("StopSolutionLoop",{trigger:true})
+        },
+        openTest(){
+            this.testFlag = true
         },
         selectGroup(group) {
             this.selectedGroup = group;
@@ -259,14 +381,10 @@ export default {
         },
 
         sendTCPData(){
-            let jsonObject = {
-                userName: 'TCP',                
-                message: JSON.stringify({ip:this.ip, port: this.portNumber, data:this.group2Output})
-            }
             let payload={
                 trigger:true,
-                mode:"chatevent",
-                data:jsonObject
+                mode:"TCP",
+                data:JSON.stringify({ip:this.ip, port: this.portNumber, data:this.group2Output})
             }
             this.$store.commit("setSocketEmit",payload)
         },
@@ -293,13 +411,8 @@ export default {
 
             let payload = {
               trigger: true,
-              mode: "chatevent",
-              data: {
-                userName: operationName,
-                message: {
-                  data: { IP: this.ip, port: parseInt(this.portNumber) },
-                },
-              },
+              mode: operationName,
+              data: JSON.stringify({ IP: this.ip, port: parseInt(this.portNumber) } )              
             };
 
             this.$store.commit("setSocketEmit", payload);
@@ -337,6 +450,14 @@ export default {
 
         setSoftware() {
             this.softwareSetVisible=true;
+            //this.softwareIcon="icon2";
+            this.test.softwareIcon="icon2"
+         },
+         setScheme(){
+            this.softwareSetVisible=true;
+            //this.softwareIcon="icon3";
+            this.test.softwareIcon="icon3"
+
          },
 
         setActiveIcon(icon){
@@ -344,6 +465,9 @@ export default {
         },
         openDialogGV(){
             this.$store.commit('setDialogVisibleGlobalVar',true)
+        },
+        openDialogGS(){
+            this.$store.commit('setDialogVisibleGlobalScript',true)
         },
         //动态布局
         layout(i) {

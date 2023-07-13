@@ -2,9 +2,25 @@
     <el-table :data="conditionData" style="width: 100%">
         <el-table-column label="条件">
             <template #default="scope">
-<!--                <el-select v-model="">-->
-
-<!--                </el-select>-->
+                <el-select v-model="scope.row.expr">
+                    <template v-if="scope.row.precision==1">
+                        <el-option 
+                        v-for="item in conditionIntExpr"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                    />
+                    </template>
+                    <template v-if="scope.row.precision==2">
+                        <el-option 
+                        v-for="item in conditionDoubleExpr"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                    />
+                    </template>
+                    
+                </el-select>
             </template>
         </el-table-column>
         <el-table-column label="有效范围下限">
@@ -36,7 +52,6 @@
       :key="item.value"
       :label="item.label"
       :value="item.value"
-      :disabled="item.disabled"
     />
     </el-select>
     <el-button @click="addItem">添加</el-button>
@@ -48,7 +63,7 @@ export default{
     props:['conditionData','conditionIntExpr','conditionDoubleExpr'],
     data(){
         return{
-            value:'',
+            value:'double',
             options:[
                 {
                     value:'double',
