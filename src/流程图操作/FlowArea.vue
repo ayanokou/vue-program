@@ -117,10 +117,12 @@
                     </el-icon>
                 </el-button>
             </template>
+            
             <LogicFlow
                 ref="lfComponent"
                 :tab="item"
                 @changeTabName="changeTabName"
+                @setFlowStateToFlowArea="setFlowState"
             >
                 <div :id="item.title" style="height: 100%"></div>
             </LogicFlow>
@@ -229,16 +231,16 @@ export default {
             }
         },
         
-        flowChartOK(newValue){
-            if(newValue.trigger){
-                let index=newValue.index
-                let run_button=document.getElementsByClassName('run-button')[index]
-                run_button.classList.remove('running')
-                run_button.classList.add('runover')
+        // flowChartOK(newValue){
+        //     if(newValue.trigger){
+        //         let index=newValue.index
+        //         let run_button=document.getElementsByClassName('run-button')[index]
+        //         run_button.classList.remove('running')
+        //         run_button.classList.add('runover')
 
-                this.$store.commit('setFlowChartOK',{trigger:false,index:-1})
-            }
-        },
+        //         this.$store.commit('setFlowChartOK',{trigger:false,index:-1})
+        //     }
+        // },
         newSolution(newValue) {
             if (newValue.trigger) {
                 this.$confirm('是否保存当前方案?', '提示', {
@@ -527,6 +529,18 @@ export default {
     },
 
     methods: {
+        setFlowState(data){
+            console.log('in setFlowState')
+            switch(data.payload){
+                case "runOver":
+                    let run_button=document.getElementsByClassName('run-button')[data.tabIndex]
+                    run_button.classList.remove('running')
+                    run_button.classList.add('runover')
+                    break;
+                default:
+                    break;
+            }
+        },
         runLoop(index){
             let msg={
                 tabIndex:index,

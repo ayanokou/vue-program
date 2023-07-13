@@ -5,34 +5,6 @@
             <el-scrollbar>
                 <el-menu class="el-menu-vertical" :collapse="true" style="width: 150px; height: 100%;">
 
-                    <!-- <el-sub-menu v-for="(model_1, model_1_name, index1) in suanzis" :index="index1">
-                        <template #title>
-                            <el-icon style="vertical-align: middle">
-                                <Expand/>
-                            </el-icon>
-                            {{ model_1_name }}
-                        </template>
-
-                        <el-space wrap class="second_left_menus_container">
-                            <el-button class="second_left_menus" type="primary" v-for="(model_2, index2) in model_1"
-                                       :index="'suanzi' + index1 + '-' + index2"
-                                       :id="model_2.lfProperties.name"
-                                       @click="clickToAddNode(model_2)"
-                                       draggable="true" @dragend="dragToAddNode($event, model_2)">
-                                       >
-
-                                <template #title>
-                                    <el-icon style="vertical-align: middle">
-                                        <Expand/>
-                                    </el-icon>
-                                    {{ model_2.lfProperties.name }}
-                                </template>
-
-
-                            </el-button>
-
-                        </el-space>
-                    </el-sub-menu> -->
                     <el-sub-menu v-for="(value, key, index1) in suanzis" :index="index1">
                         <template #title>
                             <el-icon>
@@ -52,10 +24,11 @@
         </el-aside>
         <!--流程图区域-->
         <el-main ref="lfMain" style="height: 100%; padding: 0; overflow:hidden">
+            {{ currentFlowState }}
             <div id="runtime-container">
-                <span id="runtime">流程用时：{{ flowRunTime }}us</span><!-- {{ flowRunTime }} {{ algorithmRunTime }}-->
+                <span id="runtime">流程用时：{{ timeConsume.flowRunTime }}us</span>
                 <span style="margin-right: 20px"></span>
-                <span id="runtime">算法用时：{{ algorithmRunTime }}us</span>
+                <span id="runtime">算法用时：{{ timeConsume.algorithmRunTime }}us</span>
             </div>
             <slot></slot>
         </el-main>
