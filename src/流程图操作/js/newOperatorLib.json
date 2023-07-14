@@ -1,176 +1,55 @@
 {
   "图像匹配": [
     {
-      "state": "init",
-      "superName": "图像匹配",
-      "name": "找圆",
-      "models": [
-        {
-          "modelName": "最小二乘法拟合圆",
-          "helpMsg": "it is a help message of GlobalVariable",
-          "dllPath": "resources/LeastSquares.dll",
-          "modelID": "fitLine_leastSquare",
-          "inPara": [
-            {
-              "varName": "points",
-              "varType": "vector<Point2f>",
-              "fromExpression": "",
-              "defineVarInputWay": "smartInputWay",
-              "comboList": {},
-              "varExplanation": ""
-            }
-          ],
-          "outPara": [
-            {
-              "varName": "res_circle",
-              "varType": "vector<float>",
-              "varExplanation": " 返回结果float向量 前两个数表示圆心 第三个数表示半径"
-            }
-          ]
-        },
-        {
-          "modelName": "最小二乘法找圆",
-          "helpMsg": "it is a help message of GlobalVariable",
-          "dllPath": "resources/LeastSquares.dll",
-          "modelID": "find_circle_leastSquare",
-          "inPara": [
-            {
-              "varName": "src",
-              "varType": "Mat",
-              "fromExpression": "",
-              "defineVarInputWay": "smartInputWay",
-              "comboList": {},
-              "varExplanation": "canny处理后的二值图片"
-            }
-          ],
-          "outPara": [
-            {
-              "varName": "res_circle",
-              "varType": "Vec3f",
-              "varExplanation": ""
-            },
-            {
-              "varName": "res_circle_img",
-              "varType": "Mat",
-              "varExplanation": ""
-            }
-          ]
-        },
-        {
-          "modelName": "Ransac拟合圆",
-          "helpMsg": "it is a help message of GlobalVariable",
-          "dllPath": "resources/Ransac.dll",
-          "modelID": "fitCircle_Ransac",
-          "inPara": [
-            {
-              "varName": "points",
-              "varType": "vector<Point>",
-              "fromExpression": "",
-              "defineVarInputWay": "directInputWay",
-              "varExplanation": ""
-            },
-            {
-              "varName": "inlier_threshold",
-              "varType": "float",
-              "fromExpression": "5",
-              "defineVarInputWay": "directInputWay",
-              "varExplanation": ""
-            },
-            {
-              "varName": "iterate_nums",
-              "varType": "int",
-              "fromExpression": "500",
-              "defineVarInputWay": "directInputWay",
-              "varExplanation": ""
-            },
-            {
-              "varName": "sample_points_min_distance",
-              "varType": "float",
-              "fromExpression": "5",
-              "defineVarInputWay": "directInputWay",
-              "varExplanation": ""
-            }
-          ],
-          "outPara": [
-            {
-              "varName": "res_circle",
-              "varType": "vector<float>",
-              "varExplanation": "center.x, center.y, radius"
-            }
-          ]
-        },
-        {
-          "modelName": "霍夫检测圆",
-          "dllPath": "resources/DetectHough.dll",
-          "modelID": "circles_detect_Hough",
-          "inPara": [
-            {
-              "varName": "src",
-              "varType": "Mat",
-              "fromExpression": "",
-              "defineVarInputWay": "smartInputWay",
-              "comboList": {},
-              "varExplanation": ""
-            },
-            {
-              "varName": "method",
-              "varType": "int",
-              "fromExpression": "3",
-              "defineVarInputWay": "directInputWay",
-              "varExplanation": ""
-            },
-            {
-              "varName": "dp",
-              "varType": "double",
-              "fromExpression": "1",
-              "defineVarInputWay": "directInputWay",
-              "varExplanation": ""
-            },
-            {
-              "varName": "minDist",
-              "varType": "double",
-              "fromExpression": "60",
-              "defineVarInputWay": "directInputWay",
-              "varExplanation": ""
-            },
-            {
-              "varName": "param1",
-              "varType": "double",
-              "fromExpression": "200",
-              "defineVarInputWay": "directInputWay",
-              "varExplanation": ""
-            },
-            {
-              "varName": "param2",
-              "varType": "double",
-              "fromExpression": "100",
-              "defineVarInputWay": "directInputWay",
-              "varExplanation": ""
-            },
-            {
-              "varName": "minRadius",
-              "varType": "int",
-              "fromExpression": "0",
-              "defineVarInputWay": "directInputWay",
-              "varExplanation": ""
-            },
-            {
-              "varName": "maxRadius",
-              "varType": "int",
-              "fromExpression": "20",
-              "defineVarInputWay": "directInputWay",
-              "varExplanation": ""
-            }
-          ],
-          "outPara": [
-            {
-              "varName": "dst",
-              "varType": "Mat",
-              "varExplanation": ""
-            }
-          ]
-        }
-      ]
+      "lfProperties": {
+        "name": "轮廓比对",
+        "type": "operator",
+        "text": "轮廓缺陷检测",
+        "label": "轮廓缺陷检测"
+      },
+      "properties": {
+        "state": "init",
+        "superName": "图像匹配",
+        "name": "轮廓比对",
+        "models": [
+          {
+            "modelName": "轮廓比对",
+            "helpMsg": "it is a help message of GlobalVariable",
+            "dllPath": "server/src/main/resources/MatchContourShape.dll",
+            "modelID": "contourMatch",
+            "inPara": [
+              {
+                "varName": "standard image",
+                "varType": "Mat",
+                "fromExpression": "",
+                "defineVarInputWay": "smartInputWay",
+                "varExplanation": "标准图片"
+              },
+              {
+                "varName": "detect image",
+                "varType": "Mat",
+                "fromExpression": "",
+                "defineVarInputWay": "smartInputWay",
+                "varExplanation": "待检测图片"
+              },
+              {
+                "varName": "threshold",
+                "varType": "double",
+                "fromExpression": "",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
+              }
+            ],
+            "outPara": [
+              {
+                "varName": "dst",
+                "varType": "vector<RotatedRect>",
+                "varExplanation": ""
+              }
+            ]
+          }
+        ]
+      }
     },
     {
       "state": "init",

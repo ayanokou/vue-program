@@ -3,6 +3,300 @@
     <SoftwareSet v-model="softwareSetVisible" :test="test"></SoftwareSet>
     <About v-model="aboutVisible"></About>
     <HelpDoc v-model="helpDocVisible"></HelpDoc>
+    <el-dialog title="设备管理" v-model="subCommunicationManagementVisible" :modal="false"
+        :close-on-click-modal="false"
+        custom-class="custom-dialog-little"
+        draggable>
+    <div class="right-column" style="height: 90%;">
+        <el-row :gutter="20" class="row-container">
+            <el-col :span="24">
+                <el-row class="content-head" style="flex: 4;">
+                    <el-col>通信参数</el-col>
+                    <div class="content-row">
+                        <p class="content">协议类型</p>
+                        <el-select class="input" v-model="selectedOption" placeholder="请选择" @change="updateContent">
+                        <el-option v-for="option in options" :key="option.value" :label="option.label" :value="option.value"></el-option>
+                    </el-select>
+                    </div>
+                    <div class="content-row">
+                        <p class="content">设备名称</p>
+                        <el-input class="input" v-model="deviceName" placeholder="请输入设备名称"></el-input>
+                    </div>
+                </el-row>
+                <el-row class="content-head" style="flex:6; border-top: 1px solid #ccc;">
+                    <el-col>下部分内容</el-col>
+                    <div v-if="selectedOptionContent === 'tcp'">
+                        <div class="content-row">
+                            <p class="content" >目标ip</p>
+                            <el-input
+                              class="input"
+                              v-model="ip"
+                              placeholder="xxx.xxx.xxx.xxx"
+                              @input="validateIP"
+                            />
+                        </div>
+                        <span class="content" v-if="!isIPValid" style="color: red;">请输入合法的 IP 地址</span>
+                        <div class="content-row">
+                            <p class="content" >目标端口</p>
+                            <el-input
+                              class="input"
+                              v-model="portNumber"
+                              @input="filterInput"
+                            />
+                        </div>
+                        <el-radio-group v-model="updataValue">
+                            <p class="content">数据上传</p>
+                            <el-radio :label="true" class="content">True</el-radio>
+                            <el-radio :label="false" class="content">False</el-radio>
+                        </el-radio-group>
+                        <el-radio-group v-model="autoReconnection">
+                            <p class="content">自动重连</p>
+                            <el-radio :label="true" class="content">True</el-radio>
+                            <el-radio :label="false" class="content">False</el-radio>
+                        </el-radio-group>
+                        <el-radio-group v-model="receiveEndMark">
+                            <p class="content">接收结束符</p>
+                            <el-radio :label="true" class="content">True</el-radio>
+                            <el-radio :label="false" class="content">False</el-radio>
+                        </el-radio-group>
+                    </div>
+                </el-row>
+                
+            </el-col>
+        </el-row>
+        
+    </div>
+    <template #footer>
+        <el-button @click="createAnDevice">创建</el-button>
+    </template>
+    </el-dialog>
+    <el-dialog
+        title="通信管理"
+        v-model="communicationManagementVisible"
+        :modal="false"
+        :close-on-click-modal="false"
+        custom-class="custom-dialog"
+        draggable
+    >
+        <div class="container">
+            <el-row :gutter="20" class="row-container">
+                <el-col :span="4" class="left-column">
+                    <!-- 左侧区域 -->
+                    <div class="sidebar-content">
+                        <div class="sidebar-item" :class="{ active: activeIcon === 'deviceManagement' }" @click="setActiveIcon('deviceManagement')" >
+                            <el-icon><Monitor /></el-icon>
+                            <span>设备管理</span>
+                        </div>
+                        <div class="sidebar-item" :class="{ active: activeIcon === 'receive' }" @click="setActiveIcon('receive')">
+                            <el-icon><SortDown /></el-icon>
+                            <span>接收事件</span>
+                        </div>
+                        <div class="sidebar-item" :class="{ active: activeIcon === 'send' }" @click="setActiveIcon('send')">
+                            <el-icon><SortUp /></el-icon>
+                            <span>发送事件</span>
+                        </div>
+                        <div class="sidebar-item" :class="{ active: activeIcon === 'heartbeat' }" @click="setActiveIcon('heartbeat')">
+                            <el-icon><Refresh /></el-icon>
+                            <span>心跳管理</span>
+                        </div>
+                        <div class="sidebar-item" :class="{ active: activeIcon === 'setting' }" @click="setActiveIcon('setting')">
+                            <el-icon><Setting /></el-icon>
+                            <span>响应配置</span>
+                        </div>
+                    </div>
+                </el-col>
+                <el-col :span="20" class="right-column">
+                    <!-- 右侧区域 -->
+                    <div class="right-content">
+                    <!-- 这里根据点击不同的图标显示不同的内容 -->
+                        <div v-if="activeIcon === 'deviceManagement'" class="mainfield-setting">
+                            <el-row style="height: 100%;">
+                                <el-col :span="6" class="content-head" style="border-right: 1px solid #ccc;">
+                                    设备列表
+                                    <button style="margin-left: 20%; " @click="subManageCommunication">+</button>
+                                </el-col>
+                                <el-col :span="18">
+                                    <el-row class="content-head" style="height: 60%; border-bottom: 1px solid #ccc;">
+                                        <el-col>通信参数</el-col>
+                                        <div class="content" v-if="demoSelectedTCP ===true">
+                                            <div class="content-row">
+                                                <p class="content" >目标ip</p>
+                                                <el-input
+                                                class="input"
+                                                v-model="ip"
+                                                placeholder="xxx.xxx.xxx.xxx"
+                                                @input="validateIP"
+                                                />
+                                            </div>
+                                            <span class="content" v-if="!isIPValid" style="color: red;">请输入合法的 IP 地址</span>
+                                            <div class="content-row">
+                                                <p class="content" >目标端口</p>
+                                                <el-input
+                                                class="input"
+                                                v-model="portNumber"
+                                                @input="filterInput"
+                                                />
+                                            </div>
+                                            <el-radio-group v-model="updataValue">
+                                                <p class="content">数据上传</p>
+                                                <el-radio :label="true" class="content">True</el-radio>
+                                                <el-radio :label="false" class="content">False</el-radio>
+                                            </el-radio-group>
+                                            <el-radio-group v-model="autoReconnection">
+                                                <p class="content">自动重连</p>
+                                                <el-radio :label="true" class="content">True</el-radio>
+                                                <el-radio :label="false" class="content">False</el-radio>
+                                            </el-radio-group>
+                                            <el-radio-group v-model="receiveEndMark">
+                                                <p class="content">接收结束符</p>
+                                                <el-radio :label="true" class="content">True</el-radio>
+                                                <el-radio :label="false" class="content">False</el-radio>
+                                            </el-radio-group>
+                                        </div>
+                                    </el-row>
+                                    <el-row class="content-head" style="height: 40%;">
+                                        <el-col>
+                                            <div>
+                                                <div class="content" >
+                                                    <span style="margin-right:10px;" @click="selectGroup('接收数据')">接收数据</span>
+                                                    <span @click="selectGroup('发送数据')">发送数据</span>
+                                                </div>
+                                                <div v-if="selectedGroup === '接收数据'">
+                                                    <textarea rows="6" v-model="group1Input" style="width: 100%;"></textarea>
+                                                </div>
+
+                                                <div v-if="selectedGroup === '发送数据'">
+                                                    <textarea rows="6" v-model="group2Output" style="width: 100%;"></textarea>
+                                                    
+                                                    <el-button @click="sendTCPData">发送</el-button>
+                                                    
+                                                </div>
+                                            </div>
+                                        </el-col>
+                                    </el-row>
+                                </el-col>
+                            </el-row>
+                        </div>
+                        <div v-if="activeIcon === 'receive'" class="mainfield-setting">
+                            <el-row style="height: 100%;">
+                                <el-col :span="6" class="content-head" style="border-right: 1px solid #ccc;">接收事件列表</el-col>
+                                <el-col :span="18">
+                                    <el-row class="content-head" style="height: 25%; border-bottom: 1px solid #ccc;">
+                                        <el-col>绑定设备</el-col>
+                                    </el-row>
+                                    <el-row class="content-head" style="height: 25%; border-bottom: 1px solid #ccc;">
+                                        <el-col>基本配置</el-col>
+                                    </el-row>
+                                    <el-row class="content-head" style="height: 50%;">
+                                        <el-col>输出列表</el-col>
+                                    </el-row>
+                                </el-col>
+                            </el-row>
+                        </div>
+                        <div v-if="activeIcon === 'send'" class="mainfield-setting">
+                            <el-row style="height: 100%;">
+                                <el-col :span="6" class="content-head" style="border-right: 1px solid #ccc;">发送事件列表</el-col>
+                                <el-col :span="18">
+                                    <el-row class="content-head" style="height: 25%; border-bottom: 1px solid #ccc;">
+                                        <el-col>绑定设备</el-col>
+                                    </el-row>
+                                    <el-row class="content-head" style="height: 25%; border-bottom: 1px solid #ccc;">
+                                        <el-col>基本配置</el-col>
+                                    </el-row>
+                                    <el-row class="content-head" style="height: 50%;">
+                                        <el-col>参数列表</el-col>
+                                    </el-row>
+                                </el-col>
+                            </el-row>
+                        </div>
+                        <div v-if="activeIcon === 'heartbeat'" class="mainfield-setting">显示删除内容</div>
+                        <div v-if="activeIcon === 'setting'" class="mainfield-setting">显示设置内容</div>
+                    </div>
+                </el-col>
+            </el-row>
+        </div>
+    </el-dialog>
+
+    <el-dialog
+        title="相机管理"
+        v-model="cameraManagementVisible"
+        :modal="false"
+        :close-on-click-modal="false"
+        draggable
+    >
+        <div style="display: contents;">
+            <el-row class="row-container">
+                <el-col :span="4" class="left-column">
+                    <!-- 左侧区域 -->
+                    <div class="sidebar-content">
+                        <el-button @click="takeOneImg()">测试拍照</el-button>
+                        <div class="sidebar-item" :class="{ active: activeIcon === 'cameraManage' }" @click="getAccessCameras(); setActiveIcon('cameraManage')">
+                            <el-icon><Monitor /></el-icon>
+                            <span>添加相机</span>
+                        </div> 
+                    </div>
+                </el-col>
+                <el-col :span="20" class="right-column">
+                    <!-- 右侧区域 -->
+                    <div class="right-content">
+                    <!-- 这里根据点击不同的图标显示不同的内容 -->
+                        <div class="mainfield-setting" v-if="activeIcon === 'cameraManage'">
+                            <el-row style="height: 100%;">
+                                <el-col span="8" class="content-head" style="border-right: 1px solid #ccc;">
+                                    <span>可用相机列表</span>
+                                    <!--vue for循环从某个变量里把可用的设备信息输出出来，这个变量应该在页面初始化时请求后端而得到-->
+                                    <template v-for="camera in availableCameras">
+                                        <el-card class="box-card" style="width:max-content">
+                                            <div class="text item">
+                                                {{ 'deviceId:' + camera["deviceId"] }}<br>
+                                                
+                                                {{ 'UserDefinedName:' + camera["userDefinedName"] }}<br>
+                                                
+                                                {{ 'accessable:' + camera["accessable"] }}<br></div>
+                                                <a v-if="camera['IP']">{{ 'IP:' + camera["IP"] }}</a>
+                                                <el-button @click="addCamera(camera)">打开相机</el-button>
+                                        </el-card>
+                                    </template>
+                                </el-col>
+
+                                <el-col span="12" class="content-head" style="display: block;">
+                                    <span>添加相机列表</span>
+                                    <!--vue for循环从某个变量里把可用的设备信息输出出来，这个变量应该在页面初始化时请求后端而得到-->
+                                    <template v-for="camera in foreEndCameras">
+                                        <el-card class="box-card" style="width:max-content">
+                                            <div class="text item">
+                                                {{ 'deviceId:' + camera["deviceId"] }}<br>
+                                                
+                                                {{ "deviceVendorName:" + camera["deviceVendorName"] }}<br>
+                                            </div>
+                                            <el-button @click="pamraSettingVisible=true;selectedCameraID=camera['deviceId']">参数设置</el-button>
+                                            <el-button @click="deleteCamera(camera['deviceId'])">关闭相机</el-button>     
+                                        </el-card>
+                                    </template>
+                                </el-col>
+                            </el-row>
+                        </div>
+                    </div>
+                </el-col>
+            </el-row>
+
+        </div>
+    </el-dialog>
+
+    <!--相机参数设置-->
+    <el-dialog
+        v-model="pamraSettingVisible" 
+        title="相机参数设置"
+        :modal="false"
+        :close-on-click-modal="false"
+        draggable>
+        <el-form-item v-for="(value,key) in selectedCameraParams" :label="key">
+            <div>
+                <el-input v-model="selectedCameraParams[key]"/>
+            </div>
+        </el-form-item>
+        <el-button @click="setParams()">设置参数</el-button>
+    </el-dialog>
     
     <div class="common-layout">
         <img
@@ -187,6 +481,7 @@
                             ></el-menu-item
                         >
                         <el-menu-item id="manageCamera"
+                            @click="manageCamera"
                             ><span style="color: aliceblue"
                                 >相机管理</span
                             ></el-menu-item
@@ -503,5 +798,17 @@ ul.el-menu.el-menu--horizontal.el-menu-demo1 :hover {
 
 .el-tabs__header {
     margin: 0px 0px 0px 0px;
+}
+/*camera card style*/
+.text {
+  font-size: 14px;
+}
+
+.item {
+  padding: 18px 0;
+}
+
+.box-card {
+  width: 480px;
 }
 </style>

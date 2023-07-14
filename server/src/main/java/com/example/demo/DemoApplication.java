@@ -100,6 +100,7 @@ public class DemoApplication {
 					logger.warn("client is null");
 					return;
 				}
+
 				client.sendEvent(event, data);
 			}
 		};
@@ -141,6 +142,7 @@ public class DemoApplication {
 		operationMap.put("SaveGlobalVar", 11);
 		operationMap.put("RunSolutionLoop",12);
 		operationMap.put("StopSolutionLoop",13);
+		operationMap.put("CameraOperation",14);
 
 		for (String key : operationMap.keySet()) {
 			Integer value = operationMap.get(key);
