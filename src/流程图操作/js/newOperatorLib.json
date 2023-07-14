@@ -176,7 +176,122 @@
               {
                 "varName": "dst",
                 "varType": "vector<Mat>",
-                "varExplanation": "获得到的相机图片s"
+                "varExplanation": "获得到的相机图片s 返回方面不支持vector<Mat>类型"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "lfProperties": {
+        "type": "operator",
+        "text": "相机IO",
+        "label": "相机IO",
+        "name": "相机IO"
+      },
+      "properties": {
+        "state": "init",
+        "superName": "输入输出",
+        "name": "相机IO",
+        "models": [
+          {
+            "modelName": "相机IO设置",
+            "helpMsg": "it is a help message",
+            "dllPath": "",
+            "modelID": "setIOParams",
+            "inPara": [
+              {
+                "varName": "cameraID",
+                "varType": "int",
+                "fromExpression": "0",
+                "defineVarInputWay": "selectedInputWay",
+                "varExplanation": ""
+              },
+              {
+                "varName": "triggerMode ",
+                "varType": "int",
+                "fromExpression": "0",
+                "defineVarInputWay": "selectedInputWay",
+                "comboList" : {
+                  "TriggerMode_Off": "0",
+                  "TriggerMode_On": "1"
+                },
+                "varExplanation": ""
+              },
+              {
+                "varName": "triggerSource ",
+                "varType": "int",
+                "fromExpression": "7",
+                "defineVarInputWay": "selectedInputWay",
+                "comboList" : {
+                  "Line0" : "0",
+                  "Line1" : "1",
+                  "Line2" : "2",
+                  "Line3" : "3",
+                  "Counter0" : "4",
+                  "Software" : "7",
+                  "FrequencyConverter" : "8"
+                },
+                "varExplanation": ""
+              },
+              {
+                "varName": "triggerActivation",
+                "varType": "int",
+                "fromExpression": "0",
+                "defineVarInputWay": "selectedInputWay",
+                "comboList" : {
+                  "TriggerActivation_RisingEdge": "0",
+                  "TriggerActivation_FallingEdge": "1",
+                  "TriggerActivation_LevelHigh": "2",
+                  "TriggerActivation_LevelLow": "3"
+                },
+                "varExplanation": "设置触发模式"
+              }, 
+              {
+                "varName": "triggerDelay",
+                "varType": "double",
+                "fromExpression": "500.0",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": "触发时延 单位微秒"
+              }
+            ],
+            "outPara": []
+          }
+        ]
+      }
+    },
+    {
+      "lfProperties": {
+        "type": "operator",
+        "text": "存储图像",
+        "label": "存储图像",
+        "name": "存储图像"
+      },
+      "properties": {
+        "state": "init",
+        "superName": "输入输出",
+        "name": "存储图像",
+        "models": [
+          {
+            "modelName": "存储图像",
+            "helpMsg": "it is a help message",
+            "dllPath": "D:\\Documents\\opencv_splitFunction_test\\camera_demo\\x64\\Release\\HKCamera.dll",
+            "modelID": "storeImg",
+            "inPara": [
+              {
+                "varName": "input_mat",
+                "varType": "Mat",
+                "fromExpression": "",
+                "defineVarInputWay": "smartInputWay",
+                "varExplanation": ""
+              },
+              {
+                "varName": "storePath",
+                "varType": "string",
+                "fromExpression": "server/src/main/resources/xxx.png",
+                "defineVarInputWay": "directInputWay",
+                "varExplanation": ""
               }
             ]
           }

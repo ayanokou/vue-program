@@ -236,13 +236,13 @@ export default {
             let setParams_success = JSON.parse(data)["status"]
             if(setParams_success){
                 this.$message({
-                    message: '设置参数 ' + this.tempCameraID + ' 成功',
+                    message: '设置参数 ' + this.selectedCameraID + ' 成功',
                     type: 'success',
                     duration: 1500,
                 });
             } else {
                 this.$message({
-                    message: '设置参数 ' + this.tempCameraID + ' 失败',
+                    message: '设置参数 ' + this.selectedCameraID + ' 失败',
                     type: 'error',
                     duration: 1500,
                 });

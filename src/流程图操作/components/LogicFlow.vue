@@ -78,16 +78,8 @@
                         </div>
                         <div
                             v-if="item.defineVarInputWay === 'selectedInputWay'||item.defineVarInputWay === 'smartInputWay'">
-                            <el-select v-if="m.modelName != '相机输入'" v-model="formData[index]" placeholder="Select">
-                                <el-option
-                                    v-for="(value,key) in item.comboList"
-                                    :key="key"
-                                    :label="key"
-                                    :value="value"
-                                />
-                            </el-select>
-                                
-                            <el-select v-else v-model="formData[index]" placeholder="Select" @click="t()">
+                            
+                            <el-select v-if="item.varName==='cameraID'" v-model="formData[index]" placeholder="Select" @click="t()">
                                 <el-option 
                                     v-for="camera in availableCameras"
                                     :value="camera['deviceId']"
@@ -96,6 +88,16 @@
                                 />
                                 
                             </el-select>
+                            
+                            <el-select v-else v-model="formData[index]" placeholder="Select">
+                                <el-option
+                                    v-for="(value,key) in item.comboList"
+                                    :key="key"
+                                    :label="key"
+                                    :value="value"
+                                />
+                            </el-select>
+                            
                         </div>
 
                         <div v-if="item.defineVarInputWay === 'fileInputWay'">
