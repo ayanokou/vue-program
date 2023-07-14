@@ -754,30 +754,24 @@ export default {
           },
           //列出可用相机
           getAccessCameras(){
-            let msg = JSON.stringify({data : {camera_op_type : 0}})
-            let jsonObject = {
-                message: msg
-            }
+            let msg = JSON.stringify({"camera_op_type" : 0})
             let payload={
                 trigger:true,
                 mode:"CameraOperation",
-                data:jsonObject
+                data:msg
             }
             this.$store.commit("setSocketEmit",payload)
           },
           //获取一张图片
           takeOneImg(){
-            let msg = JSON.stringify({data : {
+            let msg = JSON.stringify({
                 camera_op_type : 1, 
                 cameraID : Number(this.selectedCameraID),
-            }})
-            let jsonObject = {
-                message: msg
-            }
+            })            
             let payload={
                 trigger:true,
                 mode:"CameraOperation",
-                data:jsonObject
+                data:msg
             }
             this.$store.commit("setSocketEmit",payload)
           },
@@ -801,17 +795,14 @@ export default {
             this.tempCamera = camera
             
             //发消息给后端 打开相机
-            let msg = JSON.stringify({data : {
+            let msg = JSON.stringify({
                 camera_op_type : 2, 
                 cameraID : Number(this.selectedCameraID)
-            }})
-            let jsonObject = {
-                message: msg
-            }
+            })
             let payload={
                 trigger:true,
                 mode:"CameraOperation",
-                data:jsonObject
+                data:msg
             }
             this.$store.commit("setSocketEmit",payload)
           },
@@ -819,36 +810,30 @@ export default {
           deleteCamera(cameraID){
             this.tempCameraID = cameraID
 
-            let msg = JSON.stringify({data : {
+            let msg = JSON.stringify({
                 camera_op_type : 3, 
                 cameraID : Number(this.selectedCameraID)
-            }})
-            let jsonObject = {
-                message: msg
-            }
+            })
             let payload={
                 trigger:true,
                 mode:"CameraOperation",
-                data:jsonObject
+                data:msg
             }
             this.$store.commit("setSocketEmit",payload)
 
           },
           setParams(){
-            let msg = JSON.stringify({data : {
+            let msg = JSON.stringify({
                 camera_op_type : 4, 
                 cameraID : Number(this.selectedCameraID),
                 width : Number(this.selectedCameraParams["width"]),
                 height : Number(this.selectedCameraParams["height"]),
                 exposureTime : Number(this.selectedCameraParams["exposureTime"])
-            }})
-            let jsonObject = {
-                message: msg
-            }
+            })
             let payload={
                 trigger:true,
                 mode:"CameraOperation",
-                data:jsonObject
+                data:msg
             }
             this.$store.commit("setSocketEmit",payload)
           }

@@ -3407,7 +3407,7 @@
     },
     {
       "state": "init",
-      "superName": "输入输出",
+      "superName": "图像采集",
       "name": "相机输入",
       "models": [
         {
@@ -3465,7 +3465,7 @@
     },
     {
       "state": "init",
-      "superName": "输入输出",
+      "superName": "图像采集",
       "name": "相机IO",
       "models": [
         {
@@ -3535,13 +3535,13 @@
     },
     {
       "state": "init",
-      "superName": "输入输出",
+      "superName": "图像采集",
       "name": "存储图像",
       "models": [
         {
           "modelName": "存储图像",
           "helpMsg": "it is a help message",
-          "dllPath": "D:\\Documents\\opencv_splitFunction_test\\camera_demo\\x64\\Release\\HKCamera.dll",
+          "dllPath": "resources\\HKCamera.dll",
           "modelID": "storeImg",
           "inPara": [
             {
