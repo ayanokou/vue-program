@@ -3,161 +3,32 @@
     {
       "state": "init",
       "superName": "图像匹配",
-      "name": "找圆",
+      "name": "轮廓比对",
       "models": [
         {
-          "modelName": "最小二乘法拟合圆",
+          "modelName": "轮廓比对",
           "helpMsg": "it is a help message of GlobalVariable",
-          "dllPath": "resources/LeastSquares.dll",
-          "modelID": "fitLine_leastSquare",
+          "dllPath": "server/src/main/resources/MatchContourShape.dll",
+          "modelID": "contourMatch",
           "inPara": [
             {
-              "varName": "points",
-              "varType": "vector<Point2f>",
-              "fromExpression": "",
-              "defineVarInputWay": "smartInputWay",
-              "comboList": {},
-              "varExplanation": ""
-            }
-          ],
-          "outPara": [
-            {
-              "varName": "res_circle",
-              "varType": "vector<float>",
-              "varExplanation": " 返回结果float向量 前两个数表示圆心 第三个数表示半径"
-            }
-          ]
-        },
-        {
-          "modelName": "最小二乘法找圆",
-          "helpMsg": "it is a help message of GlobalVariable",
-          "dllPath": "resources/LeastSquares.dll",
-          "modelID": "find_circle_leastSquare",
-          "inPara": [
-            {
-              "varName": "src",
+              "varName": "standard image",
               "varType": "Mat",
               "fromExpression": "",
               "defineVarInputWay": "smartInputWay",
-              "comboList": {},
-              "varExplanation": "canny处理后的二值图片"
-            }
-          ],
-          "outPara": [
-            {
-              "varName": "res_circle",
-              "varType": "Vec3f",
-              "varExplanation": ""
+              "varExplanation": "标准图片"
             },
             {
-              "varName": "res_circle_img",
-              "varType": "Mat",
-              "varExplanation": ""
-            }
-          ]
-        },
-        {
-          "modelName": "Ransac拟合圆",
-          "helpMsg": "it is a help message of GlobalVariable",
-          "dllPath": "resources/Ransac.dll",
-          "modelID": "fitCircle_Ransac",
-          "inPara": [
-            {
-              "varName": "points",
-              "varType": "vector<Point>",
-              "fromExpression": "",
-              "defineVarInputWay": "directInputWay",
-              "varExplanation": ""
-            },
-            {
-              "varName": "inlier_threshold",
-              "varType": "float",
-              "fromExpression": "5",
-              "defineVarInputWay": "directInputWay",
-              "varExplanation": ""
-            },
-            {
-              "varName": "iterate_nums",
-              "varType": "int",
-              "fromExpression": "500",
-              "defineVarInputWay": "directInputWay",
-              "varExplanation": ""
-            },
-            {
-              "varName": "sample_points_min_distance",
-              "varType": "float",
-              "fromExpression": "5",
-              "defineVarInputWay": "directInputWay",
-              "varExplanation": ""
-            }
-          ],
-          "outPara": [
-            {
-              "varName": "res_circle",
-              "varType": "vector<float>",
-              "varExplanation": "center.x, center.y, radius"
-            }
-          ]
-        },
-        {
-          "modelName": "霍夫检测圆",
-          "dllPath": "resources/DetectHough.dll",
-          "modelID": "circles_detect_Hough",
-          "inPara": [
-            {
-              "varName": "src",
+              "varName": "detect image",
               "varType": "Mat",
               "fromExpression": "",
               "defineVarInputWay": "smartInputWay",
-              "comboList": {},
-              "varExplanation": ""
+              "varExplanation": "待检测图片"
             },
             {
-              "varName": "method",
-              "varType": "int",
-              "fromExpression": "3",
-              "defineVarInputWay": "directInputWay",
-              "varExplanation": ""
-            },
-            {
-              "varName": "dp",
+              "varName": "threshold",
               "varType": "double",
-              "fromExpression": "1",
-              "defineVarInputWay": "directInputWay",
-              "varExplanation": ""
-            },
-            {
-              "varName": "minDist",
-              "varType": "double",
-              "fromExpression": "60",
-              "defineVarInputWay": "directInputWay",
-              "varExplanation": ""
-            },
-            {
-              "varName": "param1",
-              "varType": "double",
-              "fromExpression": "200",
-              "defineVarInputWay": "directInputWay",
-              "varExplanation": ""
-            },
-            {
-              "varName": "param2",
-              "varType": "double",
-              "fromExpression": "100",
-              "defineVarInputWay": "directInputWay",
-              "varExplanation": ""
-            },
-            {
-              "varName": "minRadius",
-              "varType": "int",
-              "fromExpression": "0",
-              "defineVarInputWay": "directInputWay",
-              "varExplanation": ""
-            },
-            {
-              "varName": "maxRadius",
-              "varType": "int",
-              "fromExpression": "20",
+              "fromExpression": "",
               "defineVarInputWay": "directInputWay",
               "varExplanation": ""
             }
@@ -165,7 +36,7 @@
           "outPara": [
             {
               "varName": "dst",
-              "varType": "Mat",
+              "varType": "vector<RotatedRect>",
               "varExplanation": ""
             }
           ]
@@ -686,308 +557,6 @@
               "varName": "contours_poly",
               "varType": "vector<vector<Point>>",
               "varExplanation": "每个多边形及其顶点"
-            }
-          ]
-        },
-        {
-          "modelName": "多边形查找",
-          "helpMsg": "it is a help message of GlobalVariable",
-          "dllPath": "resources/PolygonDetect.dll",
-          "modelID": "polygonDetect",
-          "inPara": [
-            {
-              "varName": "srcImg",
-              "varType": "Mat",
-              "fromExpression": "",
-              "defineVarInputWay": "smartInputWay",
-              "comboList": {},
-              "varExplanation": "输入的彩色图片"
-            },
-            {
-              "varName": "epsilon",
-              "varType": "double",
-              "fromExpression": "8",
-              "defineVarInputWay": "directInputWay",
-              "varExplanation": "指定精度逼近多边形曲线"
-            },
-            {
-              "varName": "minAcreage",
-              "varType": "int",
-              "fromExpression": "2000",
-              "defineVarInputWay": "directInputWay",
-              "varExplanation": "面积筛选"
-            }
-          ],
-          "outPara": [
-            {
-              "varName": "contours_poly",
-              "varType": "vector<vector<Point>>",
-              "varExplanation": "每个多边形及其顶点"
-            }
-          ]
-        },
-        {
-          "modelName": "多边形查找",
-          "helpMsg": "it is a help message of GlobalVariable",
-          "dllPath": "resources/PolygonDetect.dll",
-          "modelID": "polygonDetect",
-          "inPara": [
-            {
-              "varName": "srcImg",
-              "varType": "Mat",
-              "fromExpression": "",
-              "defineVarInputWay": "smartInputWay",
-              "comboList": {},
-              "varExplanation": "输入的彩色图片"
-            },
-            {
-              "varName": "epsilon",
-              "varType": "double",
-              "fromExpression": "8",
-              "defineVarInputWay": "directInputWay",
-              "varExplanation": "指定精度逼近多边形曲线"
-            },
-            {
-              "varName": "minAcreage",
-              "varType": "int",
-              "fromExpression": "2000",
-              "defineVarInputWay": "directInputWay",
-              "varExplanation": "面积筛选"
-            }
-          ],
-          "outPara": [
-            {
-              "varName": "contours_poly",
-              "varType": "vector<vector<Point>>",
-              "varExplanation": "每个多边形及其顶点"
-            }
-          ]
-        },
-        {
-          "modelName": "多边形查找",
-          "helpMsg": "it is a help message of GlobalVariable",
-          "dllPath": "resources/PolygonDetect.dll",
-          "modelID": "polygonDetect",
-          "inPara": [
-            {
-              "varName": "srcImg",
-              "varType": "Mat",
-              "fromExpression": "",
-              "defineVarInputWay": "smartInputWay",
-              "comboList": {},
-              "varExplanation": "输入的彩色图片"
-            },
-            {
-              "varName": "epsilon",
-              "varType": "double",
-              "fromExpression": "8",
-              "defineVarInputWay": "directInputWay",
-              "varExplanation": "指定精度逼近多边形曲线"
-            },
-            {
-              "varName": "minAcreage",
-              "varType": "int",
-              "fromExpression": "2000",
-              "defineVarInputWay": "directInputWay",
-              "varExplanation": "面积筛选"
-            }
-          ],
-          "outPara": [
-            {
-              "varName": "contours_poly",
-              "varType": "vector<vector<Point>>",
-              "varExplanation": "每个多边形及其顶点"
-            }
-          ]
-        },
-        {
-          "modelName": "多边形查找",
-          "helpMsg": "it is a help message of GlobalVariable",
-          "dllPath": "resources/PolygonDetect.dll",
-          "modelID": "polygonDetect",
-          "inPara": [
-            {
-              "varName": "srcImg",
-              "varType": "Mat",
-              "fromExpression": "",
-              "defineVarInputWay": "smartInputWay",
-              "comboList": {},
-              "varExplanation": "输入的彩色图片"
-            },
-            {
-              "varName": "epsilon",
-              "varType": "double",
-              "fromExpression": "8",
-              "defineVarInputWay": "directInputWay",
-              "varExplanation": "指定精度逼近多边形曲线"
-            },
-            {
-              "varName": "minAcreage",
-              "varType": "int",
-              "fromExpression": "2000",
-              "defineVarInputWay": "directInputWay",
-              "varExplanation": "面积筛选"
-            }
-          ],
-          "outPara": [
-            {
-              "varName": "contours_poly",
-              "varType": "vector<vector<Point>>",
-              "varExplanation": "每个多边形及其顶点"
-            }
-          ]
-        },
-        {
-          "modelName": "多边形查找",
-          "helpMsg": "it is a help message of GlobalVariable",
-          "dllPath": "resources/PolygonDetect.dll",
-          "modelID": "polygonDetect",
-          "inPara": [
-            {
-              "varName": "srcImg",
-              "varType": "Mat",
-              "fromExpression": "",
-              "defineVarInputWay": "smartInputWay",
-              "comboList": {},
-              "varExplanation": "输入的彩色图片"
-            },
-            {
-              "varName": "epsilon",
-              "varType": "double",
-              "fromExpression": "8",
-              "defineVarInputWay": "directInputWay",
-              "varExplanation": "指定精度逼近多边形曲线"
-            },
-            {
-              "varName": "minAcreage",
-              "varType": "int",
-              "fromExpression": "2000",
-              "defineVarInputWay": "directInputWay",
-              "varExplanation": "面积筛选"
-            }
-          ],
-          "outPara": [
-            {
-              "varName": "contours_poly",
-              "varType": "vector<vector<Point>>",
-              "varExplanation": "每个多边形及其顶点"
-            }
-          ]
-        },
-        {
-          "modelName": "多边形查找",
-          "helpMsg": "it is a help message of GlobalVariable",
-          "dllPath": "resources/PolygonDetect.dll",
-          "modelID": "polygonDetect",
-          "inPara": [
-            {
-              "varName": "srcImg",
-              "varType": "Mat",
-              "fromExpression": "",
-              "defineVarInputWay": "smartInputWay",
-              "comboList": {},
-              "varExplanation": "输入的彩色图片"
-            },
-            {
-              "varName": "epsilon",
-              "varType": "double",
-              "fromExpression": "8",
-              "defineVarInputWay": "directInputWay",
-              "varExplanation": "指定精度逼近多边形曲线"
-            },
-            {
-              "varName": "minAcreage",
-              "varType": "int",
-              "fromExpression": "2000",
-              "defineVarInputWay": "directInputWay",
-              "varExplanation": "面积筛选"
-            }
-          ],
-          "outPara": [
-            {
-              "varName": "contours_poly",
-              "varType": "vector<vector<Point>>",
-              "varExplanation": "每个多边形及其顶点"
-            }
-          ]
-        },
-        {
-          "modelName": "多边形查找",
-          "helpMsg": "it is a help message of GlobalVariable",
-          "dllPath": "resources/PolygonDetect.dll",
-          "modelID": "polygonDetect",
-          "inPara": [
-            {
-              "varName": "srcImg",
-              "varType": "Mat",
-              "fromExpression": "",
-              "defineVarInputWay": "smartInputWay",
-              "comboList": {},
-              "varExplanation": "输入的彩色图片"
-            },
-            {
-              "varName": "epsilon",
-              "varType": "double",
-              "fromExpression": "8",
-              "defineVarInputWay": "directInputWay",
-              "varExplanation": "指定精度逼近多边形曲线"
-            },
-            {
-              "varName": "minAcreage",
-              "varType": "int",
-              "fromExpression": "2000",
-              "defineVarInputWay": "directInputWay",
-              "varExplanation": "面积筛选"
-            }
-          ],
-          "outPara": [
-            {
-              "varName": "contours_poly",
-              "varType": "vector<vector<Point>>",
-              "varExplanation": "每个多边形及其顶点"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "state": "init",
-      "superName": "图像匹配",
-      "name": "轮廓比对",
-      "models": [
-        {
-          "modelName": "轮廓比对",
-          "helpMsg": "it is a help message of GlobalVariable",
-          "dllPath": "resources/MatchContourShape.dll",
-          "modelID": "contourMatch",
-          "inPara": [
-            {
-              "varName": "standard image",
-              "varType": "Mat",
-              "fromExpression": "",
-              "defineVarInputWay": "smartInputWay",
-              "varExplanation": "标准图片"
-            },
-            {
-              "varName": "detect image",
-              "varType": "Mat",
-              "fromExpression": "",
-              "defineVarInputWay": "smartInputWay",
-              "varExplanation": "待检测图片"
-            },
-            {
-              "varName": "threshold",
-              "varType": "double",
-              "fromExpression": "",
-              "defineVarInputWay": "directInputWay",
-              "varExplanation": ""
-            }
-          ],
-          "outPara": [
-            {
-              "varName": "dst",
-              "varType": "vector<RotatedRect>",
-              "varExplanation": ""
             }
           ]
         }
@@ -3067,7 +2636,7 @@
       "superName": "深度学习",
       "name": "图像分类",
       "models": [
-       {
+        {
           "modelName": "image-classification",
           "helpMsg": "分裂模型可以有两个inceptionv3.onnx和resnet50-v1-12.onnx，类别字典文件为imagenet_classes.txt",
           "dllPath": "resources/image_classification.dll",
@@ -3113,7 +2682,7 @@
     {
       "state": "init",
       "superName": "深度学习",
-      "name": "图像增强",
+      "name": "深度学习图像增强",
       "models": [
         {
           "modelName": "imageRescale",
@@ -3211,7 +2780,7 @@
             }
           ]
         }
-      ] 
+      ]
     }
   ],
   "高级功能": [
@@ -3678,7 +3247,6 @@
         }
       ]
     }
-
   ],
   "图像采集": [
     {
@@ -3832,6 +3400,163 @@
               "varName": "dst",
               "varType": "Mat",
               "varExplanation": "123"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "state": "init",
+      "superName": "图像采集",
+      "name": "相机输入",
+      "models": [
+        {
+          "modelName": "单帧相机输入",
+          "helpMsg": "it is a help message",
+          "dllPath": "",
+          "modelID": "getImg",
+          "inPara": [
+            {
+              "varName": "cameraID",
+              "varType": "int",
+              "fromExpression": "0",
+              "defineVarInputWay": "selectedInputWay",
+              "varExplanation": ""
+            }
+          ],
+          "outPara": [
+            {
+              "varName": "dst",
+              "varType": "Mat",
+              "varExplanation": "获得到的相机图片"
+            }
+          ]
+        },
+        {
+          "modelName": "多帧帧相机输入",
+          "helpMsg": "it is a help message",
+          "dllPath": "",
+          "modelID": "getImgs",
+          "inPara": [
+            {
+              "varName": "cameraID",
+              "varType": "int",
+              "fromExpression": "0",
+              "defineVarInputWay": "selectedInputWay",
+              "varExplanation": ""
+            },
+            {
+              "varName": "帧数",
+              "varType": "int",
+              "fromExpression": "3",
+              "defineVarInputWay": "directInputWay",
+              "varExplanation": "返回图片张数"
+            }
+          ],
+          "outPara": [
+            {
+              "varName": "dst",
+              "varType": "vector<Mat>",
+              "varExplanation": "获得到的相机图片s 返回方面不支持vector<Mat>类型"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "state": "init",
+      "superName": "图像采集",
+      "name": "相机IO",
+      "models": [
+        {
+          "modelName": "相机IO设置",
+          "helpMsg": "it is a help message",
+          "dllPath": "",
+          "modelID": "setIOParams",
+          "inPara": [
+            {
+              "varName": "cameraID",
+              "varType": "int",
+              "fromExpression": "0",
+              "defineVarInputWay": "selectedInputWay",
+              "varExplanation": ""
+            },
+            {
+              "varName": "triggerMode ",
+              "varType": "int",
+              "fromExpression": "0",
+              "defineVarInputWay": "selectedInputWay",
+              "comboList": {
+                "TriggerMode_Off": "0",
+                "TriggerMode_On": "1"
+              },
+              "varExplanation": ""
+            },
+            {
+              "varName": "triggerSource ",
+              "varType": "int",
+              "fromExpression": "7",
+              "defineVarInputWay": "selectedInputWay",
+              "comboList": {
+                "Line0": "0",
+                "Line1": "1",
+                "Line2": "2",
+                "Line3": "3",
+                "Counter0": "4",
+                "Software": "7",
+                "FrequencyConverter": "8"
+              },
+              "varExplanation": ""
+            },
+            {
+              "varName": "triggerActivation",
+              "varType": "int",
+              "fromExpression": "0",
+              "defineVarInputWay": "selectedInputWay",
+              "comboList": {
+                "TriggerActivation_RisingEdge": "0",
+                "TriggerActivation_FallingEdge": "1",
+                "TriggerActivation_LevelHigh": "2",
+                "TriggerActivation_LevelLow": "3"
+              },
+              "varExplanation": "设置触发模式"
+            },
+            {
+              "varName": "triggerDelay",
+              "varType": "double",
+              "fromExpression": "500.0",
+              "defineVarInputWay": "directInputWay",
+              "varExplanation": "触发时延 单位微秒"
+            }
+          ],
+          "outPara": []
+        }
+      ]
+    },
+    {
+      "state": "init",
+      "superName": "图像采集",
+      "name": "存储图像",
+      "models": [
+        {
+          "modelName": "存储图像",
+          "helpMsg": "it is a help message",
+          "dllPath": "resources\\HKCamera.dll",
+          "modelID": "storeImg",
+          "inPara": [
+            {
+              "varName": "input_mat",
+              "varType": "Mat",
+              "fromExpression": "",
+              "defineVarInputWay": "smartInputWay",
+              "varExplanation": ""
+            },
+            {
+              "varName": "storePath",
+              "varType": "string",
+              "fromExpression": "server/src/main/resources/xxx.png",
+              "defineVarInputWay": "directInputWay",
+              "varExplanation": ""
             }
           ]
         }
@@ -4198,8 +3923,7 @@
           "helpMsg": "it is a help message",
           "dllPath": "",
           "modelID": "",
-          "inPara": [
-          ],
+          "inPara": [],
           "outPara": []
         }
       ]
@@ -4214,24 +3938,7 @@
           "helpMsg": "it is a help message",
           "dllPath": "",
           "modelID": "",
-          "inPara": [
-          ],
-          "outPara": []
-        }
-      ]
-    },
-    {
-      "state": "init",
-      "superName": "通信",
-      "name": "相机IO通信",
-      "models": [
-        {
-          "modelName": "相机IO通信",
-          "helpMsg": "it is a help message",
-          "dllPath": "",
-          "modelID": "",
-          "inPara": [
-          ],
+          "inPara": [],
           "outPara": []
         }
       ]
