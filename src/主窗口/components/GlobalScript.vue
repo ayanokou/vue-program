@@ -89,6 +89,11 @@ export default {
             <VAceEditor v-model:value="content" lang="html" theme="github" style="height: 300px" />
         </div>
         <div class="container">
+            <div class="inAndOut">
+                <input type="file" ref="fileInput" @change="importData" accept=".js">
+                <button @click="exportData">导出</button>
+            </div>
+            
             <el-button class="el-button" @click="run()">运行</el-button>
         </div>
 
@@ -112,7 +117,7 @@ export default {
     data() {
         return {
 
-
+            content:""
         }
     },
     computed: {
@@ -132,14 +137,38 @@ export default {
             } catch (error) {
                 console.error('Error running code:', error);
             }
-        }
+        },
+        exportData() {
+      const filename = 'data.js';
+      const fileContent = this.content;
+
+      const blob = new Blob([fileContent], { type: 'text/javascript' });
+
+      const downloadLink = document.createElement('a');
+      downloadLink.href = URL.createObjectURL(blob);
+      downloadLink.download = filename;
+
+      downloadLink.click();
+      URL.revokeObjectURL(downloadLink.href);
+    },
+    importData(event) {
+        console.log("in!");
+      const file = event.target.files[0];
+      const reader = new FileReader();
+
+      reader.onload = (event) => {
+        this.content = event.target.result;
+      };
+
+      reader.readAsText(file);
+    }
 
 
     },
     mounted() {
-    // 在组件挂载后，初始化代码
-    this.code = "console.log('Hello, World!');";
-  }
+        // 在组件挂载后，初始化代码
+        this.code = "console.log('Hello, World!');";
+    }
 }
 
 
@@ -159,4 +188,6 @@ export default {
     justify-content: flex-end;
     margin-right: 30px;
 }
+
+
 </style>
