@@ -15,7 +15,8 @@ import com.corundumstudio.socketio.*;
 
 import org.apache.commons.cli.*;
 
-
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,7 +24,8 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-//@SpringBootApplication
+
+@SpringBootApplication
 public class DemoApplication {
 	// private static String saveFolderPath;
     // private static String token;
@@ -32,8 +34,6 @@ public class DemoApplication {
     // public void setSaveFolderPath(String saveFolderPath) {
     //     DemoApplication.saveFolderPath = saveFolderPath;
     // }
-
-
 	private HashMap<Integer, Boolean> flags;
 	private static final String MESSAGE_HANDLER_PATH = "mh/MessageHandler.exe";
 	private static final String IP = "127.0.0.1";
@@ -149,7 +149,7 @@ public class DemoApplication {
 
 
 		server.start();
-		//SpringApplication.run(DemoApplication.class, args);
+		SpringApplication.run(DemoApplication.class, args);
         //login("admin","123");
         //executeDownload("c");
 	}
