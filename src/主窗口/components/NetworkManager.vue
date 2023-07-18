@@ -54,7 +54,7 @@
               <el-tab-pane label="通信参数">
                 <el-form
                   :model="currentDevice"
-                  :disabled="!isCreatingDevice()"
+                  :disabled="!isCreatingDevice"
                   style="margin-top: 15px"
                 >
                   <el-row :gutter="20">
@@ -130,7 +130,7 @@
                       </el-col>
                     </el-row>
                     <div
-                      v-if="isCreatingDevice()"
+                      v-if="isCreatingDevice"
                       style="display: flex; justify-content: end"
                     >
                       <el-form-item>
@@ -218,7 +218,7 @@
                         </el-col>
                       </el-row>
                       <div
-                        v-if="isCreatingDevice()"
+                        v-if="isCreatingDevice"
                         style="display: flex; justify-content: end"
                       >
                         <el-form-item>
@@ -271,7 +271,7 @@
                         </el-col>
                       </el-row>
                       <div
-                        v-if="isCreatingDevice()"
+                        v-if="isCreatingDevice"
                         style="display: flex; justify-content: end"
                       >
                         <el-form-item>
@@ -284,7 +284,7 @@
                   </template>
                 </el-form>
               </el-tab-pane>
-              <el-tab-pane label="接收数据" v-if="!isCreatingDevice()">
+              <el-tab-pane label="接收数据" v-if="!isCreatingDevice">
                 <el-form style="margin-top: 5px; height: 100%">
                   <el-form-item style="height: 80%">
                     <el-input
@@ -299,7 +299,7 @@
                   </el-form-item>
                 </el-form>
               </el-tab-pane>
-              <el-tab-pane label="发送数据" v-if="!isCreatingDevice()">
+              <el-tab-pane label="发送数据" v-if="!isCreatingDevice">
                 <el-form style="margin-top: 5px; height: 100%">
                   <el-form-item style="height: 80%; margin-bottom: 5px">
                     <el-input
@@ -839,9 +839,12 @@ export default {
   inject: ["socket"],
   computed: {
     currentDevice() {
-      return this.isCreatingDevice()
+      return this.isCreatingDevice
         ? this.deviceToCreate
         : this.devices[this.currentActiveItem];
+    },
+    isCreatingDevice() {
+      return this.currentActiveItem === "AddDevice";
     },
   },
   mounted() {
@@ -923,9 +926,6 @@ export default {
       this.AcceptEvents.push(this.acceptEventToCreate);
       console.log(this.AcceptEvents);
       this.acceptEventToCreate = {}; // 重置为一个新的空对象
-    },
-    isCreatingDevice() {
-      return this.currentActiveItem === "AddDevice";
     },
     onCreateDevice() {
       const fieldsMap = {
