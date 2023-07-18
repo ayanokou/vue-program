@@ -3,6 +3,8 @@
     <SoftwareSet v-model="softwareSetVisible" :test="test"></SoftwareSet>
     <About v-model="aboutVisible"></About>
     <HelpDoc v-model="helpDocVisible"></HelpDoc>
+
+    <GlobalTrigger v-model="globalTriggerVisible"></GlobalTrigger>
     
     <div class="common-layout">
         <img
@@ -289,7 +291,7 @@
                             <Notification />
                         </el-icon>
                     </el-menu-item>
-                    <el-menu-item title="全局触发" id="globalTrigger" index="8">
+                    <el-menu-item title="全局触发" id="globalTrigger" index="8" @click="openDialogGT()">
                         <el-icon style="color:aliceblue;">
                             <ZoomOut />
                         </el-icon>
