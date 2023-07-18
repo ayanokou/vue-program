@@ -25,6 +25,7 @@ import { ref } from 'vue'
 
 
 
+import cameras from "./cameras.js"
 
 //初始化socketio用于前后端传输
 let socket = io.connect('http://localhost:9092')
@@ -58,6 +59,23 @@ export default {
           test:{softwareIcon:"icon1"},
           group1Input: "", //通信管理-设备管理接收数据
           group2Output: "", //通信管理-设备管理发送数据
+          //是否显示相机管理窗口
+          cameraManagementVisible: false,
+          //使用相机ID
+          selectedCameraID: 0,
+          //相机默认参数设置 在拍图片时会被传到后端给相机做设置
+          selectedCameraParams : { //默认参数
+            "exposureTime" : 2313.0000, //微秒
+            "width" : 640,
+            "height" : 480,
+            //其他
+          },
+          pamraSettingVisible: false,
+          //可用相机列表
+          availableCameras : {},
+          foreEndCameras : [],
+          tempCamera : {},//存储临时相机变量 open操作
+          tempCameraID : 0,//存储临时相机ID close操作
           //是否显示最近打开方案子菜单栏
           showLastOpenSolution: false,
           //最近打开的方案名，存三个
@@ -135,6 +153,9 @@ export default {
             socket: computed(() => socket),
         }
     },
+    created() {
+        this.getAccessCameras()
+    },
 
     mounted() {
         //动态调整右半部分尺寸
@@ -181,8 +202,93 @@ export default {
         socket.on("runResults",data=>{
             this.$store.commit('setRunResults',JSON.parse(data))
         })
+        socket.on('ReceivedTcpData', data =>{
+            console.log(`ReceivedTcpData: ${data}`)
+        })
+        socket.on('revAvaCameras', data =>{
+            
+            this.availableCameras = JSON.parse(data).AvailableCameras
+            cameras.availableCameras = this.availableCameras
+            // console.log(this.$store.state.availableCameras)
+
+        })
+        socket.on('revOpenCamera', data =>{
+            let open_success = JSON.parse(data)["status"]
+            if(open_success){
+                this.foreEndCameras.push({
+                    "deviceId" : this.tempCamera["deviceId"], 
+                    "width" : this.tempCamera["width"], 
+                    "height" : this.tempCamera["height"],
+                    "exposureTime" : this.tempCamera["exposureTime"],
+                    "deviceVendorName" : this.tempCamera["deviceVendorName"],
+                    "exposureTime" : this.tempCamera["exposureTime"],
+                })
+
+                cameras.foreEndCameras = this.foreEndCameras
+
+                this.$message({
+                    message: '打开相机 ' + this.tempCamera['deviceId'] + ' 成功',
+                    type: 'success',
+                    duration: 1500,
+                });
+            }else{
+                this.$message({
+                    message: '打开相机 ' + this.tempCamera['deviceId'] + ' 失败',
+                    type: 'error',
+                    duration: 1500,
+                });
+            }
+
+        })
+        socket.on('revCloseCamera', data =>{
+            let close_success = JSON.parse(data)["status"]
+            if(close_success){
+                for(let i = 0; i < this.foreEndCameras.length; ++i){
+                    if(this.foreEndCameras[i]["deviceId"] == this.tempCameraID){
+                        this.foreEndCameras.splice(i, 1);
+                        break;
+                    }
+                }
+
+                cameras.foreEndCameras = this.foreEndCameras
+
+                this.$message({
+                    message: '关闭相机 ' + this.tempCameraID + ' 成功',
+                    type: 'success',
+                    duration: 1500,
+                });
+            } else {
+                this.$message({
+                    message: '关闭相机 ' + this.tempCameraID + ' 失败',
+                    type: 'error',
+                    duration: 1500,
+                });
+            }
+
+        }),
+        socket.on('revSetParam', data =>{
+            let setParams_success = JSON.parse(data)["status"]
+            if(setParams_success){
+                this.$message({
+                    message: '设置参数 ' + this.selectedCameraID + ' 成功',
+                    type: 'success',
+                    duration: 1500,
+                });
+            } else {
+                this.$message({
+                    message: '设置参数 ' + this.selectedCameraID + ' 失败',
+                    type: 'error',
+                    duration: 1500,
+                });
+            }
+
+        })
+        // socket.on('revRects',(data)=>{
+        //     this.$store.commit('setModuleResultData', data);
+        // })
         
     },
+
     computed:{
         ...mapState(['socketEmit','dialogVisibleGlobalVar',"softwareSet","dialogVisibleGlobalScript"])
     },
@@ -190,7 +296,7 @@ export default {
         socketEmit(newValue){
             if(newValue.trigger){
                 //
-                console.log('running...')
+                console.log('running...' + newValue.mode)
                 socket.emit(newValue.mode, newValue.data);
                 //
                 this.$store.commit("setSocketEmit",{
@@ -457,6 +563,9 @@ export default {
         subManageCommunication(){
             this.subCommunicationManagementVisible = true;
         },
+        manageCamera(){
+            this.cameraManagementVisible = true;
+        },
 
         setSoftware() {
             this.softwareSetVisible=true;
@@ -653,8 +762,90 @@ export default {
             
           
           },
-
-          
+          //列出可用相机
+          getAccessCameras(){
+            let msg = JSON.stringify({"camera_op_type" : 0})
+            let payload={
+                trigger:true,
+                mode:"CameraOperation",
+                data:msg
+            }
+            this.$store.commit("setSocketEmit",payload)
+          },
+          //获取一张图片
+          takeOneImg(){
+            let msg = JSON.stringify({
+                camera_op_type : 1, 
+                cameraID : Number(this.selectedCameraID),
+            })            
+            let payload={
+                trigger:true,
+                mode:"CameraOperation",
+                data:msg
+            }
+            this.$store.commit("setSocketEmit",payload)
+          },
         
+          //添加和打开使用相机 
+          addCamera(camera){
+            this.selectedCameraID = camera["deviceId"];
+            console.log('setCameraID: ', this.selectedCameraID);
+
+            for(let i = 0; i < this.foreEndCameras.length; ++i){
+                if(camera["deviceId"] == "" || this.foreEndCameras[i]["deviceId"] == camera["deviceId"]){
+                    this.$message({
+                        message: '添加相机失败，相机重复或为空',
+                        type: 'error',
+                        duration: 1500,
+                    });
+                    return;
+                }
+            }
+
+            this.tempCamera = camera
+            
+            //发消息给后端 打开相机
+            let msg = JSON.stringify({
+                camera_op_type : 2, 
+                cameraID : Number(this.selectedCameraID)
+            })
+            let payload={
+                trigger:true,
+                mode:"CameraOperation",
+                data:msg
+            }
+            this.$store.commit("setSocketEmit",payload)
+          },
+            //删除和关闭使用相机
+          deleteCamera(cameraID){
+            this.tempCameraID = cameraID
+
+            let msg = JSON.stringify({
+                camera_op_type : 3, 
+                cameraID : Number(this.selectedCameraID)
+            })
+            let payload={
+                trigger:true,
+                mode:"CameraOperation",
+                data:msg
+            }
+            this.$store.commit("setSocketEmit",payload)
+
+          },
+          setParams(){
+            let msg = JSON.stringify({
+                camera_op_type : 4, 
+                cameraID : Number(this.selectedCameraID),
+                width : Number(this.selectedCameraParams["width"]),
+                height : Number(this.selectedCameraParams["height"]),
+                exposureTime : Number(this.selectedCameraParams["exposureTime"])
+            })
+            let payload={
+                trigger:true,
+                mode:"CameraOperation",
+                data:msg
+            }
+            this.$store.commit("setSocketEmit",payload)
+          }
     }
 }

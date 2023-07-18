@@ -5,34 +5,6 @@
             <el-scrollbar>
                 <el-menu class="el-menu-vertical" :collapse="true" style="width: 150px; height: 100%;">
 
-                    <!-- <el-sub-menu v-for="(model_1, model_1_name, index1) in suanzis" :index="index1">
-                        <template #title>
-                            <el-icon style="vertical-align: middle">
-                                <Expand/>
-                            </el-icon>
-                            {{ model_1_name }}
-                        </template>
-
-                        <el-space wrap class="second_left_menus_container">
-                            <el-button class="second_left_menus" type="primary" v-for="(model_2, index2) in model_1"
-                                       :index="'suanzi' + index1 + '-' + index2"
-                                       :id="model_2.lfProperties.name"
-                                       @click="clickToAddNode(model_2)"
-                                       draggable="true" @dragend="dragToAddNode($event, model_2)">
-                                       >
-
-                                <template #title>
-                                    <el-icon style="vertical-align: middle">
-                                        <Expand/>
-                                    </el-icon>
-                                    {{ model_2.lfProperties.name }}
-                                </template>
-
-
-                            </el-button>
-
-                        </el-space>
-                    </el-sub-menu> -->
                     <el-sub-menu v-for="(value, key, index1) in suanzis" :index="index1">
                         <template #title>
                             <el-icon>
@@ -52,11 +24,21 @@
         </el-aside>
         <!--流程图区域-->
         <el-main ref="lfMain" style="height: 100%; padding: 0; overflow:hidden">
+            <!-- <div id="runtime-container">
+                <span id="runtime">流程用时：{{ timeConsume.flowRunTime }}us</span>
+                <span style="margin-right: 20px"></span>
+                <span id="runtime">算法用时：{{ timeConsume.algorithmRunTime }}us</span> -->
             <div id="runtime-container"  style="position: absolute; bottom: 20px; left: 0; width: 100%; text-align: center;">
+<<<<<<< HEAD
                 <span id="runtime" style="display: inline-block;width: 200px">{{ state }}</span>
                 <span style="margin-right: 20px"></span>
                 <span id="runtime" style="display: inline-block; margin-right: 20px;">流程用时：{{ flowRunTime }}us</span><!-- {{ flowRunTime }} {{ algorithmRunTime }}-->
                 <span id="runtime" style="display: inline-block;">算法用时：{{ algorithmRunTime }}us</span>
+=======
+                <span id="runtime" style="display: inline-block;width: 200px">{{ currentFlowState }}</span>
+                <span id="runtime" style="display: inline-block; margin-right: 20px;">流程用时：{{ timeConsume.flowRunTime }}us</span><!-- {{ flowRunTime }} {{ algorithmRunTime }}-->
+                <span id="runtime" style="display: inline-block;">算法用时：{{ timeConsume.algorithmRunTime }}us</span>
+>>>>>>> 2b48627a455d74d10a6128dc3e83ebdab4585adc
                 <span style="margin-right: 20px"></span>
                 <span style="display: inline-block;width: 200px">
                     <el-slider v-model="sliderValue"  @change="handleSliderChange" />
@@ -86,7 +68,18 @@
                         </div>
                         <div
                             v-if="item.defineVarInputWay === 'selectedInputWay'||item.defineVarInputWay === 'smartInputWay'">
-                            <el-select v-model="formData[index]" :placeholder="item.varExplanation">
+                            
+                            <el-select v-if="item.varName==='cameraID'" v-model="formData[index]" :placeholder="item.varExplanation" @click="t()">
+                                <el-option 
+                                    v-for="camera in availableCameras"
+                                    :value="camera['deviceId']"
+                                    :label="camera['deviceVendorName']+camera['deviceId']"
+                                    @click="m.dllPath=dllPaths[camera['deviceVendorName']]"
+                                />
+                                
+                            </el-select>
+                            
+                            <el-select v-else v-model="formData[index]" :placeholder="item.varExplanation">
                                 <el-option
                                     v-for="(value,key) in item.comboList"
                                     :key="key"
@@ -94,11 +87,16 @@
                                     :value="value"
                                 />
                             </el-select>
+                            
                         </div>
+
                         <div v-if="item.defineVarInputWay === 'fileInputWay'">
                             <input @change="readFile(index)" type="file"  accept="image/*" id="imgUrl">
                         </div>
                     </el-form-item>
+                    <div v-if="m.modelName == '相机输入'">
+                        <el-input v-model="m.dllPath" disabled="true"/>
+                    </div>
                 </template>
             </el-form>
 

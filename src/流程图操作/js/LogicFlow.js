@@ -22,9 +22,10 @@ import {
 import { LeftMenus } from './LeftMenuItems.js'
 import { MiniMap } from './MiniMap.js'
 import { eventHandle, events } from "../../sys/eventResponseController";
-import { ElNotification } from 'element-plus'
+import { ElNotification, ElStep } from 'element-plus'
 import Branch from "../components/dialog/Branch.vue";
 import Condition from "../components/dialog/Condition.vue";
+import cameras from "../../主窗口/js/cameras.js";
 
 
 LogicFlow.use(SelectionSelect);
@@ -277,6 +278,7 @@ export default {
     name: 'FlowDemo',
     props: ['tab'],
     expose: ['lfData'],
+    emits:['changeTabName','setFlowStateToFlowArea'],
     components: {
         Branch,Condition
     },
@@ -300,11 +302,14 @@ export default {
             suanzis: suanziItemList,
             dialogVisible: false,
             formData: [],
-            timeRunTimeJson:{eachConsuming:[]},//流程和所有算子的用时
-            flowRunTime: 0, //流程用时
-            algorithmRunTime: 0, //算法用时
-            isRan: false,
-            addNodePosition_x: 100,
+
+            timeConsume:{
+                flowRunTime: -1, //流程用时
+                algorithmRunTime: -1, //算法用时
+            },
+
+            currentFlowState:"",
+
             //拖拽节点的初始
             modelName:"",//模型名称
             operatorData:{},//拖拽节点的原始properties数据
@@ -313,7 +318,12 @@ export default {
             dialogCondition:false,
             conditionData:[],
             conditionIntExpr:undefined,
-            conditionDoubleExpr:undefined
+            conditionDoubleExpr:undefined,
+
+            availableCameras : {},
+            dllPaths : {
+                "Hikrobot" : "resources\\HKCamera.dll",
+                "Basler" : "xxx",},
           }
     },
     computed: {
@@ -325,17 +335,17 @@ export default {
             })
         },
 
-
         lfData() {
             return this.lf.getGraphData()
         },
         ...mapState([
             "timeConsume",
-            "runState"
+            "runResults"
         ]),
 
     },
     watch:{
+
         //在对话框中监听修改模型,同时切换nodeModel也会触发
         modelName(newValue){
             if(this.operatorData.models){
@@ -349,31 +359,38 @@ export default {
                     this.formData=(this.operatorData.models.find(item=>item.modelName==newValue)).inPara.map(param=>param.fromExpression)
                 //this.operatorData.models.find(item=>item.modelName==newValue)
             }
-       },
-        runState(newValue){
-            if(newValue.trigger){
-                if(newValue.content && newValue.content.tab_index==this.tab.index){
-                    console.log("in tab_index:"+this.tab.index)
-                    console.log(newValue.content)
-                    ////节点状态颜色字典
-                    //  const color = {"init" : "blue", "running" : "green", "success" : "gray", "error" : "red"}
-                    this.changeNodeStage(newValue.content.node_id, newValue.content.state) //改变节点状态 再节点类中getnodestyle方法中会根据状态改变节点颜色
-                    this.$store.commit('setRunState',{trigger:false,content:null})
-                }
-
+        },
+        nodeModel(newValue){
+            let state=newValue.getProperties().state
+            switch(state){
+                case "init":
+                    this.currentFlowState=`模块${newValue.id}未配置参数}`
+                    break;
+                case "ready":
+                    this.currentFlowState=`模块${newValue.id}已配置完成`
+                    break;
+                default:
+                    break;
             }
         },
-        timeConsume(newValue){
-            //console.log("curNodeId: " + this.nodeModel)
-            this.timeRunTimeJson = JSON.parse(newValue);
-            this.flowRunTime = this.timeRunTimeJson.totalConsuming;
-            for(let algorithm of this.timeRunTimeJson.eachConsuming){
-                if(algorithm.id === this.selectedAlgorithm){
-                    this.algorithmRunTime = algorithm.consume;
-                }
+        
+        runResults(newValue){
+            let tab_result=newValue.find(item=>item.tab_index===this.tab.index)
+            if(tab_result){
+                //set flow time consume
+                //set state of each ndoe
+                this.timeConsume.flowRunTime=tab_result.totalTimeConsume                         
+                tab_result.results.forEach(item=>{
+                    let id=item.id
+                    this.changeNodeStage(id,"success")
+                })
+                //set ack to logicFlow.vue
+                this.$emit('setFlowStateToFlowArea',{tabIndex:this.tab.index,payload:"runOver"})
             }
+
         }
     },
+
     mounted() {
         // this.initHeight = 800
         // this.initHeight = window.innerHeight-150
@@ -398,6 +415,8 @@ export default {
         })
         //单击选中节点
         this.lf.on('node:click',(evt)=>{
+            //更新耗时显示
+            this.updateTimeconsume(evt.data.id)
             //更新选中节点全局数据
             this.$store.commit('setCurrentNode',{tabIndex:this.tab.index,nodeId:evt.data.id})
             //触发显示当前结果命令
@@ -434,7 +453,6 @@ export default {
             //     }
             // }
             this.selectedAlgorithm = evt.data.id
-            this.updateTimeConsuming();
             this.$store.commit('setVuexHelpInfo', this.nodeModel.getProperties().helpMsg)
 
             this.dialogBranch=false
@@ -674,18 +692,13 @@ export default {
                 }
 
             ])
-            // 设置算子面板, 换成三级菜单后这段代码没用了, 初始化lf的时候设置stopMoveGraph为true就是默认框选
+
             var suanziItemListConcat = []
 
 
             Object.entries(suanziItemList).forEach(([key_1, value_1])=>{
                 value_1.forEach((value_2)=>{
                     var temp = {
-                        // label : value_2.lfProperties.label,
-                        // text : value_2.lfProperties.text,
-                        // type : value_2.lfProperties.type,
-                        // name : value_2.lfProperties.name,
-                        // properties : value_2.properties,
                         label: value_2.name,
                         text:value_2.name,
                         type:"operator",
@@ -693,54 +706,12 @@ export default {
                         properties:value_2,
                         icon : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAEFVwZaAAAABGdBTUEAALGPC/xhBQAAAqlJREFUOBF9VM9rE0EUfrMJNUKLihGbpLGtaCOIR8VjQMGDePCgCCIiCNqzCAp2MyYUCXhUtF5E0D+g1t48qAd7CCLqQUQKEWkStcEfVGlLdp/fm3aW2QQdyLzf33zz5m2IsAZ9XhDpyaaIZkTS4ASzK41TFao88GuJ3hsr2pAbipHxuSYyKRugagICGANkfFnNh3HeE2N0b3nN2cgnpcictw5veJIzxmDamSlxxQZicq/mflxhbaH8BLRbuRwNtZp0JAhoplVRUdzmCe/vO27wFuuA3S5qXruGdboy5/PRGFsbFGKo/haRtQHIrM83bVeTrOgNhZReWaYGnE4aUQgTJNvijJFF4jQ8BxJE5xfKatZWmZcTQ+BVgh7s8SgPlCkcec4mGTmieTP4xd7PcpIEg1TX6gdeLW8rTVMVLVvb7ctXoH0Cydl2QOPJBG21STE5OsnbweVYzAnD3A7PVILuY0yiiyDwSm2g441r6rMSgp6iK42yqroI2QoXeJVeA+YeZSa47gZdXaZWQKTrG93rukk/l2Al6Kzh5AZEl7dDQy+JjgFahQjRopSxPbrbvK7GRe9ePWBo1wcU7sYrFZtavXALwGw/7Dnc50urrHJuTPSoO2IMV3gUQGNg87IbSOIY9BpiT9HV7FCZ94nPXb3MSnwHn/FFFE1vG6DTby+r31KAkUktB3Qf6ikUPWxW1BkXSPQeMHHiW0+HAd2GelJsZz1OJegCxqzl+CLVHa/IibuHeJ1HAKzhuDR+ymNaRFM+4jU6UWKXorRmbyqkq/D76FffevwdCp+jN3UAN/C9JRVTDuOxC/oh+EdMnqIOrlYteKSfadVRGLJFJPSB/ti/6K8f0CNymg/iH2gO/f0DwE0yjAFO6l8JaR5j0VPwPwfaYHqOqrCI319WzwhwzNW/aQAAAABJRU5ErkJggg=="
                     }
-                    if(temp.label == "选区"){
-                        temp.callback = () => {
-                            //开启框选
-                            lf.openSelectionSelect()
-                            lf.once("selection:selected", (data) => {
-                                let result = { nodes: [], edges: [] }
-                                for (let x of data) {
-                                    //通过id获得model
-                                    let model = this.lf.getNodeModelById(x.id)
-                                    //通过model获得data
-                                    if (!model) {
-                                        model = this.lf.getEdgeModelById(x.id)
-                                        result.edges.push(model.getData())
-                                    } else {
-                                        result.nodes.push(model.getData())
-                                    }
-                                }
-                                this.selectedMSG = result
-                                console.log(this.selectedMSG)
-                            });
-                        }
-                    }
                     suanziItemListConcat = suanziItemListConcat.concat(temp)
                 })
             })
 
             lf.extension.leftMenus.setPatternItems(suanziItemListConcat,this.tab.index)
-            // // 设置节点面板, 设置框选回调
-            // suanziItemList['控制模块'][0].callback = () => {
-            //     //开启框选
-            //     lf.openSelectionSelect()
-            //     lf.once("selection:selected", (data) => {
-            //         let result = {nodes: [], edges: []}
-            //         for (let x of data) {
-            //             //通过id获得model
-            //             let model = this.lf.getNodeModelById(x.id)
-            //             //通过model获得data
-            //             if (!model) {
-            //                 model = this.lf.getEdgeModelById(x.id)
-            //                 result.edges.push(model.getData())
-            //             } else {
-            //                 result.nodes.push(model.getData())
-            //             }
-            //         }
-            //         this.selectedMSG = result
-            //         console.log(this.selectedMSG)
-            //     });
-            // }
+
             lf.extension.control.addItem({
                 text: "保存流程",
                 onClick: () => {
@@ -986,62 +957,10 @@ export default {
         clear() {
             this.formData = []
         },
-        // // 三级菜单按下添加节点
-        // clickToAddNode(node) {
-        //         if (node.lfProperties.text != "选区") {
-        //             const idSet = new Set()
-        //             // find the smallest unused id
-        //             this.lf.graphModel.nodes.forEach(node => {
-        //                 idSet.add(node.id)
-        //             })
-        //             let id = 0
-        //             while (idSet.has(id.toString())) {
-        //                 id++
-        //             }
-        //             this.lf.addNode({
-        //                 id: id.toString(),
-        //                 type: node.lfProperties.type,
-        //                 x: 100,
-        //                 y: this.addNodePosition_x,
-        //                 text: node.lfProperties.text,
-        //                 label: node.lfProperties.label,
-        //                 name: node.lfProperties.name,
-        //                 properties: node.properties
-        //             })
-        //             this.addNodePosition_x += 45
-        //         }
-        // },
-        // // 三级菜单拖拽添加节点
-        // dragToAddNode(event, node) {
-        //      this.lf.addNode({
-        //             type: node.lfProperties.type,
-        //             x: event.clientX - 50,
-        //             y: event.clientY - 100,
-        //             text: node.lfProperties.text,
-        //             label: node.lfProperties.label,
-        //             name: node.lfProperties.name,
-        //             properties: node.properties
-        //         })
-        //     this.currentNodeNum[node.lfProperties.text] += 1
-        // },
         clickLeftMenu() {
             let es = document.getElementsByClassName('el-overlay-dialog')
             for (let e of es) {
                 e.parentNode.style.width = '0px'
-            }
-        },
-
-
-
-
-
-        updateTimeConsuming(){
-            if(this.isRan == false) return;
-            for(let algorithm of this.timeRunTimeJson.eachConsuming){
-                console.log("algorithm: " + algorithm.id)
-                if(algorithm.id == this.selectedAlgorithm){
-                    this.algorithmRunTime = algorithm.consume;
-                }
             }
         },
         //根据节点运行状态改变节点边的颜色 状态init running finished
@@ -1067,7 +986,25 @@ export default {
 
                 reader.readAsDataURL(input.files[0]);
             }
-        }
+        },
+        updateTimeconsume(nodeId){
+            let tab_result=this.runResults.find(item=>item.tab_index===this.tab.index)
+            if(tab_result){
+                this.timeConsume.flowRunTime=tab_result.totalTimeConsume
+
+                let node_result=tab_result.results.find(item=>item.id===nodeId)
+                if(node_result){
+                    this.timeConsume.algorithmRunTime=node_result.timeConsume
+                }else{
+                    this.timeConsume.algorithmRunTime=-1
+                }
+            }else{
+                this.timeConsume.flowRunTime=-1
+            }
+        },
+        t(){
+            this.availableCameras = cameras.foreEndCameras
+        },
     }
 }
 

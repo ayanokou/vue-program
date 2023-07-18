@@ -15,7 +15,25 @@ import com.corundumstudio.socketio.*;
 
 import org.apache.commons.cli.*;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+
+@SpringBootApplication
 public class DemoApplication {
+	// private static String saveFolderPath;
+    // private static String token;
+
+    // @Value("${file.download.path}")
+    // public void setSaveFolderPath(String saveFolderPath) {
+    //     DemoApplication.saveFolderPath = saveFolderPath;
+    // }
 	private HashMap<Integer, Boolean> flags;
 	private static final String MESSAGE_HANDLER_PATH = "mh/MessageHandler.exe";
 	private static final String IP = "127.0.0.1";
@@ -82,6 +100,7 @@ public class DemoApplication {
 					logger.warn("client is null");
 					return;
 				}
+
 				client.sendEvent(event, data);
 			}
 		};
@@ -123,6 +142,7 @@ public class DemoApplication {
 		operationMap.put("SaveGlobalVar", 11);
 		operationMap.put("RunSolutionLoop",12);
 		operationMap.put("StopSolutionLoop",13);
+		operationMap.put("CameraOperation",14);
 
 		for (String key : operationMap.keySet()) {
 			Integer value = operationMap.get(key);
@@ -131,5 +151,89 @@ public class DemoApplication {
 
 
 		server.start();
+		SpringApplication.run(DemoApplication.class, args);
+        //login("admin","123");
+        //executeDownload("c");
 	}
+	// public static void login(String username,String password){
+    //     RestTemplate restTemplate = new RestTemplate();
+    //     LoginForm loginForm = new LoginForm();
+    //     loginForm.setUsername(username);
+    //     loginForm.setPassword(password);
+    //     loginForm.setRememberMe(true);
+    //     loginForm.setCode("123");
+
+    //     // 设置请求头
+    //     HttpHeaders headers = new HttpHeaders();
+    //     headers.setContentType(MediaType.APPLICATION_JSON);
+
+    //     // 创建请求体
+    //     HttpEntity<LoginForm> request = new HttpEntity<>(loginForm, headers);
+
+    //     // 发送POST请求
+    //     String url = "http://10.13.2.43:8081/login";
+    //     ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, request, String.class);
+    //     HttpHeaders responseHeaders = responseEntity.getHeaders();
+    //     // 获取指定属性的值
+    //     token = responseHeaders.getFirst("token");
+    //     if (token != null) {
+    //         System.out.println("Token: " + token);
+    //     } else {
+    //         System.out.println("Token未找到");
+    //     }
+    // }
+    // public static void executeDownload(String filename) {
+
+
+    //     RestTemplate restTemplate = new RestTemplate();
+
+
+    //     // 创建请求头
+    //     HttpHeaders downloadHeaders = new HttpHeaders();
+    //     downloadHeaders.setContentType(MediaType.APPLICATION_JSON);
+    //     downloadHeaders.set("token", token); // 将token设置到下载请求的头部
+
+    //     // 创建请求体
+    //     HttpEntity<String> downloadRequest = new HttpEntity<>(downloadHeaders);
+
+    //     // 构建下载请求的URL
+    //     String downloadUrl = "http://10.13.2.43:8081/download/" + filename;
+
+    //     // 发送下载请求
+    //     ResponseEntity<Resource> downloadResponse = restTemplate.exchange(downloadUrl, HttpMethod.GET, downloadRequest, Resource.class);
+
+    //     // 获取下载的资源
+    //     Resource downloadResource = downloadResponse.getBody();
+
+    //     // 检查下载是否成功，根据需要进行逻辑处理
+
+    //     // 处理下载的资源，例如保存到文件
+    //     try (InputStream inputStream = downloadResource.getInputStream()) {
+    //         String fileName = "c"; // 根据您的要求，使用发送请求的参数作为文件名
+    //         String saveFilePath = saveFolderPath + "\\" + fileName + ".dll"; // 构建文件保存路径
+
+    //         // 检查目标文件夹是否存在，若不存在则创建
+    //         File folder = new File(saveFolderPath);
+    //         if (!folder.exists()) {
+    //             folder.mkdirs();
+    //         }
+
+    //         // 检查文件是否已存在，若存在则删除
+    //         File existingFile = new File(saveFilePath);
+    //         if (existingFile.exists()) {
+    //             existingFile.delete();
+    //         }
+
+    //         // 使用 Files.copy() 方法将输入流保存到文件
+    //         Files.copy(inputStream, Paths.get(saveFilePath), StandardCopyOption.REPLACE_EXISTING);
+
+    //         System.out.println("文件下载成功：" + saveFilePath);
+    //     } catch (IOException e) {
+    //         System.err.println("文件下载失败: " + e.getMessage());
+    //     }
+
+
+
+    // }
+
 }
