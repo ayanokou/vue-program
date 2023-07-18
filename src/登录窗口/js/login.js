@@ -37,6 +37,8 @@ export default {
         console.error(error);
         this.$message.error('登录失败，请重试');
       });
+
+      router.push('/main');
       
     },
   },

@@ -911,7 +911,6 @@ export default {
     this.socket.off("UdpListenerReceivedData");
   },
   methods: {
-<<<<<<< HEAD
     onCreateSendEvent() {
       
       this.SendEvents.push(this.sendEventToCreate);
@@ -924,11 +923,9 @@ export default {
       this.AcceptEvents.push(this.acceptEventToCreate);
       console.log(this.AcceptEvents);
       this.acceptEventToCreate = {}; // 重置为一个新的空对象
-
-=======
+    },
     isCreatingDevice() {
       return this.currentActiveItem === "AddDevice";
->>>>>>> 2b48627a455d74d10a6128dc3e83ebdab4585adc
     },
     onCreateDevice() {
       this.deviceToCreate.receivedData = "";

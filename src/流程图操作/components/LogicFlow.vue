@@ -29,16 +29,9 @@
                 <span style="margin-right: 20px"></span>
                 <span id="runtime">算法用时：{{ timeConsume.algorithmRunTime }}us</span> -->
             <div id="runtime-container"  style="position: absolute; bottom: 20px; left: 0; width: 100%; text-align: center;">
-<<<<<<< HEAD
-                <span id="runtime" style="display: inline-block;width: 200px">{{ state }}</span>
-                <span style="margin-right: 20px"></span>
-                <span id="runtime" style="display: inline-block; margin-right: 20px;">流程用时：{{ flowRunTime }}us</span><!-- {{ flowRunTime }} {{ algorithmRunTime }}-->
-                <span id="runtime" style="display: inline-block;">算法用时：{{ algorithmRunTime }}us</span>
-=======
                 <span id="runtime" style="display: inline-block;width: 200px">{{ currentFlowState }}</span>
                 <span id="runtime" style="display: inline-block; margin-right: 20px;">流程用时：{{ timeConsume.flowRunTime }}us</span><!-- {{ flowRunTime }} {{ algorithmRunTime }}-->
                 <span id="runtime" style="display: inline-block;">算法用时：{{ timeConsume.algorithmRunTime }}us</span>
->>>>>>> 2b48627a455d74d10a6128dc3e83ebdab4585adc
                 <span style="margin-right: 20px"></span>
                 <span style="display: inline-block;width: 200px">
                     <el-slider v-model="sliderValue"  @change="handleSliderChange" />

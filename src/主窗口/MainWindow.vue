@@ -3,10 +3,8 @@
     <SoftwareSet v-model="softwareSetVisible" :test="test"></SoftwareSet>
     <About v-model="aboutVisible"></About>
     <HelpDoc v-model="helpDocVisible"></HelpDoc>
-<<<<<<< HEAD
 
     <GlobalTrigger v-model="globalTriggerVisible"></GlobalTrigger>
-=======
     <el-dialog title="设备管理" v-model="subCommunicationManagementVisible" :modal="false"
         :close-on-click-modal="false"
         custom-class="custom-dialog-little"
@@ -301,7 +299,6 @@
         </el-form-item>
         <el-button @click="setParams()">设置参数</el-button>
     </el-dialog>
->>>>>>> 2b48627a455d74d10a6128dc3e83ebdab4585adc
     
     <div class="common-layout">
         <img
