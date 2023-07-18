@@ -142,6 +142,8 @@ public class DemoApplication {
 		operationMap.put("RunSolutionLoop", 12);
 		operationMap.put("StopSolutionLoop", 13);
 		operationMap.put("CameraOperation", 14);
+		operationMap.put("AddModbusMaster", 15);
+		operationMap.put("RemoveModbusMaster", 16);
 
 		for (String key : operationMap.keySet()) {
 			Integer value = operationMap.get(key);

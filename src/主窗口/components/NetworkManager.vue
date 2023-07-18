@@ -147,16 +147,16 @@
                           <el-select v-model="currentDevice.functionType">
                             <el-option
                               label="读保持寄存器"
-                              value="readRegister"
+                              value="0"
                             >
                             </el-option>
                             <el-option
                               label="读输入寄存器"
-                              value="readInputRegister"
+                              value="1"
                             ></el-option>
                             <el-option
                               label="写多个寄存器"
-                              value="writeRegisters"
+                              value="2"
                             ></el-option>
                           </el-select>
                         </el-form-item>
@@ -974,7 +974,7 @@ export default {
             "functionType",
             "deviceAddress",
             "registerAddress",
-            "registerNumber",
+            "numberOfRegisters",
             "protocol",
             "device",
             "baud",
@@ -986,6 +986,7 @@ export default {
       };
       const numberFields = [
         "port",
+        "functionType",
         "deviceAddress",
         "registerAddress",
         "numberOfRegisters",
