@@ -1,4 +1,4 @@
-import userData from '../login.json'; // 导入用户数据 JSON 文件
+import axios from 'axios';
 import router from '../../sys/router'
 
 export default {
@@ -10,23 +10,36 @@ export default {
   },
   methods: {
     login() {
-      // 遍历用户数据
-      for (const user of userData.users) {
-        if (user.username === this.account && user.password === this.password) {
-          // 登录成功逻辑
-          console.log('登录成功');
-          const userInfo = {
-            username: user.username,
-            password: user.password
-          };
-          sessionStorage.setItem('userInfo', JSON.stringify(userInfo));
-          router.push('/main');
-          return;
-          ;
-        }
-      }
-      // 登录失败逻辑
-      console.log('登录失败');
+
+      axios.post('http://localhost:8080/login', {
+        username: this.account,
+        password: this.password,
+      })
+      .then(response => {
+        const userInfo = {
+          username: this.account,
+          password: this.password,
+        };
+        sessionStorage.setItem('userInfo', JSON.stringify(userInfo));
+
+      
+        
+        this.$message({
+          message: '登录成功',
+          type: 'success',
+          duration: 1500,
+          onClose: () => {
+            router.push('/main');
+          }
+        });
+      })
+      .catch(error => {
+        console.error(error);
+        this.$message.error('登录失败，请重试');
+      });
+
+      router.push('/main');
+      
     },
   },
 };

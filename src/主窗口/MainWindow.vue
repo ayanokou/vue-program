@@ -3,6 +3,8 @@
     <SoftwareSet v-model="softwareSetVisible" :test="test"></SoftwareSet>
     <About v-model="aboutVisible"></About>
     <HelpDoc v-model="helpDocVisible"></HelpDoc>
+
+    <GlobalTrigger v-model="globalTriggerVisible"></GlobalTrigger>
     <el-dialog title="设备管理" v-model="subCommunicationManagementVisible" :modal="false"
         :close-on-click-modal="false"
         custom-class="custom-dialog-little"
@@ -584,7 +586,7 @@
                             <Notification />
                         </el-icon>
                     </el-menu-item>
-                    <el-menu-item title="全局触发" id="globalTrigger" index="8">
+                    <el-menu-item title="全局触发" id="globalTrigger" index="8" @click="openDialogGT()">
                         <el-icon style="color:aliceblue;">
                             <ZoomOut />
                         </el-icon>

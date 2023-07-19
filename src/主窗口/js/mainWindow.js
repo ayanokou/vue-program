@@ -8,6 +8,8 @@ import LayoutThree from "@/主窗口/components/layout/LayoutThree.vue";
 import GlobalVar from "../components/GlobalVar.vue";
 import GlobalScript from "../components/GlobalScript.vue"
 import NetworkManager from "../components/NetworkManager.vue";
+import GlobalTrigger  from "../components/GlobalTrigger.vue";
+
 import SoftwareSet from "../components/SoftwareSet.vue";
 import About from "../components/About.vue"
 import HelpDoc from "../components/HelpDoc.vue"
@@ -38,15 +40,18 @@ export default {
         About,
         HelpDoc,
         GlobalScript,
+        GlobalTrigger
     },
     data() {
         return {
+          globalTrigger:"",
           autoReconnection: false,
           receiveEndMark: false,
           demoSelectedTCP: false,
           //软件设置窗口
           softwareSetVisible:false,
           networkManagerVisible: false,
+          globalTriggerVisible:false,
           aboutVisible: false,
           helpDocVisible: false,
           activeIcon: "deviceManagement",
@@ -305,6 +310,11 @@ export default {
 
     },
     methods: {
+
+        openDialogGT(){
+
+            this.globalTriggerVisible=true
+        },
         returnto(){
             console.log(JSON.parse(sessionStorage.getItem('userInfo')).username)
             console.log(JSON.parse(sessionStorage.getItem('userInfo')).password)
