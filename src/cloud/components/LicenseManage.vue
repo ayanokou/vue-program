@@ -30,7 +30,7 @@
             {{  row.expiryDate}}
             </div>
         </template>
-    </el-table-column>-->
+    </el-table-column>
 
     </el-table>
   
