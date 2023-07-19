@@ -1,4 +1,5 @@
 <template>
+  {{ showImg }}
   <div>
     <div class="head-btn-box">
       <el-button title="放大" id="toBig" icon="zoom-in" @click="zoomIn"></el-button>
@@ -122,17 +123,22 @@ export default {
   watch: {
     showImg(newVal) {
       if (newVal) {
+        console.log('in showImg:')
+        console.log(this.currentNode)
+        console.log(this.runResults)
         //find img
         let tab_result = this.runResults.find(item => item.tab_index === this.currentNode.tabIndex)
         if (!tab_result) {
           this.imgBase64 = ''
           console.log('tab_result is null')
+          this.$store.commit('showImgEvent', false)
           return
         }
         let node_result = tab_result.results.find(item => item.id === this.currentNode.nodeId)
         if (!node_result) {
           this.imgBase64 = ''
           console.log('node_result is null')
+          this.$store.commit('showImgEvent', false)
           return
         }
 
@@ -140,6 +146,7 @@ export default {
 
         if (!results) {
           this.imgBase64 = ''
+          this.$store.commit('showImgEvent', false)
           return
         }
 
@@ -149,8 +156,11 @@ export default {
 
         } else {
           this.imgBase64 = ''
+          
+          this.$store.commit('showImgEvent', false)
           return
         }
+        console.log(this.imgBase64)
         //close
         this.$store.commit('showImgEvent', false)
       }

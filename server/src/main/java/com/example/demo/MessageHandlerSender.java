@@ -18,7 +18,7 @@ public class MessageHandlerSender {
         this.logger = logger;
     }
 
-    public void tryConnect() {
+    public void tryConnect() throws InterruptedException {
         while (true) {
             try {
                 socket = new Socket(ip, port);
@@ -28,6 +28,7 @@ public class MessageHandlerSender {
             }catch(IOException e) {
                 logger.error("IOException: " + e.getMessage());
             }
+            Thread.sleep(1000);
         }
     }
 
