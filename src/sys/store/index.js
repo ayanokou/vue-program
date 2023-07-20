@@ -38,6 +38,7 @@ export default createStore({
             showImg:false,
             historyResults:[],
             dialogVisibleGlobalScript:false,
+            scriptVarInt:"",
         }
     },
     mutations:{
@@ -127,6 +128,9 @@ export default createStore({
         setDialogVisibleGlobalScript(state,payload){
             state.dialogVisibleGlobalScript=payload
         },
+        setScriptVarInt(state,payload){
+            state.scriptVarInt=payload
+        }
     },
     modules:{
 

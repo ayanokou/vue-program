@@ -121,7 +121,7 @@ export default {
         }
     },
     computed: {
-        ...mapState(['dialogVisibleGlobalScript']),
+        ...mapState(['dialogVisibleGlobalScript','scriptVarInt']),
 
     },
     mounted() {
@@ -163,20 +163,21 @@ export default {
       reader.readAsText(file);
     },
 
-    getScriptVar(paramName) {
-            let payload={
-                trigger:true,
-                mode:"getScriptVar",
-                data:JSON.stringify(paramName)
-            }
-            this.$store.commit("setSocketEmit",payload)
-        },
+
 
 
     GetGlobalVariableIntValue(paramName,paramValue)
     {
-
-        paramValue.push(0);
+        let payload={
+                trigger:true,
+                mode:"getScriptVarInt",
+                data:JSON.stringify({
+                    varName:paramName,
+                })
+            }
+            this.$store.commit("setSocketEmit",payload)
+        paramValue.push(this.scriptVarInt);
+        console.log(this.scriptVarInt);
     },
     GetGlobalVariableFloatValue(paramName,paramValue)
     {
@@ -186,8 +187,17 @@ export default {
     {
         paramValue.push("");
     },
-    SetGlobalVariableIntValue ( paramName,  paramValsue)
+    SetGlobalVariableIntValue ( paramName,  paramValue)
     {
+        let payload={
+                trigger:true,
+                mode:"setScriptVarInt",
+                data:JSON.stringify({
+                    varName:paramName,
+                    varValue:paramValue
+                })
+            }
+            this.$store.commit("setSocketEmit",payload)
 
     },
     SetGlobalVariableFloatValue ( paramName,  paramValue)

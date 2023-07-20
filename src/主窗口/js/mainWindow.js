@@ -184,6 +184,9 @@ export default {
             //先传递给FlowArea组件
             this.$store.commit('setRunResult',data)
         })
+        socket.on('getScriptVarInt',(data)=>{
+            this.$store.commit('setScriptVarInt',data)
+        })
 
         socket.on('revTimeConsume',(data)=>{
             this.$store.commit('timeConsumeEvent', data);
