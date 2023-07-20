@@ -248,7 +248,7 @@
                                     <span>可用相机列表</span>
                                     <!--vue for循环从某个变量里把可用的设备信息输出出来，这个变量应该在页面初始化时请求后端而得到-->
                                     <template v-for="camera in availableCameras">
-                                        <el-card class="box-card" style="width:max-content">
+                                        <el-card class="box-card" style="width:max-content; height: 160px; border: 1px solid;">
                                             <div class="text item">
                                                 {{ 'deviceId:' + camera["deviceId"] }}<br>
                                                 
@@ -261,17 +261,17 @@
                                     </template>
                                 </el-col>
 
-                                <el-col span="12" class="content-head" style="display: block;">
+                                <el-col span="12" class="content-head" style="display: block">
                                     <span>添加相机列表</span>
                                     <!--vue for循环从某个变量里把可用的设备信息输出出来，这个变量应该在页面初始化时请求后端而得到-->
                                     <template v-for="camera in foreEndCameras">
-                                        <el-card class="box-card" style="width:max-content">
+                                        <el-card class="box-card" style="width:max-content; height: 160px; border: 1px solid;">
                                             <div class="text item">
                                                 {{ 'deviceId:' + camera["deviceId"] }}<br>
                                                 
                                                 {{ "deviceVendorName:" + camera["deviceVendorName"] }}<br>
                                             </div>
-                                            <el-button @click="pamraSettingVisible=true;selectedCameraID=camera['deviceId']">参数设置</el-button>
+                                            <el-button @click="selectedCameraID=camera['deviceId'];pamraSettingVisible=true;">参数设置</el-button>
                                             <el-button @click="deleteCamera(camera['deviceId'])">关闭相机</el-button>     
                                         </el-card>
                                     </template>

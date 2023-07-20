@@ -214,9 +214,10 @@ export default {
         })
         socket.on('revOpenCamera', data =>{
             let open_success = JSON.parse(data)["status"]
+            let cameraID = JSON.parse(data)["cameraID"]
             if(open_success){
                 this.foreEndCameras.push({
-                    "deviceId" : this.tempCamera["deviceId"], 
+                    "deviceId" : cameraID,
                     "width" : this.tempCamera["width"], 
                     "height" : this.tempCamera["height"],
                     "exposureTime" : this.tempCamera["exposureTime"],
@@ -227,13 +228,13 @@ export default {
                 cameras.foreEndCameras = this.foreEndCameras
 
                 this.$message({
-                    message: '打开相机 ' + this.tempCamera['deviceId'] + ' 成功',
+                    message: '打开相机 ' + cameraID + ' 成功',
                     type: 'success',
                     duration: 1500,
                 });
             }else{
                 this.$message({
-                    message: '打开相机 ' + this.tempCamera['deviceId'] + ' 失败',
+                    message: '打开相机 ' + cameraID + ' 失败',
                     type: 'error',
                     duration: 1500,
                 });
@@ -242,9 +243,10 @@ export default {
         })
         socket.on('revCloseCamera', data =>{
             let close_success = JSON.parse(data)["status"]
+            let cameraID = JSON.parse(data)["cameraID"]
             if(close_success){
                 for(let i = 0; i < this.foreEndCameras.length; ++i){
-                    if(this.foreEndCameras[i]["deviceId"] == this.tempCameraID){
+                    if(this.foreEndCameras[i]["deviceId"] == cameraID){
                         this.foreEndCameras.splice(i, 1);
                         break;
                     }
@@ -253,13 +255,13 @@ export default {
                 cameras.foreEndCameras = this.foreEndCameras
 
                 this.$message({
-                    message: '关闭相机 ' + this.tempCameraID + ' 成功',
+                    message: '关闭相机 ' + cameraID + ' 成功',
                     type: 'success',
                     duration: 1500,
                 });
             } else {
                 this.$message({
-                    message: '关闭相机 ' + this.tempCameraID + ' 失败',
+                    message: '关闭相机 ' + cameraID + ' 失败',
                     type: 'error',
                     duration: 1500,
                 });
@@ -268,15 +270,16 @@ export default {
         }),
         socket.on('revSetParam', data =>{
             let setParams_success = JSON.parse(data)["status"]
+            let cameraID = JSON.parse(data)["cameraID"]
             if(setParams_success){
                 this.$message({
-                    message: '设置参数 ' + this.selectedCameraID + ' 成功',
+                    message: '设置参数 ' + cameraID + ' 成功',
                     type: 'success',
                     duration: 1500,
                 });
             } else {
                 this.$message({
-                    message: '设置参数 ' + this.selectedCameraID + ' 失败',
+                    message: '设置参数 ' + cameraID + ' 失败',
                     type: 'error',
                     duration: 1500,
                 });
@@ -822,7 +825,7 @@ export default {
 
             let msg = JSON.stringify({
                 camera_op_type : 3, 
-                cameraID : Number(this.selectedCameraID)
+                cameraID : Number(this.tempCameraID)
             })
             let payload={
                 trigger:true,
