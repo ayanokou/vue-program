@@ -144,7 +144,8 @@ public class DemoApplication {
 		operationMap.put("CameraOperation", 14);
 		operationMap.put("AddModbusMaster", 15);
 		operationMap.put("RemoveModbusMaster", 16);
-
+		operationMap.put("getScriptVar",17);
+		
 		for (String key : operationMap.keySet()) {
 			Integer value = operationMap.get(key);
 			reg.register(key, value);

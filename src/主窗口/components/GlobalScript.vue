@@ -161,7 +161,45 @@ export default {
       };
 
       reader.readAsText(file);
+    },
+
+    getScriptVar(paramName) {
+            let payload={
+                trigger:true,
+                mode:"getScriptVar",
+                data:JSON.stringify(paramName)
+            }
+            this.$store.commit("setSocketEmit",payload)
+        },
+
+
+    GetGlobalVariableIntValue(paramName,paramValue)
+    {
+
+        paramValue.push(0);
+    },
+    GetGlobalVariableFloatValue(paramName,paramValue)
+    {
+        paramValue.push(0);
+    },
+    GetGlobalVariableStringValue ( paramName, paramValue)
+    {
+        paramValue.push("");
+    },
+    SetGlobalVariableIntValue ( paramName,  paramValsue)
+    {
+
+    },
+    SetGlobalVariableFloatValue ( paramName,  paramValue)
+    {
+
+    },
+    SetGlobalVariableStrignValue ( paramName,  paramValue)
+    {
+
     }
+
+
 
 
     },
