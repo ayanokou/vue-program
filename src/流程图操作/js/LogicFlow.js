@@ -323,6 +323,7 @@ export default {
             availableCameras : {},
             dllPaths : {
                 "Hikrobot" : "resources\\HKCamera.dll",
+                // "Hikrobot" : "D:\\Documents\\opencv_splitFunction_test\\camera_demo\\x64\\Release\\HKCamera.dll",
                 "Basler" : "xxx",},
           }
     },

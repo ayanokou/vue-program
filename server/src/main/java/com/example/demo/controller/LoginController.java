@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 public class LoginController {
-    private String userJsonPath = "D:\\新建文件夹\\GeliVision\\src\\登录窗口\\login.json";
+    private String userJsonPath = "src\\登录窗口\\login.json";
     @PostMapping("/login")
     @ResponseBody
     public ResponseEntity<?> login(@RequestBody User loginForm) {
