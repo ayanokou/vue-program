@@ -51,7 +51,7 @@ public class DemoApplication {
 		Logger logger = LoggerFactory.getLogger(DemoApplication.class);
 
 		Options options = new Options();
-		Option detached = new Option("d", "detached", false, "run in detached mode");
+		Option detached = new Option("a", "attached", false, "run in attached mode");
 		options.addOption(detached);
 
 		CommandLine cmd = null;
@@ -64,13 +64,13 @@ public class DemoApplication {
 			formatter.printHelp("Usage: ", options);
 			System.exit(1);
 		}
-
-		if (cmd.hasOption("detached")) {
-			logger.info("run in detached mode");
-		} else {
+		
+		if (cmd.hasOption("attached")) {
 			logger.info("run in attached mode");
 			MessageHandlerInitializer initializer = new MessageHandlerInitializer(MESSAGE_HANDLER_PATH, logger);
 			initializer.start();
+		} else {
+			logger.info("run in detached mode");
 		}
 
 		com.corundumstudio.socketio.Configuration config = new Configuration();
