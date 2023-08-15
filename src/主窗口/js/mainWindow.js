@@ -383,7 +383,7 @@ export default {
             console.log('Downloading file...');
           },
 
-        test(){
+        testCurrentData(){
             this.$store.commit('setRunResults',[
                 {
                   "tab_index": 0,
@@ -411,33 +411,47 @@ export default {
                         },
                         {
                             "name":"points1",
-                            type:"vector<Point>",
-                            content:[
+                            "type":"vector<Point>",
+                            "content":[
                                 {
-                                    type:"Point",
-                                    content:{
-                                        x:1,
-                                        y:2
+                                    "type":"Point",
+                                    "content":{
+                                        "x":1,
+                                        "y":2
                                     }
                                 }
                             ]
                         },
                         {
-                            "name":"points2",
-                            type:"vector<Point>",
-                            content:[
+                            "name":"vi",
+                            "type":"vector<int>",
+                            "content":[
                                 {
-                                    type:"Point",
-                                    content:{
-                                        x:1,
-                                        y:2
+                                    "type":"int",
+                                    "content":1
+                                },
+                                {
+                                    "type":"int",
+                                    "content":2
+                                }
+                            ]
+                        },
+                        {
+                            "name":"points2",
+                            "type":"vector<Point>",
+                            "content":[
+                                {
+                                    "type":"Point",
+                                    "content":{
+                                        "x":1,
+                                        "y":2
                                     }
                                 },
                                 {
-                                    type:"Point",
-                                    content:{
-                                        x:1,
-                                        y:2
+                                    "type":"Point",
+                                    "content":{
+                                        "x":1,
+                                        "y":2
                                     }
                                 }
                             ]
@@ -445,7 +459,28 @@ export default {
                       ],
                       "timeConsume": 5688
                     },
-                    {}
+                    {
+                        "id": "1",
+                        "outResults": [
+                            {
+                                "name":"dst",
+                                "type":"int",
+                                "content":0
+                            }
+                        ],
+                        "timeConsume": 20
+                    },
+                   {
+                        "id": "1",
+                        "outResults": [
+                            {
+                                "name":"dst",
+                                "type":"int",
+                                "content":0
+                            }
+                        ],
+                        "timeConsume": 20
+                    }
                   ],
                   "totalTimeConsume": 6275
                 },
@@ -471,7 +506,7 @@ export default {
                   "totalTimeConsume": 6275
                 }
               ])
-            },
+        },
         openHelpDoc(){
             this.helpDocVisible = true
         },

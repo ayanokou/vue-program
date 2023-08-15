@@ -78,7 +78,7 @@ export default{
     },
     methods:{
         handleDelete(index,row){
-
+            this.conditionData.splice(index,1)
         },
         addItem(){
             let precision=-1

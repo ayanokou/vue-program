@@ -1,5 +1,4 @@
 <template>
-  {{ showImg }}
   <div>
     <div class="head-btn-box">
       <el-button title="放大" id="toBig" icon="zoom-in" @click="zoomIn"></el-button>
@@ -123,9 +122,6 @@ export default {
   watch: {
     showImg(newVal) {
       if (newVal) {
-        console.log('in showImg:')
-        console.log(this.currentNode)
-        console.log(this.runResults)
         //find img
         let tab_result = this.runResults.find(item => item.tab_index === this.currentNode.tabIndex)
         if (!tab_result) {
@@ -151,16 +147,12 @@ export default {
         }
 
         const ans = results.filter(item => item.type === "Mat")
-        if (typeof ans === 'object') {
+        if (ans.length > 0) {
           this.imgBase64 = ans[0].content
 
         } else {
           this.imgBase64 = ''
-          
-          this.$store.commit('showImgEvent', false)
-          return
         }
-        console.log(this.imgBase64)
         //close
         this.$store.commit('showImgEvent', false)
       }

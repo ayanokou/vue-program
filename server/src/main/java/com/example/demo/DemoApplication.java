@@ -10,6 +10,7 @@ import com.corundumstudio.socketio.listener.*;
 import java.io.IOException;
 import java.net.UnknownHostException;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.corundumstudio.socketio.*;
 
@@ -116,7 +117,7 @@ public class DemoApplication {
 						throws Exception {
 					listenerForCpp.setClient(socketIOClient);
 					JSONObject jsonObject = new JSONObject();
-					JSONObject data = JSONObject.parseObject(msg);
+					Object data = JSONObject.parse(msg);
 					jsonObject.put("operation", operation);
 					jsonObject.put("data", data);
 					String result = jsonObject.toJSONString();

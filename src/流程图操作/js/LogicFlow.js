@@ -90,6 +90,7 @@ class MyGroupModel extends GroupNode.model {
     initNodeData(data) {
         super.initNodeData(data);
         this.foldable = true;
+        this.resizeable = true;
         this.width = data.width || 300;
         this.height = data.height || 200;
         const noTarget = {
@@ -144,12 +145,16 @@ class MyGroupModel extends GroupNode.model {
     }
 
     createId() {
-        let max=0
-        for(let node of this.graphModel.nodes){
-            if(node.id>max)
-                max=node.id
+        const idSet = new Set()
+        // find the smallest unused id
+        this.graphModel.nodes.forEach(node => {
+            idSet.add(node.id)
+        })
+        let id = 0
+        while (idSet.has(id.toString())) {
+            id++
         }
-        return (++max) + "";
+        return id.toString()
     }
 }
 
@@ -433,71 +438,8 @@ export default {
         })
         //双击节点，弹出对话框
         this.lf.on('node:dbclick', (evt) => {
-            this.nodeModel=this.lf.getNodeModelById(evt.data.id)
-            //console.log(evt.data)//运行的结点信息
-            let array=suanziItemList[evt.data.properties.superName]
-            this.operatorData=array.find(item=>item.name==evt.data.properties.name)
-            //找modelName和formData
-            //console.log(this.nodeModel.getProperties())
-            if(this.nodeModel.getProperties().inPara){
-                this.modelName=this.nodeModel.getProperties().modelName
-                this.formData=this.nodeModel.getProperties().inPara.map(param=>param.fromExpression)
-            }else{
-                this.modelName=this.operatorData.models[0].modelName
-                this.formData=this.operatorData.models[0].inPara.map(param=>param.fromExpression)
-            }
-
-            // //获得输入源
-            this.findInPara(evt.data.id)
-            // for(let i in this.nodeProperties.models){
-            //     if(this.model.modelName==this.nodeProperties.models[i].modelName){
-            //         this.nodeProperties.models[i].inPara=inPara
-            //     }
-            // }
-            this.selectedAlgorithm = evt.data.id
-            this.$store.commit('setVuexHelpInfo', this.nodeModel.getProperties().helpMsg)
-
-            this.dialogBranch=false
-            this.dialogCondition=false
-            this.dialogVisible = true
-            //是否补充其他组件
-            if(evt.data.properties.name=="分支模块"){
-                this.dialogBranch=true
-
-                let sonsModel=this.lf.getNodeOutgoingNode(evt.data.id)
-                let data=[]
-                let payload=[]
-                if(this.nodeModel.getProperties().payload)
-                    payload=this.nodeModel.getProperties().payload
-
-                for(let model of sonsModel){
-                    let node_id=model.id
-                    data.push({
-                        "nodeId":"模块ID:"+node_id,
-                        "valueId":-1
-                    })
-                }
-
-                for(let idx in payload){
-                    data[idx].valueId=payload[idx].valueId
-                }
-                this.branchData=data
-            }else if(evt.data.properties.name=="条件检测"){
-                this.dialogCondition=true
-                
-                if(this.nodeModel.getProperties().payload){
-                    this.conditionData=this.nodeModel.getProperties().payload
-                }else{
-                    this.conditionData=[]
-                }
-
-                this.conditionIntExpr=this.getIncomingData(evt.data.id,'int')
-                this.conditionDoubleExpr=this.getIncomingData(evt.data.id,'double')
-            }
-                
-            let e = document.getElementsByClassName('el-overlay-dialog')[0].parentNode
-            e.style.width = '0px';
-
+            if(evt.data.properties.modelName!="group")
+                this.setInParams(evt.data) 
         })
 
 
@@ -586,6 +528,8 @@ export default {
                 nodeTextEdit : false, // 使得节点文本不可选
             })
 
+            const setInParams=this.setInParams
+
             lf.extension.menu.setMenuConfig({
                 nodeMenu: [
                     {
@@ -595,18 +539,12 @@ export default {
                         },
                     },
                     {
-                        text: '编辑文本',
+                        text: '配置参数',
                         callback: function (node) {
-                            lf.graphModel.editText(node.id);
+                            setInParams(node)
                         },
                     },
-                    {
-                        text: '单步运行',
-                        callback: function (node) {
 
-                            console.log(node)
-                        }
-                    }
                 ], // 覆盖默认的节点右键菜单
                 //edgeMenu: false, // 删除默认的边右键菜单
                 graphMenu: [],
@@ -784,10 +722,14 @@ export default {
 
 
         findInPara(id) {
-            console.log('in findInPara')
+            //done fix:如果这个节点在group里面就要多添加一些带[loopIndex]的可选入参
+            //done fix：如果这个节点正好是group，需要为终止坐标参数构建那些vector<*>的长度，作为可选参数
             let set=new Set()
             let comboList={}
             let queue=[id]
+            if(this.modelName=="group"){
+                queue.push(...this.nodeModel.getData().children)
+            }
             while(queue.length>0){
                 let targetid=queue.shift()
 
@@ -798,7 +740,15 @@ export default {
                     }
                 }
             }
-            console.log(set.size)
+
+            let children=[]
+            for(let node of this.lf.getGraphData().nodes){
+                if(node.children){
+                    children.push(...node.children)
+                }
+            }
+            console.log(children)
+
 
             set.forEach(item=>{
                 let each_outPara=[]
@@ -808,13 +758,11 @@ export default {
                 for(let para of each_outPara){
                     comboList[text+"."+para.varExplanation+"."+para.varName]=item.toString()+"."+para.varName+"#"+para.varType
                 }
-
             })
 
             set.clear()
-            //bug：修改了this.operatorData,对话框用operatorData绘制。连接过之后，再删除连接，依然可以选择
-            //获得model
-            let model=this.operatorData.models.find(item=>item.modelName==this.modelName)
+
+            //let model=this.operatorData.models.find(item=>item.modelName==this.modelName)
             for(let model of this.operatorData.models){
                 for(let p of model.inPara){
                     if(p.defineVarInputWay=="smartInputWay"){
@@ -825,35 +773,28 @@ export default {
                                 p.comboList[i]=comboList[i].split('#')[0]
 
                         }else{
-                            for(let i in comboList){
-                                let type=comboList[i].split('#')[1]
-                                if(type==p.varType)
-                                    p.comboList[i]=comboList[i].split('#')[0]
+                            if(this.modelName=="group"){
+                                const format_regex=/^vector<.*>$/
+                                for(let i in comboList){
+                                    let type=comboList[i].split('#')[1]
+                                    if(format_regex.test(type))
+                                        p.comboList["size of ("+i+")-1"]=comboList[i].split('#')[0]
+                                }
+                            }else{
+                                for(let i in comboList){
+                                    let type=comboList[i].split('#')[1]
+                                    if(type==p.varType)
+                                        p.comboList[i]=comboList[i].split('#')[0]
+                                    else if(children.includes(id)&&type=="vector<"+p.varType+">"){
+                                        p.comboList[i+"[loopIndex]"]=comboList[i].split('#')[0]+"[loopIndex]"
+                                    }
+                                }
                             }
+                            
                         }
-
                     }
                 }
             }
-            // //获得inPara
-            // for(let p of model.inPara){
-            //     if(p.defineVarInputWay=="smartInputWay"){
-            //         //修改bug，清除之前连接的记录
-            //         p.comboList={}
-            //         if(p.varType=="object"){
-            //             for(let i in comboList)
-            //                 p.comboList[i]=comboList[i].split('#')[0]
-            //
-            //         }else{
-            //             for(let i in comboList){
-            //                 let type=comboList[i].split('#')[1]
-            //                 if(type==p.varType)
-            //                     p.comboList[i]=comboList[i].split('#')[0]
-            //             }
-            //         }
-            //
-            //     }
-            // }
         },
         loadFlowChart() {
             let inputObj = document.createElement('input');
@@ -906,11 +847,12 @@ export default {
             let name = prompt("请输入新名称", "lf");
             this.tab.tabName = name
         },
-        paramCheck(data,type){
+        paramCheck(inputWay, data, type){
             const int_regex=/^-?\d+$/
             const double_regex=/^-?\d+(.\d+)?$/
             const Size_regex=/^\d+,\d+$/
             let flag=true;
+            if(inputWay=="smartInputWay") return true
             switch(type){
                 case "int":
                     flag=int_regex.test(data)
@@ -924,7 +866,6 @@ export default {
                 default:
                     break;
             }
-            console.log(flag)
             if(!flag){
                 alert("提交类型出错!")
             }
@@ -940,7 +881,7 @@ export default {
             let paramReady = true
             for(let i in model_copy["inPara"]){
 
-                if(this.formData[i]==""||!this.paramCheck(this.formData[i],model_copy["inPara"][i].varType)) paramReady = false
+                if(this.formData[i]==""||!this.paramCheck(model_copy["inPara"][i].defineVarInputWay,this.formData[i],model_copy["inPara"][i].varType)) paramReady = false
                 else model_copy["inPara"][i].fromExpression=this.formData[i]
             }
 
@@ -1009,6 +950,72 @@ export default {
         t(){
             this.availableCameras = cameras.foreEndCameras
         },
+
+        setInParams(node){    
+            this.nodeModel=this.lf.getNodeModelById(node.id)
+            //console.log(evt.data)//运行的结点信息
+            let array=suanziItemList[node.properties.superName]
+            this.operatorData=array.find(item=>item.name==node.properties.name)
+            //找modelName和formData
+            //console.log(this.nodeModel.getProperties())
+            if(this.nodeModel.getProperties().inPara){
+                this.modelName=this.nodeModel.getProperties().modelName
+                this.formData=this.nodeModel.getProperties().inPara.map(param=>param.fromExpression)
+            }else{
+                this.modelName=this.operatorData.models[0].modelName
+                this.formData=this.operatorData.models[0].inPara.map(param=>param.fromExpression)
+            }
+            // //获得输入源
+            this.findInPara(node.id)
+            // for(let i in this.nodeProperties.models){
+            //     if(this.model.modelName==this.nodeProperties.models[i].modelName){
+            //         this.nodeProperties.models[i].inPara=inPara
+            //     }
+            // }
+            this.selectedAlgorithm = node.id
+            this.$store.commit('setVuexHelpInfo', this.nodeModel.getProperties().helpMsg)
+
+            this.dialogBranch=false
+            this.dialogCondition=false
+            this.dialogVisible = true
+            //是否补充其他组件
+            if(node.properties.name=="分支模块"){
+                this.dialogBranch=true
+
+                let sonsModel=this.lf.getNodeOutgoingNode(node.id)
+                let data=[]
+                let payload=[]
+                if(this.nodeModel.getProperties().payload)
+                    payload=this.nodeModel.getProperties().payload
+
+                for(let model of sonsModel){
+                    let node_id=model.id
+                    data.push({
+                        "nodeId":"模块ID:"+node_id,
+                        "valueId":-1
+                    })
+                }
+
+                for(let idx in payload){
+                    data[idx].valueId=payload[idx].valueId
+                }
+                this.branchData=data
+            }else if(node.properties.name=="条件检测"){
+                this.dialogCondition=true
+                
+                if(this.nodeModel.getProperties().payload){
+                    this.conditionData=this.nodeModel.getProperties().payload
+                }else{
+                    this.conditionData=[]
+                }
+
+                this.conditionIntExpr=this.getIncomingData(node.id,'int')
+                this.conditionDoubleExpr=this.getIncomingData(node.id,'double')
+            }
+                
+            let e = document.getElementsByClassName('el-overlay-dialog')[0].parentNode
+            e.style.width = '0px';
+        }
     }
 }
 

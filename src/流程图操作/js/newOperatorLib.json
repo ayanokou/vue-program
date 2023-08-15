@@ -8,7 +8,7 @@
         {
           "modelName": "轮廓比对",
           "helpMsg": "it is a help message of GlobalVariable",
-          "dllPath": "server/src/main/resources/MatchContourShape.dll",
+          "dllPath": "resources/MatchContourShape.dll",
           "modelID": "contourMatch",
           "inPara": [
             {
@@ -28,7 +28,7 @@
             {
               "varName": "threshold",
               "varType": "double",
-              "fromExpression": "",
+              "fromExpression": "100",
               "defineVarInputWay": "directInputWay",
               "varExplanation": ""
             }
@@ -759,22 +759,23 @@
           "inPara": [
             {
               "varName": "src",
-              "varType": "object",
+              "varType": "Mat",
               "fromExpression": "",
-              "defineVarInputWay": "directInputWay",
+              "defineVarInputWay": "smartInputWay",
+              "comboList":{},
               "varExplanation": ""
             },
             {
               "varName": "thresh",
               "varType": "double",
-              "fromExpression": "",
+              "fromExpression": "127",
               "defineVarInputWay": "directInputWay",
               "varExplanation": ""
             },
             {
               "varName": "maxval",
               "varType": "double",
-              "fromExpression": "",
+              "fromExpression": "255",
               "defineVarInputWay": "directInputWay",
               "varExplanation": ""
             },
@@ -782,7 +783,17 @@
               "varName": "type",
               "varType": "int",
               "fromExpression": "",
-              "defineVarInputWay": "directInputWay",
+              "defineVarInputWay": "selectedInputWay",
+              "comboList":{
+                "THRESH_BINARY": "0",
+                "THRESH_BINARY_INV": "1",
+                "THRESH_TRUNC": "2",
+                "THRESH_TOZERO": "3",
+                "THRESH_TOZERO_INV": "4",
+                "THRESH_MASK": "7",
+                "THRESH_OTSU": "8",
+                "THRESH_TRIANGLE": "16"
+              },
               "varExplanation": ""
             }
           ],
@@ -1314,7 +1325,7 @@
       "models": [
         {
           "modelName": "加",
-          "dllPath": "server/src/main/resources/imgOperation.dll",
+          "dllPath": "resources/imgOperation.dll",
           "modelID": "myAdd",
           "inPara": [
             {
@@ -1342,7 +1353,7 @@
         },
         {
           "modelName": "减",
-          "dllPath": "server/src/main/resources/imgOperation.dll",
+          "dllPath": "resources/imgOperation.dll",
           "modelID": "mySubtract",
           "inPara": [
             {
@@ -1370,7 +1381,7 @@
         },
         {
           "modelName": "绝对差",
-          "dllPath": "server/src/main/resources/imgOperation.dll",
+          "dllPath": "resources/imgOperation.dll",
           "modelID": "myAbsdiff",
           "inPara": [
             {
@@ -1398,7 +1409,7 @@
         },
         {
           "modelName": "按位非",
-          "dllPath": "server/src/main/resources/imgOperation.dll",
+          "dllPath": "resources/imgOperation.dll",
           "modelID": "myBitwiseNot",
           "inPara": [
             {
@@ -1419,7 +1430,7 @@
         },
         {
           "modelName": "按位与",
-          "dllPath": "server/src/main/resources/imgOperation.dll",
+          "dllPath": "resources/imgOperation.dll",
           "modelID": "myBitwiseAnd",
           "inPara": [
             {
@@ -1447,7 +1458,7 @@
         },
         {
           "modelName": "异或",
-          "dllPath": "server/src/main/resources/imgOperation.dll",
+          "dllPath": "resources/imgOperation.dll",
           "modelID": "myBitwiseXor",
           "inPara": [
             {
@@ -1475,7 +1486,7 @@
         },
         {
           "modelName": "最大值最小值",
-          "dllPath": "server/src/main/resources/imgOperation.dll",
+          "dllPath": "resources/imgOperation.dll",
           "modelID": "myAdd",
           "inPara": [
             {
@@ -1496,7 +1507,7 @@
         },
         {
           "modelName": "均值",
-          "dllPath": "server/src/main/resources/imgOperation.dll",
+          "dllPath": "resources/imgOperation.dll",
           "modelID": "myMean",
           "inPara": [
             {
@@ -1517,7 +1528,7 @@
         },
         {
           "modelName": "归一化",
-          "dllPath": "server/src/main/resources/imgOperation.dll",
+          "dllPath": "resources/imgOperation.dll",
           "modelID": "myNormalize",
           "inPara": [
             {
@@ -1538,7 +1549,7 @@
         },
         {
           "modelName": "傅里叶变换",
-          "dllPath": "server/src/main/resources/imgOperation.dll",
+          "dllPath": "resources/imgOperation.dll",
           "modelID": "myDft",
           "inPara": [
             {
@@ -1890,7 +1901,7 @@
         {
           "modelName": "拟合直线",
           "helpMsg": "it is a help message of GlobalVariable",
-          "dllPath": "server\\src\\main\\resources\\fitLine.dll",
+          "dllPath": "resources/fitLine.dll",
           "modelID": "myFitLine",
           "inPara": [
             {
@@ -1948,7 +1959,7 @@
         {
           "modelName": "拟合椭圆",
           "helpMsg": "it is a help message of GlobalVariable",
-          "dllPath": "server\\src\\main\\resources\\fitEllipse.dll",
+          "dllPath": "resources/fitEllipse.dll",
           "modelID": "myFitEllipse",
           "inPara": [
             {
@@ -1978,7 +1989,7 @@
         {
           "modelName": "灰度像素统计",
           "helpMsg": "it is a help message of GlobalVariable",
-          "dllPath": "server\\src\\main\\resources\\PixesStatistic.dll",
+          "dllPath": "resources/PixesStatistic.dll",
           "modelID": "pixesStatistic",
           "inPara": [
             {
@@ -3093,7 +3104,7 @@
       "models": [
         {
           "modelName": "找轮廓",
-          "dllPath": "server/src/main/resources/contoursOperation.dll",
+          "dllPath": "resources/contoursOperation.dll",
           "modelID": "find_all_contours",
           "inPara": [
             {
@@ -3114,7 +3125,7 @@
         },
         {
           "modelName": "画单一轮廓",
-          "dllPath": "server/src/main/resources/contoursOperation.dll",
+          "dllPath": "resources/contoursOperation.dll",
           "modelID": "draw_one_contours",
           "inPara": [
             {
@@ -3149,7 +3160,7 @@
         },
         {
           "modelName": "轮廓排序",
-          "dllPath": "server/src/main/resources/contoursOperation.dll",
+          "dllPath": "resources/contoursOperation.dll",
           "modelID": "sortContours",
           "inPara": [
             {
@@ -3177,7 +3188,7 @@
         },
         {
           "modelName": "轮廓筛选",
-          "dllPath": "server/src/main/resources/contoursOperation.dll",
+          "dllPath": "resources/contoursOperation.dll",
           "modelID": "filterContours",
           "inPara": [
             {
@@ -3219,7 +3230,7 @@
         },
         {
           "modelName": "轮廓合并",
-          "dllPath": "server/src/main/resources/contoursOperation.dll",
+          "dllPath": "resources/contoursOperation.dll",
           "modelID": "mergeContours",
           "inPara": [
             {
@@ -3554,7 +3565,7 @@
             {
               "varName": "storePath",
               "varType": "string",
-              "fromExpression": "server/src/main/resources/xxx.png",
+              "fromExpression": "resources/xxx.png",
               "defineVarInputWay": "directInputWay",
               "varExplanation": ""
             }
@@ -3815,15 +3826,36 @@
           "modelID": "",
           "inPara": [
             {
-              "varName": "int",
-              "varType": "string",
+              "varName": "循环使能",
+              "varType": "bool",
               "fromExpression": "",
               "defineVarInputWay": "selectedInputWay",
               "comboList": {
-                "全部": "and",
-                "任意": "or"
+                "True": "1",
+                "False": "0"
               },
-              "varExplanation": ""
+              "varExplanation": "循环使能开关"
+            },
+            {
+              "varName":"间隔时间(ms)",
+              "varType":"int",
+              "fromExpression":"100",
+              "defineVarInputWay":"directInputWay",
+              "varExplanation":"循环间隔时间"
+            },
+            {
+              "varName":"起始坐标",
+              "varType":"int",
+              "fromExpression":"0",
+              "defineVarInputWay":"directInputWay",
+              "varExplanation":"循环起始坐标"
+            },           {
+              "varName":"终止坐标",
+              "varType":"int",
+              "fromExpression":"",
+              "defineVarInputWay":"smartInputWay",
+              "comboList":{},
+              "varExplanation":"循环终止坐标"
             }
           ],
           "outPara": []
@@ -3940,6 +3972,60 @@
           "modelID": "",
           "inPara": [],
           "outPara": []
+        }
+      ]
+    }
+  ],
+  "test":[
+    {
+      "state": "init",
+      "superName": "test",
+      "name": "接收int",
+      "models": [
+        {
+          "modelName": "接收int",
+          "helpMsg": "it is a help message",
+          "dllPath": "resources/testForGroup.dll",
+          "modelID": "g",
+          "inPara": [
+            {
+              "varName": "src",
+              "varType": "int",
+              "fromExpression": "",
+              "defineVarInputWay": "smartInputWay",
+              "comboList": {},
+              "varExplanation": ""
+            }
+          ],
+          "outPara": [
+            {
+              "varName":"increase",
+              "varType":"int",
+              "varExplanation":"+1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "state": "init",
+      "superName": "test",
+      "name": "生成vector<int>",
+      "models": [
+        {
+          "modelName": "生成vector<int>",
+          "helpMsg": "it is a help message",
+          "dllPath": "resources/testForGroup.dll",
+          "modelID": "f",
+          "inPara": [
+          ],
+          "outPara": [
+            {
+              "varName":"dst",
+              "varType":"vector<int>",
+              "varExplanation":""
+            }
+          ]
         }
       ]
     }

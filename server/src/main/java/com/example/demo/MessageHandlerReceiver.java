@@ -7,7 +7,7 @@ import java.net.Socket;
 
 import org.slf4j.Logger;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.*;
 
 public class MessageHandlerReceiver implements Runnable {
     private Socket socket;
@@ -40,14 +40,21 @@ public class MessageHandlerReceiver implements Runnable {
                     logger.info("MessageHandlerReceiver: {}", message);
                     JSONObject jsonObject = JSONObject.parseObject(message);
                     String event = jsonObject.getString("event");
+                    Object data_obj=jsonObject.get("data");
                     String data;
-                    if(jsonObject.getJSONObject("data") != null) {
-                    	data = jsonObject.getJSONObject("data").toJSONString();
-                    }else if(jsonObject.getJSONArray("data") != null) {
+                    if(data_obj instanceof JSONObject){
+                        data=jsonObject.getJSONObject("data").toJSONString();
+                    }else if(data_obj instanceof JSONArray){
                         data=jsonObject.getJSONArray("data").toJSONString();
+                    }else if(data_obj instanceof String){
+                        data=jsonObject.getString("data");
+                    }else if(data_obj instanceof Integer){
+                        data=jsonObject.getInteger("data").toString();
                     }else{
-                        data="";
+                        data="can't parse data in MessageHandlerReceiver yet";
                     }
+
+
                     listener.onMessage(event, data);
 
                     msg = msg.substring(endIndex + 6);
