@@ -145,10 +145,7 @@
                       <el-col :span="12">
                         <el-form-item label="功能码">
                           <el-select v-model="currentDevice.functionType">
-                            <el-option
-                              label="读保持寄存器"
-                              value="0"
-                            >
+                            <el-option label="读保持寄存器" value="0">
                             </el-option>
                             <el-option
                               label="读输入寄存器"
@@ -237,7 +234,9 @@
                         </el-col>
                         <el-col :span="12">
                           <el-form-item label="波特率">
-                            <el-input-number v-model="currentDevice.baud"></el-input-number>
+                            <el-input-number
+                              v-model="currentDevice.baud"
+                            ></el-input-number>
                           </el-form-item>
                         </el-col>
                       </el-row>
@@ -358,7 +357,13 @@
                     style="cursor: pointer"
                     class="li-item"
                   >
-                  {{ index +  AcceptEvent.manner + (AcceptEvent.manner === '脚本' ? '' : '-'+AcceptEvent.type) }}
+                    {{
+                      index +
+                      AcceptEvent.manner +
+                      (AcceptEvent.manner === "脚本"
+                        ? ""
+                        : "-" + AcceptEvent.type)
+                    }}
                   </li>
                 </ul>
               </el-scrollbar>
@@ -366,114 +371,118 @@
           </el-col>
           <el-col :span="18" style="height: 100%">
             <el-tabs class="SendEventParams-menu">
-                <el-tab-pane label="参数">
-                  <el-form
-                    :model="CurrentAcceptEvent"
-                    :disabled="!isCreatingAcceptEvent()"
-                    style="margin-top: 15px;"
+              <el-tab-pane label="参数">
+                <el-form
+                  :model="CurrentAcceptEvent"
+                  :disabled="!isCreatingAcceptEvent()"
+                  style="margin-top: 15px"
+                >
+                  <el-row :gutter="20">
+                    <el-col :span="10">
+                      <el-form-item label="处理方式">
+                        <el-select v-model="CurrentAcceptEvent.manner">
+                          <el-option label="文本" value="文本"></el-option>
+                          <el-option
+                            label="字节匹配"
+                            value="字节匹配"
+                          ></el-option>
+                          <el-option label="脚本" value="脚本"></el-option>
+                        </el-select>
+                      </el-form-item>
+                    </el-col>
+                    <el-col :span="14">
+                      <el-form-item label="事件类型">
+                        <el-select
+                          v-model="CurrentAcceptEvent.type"
+                          :disabled="CurrentAcceptEvent.manner === '脚本'"
+                        >
+                          <el-option
+                            v-if="CurrentAcceptEvent.manner != '字节匹配'"
+                            label="协议解析"
+                            value="协议解析"
+                          ></el-option>
+                          <el-option
+                            label="协议组装"
+                            value="协议组装"
+                          ></el-option>
+                        </el-select>
+                      </el-form-item>
+                    </el-col>
+                  </el-row>
+
+                  <div
+                    v-if="isCreatingAcceptEvent()"
+                    style="display: flex; justify-content: end"
                   >
-                    <el-row :gutter="20">
-                      <el-col :span="10">
-                        <el-form-item label="处理方式">
-                          <el-select v-model="CurrentAcceptEvent.manner">
-                            <el-option
-                              label="文本"
-                              value="文本"
-                            ></el-option>
-                            <el-option
-                              label="字节匹配"
-                              value="字节匹配"
-                            ></el-option>
-                            <el-option
-                              label="脚本"
-                              value="脚本"
-                            ></el-option>
-                          </el-select>
-                        </el-form-item>
-                      </el-col>
-                      <el-col :span="14">
-                        <el-form-item label="事件类型">
-                          <el-select v-model="CurrentAcceptEvent.type"  :disabled="CurrentAcceptEvent.manner === '脚本'" >
-                            <el-option v-if ="CurrentAcceptEvent.manner != '字节匹配'"
-                              label="协议解析"
-                              value="协议解析"
-                            ></el-option>
-                            <el-option
-                              label="协议组装"
-                              value="协议组装"
-                            ></el-option>
-                          </el-select>
-                        </el-form-item>
-                      </el-col>
-                    </el-row>
+                    <el-form-item>
+                      <el-button type="primary" @click="onCreateAcceptEvent"
+                        >创建</el-button
+                      >
+                    </el-form-item>
+                  </div>
+                </el-form>
+              </el-tab-pane>
 
-                    <div v-if="isCreatingAcceptEvent()" style="display: flex; justify-content: end">
-                        <el-form-item>
-                          <el-button type="primary" @click="onCreateAcceptEvent"
-                            >创建</el-button
-                          >
-                        </el-form-item>
-                    </div>
-                  </el-form>
-                </el-tab-pane>
-
-                
-             
-
-            
-              <el-tab-pane v-if="(CurrentAcceptEvent.type === '协议解析' || CurrentAcceptEvent.manner == '脚本') && !isCreatingAcceptEvent()" label="设置">
+              <el-tab-pane
+                v-if="
+                  (CurrentAcceptEvent.type === '协议解析' ||
+                    CurrentAcceptEvent.manner == '脚本') &&
+                  !isCreatingAcceptEvent()
+                "
+                label="设置"
+              >
                 <template v-if="CurrentAcceptEvent.manner == '文本'">
                   <p style="margin-top: 0">绑定设备</p>
 
                   <el-row :gutter="20">
                     <el-col :span="14">
                       <el-form-item label="绑定设备">
-                        <el-input ></el-input>
+                        <el-input></el-input>
                       </el-form-item>
                     </el-col>
                   </el-row>
-                  
+
                   <p style="margin-top: 0">基本配置</p>
-                  
+
                   <el-row :gutter="20">
                     <el-col :span="14">
                       <el-form-item label="分隔符">
-                        <el-select  v-model="CurrentAcceptEvent.separator">
-                          <el-option
-                            label=";"
-                            value=";"
-                          ></el-option>
+                        <el-select v-model="CurrentAcceptEvent.separator">
+                          <el-option label=";" value=";"></el-option>
                         </el-select>
                       </el-form-item>
-                      
+
                       <el-form-item label="字符长度比较">
                         <el-switch
                           v-model="CurrentAcceptEvent.CharacterLengthComparison"
                         ></el-switch>
                       </el-form-item>
-                      
                     </el-col>
                   </el-row>
 
                   <p style="margin-top: 0">输出列表</p>
                   <el-row :gutter="20">
-                      <el-col :span="14">
-                      
-                        <el-table :data="CurrentAcceptEvent.ParametersTable" style="width: 100%">
-
-                          <el-table-column prop="licenseName" label="序号" width="180" />
-                          <el-table-column prop="procedureName" label="名称" width="180" />
-                          <el-table-column prop="description" label="类型" />
-                          <el-table-column prop="description" label="数据结果" />
-
-                        </el-table>
-                        
-                      </el-col>
-                    </el-row>
-
+                    <el-col :span="14">
+                      <el-table
+                        :data="CurrentAcceptEvent.ParametersTable"
+                        style="width: 100%"
+                      >
+                        <el-table-column
+                          prop="licenseName"
+                          label="序号"
+                          width="180"
+                        />
+                        <el-table-column
+                          prop="procedureName"
+                          label="名称"
+                          width="180"
+                        />
+                        <el-table-column prop="description" label="类型" />
+                        <el-table-column prop="description" label="数据结果" />
+                      </el-table>
+                    </el-col>
+                  </el-row>
                 </template>
-
-                
 
                 <template v-if="CurrentAcceptEvent.manner == '脚本'">
                   <p style="margin-top: 0">绑定设备</p>
@@ -481,14 +490,13 @@
                   <el-row :gutter="20">
                     <el-col :span="14">
                       <el-form-item label="绑定设备">
-                        <el-input ></el-input>
+                        <el-input></el-input>
                       </el-form-item>
                     </el-col>
                   </el-row>
                   <p style="margin-top: 0">基本配置</p>
                   <el-row :gutter="20">
                     <el-col :span="14">
-                     
                       <el-form-item label="回复给设备">
                         <el-switch
                           v-model="CurrentAcceptEvent.ReturnToDevice"
@@ -497,127 +505,138 @@
 
                       <el-form-item label="载入路径">
                         <el-input v-model="CurrentAcceptEvent.load"></el-input>
-                        
                       </el-form-item>
-                      
                     </el-col>
                   </el-row>
                   <p style="margin-top: 0">组装列表</p>
                   <el-row :gutter="20">
-                      <el-col :span="14">
-                      
-                        <el-table :data="CurrentAcceptEvent.ParametersTable" style="width: 100%">
-
-                          <el-table-column prop="licenseName" label="序号" width="180" />
-                          <el-table-column prop="procedureName" label="名称" width="180" />
-                          <el-table-column prop="description" label="类型" />
-                          <el-table-column prop="description" label="数据结果" />
-
-                        </el-table>
-                        
-                      </el-col>
-                    </el-row>
-                  
+                    <el-col :span="14">
+                      <el-table
+                        :data="CurrentAcceptEvent.ParametersTable"
+                        style="width: 100%"
+                      >
+                        <el-table-column
+                          prop="licenseName"
+                          label="序号"
+                          width="180"
+                        />
+                        <el-table-column
+                          prop="procedureName"
+                          label="名称"
+                          width="180"
+                        />
+                        <el-table-column prop="description" label="类型" />
+                        <el-table-column prop="description" label="数据结果" />
+                      </el-table>
+                    </el-col>
+                  </el-row>
                 </template>
-
-
-
               </el-tab-pane>
-           
 
-            
-              <el-tab-pane v-if="CurrentAcceptEvent.type === '协议组装' && !isCreatingAcceptEvent()" label="输入配置">
+              <el-tab-pane
+                v-if="
+                  CurrentAcceptEvent.type === '协议组装' &&
+                  !isCreatingAcceptEvent()
+                "
+                label="输入配置"
+              >
                 <p style="margin-top: 0">绑定设备</p>
 
                 <el-row :gutter="20">
                   <el-col :span="14">
                     <el-form-item label="绑定设备">
-                      <el-input ></el-input>
+                      <el-input></el-input>
                     </el-form-item>
                   </el-col>
                 </el-row>
 
                 <p style="margin-top: 0">基本配置</p>
-                
+
                 <el-row :gutter="20">
                   <el-col :span="14">
                     <el-form-item label="分隔符">
-                      <el-select  v-model="CurrentAcceptEvent.separator">
-                        <el-option
-                          label=";"
-                          value=";"
-                        ></el-option>
+                      <el-select v-model="CurrentAcceptEvent.separator">
+                        <el-option label=";" value=";"></el-option>
                       </el-select>
                     </el-form-item>
-                    
+
                     <el-form-item label="字符长度比较">
                       <el-switch
                         v-model="CurrentAcceptEvent.CharacterLengthComparison"
                       ></el-switch>
                     </el-form-item>
-                    
                   </el-col>
                 </el-row>
 
                 <p style="margin-top: 0">解析列表</p>
                 <el-row :gutter="20">
-                    <el-col :span="14">
-                    
-                      <el-table :data="CurrentAcceptEvent.ParametersTable" style="width: 100%">
-
-                        <el-table-column prop="licenseName" label="序号" width="180" />
-                        <el-table-column prop="procedureName" label="名称" width="180" />
-                        <el-table-column prop="description" label="类型" />
-                        <el-table-column prop="description" label="比较规则配置" />
-
-                      </el-table>
-                      
-                    </el-col>
-                  </el-row>
-
-
-
-
-
-
+                  <el-col :span="14">
+                    <el-table
+                      :data="CurrentAcceptEvent.ParametersTable"
+                      style="width: 100%"
+                    >
+                      <el-table-column
+                        prop="licenseName"
+                        label="序号"
+                        width="180"
+                      />
+                      <el-table-column
+                        prop="procedureName"
+                        label="名称"
+                        width="180"
+                      />
+                      <el-table-column prop="description" label="类型" />
+                      <el-table-column
+                        prop="description"
+                        label="比较规则配置"
+                      />
+                    </el-table>
+                  </el-col>
+                </el-row>
               </el-tab-pane>
-            
 
-              <el-tab-pane v-if="CurrentAcceptEvent.type === '协议组装' && !isCreatingAcceptEvent()" label="组装配置">
+              <el-tab-pane
+                v-if="
+                  CurrentAcceptEvent.type === '协议组装' &&
+                  !isCreatingAcceptEvent()
+                "
+                label="组装配置"
+              >
                 <p style="margin-top: 0">基本配置</p>
                 <el-row :gutter="20">
-                    <el-col :span="14">
-                     
-                      <el-form-item label="回复给设备">
-                        <el-switch
-                          v-model="CurrentAcceptEvent.ReturnToDevice"
-                        ></el-switch>
-                      </el-form-item>
-                    </el-col>
-                  </el-row>
+                  <el-col :span="14">
+                    <el-form-item label="回复给设备">
+                      <el-switch
+                        v-model="CurrentAcceptEvent.ReturnToDevice"
+                      ></el-switch>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
 
-                  <p style="margin-top: 0">组装列表</p>
-                  <el-row :gutter="20">
-                      <el-col :span="14">
-                      
-                        <el-table :data="CurrentAcceptEvent.ParametersTable" style="width: 100%">
-
-                          <el-table-column prop="licenseName" label="序号" width="180" />
-                          <el-table-column prop="procedureName" label="类型" width="180" />
-                          <el-table-column prop="description" label="内容" />
-                          <el-table-column prop="description" label="数据结果" />
-
-                        </el-table>
-                        
-                      </el-col>
-                    </el-row>
-
-
-
+                <p style="margin-top: 0">组装列表</p>
+                <el-row :gutter="20">
+                  <el-col :span="14">
+                    <el-table
+                      :data="CurrentAcceptEvent.ParametersTable"
+                      style="width: 100%"
+                    >
+                      <el-table-column
+                        prop="licenseName"
+                        label="序号"
+                        width="180"
+                      />
+                      <el-table-column
+                        prop="procedureName"
+                        label="类型"
+                        width="180"
+                      />
+                      <el-table-column prop="description" label="内容" />
+                      <el-table-column prop="description" label="数据结果" />
+                    </el-table>
+                  </el-col>
+                </el-row>
               </el-tab-pane>
             </el-tabs>
-
-              
           </el-col>
         </el-row>
       </el-tab-pane>
@@ -657,7 +676,11 @@
                     style="cursor: pointer"
                     class="li-item"
                   >
-                  {{ index +  SendEvent.manner + (SendEvent.manner === '脚本' ? '' : '-'+SendEvent.type) }}
+                    {{
+                      index +
+                      SendEvent.manner +
+                      (SendEvent.manner === "脚本" ? "" : "-" + SendEvent.type)
+                    }}
                   </li>
                 </ul>
               </el-scrollbar>
@@ -665,103 +688,106 @@
           </el-col>
           <el-col :span="18" style="height: 100%">
             <el-tabs class="SendEventParams-menu">
-                <el-tab-pane label="参数">
-                  <el-form
-                    :model="CurrentSendEvent"
-                    :disabled="!isCreatingSendEvent()"
-                    style="margin-top: 15px;"
+              <el-tab-pane label="参数">
+                <el-form
+                  :model="CurrentSendEvent"
+                  :disabled="!isCreatingSendEvent()"
+                  style="margin-top: 15px"
+                >
+                  <el-row :gutter="20">
+                    <el-col :span="10">
+                      <el-form-item label="处理方式">
+                        <el-select v-model="CurrentSendEvent.manner">
+                          <el-option label="文本" value="文本"></el-option>
+                          <el-option label="脚本" value="脚本"></el-option>
+                        </el-select>
+                      </el-form-item>
+                    </el-col>
+                    <el-col :span="14">
+                      <el-form-item label="事件类型">
+                        <el-select
+                          v-model="CurrentSendEvent.type"
+                          :disabled="CurrentSendEvent.manner === '脚本'"
+                        >
+                          <el-option
+                            label="直接输出"
+                            value="直接输出"
+                          ></el-option>
+                          <el-option
+                            label="组装输出"
+                            value="组装输出"
+                          ></el-option>
+                        </el-select>
+                      </el-form-item>
+                    </el-col>
+                  </el-row>
+
+                  <div
+                    v-if="isCreatingSendEvent()"
+                    style="display: flex; justify-content: end"
                   >
-                    <el-row :gutter="20">
-                      <el-col :span="10">
-                        <el-form-item label="处理方式">
-                          <el-select v-model="CurrentSendEvent.manner">
-                            <el-option
-                              label="文本"
-                              value="文本"
-                            ></el-option>
-                            <el-option
-                              label="脚本"
-                              value="脚本"
-                            ></el-option>
-                          </el-select>
-                        </el-form-item>
-                      </el-col>
-                      <el-col :span="14">
-                        <el-form-item label="事件类型">
-                          <el-select v-model="CurrentSendEvent.type"  :disabled="CurrentSendEvent.manner === '脚本'">
-                            <el-option
-                              label="直接输出"
-                              value="直接输出"
-                            ></el-option>
-                            <el-option
-                              label="组装输出"
-                              value="组装输出"
-                            ></el-option>
-                          </el-select>
-                        </el-form-item>
-                      </el-col>
-                    </el-row>
+                    <el-form-item>
+                      <el-button type="primary" @click="onCreateSendEvent"
+                        >创建</el-button
+                      >
+                    </el-form-item>
+                  </div>
+                </el-form>
+              </el-tab-pane>
 
-                    <div v-if="isCreatingSendEvent()" style="display: flex; justify-content: end">
-                        <el-form-item>
-                          <el-button type="primary" @click="onCreateSendEvent"
-                            >创建</el-button
-                          >
-                        </el-form-item>
-                    </div>
-                  </el-form>
-                </el-tab-pane>
-
-                
-             
-
-            
-              <el-tab-pane v-if="(CurrentSendEvent.type === '直接输出' || CurrentSendEvent.manner == '脚本') && !isCreatingSendEvent()" label="设置">
+              <el-tab-pane
+                v-if="
+                  (CurrentSendEvent.type === '直接输出' ||
+                    CurrentSendEvent.manner == '脚本') &&
+                  !isCreatingSendEvent()
+                "
+                label="设置"
+              >
                 <template v-if="CurrentSendEvent.manner == '文本'">
                   <p style="margin-top: 0">绑定设备</p>
 
                   <el-row :gutter="20">
                     <el-col :span="14">
                       <el-form-item label="绑定设备">
-                        <el-input ></el-input>
+                        <el-input></el-input>
                       </el-form-item>
                     </el-col>
                   </el-row>
-                  
+
                   <p style="margin-top: 0">基本配置</p>
-                  
+
                   <el-row :gutter="20">
                     <el-col :span="14">
                       <el-form-item label="分隔符">
-                        <el-select  v-model="CurrentSendEvent.separator">
-                          <el-option
-                            label=";"
-                            value=";"
-                          ></el-option>
+                        <el-select v-model="CurrentSendEvent.separator">
+                          <el-option label=";" value=";"></el-option>
                         </el-select>
                       </el-form-item>
-                    
-                      
                     </el-col>
                   </el-row>
 
                   <p style="margin-top: 0">参数列表</p>
                   <el-row :gutter="20">
-                      <el-col :span="14">
-                      
-                        <el-table :data="CurrentSendEvent.ParametersTable" style="width: 100%">
-
-                          <el-table-column prop="licenseName" label="序号" width="180" />
-                          <el-table-column prop="procedureName" label="名称" width="180" />
-                          <el-table-column prop="description" label="类型" />
-                        </el-table>
-                        
-                      </el-col>
-                    </el-row>
-
+                    <el-col :span="14">
+                      <el-table
+                        :data="CurrentSendEvent.ParametersTable"
+                        style="width: 100%"
+                      >
+                        <el-table-column
+                          prop="licenseName"
+                          label="序号"
+                          width="180"
+                        />
+                        <el-table-column
+                          prop="procedureName"
+                          label="名称"
+                          width="180"
+                        />
+                        <el-table-column prop="description" label="类型" />
+                      </el-table>
+                    </el-col>
+                  </el-row>
                 </template>
-
-                
 
                 <template v-if="CurrentSendEvent.manner == '脚本'">
                   <p style="margin-top: 0">绑定设备</p>
@@ -769,120 +795,121 @@
                   <el-row :gutter="20">
                     <el-col :span="14">
                       <el-form-item label="绑定设备">
-                        <el-input ></el-input>
+                        <el-input></el-input>
                       </el-form-item>
-                      
                     </el-col>
                   </el-row>
-                
+
                   <el-row :gutter="20">
                     <el-col :span="14">
-                     
-
                       <el-form-item label="载入路径">
                         <el-input v-model="CurrentSendEvent.load"></el-input>
-                        
                       </el-form-item>
-                      
                     </el-col>
                   </el-row>
                   <p style="margin-top: 0">组装列表</p>
                   <el-row :gutter="20">
-                      <el-col :span="14">
-                      
-                        <el-table :data="CurrentSendEvent.ParametersTable" style="width: 100%">
-
-                          <el-table-column prop="licenseName" label="序号" width="180" />
-                          <el-table-column prop="procedureName" label="名称" width="180" />
-                          <el-table-column prop="description" label="类型" />
-                        
-
-                        </el-table>
-                        
-                      </el-col>
-                    </el-row>
-                  
+                    <el-col :span="14">
+                      <el-table
+                        :data="CurrentSendEvent.ParametersTable"
+                        style="width: 100%"
+                      >
+                        <el-table-column
+                          prop="licenseName"
+                          label="序号"
+                          width="180"
+                        />
+                        <el-table-column
+                          prop="procedureName"
+                          label="名称"
+                          width="180"
+                        />
+                        <el-table-column prop="description" label="类型" />
+                      </el-table>
+                    </el-col>
+                  </el-row>
                 </template>
-
-
-
               </el-tab-pane>
-           
 
-            
-              <el-tab-pane v-if="CurrentSendEvent.type === '组装输出' && !isCreatingSendEvent()" label="输入配置">
+              <el-tab-pane
+                v-if="
+                  CurrentSendEvent.type === '组装输出' && !isCreatingSendEvent()
+                "
+                label="输入配置"
+              >
                 <p style="margin-top: 0">绑定设备</p>
 
                 <el-row :gutter="20">
                   <el-col :span="14">
                     <el-form-item label="绑定设备">
-                      <el-input ></el-input>
+                      <el-input></el-input>
                     </el-form-item>
                   </el-col>
                 </el-row>
 
-                
-
                 <p style="margin-top: 0">参数列表</p>
                 <el-row :gutter="20">
-                    <el-col :span="14">
-                    
-                      <el-table :data="CurrentSendEvent.ParametersTable" style="width: 100%">
-
-                        <el-table-column prop="licenseName" label="序号" width="180" />
-                        <el-table-column prop="procedureName" label="名称" width="180" />
-                        <el-table-column prop="description" label="类型" />
-                      </el-table>
-                      
-                    </el-col>
-                  </el-row>
-
-
-
-
-
-
+                  <el-col :span="14">
+                    <el-table
+                      :data="CurrentSendEvent.ParametersTable"
+                      style="width: 100%"
+                    >
+                      <el-table-column
+                        prop="licenseName"
+                        label="序号"
+                        width="180"
+                      />
+                      <el-table-column
+                        prop="procedureName"
+                        label="名称"
+                        width="180"
+                      />
+                      <el-table-column prop="description" label="类型" />
+                    </el-table>
+                  </el-col>
+                </el-row>
               </el-tab-pane>
-            
 
-              <el-tab-pane v-if="CurrentSendEvent.type === '组装输出' && !isCreatingSendEvent()" label="组装配置">
+              <el-tab-pane
+                v-if="
+                  CurrentSendEvent.type === '组装输出' && !isCreatingSendEvent()
+                "
+                label="组装配置"
+              >
                 <p style="margin-top: 0">分隔符设置</p>
                 <el-row :gutter="20">
                   <el-col :span="14">
                     <el-form-item label="分隔符">
-                      <el-select  v-model="CurrentSendEvent.separator">
-                        <el-option
-                          label=";"
-                          value=";"
-                        ></el-option>
+                      <el-select v-model="CurrentSendEvent.separator">
+                        <el-option label=";" value=";"></el-option>
                       </el-select>
                     </el-form-item>
-                  
-                    
                   </el-col>
                 </el-row>
-                
 
-                  <p style="margin-top: 0">组装列表</p>
-                  <el-row :gutter="20">
-                      <el-col :span="14">
-                      
-                        <el-table :data="CurrentSendEvent.ParametersTable" style="width: 100%">
-
-                          <el-table-column prop="licenseName" label="序号" width="180" />
-                          <el-table-column prop="procedureName" label="类型" width="180" />
-                          <el-table-column prop="description" label="内容" />
-
-                        </el-table>
-                        
-                      </el-col>
-                    </el-row>
-
-
-
+                <p style="margin-top: 0">组装列表</p>
+                <el-row :gutter="20">
+                  <el-col :span="14">
+                    <el-table
+                      :data="CurrentSendEvent.ParametersTable"
+                      style="width: 100%"
+                    >
+                      <el-table-column
+                        prop="licenseName"
+                        label="序号"
+                        width="180"
+                      />
+                      <el-table-column
+                        prop="procedureName"
+                        label="类型"
+                        width="180"
+                      />
+                      <el-table-column prop="description" label="内容" />
+                    </el-table>
+                  </el-col>
+                </el-row>
               </el-tab-pane>
             </el-tabs>
-            
           </el-col>
         </el-row>
       </el-tab-pane>
@@ -912,13 +939,13 @@ export default {
   emits: ["update:isVisible"],
   data() {
     return {
-      SendAssembleTable:[],
+      SendAssembleTable: [],
       currentAcceptEvent: "AddAcceptEvent",
       currentSendEvent: "AddSendEvent",
       AcceptEvents: [],
       SendEvents: [],
-      acceptEventToCreate: { name:""},
-      sendEventToCreate: {name:""},
+      acceptEventToCreate: { name: "" },
+      sendEventToCreate: { name: "" },
       deviceToCreate: { name: "" },
       currentActiveItem: "AddDevice",
       devices: [],
@@ -942,12 +969,10 @@ export default {
         ? this.sendEventToCreate
         : this.SendEvents[this.currentSendEvent];
     },
-    
 
     isCreatingDevice() {
       return this.currentActiveItem === "AddDevice";
     },
-
   },
 
   mounted() {
@@ -1005,7 +1030,21 @@ export default {
       console.log(`TcpConnectorReceivedData: ${data}`)
     );
     this.socket.on("TcpListenerReceivedData", (data) =>
-      console.log(`TcpListenerReceivedData: ${data}`)
+      // find device according to data.IP and data.port
+      // then append data to device.receivedData
+      {
+        data = JSON.parse(data);
+        for (let i = 0; i < this.devices.length; i++) {
+          if (
+            this.devices[i].type === "TcpListener" &&
+            this.devices[i].IP === data.IP &&
+            this.devices[i].port === data.port
+          ) {
+            this.devices[i].receivedData += data.data;
+            break;
+          }
+        }
+      }
     );
     this.socket.on("UdpListenerReceivedData", (data) =>
       console.log(`UdpListenerReceivedData: ${data}`)
@@ -1018,14 +1057,11 @@ export default {
   },
   methods: {
     onCreateSendEvent() {
-      
       this.SendEvents.push(this.sendEventToCreate);
       console.log(this.SendEvents);
       this.sendEventToCreate = {}; // 重置为一个新的空对象
-
     },
     onCreateAcceptEvent() {
-      
       this.AcceptEvents.push(this.acceptEventToCreate);
       console.log(this.AcceptEvents);
       this.acceptEventToCreate = {}; // 重置为一个新的空对象
@@ -1033,12 +1069,11 @@ export default {
     isCreatingDevice() {
       return this.currentActiveItem === "AddDevice";
     },
-    isCreatingAcceptEvent(){
-      return this.currentAcceptEvent === "AddAcceptEvent"
+    isCreatingAcceptEvent() {
+      return this.currentAcceptEvent === "AddAcceptEvent";
     },
-    isCreatingSendEvent(){
-      return this.currentSendEvent === "AddSendEvent"
-
+    isCreatingSendEvent() {
+      return this.currentSendEvent === "AddSendEvent";
     },
     onCreateDevice() {
       const fieldsMap = {
@@ -1112,9 +1147,9 @@ export default {
       if (this.deviceToCreate.type === "ModbusMaster") {
         this.deviceToCreate = Object.fromEntries(
           Object.entries(this.deviceToCreate).filter(([key, value]) => {
-            return fieldsMap.ModbusMaster[this.deviceToCreate.protocol].includes(
-              key
-            );
+            return fieldsMap.ModbusMaster[
+              this.deviceToCreate.protocol
+            ].includes(key);
           })
         );
       } else {
@@ -1131,6 +1166,9 @@ export default {
           this.deviceToCreate[field] = Number(this.deviceToCreate[field]);
         }
       }
+
+      this.deviceToCreate.enabled = true;
+      this.deviceToCreate.receivedData = "";
 
       console.log(this.deviceToCreate);
       this.devices.push(this.deviceToCreate);

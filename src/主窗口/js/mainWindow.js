@@ -192,22 +192,10 @@ export default {
             this.$store.commit('timeConsumeEvent', data);
         })
 
-        socket.on("TcpConnectorReceivedData", (data) =>
-          console.log(`TcpConnectorReceivedData: ${data}`)
-        );
-        socket.on("TcpListenerReceivedData", (data) =>
-          console.log(`TcpListenerReceivedData: ${data}`)
-        );
-        socket.on("UdpListenerReceivedData", (data) =>
-          console.log(`UdpListenerReceivedData: ${data}`)
-        );
-
         socket.on("runResults",data=>{
             this.$store.commit('setRunResults',JSON.parse(data))
         })
-        socket.on('ReceivedTcpData', data =>{
-            console.log(`ReceivedTcpData: ${data}`)
-        })
+
         socket.on('revAvaCameras', data =>{
             
             this.availableCameras = JSON.parse(data).AvailableCameras
