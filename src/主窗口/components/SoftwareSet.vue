@@ -149,7 +149,7 @@
                   </el-radio-group>
                 </div>
               </el-row>
-              <el-button class="btn" @click="confirm1">确认</el-button>
+              <el-button class="btn" @click="paramPassA">确认</el-button>
             </div>
             <div v-if="test.softwareIcon === 'icon3'" class="mainfield-setting">
               <el-row class="content-head" style="">
@@ -202,6 +202,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   props: ["test"],
   data() {
@@ -224,7 +225,8 @@ export default {
           { index: 1, input1: '', input2: '', input3: '', switch: 1 },
         
         ]
-      }
+      },
+      message:'hello'
 
     };
   },
@@ -232,8 +234,28 @@ export default {
     setActiveIcon(icon) {
       this.test.softwareIcon = icon;
     },
+    paramPassA() {
+      console.log(this.softwareParam);
+      axios.post('http://localhost:8080/paramPass', {
+          selfStartOfStartupSoftware:this.softwareParam.selfStartOfStartupSoftware,
+          defaultRunInterface: this.softwareParam.defaultRunInterface,
+        maximizeRuntimeInterfaceStartsIndependently: this.softwareParam.maximizeRuntimeInterfaceStartsIndependently,
+        fileAutomaticLoading: this.softwareParam.fileAutomaticLoading,
+        softwareShutdownSettings: this.softwareParam.softwareShutdownSettings,
+        loadPath: this.softwareParam.loadPath,
+        schemepassword: this.softwareParam.schemepassword,
+        startupStatus: this.softwareParam.startupStatus,
+        chooseIdentity: this.softwareParam.chooseIdentity,
+        //paramLista:this.softwareParam
+
+  }).then((resp) => {
+        console.log(resp);
+})
+},
     confirm1() {
-      localStorage.setItem("softwareParam", JSON.stringify(softwareParam));
+      //localStorage.setItem("softwareParam", JSON.stringify(softwareParam));
+      console.log(this.softwareParam);
+      paramPassA();
     },
     confirm2() {
       localStorage.setItem("schemeParam", JSON.stringify(schemeParam));
