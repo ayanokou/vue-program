@@ -149,7 +149,7 @@
                   </el-radio-group>
                 </div>
               </el-row>
-              <el-button class="btn" @click="paramPassA">确认</el-button>
+              <el-button class="btn" @click="softwareParamPass">确认</el-button>
             </div>
             <div v-if="test.softwareIcon === 'icon3'" class="mainfield-setting">
               <el-row class="content-head" style="">
@@ -163,25 +163,25 @@
                   <el-table-column prop="index" label="序号"></el-table-column>
                   <el-table-column label="方案路径">
                     <template #default="scope">
-                    <el-input v-model="scope.row.input1"/>
+                    <el-input v-model="scope.row.schemeRoute"/>
                 </template>
                     <!-- <el-input v-model="schemeParam.rows.input1"></el-input> -->
                   </el-table-column>
                   <el-table-column label="方案密码">
                     <template #default="scope">
-                    <el-input v-model="scope.row.input2"/>
+                    <el-input v-model="scope.row.schemePasswd"/>
                 </template>
                     <!-- <el-input v-model="schemeParam.rows.input2"></el-input> -->
                   </el-table-column>
                   <el-table-column label="通信字符串">
                     <template #default="scope">
-                    <el-input v-model="scope.row.input3"/>
+                    <el-input v-model="scope.row.communString"/>
                 </template>
                     <!-- <el-input v-model="schemeParam.rows.input3"></el-input> -->
                   </el-table-column>
                   <el-table-column label="通信切换">
                     <template #default="scope">
-                      <el-switch v-model="scope.row.switch" active-color="#13ce66" inactive-color="#ff4949">
+                      <el-switch v-model="scope.row.switching" active-color="#13ce66" inactive-color="#ff4949">
                     </el-switch>
                 </template>
                     <!-- <el-switch v-model="schemeParam.rows.switch" active-color="#13ce66" inactive-color="#ff4949">
@@ -189,7 +189,7 @@
                   </el-table-column>
                 </el-table>
               </div>
-              <el-button class="btn" @click="confirm2">确认</el-button>
+              <el-button class="btn" @click="schemeParamPass">确认</el-button>
             </div>
             <div v-if="test.softwareIcon === 'icon4'" class="mainfield-setting">
             </div>
@@ -222,7 +222,7 @@ export default {
       },
       schemeParam: {
         rows: [
-          { index: 1, input1: '', input2: '', input3: '', switch: 1 },
+          { index: 1, schemeRoute: '', schemePasswd: '', communString: '', switching: 1 },
         
         ]
       },
@@ -234,7 +234,7 @@ export default {
     setActiveIcon(icon) {
       this.test.softwareIcon = icon;
     },
-    paramPassA() {
+    softwareParamPass() {
       console.log(this.softwareParam);
       axios.post('http://localhost:8080/paramPass', {
           selfStartOfStartupSoftware:this.softwareParam.selfStartOfStartupSoftware,
@@ -252,6 +252,15 @@ export default {
         console.log(resp);
 })
 },
+    schemeParamPass(){
+      console.log(this.schemeParam);
+      axios.post('http://localhost:8080/schemeParamPass', {
+        rows:this.schemeParam.rows
+
+  }).then((resp) => {
+        console.log(resp);
+})
+    },
     confirm1() {
       //localStorage.setItem("softwareParam", JSON.stringify(softwareParam));
       console.log(this.softwareParam);
@@ -269,10 +278,10 @@ export default {
       // 添加一行到数组中
       this.schemeParam.rows.push({
         index: maxIndex + 1,
-        input1: '',
-        input2: '',
-        input3: '',
-        switch:1, 
+        schemeRoute: '',
+        schemePasswd: '',
+        communString: '',
+        communSwitching:1, 
       });
     }
   },
