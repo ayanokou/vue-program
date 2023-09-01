@@ -1,0 +1,1 @@
+{"selfStartOfStartupSoftware":true,"defaultRunInterface":true,"maximizeRuntimeInterfaceStartsIndependently":true,"fileAutomaticLoading":true,"softwareShutdownSettings":"1","loadPath":"1","schemepassword":"2","startupStatus":"3","chooseIdentity":"4"}

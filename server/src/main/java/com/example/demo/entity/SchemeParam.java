@@ -1,17 +1,28 @@
 package com.example.demo.entity;
 
 public class SchemeParam {
-    private int index;
+    private Integer index;
     private String schemeRoute;
     private String schemePasswd;
     private String communString;
-    private int switching;
+    private Boolean switching;
 
-    public int getIndex() {
+    public SchemeParam() {
+    }
+
+    public SchemeParam(Integer index, String schemeRoute, String schemePasswd, String communString, Boolean switching) {
+        this.index = index;
+        this.schemeRoute = schemeRoute;
+        this.schemePasswd = schemePasswd;
+        this.communString = communString;
+        this.switching = switching;
+    }
+
+    public Integer getIndex() {
         return index;
     }
 
-    public void setIndex(int index) {
+    public void setIndex(Integer index) {
         this.index = index;
     }
 
@@ -39,11 +50,11 @@ public class SchemeParam {
         this.communString = communString;
     }
 
-    public int getSwitching() {
+    public Boolean getSwitching() {
         return switching;
     }
 
-    public void setSwitching(int switching) {
+    public void setSwitching(Boolean switching) {
         this.switching = switching;
     }
 }

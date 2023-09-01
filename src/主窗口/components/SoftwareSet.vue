@@ -253,11 +253,17 @@ export default {
 })
 },
     schemeParamPass(){
-      console.log(this.schemeParam);
-      axios.post('http://localhost:8080/schemeParamPass', {
-        rows:this.schemeParam.rows
-
-  }).then((resp) => {
+      console.log(this.schemeParam.rows);
+      const jsondata=JSON.stringify(this.schemeParam.rows);
+      console.log(jsondata);
+      axios.post('http://localhost:8080/schemeParamPass', 
+      jsondata,{
+      headers: {
+        'Content-Type': "application/json;charset=UTF-8"
+      },
+    }
+      
+  ).then((resp) => {
         console.log(resp);
 })
     },

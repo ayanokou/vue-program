@@ -9,6 +9,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 public class ParamPasser {
@@ -42,11 +43,13 @@ public class ParamPasser {
     }
 
     @PostMapping("/schemeParamPass")
-    public String schemeParamPass(@RequestParam("rows") SchemeParam[] schemeParam){
+    public String schemeParamPass(@RequestBody List<SchemeParam> rows){
+
+
 
         // 使用 Gson 将实例转换为 JSON 字符串
         Gson gson = new Gson();
-        String json = gson.toJson(schemeParam);
+        String json = gson.toJson(rows);
 
 
         // 将 JSON 字符串写入到本地文件
