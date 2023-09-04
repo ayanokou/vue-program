@@ -89,6 +89,8 @@ export default {
             <VAceEditor v-model:value="content" lang="html" theme="github" style="height: 300px" />
         </div>
         <div class="container">
+            <el-button class="el-button" @click="testfunc()">SETtest</el-button>
+            <el-button class="el-button" @click="GETtestfunc()">GETtest</el-button>
             <div class="inAndOut">
                 <input type="file" ref="fileInput" @change="importData" accept=".js">
                 <button @click="exportData">导出</button>
@@ -121,7 +123,7 @@ export default {
         }
     },
     computed: {
-        ...mapState(['dialogVisibleGlobalScript','scriptVarInt']),
+        ...mapState(['dialogVisibleGlobalScript','scriptVarInt','scriptVarFloat','scriptVarSring']),
 
     },
     mounted() {
@@ -163,10 +165,37 @@ export default {
       reader.readAsText(file);
     },
 
+    GETtestfunc(){
+        // var paramName = "paramNameint"; 
+        // this.GetGlobalVariableIntValue(paramName)
+        var paramName = "paramNamefloat"; 
+        this.GetGlobalVariableFloatValue(paramName)
+        // var paramName = "paramNamestring"; 
+        // this.GetGlobalVariableStringValue(paramName)
+    },
+    testfunc(){
+        // var paramName = "paramNameint"; 
+        // var paramValue = 123;  
+        // this.SetGlobalVariableIntValue ( paramName,  paramValue)
+        var paramName = "paramNamefloat"; 
+        var paramValue = 123.45;  
+        this.SetGlobalVariableFloatValue ( paramName,  paramValue)
+        // var paramName = "paramNamestring"; 
+        // var paramValue = "123";  
+        // this.SetGlobalVariableStrignValue ( paramName,  paramValue)
+    },
 
+sleep(time){
+ var timeStamp = new Date().getTime();
+ var endTime = timeStamp + time;
+ while(true){
+ if (new Date().getTime() > endTime){
+  return;
+ } 
+ }
+},
 
-
-    GetGlobalVariableIntValue(paramName,paramValue)
+    GetGlobalVariableIntValue(paramName)
     {
         let payload={
                 trigger:true,
@@ -176,16 +205,29 @@ export default {
                 })
             }
             this.$store.commit("setSocketEmit",payload)
-        paramValue.push(this.scriptVarInt);
-        console.log(this.scriptVarInt);
     },
-    GetGlobalVariableFloatValue(paramName,paramValue)
+    GetGlobalVariableFloatValue(paramName)
     {
-        paramValue.push(0);
+        let payload={
+                trigger:true,
+                mode:"getScriptVarFloat",
+                data:JSON.stringify({
+                    varName:paramName,
+                })
+            }
+            this.$store.commit("setSocketEmit",payload)
     },
-    GetGlobalVariableStringValue ( paramName, paramValue)
+    GetGlobalVariableStringValue ( paramName)
     {
-        paramValue.push("");
+        let payload={
+                trigger:true,
+                mode:"getScriptVarString",
+                data:JSON.stringify({
+                    varName:paramName,
+                })
+            }
+            this.$store.commit("setSocketEmit",payload)
+
     },
     SetGlobalVariableIntValue ( paramName,  paramValue)
     {
@@ -198,15 +240,34 @@ export default {
                 })
             }
             this.$store.commit("setSocketEmit",payload)
+            this.$message({message:'SetGlobalVariableIntValue success'})
 
     },
     SetGlobalVariableFloatValue ( paramName,  paramValue)
     {
-
+        let payload={
+                trigger:true,
+                mode:"setScriptVarFloat",
+                data:JSON.stringify({
+                    varName:paramName,
+                    varValue:paramValue
+                })
+            }
+            this.$store.commit("setSocketEmit",payload)
+            this.$message({message:'SetGlobalVariableFloatValue success'})
     },
     SetGlobalVariableStrignValue ( paramName,  paramValue)
     {
-
+        let payload={
+                trigger:true,
+                mode:"setScriptVarString",
+                data:JSON.stringify({
+                    varName:paramName,
+                    varValue:paramValue
+                })
+            }
+            this.$store.commit("setSocketEmit",payload)
+            this.$message({message:'SetGlobalVariableStrignValue success'})
     }
 
 

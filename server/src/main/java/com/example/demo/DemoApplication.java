@@ -147,6 +147,10 @@ public class DemoApplication {
 		operationMap.put("RemoveModbusMaster", 16);
 		operationMap.put("getScriptVarInt",17);
 		operationMap.put("setScriptVarInt",18);
+		operationMap.put("getScriptVarFloat",19);
+		operationMap.put("setScriptVarFloat",20);
+		operationMap.put("getScriptVarString",21);
+		operationMap.put("setScriptVarString",22);
 		
 		for (String key : operationMap.keySet()) {
 			Integer value = operationMap.get(key);

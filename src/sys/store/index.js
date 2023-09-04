@@ -39,6 +39,8 @@ export default createStore({
             historyResults:[],
             dialogVisibleGlobalScript:false,
             scriptVarInt:"",
+            scriptVarFloat:"",
+            scriptVarString:"",
         }
     },
     mutations:{
@@ -130,6 +132,12 @@ export default createStore({
         },
         setScriptVarInt(state,payload){
             state.scriptVarInt=payload
+        },
+        setScriptVarFloat(state,payload){
+            state.scriptVarFloat=payload
+        },
+        setScriptVarString(state,payload){
+            state.scriptVarString=payload
         }
     },
     modules:{

@@ -185,7 +185,16 @@ export default {
             this.$store.commit('setRunResult',data)
         })
         socket.on('getScriptVarInt',(data)=>{
+            this.$message({message:data})
             this.$store.commit('setScriptVarInt',data)
+        })
+        socket.on('getScriptVarFloat',(data)=>{
+            this.$message({message:data})
+            this.$store.commit('setScriptVarFloat',data)
+        })
+        socket.on('getScriptVarString',(data)=>{
+            this.$message({message:data})
+            this.$store.commit('setScriptVarString',data)
         })
 
         socket.on('revTimeConsume',(data)=>{
