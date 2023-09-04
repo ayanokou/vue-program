@@ -105,10 +105,8 @@ public class DemoApplication {
 			}
 		};
 
-		MessageHandlerSender sender = new MessageHandlerSender(IP, PORT, logger);
-		sender.tryConnect();
-		MessageHandlerReceiver receiver = new MessageHandlerReceiver(sender.getSocket(), listenerForCpp, logger);
-		receiver.start();
+		MessageHandlerClient msgHandlerClient = new MessageHandlerClient(IP, PORT, listenerForCpp, logger);
+		msgHandlerClient.connect();
 
 		Register reg = (String event, int operation) -> {
 			server.addEventListener(event, String.class, new DataListener<String>() {
@@ -121,8 +119,9 @@ public class DemoApplication {
 					jsonObject.put("operation", operation);
 					jsonObject.put("data", data);
 					String result = jsonObject.toJSONString();
-					logger.info("receive event: {}, data: {}", event, result);
-					sender.sendToMessageHandler(result);
+					// logger.info("receive event: {}, data: {}", event, result);
+					logger.info("receive event: {}", event);
+					msgHandlerClient.send(result);
 				}
 			});
 		};
