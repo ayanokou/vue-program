@@ -53,13 +53,15 @@
             <el-tabs class="params-menu">
               <el-tab-pane label="通信参数">
                 <el-form
+                  ref="createDeviceFormRef"
                   :model="currentDevice"
                   :disabled="!isCreatingDevice"
+                  :rules="createDeviceRules"
                   style="margin-top: 15px"
                 >
                   <el-row :gutter="20">
                     <el-col :span="10">
-                      <el-form-item label="名称">
+                      <el-form-item label="名称" prop="name">
                         <el-input v-model="currentDevice.name"></el-input>
                       </el-form-item>
                     </el-col>
@@ -949,6 +951,12 @@ export default {
       deviceToCreate: { name: "" },
       currentActiveItem: "AddDevice",
       devices: [],
+      createDeviceRules: {
+        name: [
+          { required: true, trigger: "blur" },
+          { validator: this.validateDeviceName, trigger: "blur" },
+        ],
+      },
     };
   },
   inject: ["socket"],
@@ -976,84 +984,23 @@ export default {
   },
 
   mounted() {
-    this.devices = [
-      {
-        enabled: true,
-        name: "TcpListener1",
-        type: "TcpListener",
-        IP: "127.0.0.1",
-        port: 8080,
-      },
-      {
-        enabled: true,
-        name: "TcpConnector1",
-        type: "TcpConnector",
-        IP: "127.0.0.1",
-        port: 8090,
-      },
-      {
-        enabled: true,
-        name: "UdpListener1",
-        type: "UdpListener",
-        IP: "127.0.0.1",
-        port: 9090,
-      },
-      {
-        enabled: true,
-        name: "ModbusMaster1",
-        type: "ModbusMaster",
-        functionType: "readRegister",
-        deviceAddress: 1,
-        registerAddress: 0,
-        registerNumber: 1,
-        protocol: "TCP",
-        IP: "127.0.0.1",
-        port: 502,
-      },
-      {
-        enabled: true,
-        name: "ModbusMaster2",
-        type: "ModbusMaster",
-        functionType: "readRegister",
-        deviceAddress: 1,
-        registerAddress: 0,
-        registerNumber: 1,
-        protocol: "RTU",
-        device: "COM1",
-        baud: 9600,
-        dataBits: 8,
-        stopBits: 1,
-        parity: "N",
-      },
-    ];
-    this.socket.on("TcpConnectorReceivedData", (data) =>
-      console.log(`TcpConnectorReceivedData: ${data}`)
-    );
-    this.socket.on("TcpListenerReceivedData", (data) =>
+    this.socket.on("DeviceReceivedData", (data) =>
       // find device according to data.IP and data.port
       // then append data to device.receivedData
       {
         data = JSON.parse(data);
+        console.log(data);
         for (let i = 0; i < this.devices.length; i++) {
-          if (
-            this.devices[i].type === "TcpListener" &&
-            this.devices[i].IP === data.IP &&
-            this.devices[i].port === data.port
-          ) {
+          if (this.devices[i].name === data.name) {
             this.devices[i].receivedData += data.data;
             break;
           }
         }
       }
     );
-    this.socket.on("UdpListenerReceivedData", (data) =>
-      console.log(`UdpListenerReceivedData: ${data}`)
-    );
   },
   unmounted() {
-    this.socket.off("TcpConnectorReceivedData");
-    this.socket.off("TcpListenerReceivedData");
-    this.socket.off("UdpListenerReceivedData");
+    this.socket.off("DeviceReceivedData");
   },
   methods: {
     onCreateSendEvent() {
@@ -1066,9 +1013,6 @@ export default {
       console.log(this.AcceptEvents);
       this.acceptEventToCreate = {}; // 重置为一个新的空对象
     },
-    isCreatingDevice() {
-      return this.currentActiveItem === "AddDevice";
-    },
     isCreatingAcceptEvent() {
       return this.currentAcceptEvent === "AddAcceptEvent";
     },
@@ -1076,108 +1020,126 @@ export default {
       return this.currentSendEvent === "AddSendEvent";
     },
     onCreateDevice() {
-      const fieldsMap = {
-        TcpListener: [
-          "name",
-          "type",
-          "IP",
-          "port",
-          "upload",
-          "reconnect",
-          "endFlag",
-        ],
-        TcpConnector: [
-          "name",
-          "type",
-          "IP",
-          "port",
-          "upload",
-          "reconnect",
-          "endFlag",
-        ],
-        UdpListener: [
-          "name",
-          "type",
-          "IP",
-          "port",
-          "upload",
-          "reconnect",
-          "endFlag",
-        ],
-        ModbusMaster: {
-          TCP: [
+      this.$refs.createDeviceFormRef.validate((isValid, invalidFields) => {
+        if (!isValid) {
+          return;
+        }
+
+        const fieldsMap = {
+          TcpListener: [
             "name",
             "type",
-            "functionType",
-            "deviceAddress",
-            "registerAddress",
-            "numberOfRegisters",
-            "protocol",
             "IP",
             "port",
+            "upload",
+            "reconnect",
+            "endFlag",
           ],
-          RTU: [
+          TcpConnector: [
             "name",
             "type",
-            "functionType",
-            "deviceAddress",
-            "registerAddress",
-            "numberOfRegisters",
-            "protocol",
-            "device",
-            "baud",
-            "dataBits",
-            "stopBits",
-            "parity",
+            "IP",
+            "port",
+            "upload",
+            "reconnect",
+            "endFlag",
           ],
-        },
-      };
-      const numberFields = [
-        "port",
-        "functionType",
-        "deviceAddress",
-        "registerAddress",
-        "numberOfRegisters",
-        "baud",
-        "dataBits",
-        "stopBits",
-      ];
+          UdpListener: [
+            "name",
+            "type",
+            "IP",
+            "port",
+            "upload",
+            "reconnect",
+            "endFlag",
+          ],
+          ModbusMaster: {
+            TCP: [
+              "name",
+              "type",
+              "functionType",
+              "deviceAddress",
+              "registerAddress",
+              "numberOfRegisters",
+              "protocol",
+              "IP",
+              "port",
+            ],
+            RTU: [
+              "name",
+              "type",
+              "functionType",
+              "deviceAddress",
+              "registerAddress",
+              "numberOfRegisters",
+              "protocol",
+              "device",
+              "baud",
+              "dataBits",
+              "stopBits",
+              "parity",
+            ],
+          },
+        };
+        const numberFields = [
+          "port",
+          "functionType",
+          "deviceAddress",
+          "registerAddress",
+          "numberOfRegisters",
+          "baud",
+          "dataBits",
+          "stopBits",
+        ];
 
-      // filter out wrong fields
-      if (this.deviceToCreate.type === "ModbusMaster") {
-        this.deviceToCreate = Object.fromEntries(
-          Object.entries(this.deviceToCreate).filter(([key, value]) => {
-            return fieldsMap.ModbusMaster[
-              this.deviceToCreate.protocol
-            ].includes(key);
-          })
-        );
-      } else {
-        this.deviceToCreate = Object.fromEntries(
-          Object.entries(this.deviceToCreate).filter(([key, value]) => {
-            return fieldsMap[this.deviceToCreate.type].includes(key);
-          })
-        );
-      }
-
-      // make sure number fields are numbers
-      for (const field of numberFields) {
-        if (this.deviceToCreate[field]) {
-          this.deviceToCreate[field] = Number(this.deviceToCreate[field]);
+        // filter out wrong fields
+        if (this.deviceToCreate.type === "ModbusMaster") {
+          this.deviceToCreate = Object.fromEntries(
+            Object.entries(this.deviceToCreate).filter(([key, value]) => {
+              return fieldsMap.ModbusMaster[
+                this.deviceToCreate.protocol
+              ].includes(key);
+            })
+          );
+        } else {
+          this.deviceToCreate = Object.fromEntries(
+            Object.entries(this.deviceToCreate).filter(([key, value]) => {
+              return fieldsMap[this.deviceToCreate.type].includes(key);
+            })
+          );
         }
-      }
 
-      this.deviceToCreate.enabled = true;
-      this.deviceToCreate.receivedData = "";
+        // make sure number fields are numbers
+        for (const field of numberFields) {
+          if (this.deviceToCreate[field]) {
+            this.deviceToCreate[field] = Number(this.deviceToCreate[field]);
+          }
+        }
 
-      console.log(this.deviceToCreate);
-      this.devices.push(this.deviceToCreate);
+        this.deviceToCreate.enabled = true;
+        this.deviceToCreate.receivedData = "";
 
-      const operation = `Add${this.deviceToCreate.type}`;
-      this.socket.emit(operation, JSON.stringify(this.deviceToCreate));
+        console.log(this.isCreatingDevice);
+        this.devices.push({...this.deviceToCreate});
+
+        const operation = `Add${this.deviceToCreate.type}`;
+        this.socket.emit(operation, JSON.stringify(this.deviceToCreate));
+      });
     },
     onClickDevice(index) {
       this.currentActiveItem = index;
+    },
+    validateDeviceName(rule, value, callback) {
+      if (value === "") {
+        callback(new Error("请输入设备名称"));
+      } else {
+        for (const device of this.devices) {
+          if (device.name === value) {
+            callback(new Error("设备名称已存在"));
+          }
+        }
+        callback();
+      }
     },
   },
 };
