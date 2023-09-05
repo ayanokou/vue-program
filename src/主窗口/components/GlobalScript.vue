@@ -205,6 +205,7 @@ sleep(time){
                 })
             }
             this.$store.commit("setSocketEmit",payload)
+            console.log(this.scriptVarInt);
     },
     GetGlobalVariableFloatValue(paramName)
     {
@@ -216,6 +217,7 @@ sleep(time){
                 })
             }
             this.$store.commit("setSocketEmit",payload)
+            console.log(this.scriptVarFloat);
     },
     GetGlobalVariableStringValue ( paramName)
     {
@@ -227,6 +229,7 @@ sleep(time){
                 })
             }
             this.$store.commit("setSocketEmit",payload)
+            console.log(this.scriptVarSring);
 
     },
     SetGlobalVariableIntValue ( paramName,  paramValue)

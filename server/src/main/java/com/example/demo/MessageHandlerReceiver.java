@@ -1,3 +1,9 @@
+/*
+ * @Author: 计佳斌bin
+ * @Date: 2023-09-01 16:27:25
+ * @LastEditTime: 2023-09-05 16:12:35
+ * @FilePath: \GeliVision\server\src\main\java\com\example\demo\MessageHandlerReceiver.java
+ */
 package com.example.demo;
 
 import java.io.BufferedReader;
@@ -50,7 +56,10 @@ public class MessageHandlerReceiver implements Runnable {
                         data=jsonObject.getString("data");
                     }else if(data_obj instanceof Integer){
                         data=jsonObject.getInteger("data").toString();
-                    }else{
+                    }else if(data_obj instanceof Double){
+                        data=jsonObject.getDouble("data").toString();
+                    }
+                    else{
                         data="can't parse data in MessageHandlerReceiver yet";
                     }
 
