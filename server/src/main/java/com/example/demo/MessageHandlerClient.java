@@ -69,8 +69,10 @@ public class MessageHandlerClient {
                                     data = jsonObject.getString("data");
                                 } else if (data_obj instanceof Integer) {
                                     data = jsonObject.getInteger("data").toString();
+                                } else if (data_obj instanceof Double) {
+                                    data = jsonObject.getDouble("data").toString();
                                 } else {
-                                    data = "can't parse data in MessageHandlerReceiver yet";
+                                    data = "can't parse data in MessageHandlerClient yet";
                                 }
 
                                 listener.onMessage(event, data);
