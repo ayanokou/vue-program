@@ -153,15 +153,15 @@
                       <el-col :span="12">
                         <el-form-item label="功能码">
                           <el-select v-model="currentDevice.functionType">
-                            <el-option label="读保持寄存器" value="0">
+                            <el-option label="读保持寄存器" :value="0">
                             </el-option>
                             <el-option
                               label="读输入寄存器"
-                              value="1"
+                              :value="1"
                             ></el-option>
                             <el-option
                               label="写多个寄存器"
-                              value="2"
+                              :value="2"
                             ></el-option>
                           </el-select>
                         </el-form-item>
@@ -252,18 +252,18 @@
                         <el-col :span="8">
                           <el-form-item label="数据位">
                             <el-select v-model="currentDevice.dataBits">
-                              <el-option label="8" value="8"></el-option>
-                              <el-option label="7" value="7"></el-option>
-                              <el-option label="6" value="6"></el-option>
-                              <el-option label="5" value="5"></el-option>
+                              <el-option label="8" :value="8"></el-option>
+                              <el-option label="7" :value="7"></el-option>
+                              <el-option label="6" :value="6"></el-option>
+                              <el-option label="5" :value="5"></el-option>
                             </el-select>
                           </el-form-item>
                         </el-col>
                         <el-col :span="8">
                           <el-form-item label="停止位">
                             <el-select v-model="currentDevice.stopBits">
-                              <el-option label="1" value="1"></el-option>
-                              <el-option label="2" value="2"></el-option>
+                              <el-option label="1" :value="1"></el-option>
+                              <el-option label="2" :value="2"></el-option>
                             </el-select>
                           </el-form-item>
                         </el-col>
@@ -288,6 +288,64 @@
                         </el-form-item>
                       </div>
                     </template>
+                  </template>
+                  <template
+                    v-else-if="currentDevice.deviceType === 'SerialPort'"
+                  >
+                    <el-row :gutter="20">
+                      <el-col :span="12">
+                        <el-form-item label="串口号">
+                          <el-input v-model="currentDevice.device"></el-input>
+                        </el-form-item>
+                      </el-col>
+                      <el-col :span="12"
+                        ><el-form-item label="校验位">
+                          <el-select v-model="currentDevice.parity">
+                            <el-option label="无" value="N"></el-option>
+                            <el-option label="奇校验" value="O"></el-option>
+                            <el-option label="偶校验" value="E"></el-option>
+                          </el-select>
+                        </el-form-item>
+                      </el-col>
+                    </el-row>
+                    <el-row :gutter="20">
+                      <el-col :span="8">
+                        <el-form-item label="数据位">
+                          <el-select v-model="currentDevice.dataBits">
+                            <el-option label="1" :value="1"></el-option>
+                            <el-option label="1.5" :value="1.5"></el-option>
+                            <el-option label="2" :value="2"></el-option>
+                          </el-select>
+                        </el-form-item>
+                      </el-col>
+                      <el-col :span="8">
+                        <el-form-item label="波特率">
+                          <el-input-number
+                            v-model="currentDevice.baud"
+                            min="1"
+                          ></el-input-number>
+                        </el-form-item>
+                      </el-col>
+                      <el-col :span="8">
+                        <el-form-item label="停止位">
+                          <el-select v-model="currentDevice.stopBits">
+                            <el-option label="6" :value="6"></el-option>
+                            <el-option label="7" :value="7"></el-option>
+                            <el-option label="8" :value="8"></el-option>
+                          </el-select>
+                        </el-form-item>
+                      </el-col>
+                    </el-row>
+                    <div
+                      v-if="isCreatingDevice"
+                      style="display: flex; justify-content: end"
+                    >
+                      <el-form-item>
+                        <el-button type="primary" @click="onCreateDevice"
+                          >创建</el-button
+                        >
+                      </el-form-item>
+                    </div>
                   </template>
                 </el-form>
               </el-tab-pane>
@@ -1085,17 +1143,17 @@ export default {
               "parity",
             ],
           },
+          SerialPort: [
+            "name",
+            "deviceType",
+            "device",
+            "baud",
+            "dataBits",
+            "stopBits",
+            "parity",
+          ],
         };
-        const NumberFields = [
-          "port",
-          "functionType",
-          "deviceAddress",
-          "registerAddress",
-          "numberOfRegisters",
-          "baud",
-          "dataBits",
-          "stopBits",
-        ];
+
         const DeviceType = {
           TcpListener: 0,
           TcpConnector: 1,
@@ -1121,13 +1179,6 @@ export default {
           );
         }
 
-        // make sure number fields are numbers
-        for (const field of NumberFields) {
-          if (this.deviceToCreate[field]) {
-            this.deviceToCreate[field] = Number(this.deviceToCreate[field]);
-          }
-        }
-
         this.deviceToCreate.enabled = true;
         this.deviceToCreate.receivedData = "";
 
@@ -1136,6 +1187,8 @@ export default {
         // map deviceType to number in a new object
         const deviceToCreate = { ...this.deviceToCreate };
         deviceToCreate.deviceType = DeviceType[deviceToCreate.deviceType];
+
+        console.log(JSON.stringify(deviceToCreate));
 
         this.socket.emit("AddDevice", JSON.stringify(deviceToCreate));
       });
