@@ -127,23 +127,17 @@ public class DemoApplication {
 		};
 
 		HashMap<String, Integer> operationMap = new HashMap<String, Integer>();
-		operationMap.put("AddTcpListener", 0);
-		operationMap.put("RemoveTcpListener", 1);
-		operationMap.put("SendTcpMessageFromListener", 2);
-		operationMap.put("AddTcpConnector", 3);
-		operationMap.put("RemoveTcpConnector", 4);
-		operationMap.put("SendTcpMessageFromConnector", 5);
-		operationMap.put("AddUdpListener", 6);
-		operationMap.put("RemoveUdpListener", 7);
-		operationMap.put("SendUdpMessage", 8);
+		operationMap.put("AddDevice", 0);
+		operationMap.put("RemoveDevice", 1);
+		operationMap.put("SendMessageFromDevice", 2);
+
 		operationMap.put("RunFlow", 9);
 		operationMap.put("RunSolution", 10);
 		operationMap.put("SaveGlobalVar", 11);
 		operationMap.put("RunSolutionLoop", 12);
 		operationMap.put("StopSolutionLoop", 13);
 		operationMap.put("CameraOperation", 14);
-		operationMap.put("AddModbusMaster", 15);
-		operationMap.put("RemoveModbusMaster", 16);
+		
 		operationMap.put("getScriptVarInt",17);
 		operationMap.put("setScriptVarInt",18);
 		operationMap.put("getScriptVarFloat",19);

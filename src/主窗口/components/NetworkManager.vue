@@ -67,7 +67,7 @@
                     </el-col>
                     <el-col :span="14">
                       <el-form-item label="协议类型">
-                        <el-select v-model="currentDevice.type">
+                        <el-select v-model="currentDevice.deviceType">
                           <el-option
                             label="TCP服务端"
                             value="TcpListener"
@@ -84,6 +84,10 @@
                             label="Modbus主站"
                             value="ModbusMaster"
                           ></el-option>
+                          <el-option
+                            label="串口"
+                            value="SerialPort"
+                          ></el-option>
                         </el-select>
                       </el-form-item>
                     </el-col>
@@ -91,9 +95,9 @@
 
                   <template
                     v-if="
-                      currentDevice.type === 'TcpListener' ||
-                      currentDevice.type === 'TcpConnector' ||
-                      currentDevice.type === 'UdpListener'
+                      currentDevice.deviceType === 'TcpListener' ||
+                      currentDevice.deviceType === 'TcpConnector' ||
+                      currentDevice.deviceType === 'UdpListener'
                     "
                   >
                     <el-row :gutter="20">
@@ -142,7 +146,9 @@
                       </el-form-item>
                     </div>
                   </template>
-                  <template v-else-if="currentDevice.type === 'ModbusMaster'">
+                  <template
+                    v-else-if="currentDevice.deviceType === 'ModbusMaster'"
+                  >
                     <el-row :gutter="20">
                       <el-col :span="12">
                         <el-form-item label="功能码">
@@ -982,10 +988,9 @@ export default {
       return this.currentActiveItem === "AddDevice";
     },
   },
-
   mounted() {
     this.socket.on("DeviceReceivedData", (data) =>
-      // find device according to data.IP and data.port
+      // find device according to data.name
       // then append data to device.receivedData
       {
         data = JSON.parse(data);
@@ -1025,10 +1030,10 @@ export default {
           return;
         }
 
-        const fieldsMap = {
+        const FieldsMap = {
           TcpListener: [
             "name",
-            "type",
+            "deviceType",
             "IP",
             "port",
             "upload",
@@ -1037,7 +1042,7 @@ export default {
           ],
           TcpConnector: [
             "name",
-            "type",
+            "deviceType",
             "IP",
             "port",
             "upload",
@@ -1046,7 +1051,7 @@ export default {
           ],
           UdpListener: [
             "name",
-            "type",
+            "deviceType",
             "IP",
             "port",
             "upload",
@@ -1056,7 +1061,7 @@ export default {
           ModbusMaster: {
             TCP: [
               "name",
-              "type",
+              "deviceType",
               "functionType",
               "deviceAddress",
               "registerAddress",
@@ -1067,7 +1072,7 @@ export default {
             ],
             RTU: [
               "name",
-              "type",
+              "deviceType",
               "functionType",
               "deviceAddress",
               "registerAddress",
@@ -1081,7 +1086,7 @@ export default {
             ],
           },
         };
-        const numberFields = [
+        const NumberFields = [
           "port",
           "functionType",
           "deviceAddress",
@@ -1091,12 +1096,19 @@ export default {
           "dataBits",
           "stopBits",
         ];
+        const DeviceType = {
+          TcpListener: 0,
+          TcpConnector: 1,
+          UdpListener: 2,
+          ModbusMaster: 3,
+          SerialPort: 4,
+        };
 
         // filter out wrong fields
-        if (this.deviceToCreate.type === "ModbusMaster") {
+        if (this.deviceToCreate.deviceType === "ModbusMaster") {
           this.deviceToCreate = Object.fromEntries(
             Object.entries(this.deviceToCreate).filter(([key, value]) => {
-              return fieldsMap.ModbusMaster[
+              return FieldsMap.ModbusMaster[
                 this.deviceToCreate.protocol
               ].includes(key);
             })
@@ -1104,13 +1116,13 @@ export default {
         } else {
           this.deviceToCreate = Object.fromEntries(
             Object.entries(this.deviceToCreate).filter(([key, value]) => {
-              return fieldsMap[this.deviceToCreate.type].includes(key);
+              return FieldsMap[this.deviceToCreate.deviceType].includes(key);
             })
           );
         }
 
         // make sure number fields are numbers
-        for (const field of numberFields) {
+        for (const field of NumberFields) {
           if (this.deviceToCreate[field]) {
             this.deviceToCreate[field] = Number(this.deviceToCreate[field]);
           }
@@ -1119,11 +1131,13 @@ export default {
         this.deviceToCreate.enabled = true;
         this.deviceToCreate.receivedData = "";
 
-        console.log(this.isCreatingDevice);
-        this.devices.push({...this.deviceToCreate});
+        this.devices.push({ ...this.deviceToCreate });
 
-        const operation = `Add${this.deviceToCreate.type}`;
-        this.socket.emit(operation, JSON.stringify(this.deviceToCreate));
+        // map deviceType to number in a new object
+        const deviceToCreate = { ...this.deviceToCreate };
+        deviceToCreate.deviceType = DeviceType[deviceToCreate.deviceType];
+
+        this.socket.emit("AddDevice", JSON.stringify(deviceToCreate));
       });
     },
     onClickDevice(index) {
