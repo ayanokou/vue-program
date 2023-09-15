@@ -16,7 +16,7 @@ export default {
       });
   },
   methods: {
-    deleteUser(id){
+    deleteUser(id){    //删除用户信息
       axiosInstance.post(`/deleteUser/${id}`)
             .then(response => {
               console.log("删除成功");
@@ -28,12 +28,12 @@ export default {
             });
           
     },
-    gotoindex(){
+    gotoindex(){     //跳转目录
       this.$router.push('/Index');
 
 
     },
-    changeRole(user,role){
+    changeRole(user,role){   //修改用户权限
       user.role = role;
       axiosInstance.post('/changeRole',user)
             .then(response => {

@@ -1,4 +1,4 @@
-import { Menu, BpmnElement, SelectionSelect, Control, Snapshot, Group, GroupNode } from '@logicflow/extension'
+import { Menu, BpmnElement, SelectionSelect, Control, Snapshot, Group, GroupNode } from '@logicflow/extension' //引入组件扩展模块
 import { lfJson2Xml } from '@logicflow/extension'
 
 //test 框选
@@ -17,7 +17,7 @@ import {
     CircleNode,
     CircleNodeModel,
     h
-} from '@logicflow/core'
+} from '@logicflow/core'   //对基础类型的节点的引入
 
 import { LeftMenus } from './LeftMenuItems.js'
 import { MiniMap } from './MiniMap.js'
@@ -28,9 +28,10 @@ import Condition from "../components/dialog/Condition.vue";
 import cameras from "../../主窗口/js/cameras.js";
 
 
-LogicFlow.use(SelectionSelect);
-LogicFlow.use(Menu);
-class MyCircleModel extends CircleNodeModel {
+LogicFlow.use(SelectionSelect); //框选
+LogicFlow.use(Menu);  //右键菜单
+//自定义节点的设置
+class MyCircleModel extends CircleNodeModel { //继承基础的圆形节点 并对该节点的样式进行定义
     getNodeStyle() {
         const style = super.getNodeStyle();
         style.stroke = 'blue';
@@ -43,7 +44,7 @@ class MyCircleModel extends CircleNodeModel {
     }
 }
 
-class SuanziModel extends RectNodeModel {
+class SuanziModel extends RectNodeModel {  //继承基础的矩形节点 并对该节点的样式进行定义
     setAttributes() {
         const size = this.properties.scale || 1;
         

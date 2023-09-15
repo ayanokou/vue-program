@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
 
-const router = createRouter({
+const router = createRouter({   //创建路由
     //history: createWebHistory(),
     history: createWebHashHistory(),
     // history: process.env.IS_ELECTRON ? createWebHashHistory(process.env.BASE_URL) : createWebHistory(process.env.BASE_URL),

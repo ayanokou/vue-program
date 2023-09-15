@@ -1,4 +1,4 @@
-
+//模块引用
 import ProcessDp from "@/流程图操作/FlowArea.vue";
 import ImageArea from "@/图像操作/ImageArea.vue";
 import ResultArea from "@/流程图操作/结果描述与帮助/ResultArea.vue";
@@ -32,7 +32,7 @@ let socket = io.connect('http://localhost:9092')
 
 
 
-export default {
+export default {  //指定默认输出
     components:{
         GlobalVar,
         NetworkManager,
@@ -160,7 +160,8 @@ export default {
     mounted() {
         //动态调整右半部分尺寸
         window.addEventListener('resize', this.dynamicRightHeight)
-        socket.on('flowChartOK',(data)=>{
+        //对流程图相关信息进行监听
+        socket.on('flowChartOK',(data)=>{   
             console.log('in flow chart ok'+data)
             this.$store.commit('setFlowChartOK',{
                 trigger:true,
@@ -292,9 +293,9 @@ export default {
         
     },
 
-    computed:{
-        ...mapState(['socketEmit','dialogVisibleGlobalVar',"softwareSet","dialogVisibleGlobalScript"])
-    },
+    computed:{   //计算属性
+        ...mapState(['socketEmit','dialogVisibleGlobalVar',"softwareSet","dialogVisibleGlobalScript"])  //获取多个状态生成计算属性
+    },  
     watch:{
         socketEmit(newValue){
             if(newValue.trigger){
@@ -366,14 +367,14 @@ export default {
                 this.downloadFile();
               });
           },
-          uploadFile() {
+          uploadFile() {  //上传文件
             // Logic for file upload goes here
             // You can show a file upload dialog or perform any other necessary actions
             // when the user chooses to upload a file.
             console.log('Uploading file...');
           },
       
-          downloadFile() {
+          downloadFile() {   //下载文件
             // Logic for file download goes here
             // You can initiate a file download or perform any other necessary actions
             // when the user chooses to download a file.

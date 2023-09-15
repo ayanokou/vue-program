@@ -5,11 +5,11 @@ import axiosInstance from '../../axios';
     data() {
       return {
         form: {
-          username: '',
-          nickName: '',
-          password: '',
-          password2: '',
-          code: ''
+          username: '',    //登录账号
+          nickName: '',    //昵称
+          password: '',    //登录密码
+          password2: '',   //再次验证
+          code: ''         //验证码
         },
         rules: {
           username: [

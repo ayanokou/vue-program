@@ -1,7 +1,7 @@
 // 节点样式创建 以及拖动效果绑定
 let tabIndex=0
 const LeftMenus = (function () {
-    function LeftMenus(_a) {
+    function LeftMenus(_a) {  
         var _this = this;
         var lf = _a.lf;
         this.lf = lf;

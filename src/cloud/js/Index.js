@@ -12,7 +12,7 @@ import router from '../../sys/router';
 
 
 
-const value = ref([])
+const value = ref([]) //创建ref对象
 
 const handleChange = (value) => {
   console.log(value)
@@ -29,7 +29,7 @@ const treeRef = ref(null)
 
 
 
-export default {
+export default {   //指定默认输出
   component:{
     Download,
     Upload,
@@ -38,7 +38,7 @@ export default {
     UserManage,
   },
 
-  data() {
+  data() {  //数据部分
     return {
       showLicenseDialog: false,
       licenseForm: {

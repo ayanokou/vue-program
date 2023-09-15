@@ -4,14 +4,14 @@ import router from '../../sys/router';
 
 
 
-export default {
+export default {  //指定默认输出
   data() {
     return {
       loginForm:{
-        username: '',
-        password: '',
-        code: '',
-        rememberMe: ''
+        username: '',    //用户名
+        password: '',    //密码
+        code: '',        //验证码
+        rememberMe: ''   //记住密码
       },
       
     }
